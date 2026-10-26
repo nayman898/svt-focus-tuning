@@ -3,7 +3,7 @@
   "model": "Focus SVT",
   "model_year": 2004,
   "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
-  "prepared_test_revision": "v002-idle-1100: owner reports write completed; first post-write log reviewed. Warm mean RPM 1103.5; candidate clock offset 4 seconds for that session; fan/load disturbance and AFR variation remain.",
+  "prepared_test_revision": "v003-temp-fan-stage-match: owner supplied test logs and reports slight improvement, still noticeable. Warm mean RPM 1100.5; load-related voltage/RPM dips and AFR variability remain. Temporary pathway effectiveness not independently proven.",
   "current_calibration_source": "Previous owner",
   "engine_modifications": [
     "Hardened connecting rods; manufacturer and specifications unconfirmed",
@@ -103,6 +103,7 @@
   "tuning_goals": [
     "Optimize idle first",
     "Optimize cruise and light-load drivability next",
+    "Investigate IMRC / dual-stage intake after engine idle and fueling stability, before final power optimization",
     "Then evaluate SCG-1 wastegate duty cycle (WGDC) and gain to establish a stable, owner-accepted boost-control baseline",
     "Optimize power after idle, cruise and boost control are stable"
   ],

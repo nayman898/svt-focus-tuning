@@ -5,6 +5,11 @@ use the ECU's existing high-speed idle pathway with the present fan wiring.
 It is not validated airflow compensation, an electrical repair, or a remedy
 for turbo heat exposure.
 
+**Post-test update:** the owner supplied v003 logs and reports a slight
+improvement, still noticeable. The [timing and load-event review](../reports/2026-10-26-v003-timing-review.md)
+shows a modestly narrower warm RPM spread but persistent voltage/RPM dips.
+The pathway remains temporary and its compensation effect is not proven.
+
 Parent: [v002](v002-idle-1100.hpt).
 Candidate: [v003](v003-temp-fan-stage-match.hpt).
 

@@ -43,7 +43,7 @@
                           "parent":  "v002",
                           "bytes":  215709,
                           "sha256":  "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
-                          "status":  "Prepared; reopened and compared; not flashed by agent; temporary stage-match effectiveness unverified",
+                          "status":  "Owner supplied v003 test logs and reports slight improvement; reviewed 2026-10-26. Warm mean 1100.5 rpm; voltage/load disturbances remain. Temporary-path effectiveness not independently established.",
                           "temporary":  true,
                           "pathway":  "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
                           "changes":  [
@@ -56,5 +56,5 @@
                           "hardware_assumption":  "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact"
                       }
                   ],
-    "updated_at":  "2026-10-26T13:01:20.6628490-04:00"
+    "updated_at":  "2026-10-26T13:32:07.1543204-04:00"
 }

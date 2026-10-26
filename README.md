@@ -27,6 +27,8 @@ baselines, scan logs, and documented calibration changes.
 
 ## Project layout
 
+- [v003 timing review](reports/2026-10-26-v003-timing-review.md): how idle spark
+  responds during RPM dips, temporary fan-path results and IMRC follow-up.
 - [v002 idle review](reports/2026-10-26-v002-idle-review.md): first post-write
   comparison, temperature-matched idle statistics and the remaining load/AFR issues.
 - [First idle review](reports/2026-10-26-idle-review.md): ECU RPM is recorded,

@@ -8,7 +8,7 @@ request. No remote repository or publication has been configured.
 | v000 | [Earlier ECU read](v000-ecu-read-20261026-102710.hpt) | Archived HP Tuners vehicle-cache read dated 2026-10-26 10:27:10. Differences from v001 have not been cataloged. | Historical capture; not a test candidate |
 | v001 | [Current baseline](v001-baseline-with-mil.hpt) | Exact copy of SVT Base (from chuck). Owner confirms this is a fresh ECU read plus their MIL changes. | Owner-confirmed current baseline |
 | v002 | [Idle 1100 test](v002-idle-1100.hpt) | Derived from v001. P/N idle target 1,200 to 1,100 rpm; Drive idle target 1,200 to 1,100 rpm. | Owner reports write completed; [first post-write review](../reports/2026-10-26-v002-idle-review.md) supports retaining as test baseline; fan/load and AFR issues remain |
-| v003 | [TEMP fan-stage match](v003-temp-fan-stage-match.hpt) | High-speed temperature thresholds 225/215 to 195/190 F, plus embedded temporary-path notes. [Test and retirement](v003-temp-fan-stage-match.md). | Prepared and reopened/compared; not flashed by agent; effectiveness unverified |
+| v003 | [TEMP fan-stage match](v003-temp-fan-stage-match.hpt) | High-speed temperature thresholds 225/215 to 195/190 F, plus embedded temporary-path notes. [Test and retirement](v003-temp-fan-stage-match.md). | Owner supplied test logs; [review](../reports/2026-10-26-v003-timing-review.md) shows modest observed improvement but persistent voltage/RPM disturbance; remains temporary |
 
 ## v002 verification
 
