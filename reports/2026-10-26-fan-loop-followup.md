@@ -49,8 +49,10 @@ test setup; they do not prove sensor function or justify immediately enabling
 learning. Current known tune values include 254-s closed-loop startup delays,
 520 F CL O2 sensor temperature threshold, and LTFT disabled. LTFT learning
 being disabled is not, by itself, proof that closed-loop short-term correction
-is disabled. The specific open-loop TPS/load/delay table values still need
-inspection before choosing a calibration change.
+is disabled. Subsequent inspection found the open-loop TPS threshold table
+zero at every RPM breakpoint. [v004](../tunes/v004-idle-closed-loop-entry-test.md)
+tests a narrow low-RPM change while preserving the other loop gates; its
+effectiveness has not yet been measured.
 
 ## Measurements to distinguish causes
 

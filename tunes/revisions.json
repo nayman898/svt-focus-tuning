@@ -54,7 +54,24 @@
                           "verification":  "Reopened file: only two fan-threshold parameters and Notes differ from v002; high and low thresholds read 195/190 F; embedded note verified",
                           "retirement":  "After resistor circuit repair, restore high-speed 225/215 F while preserving later unrelated changes",
                           "hardware_assumption":  "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact"
+                      },
+                      {
+                          "version":  "v004",
+                          "file":  "v004-idle-closed-loop-entry-test.hpt",
+                          "parent":  "v003",
+                          "bytes":  217053,
+                          "sha256":  "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
+                          "status":  "Prepared; saved and reopened; not flashed by agent; stationary warm-idle CL-entry test only",
+                          "changes":  [
+                                          "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 0.00 -\u003e 8.00 AD counts",
+                                          "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 0.00 -\u003e 8.00 AD counts",
+                                          "Calibration Details Notes appended with idle-only test scope and inherited temporary fan path"
+                                      ],
+                          "verification":  "Reopened comparison: only Notes and ECM 32731 table differ from v003; all seven rows verified; pressure-compensation toggle removed and Enabled retained",
+                          "inherited_temporary_pathway":  "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
+                          "test_scope":  "Stationary warm idle, beyond retained 254-second startup gates; driving/boost not validated",
+                          "rollback":  "v003-temp-fan-stage-match.hpt"
                       }
                   ],
-    "updated_at":  "2026-10-26T13:32:07.1543204-04:00"
+    "updated_at":  "2026-10-26T14:25:35.0938285-04:00"
 }

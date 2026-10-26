@@ -4,6 +4,7 @@
   "model_year": 2004,
   "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
   "prepared_test_revision": "v003-temp-fan-stage-match: owner supplied test logs and reports slight improvement, still noticeable. Warm mean RPM 1100.5; load-related voltage/RPM dips and AFR variability remain. Temporary pathway effectiveness not independently proven.",
+  "candidate_test_revision": "v004-idle-closed-loop-entry-test: prepared, not flashed by agent. OL TPS threshold 0/1500 rpm cells 0 to 8 AD counts; other cells, 254-second delays, LTFT-disabled state and injector compensation retained. Stationary warm-idle test only; inherits temporary fan pathway.",
   "current_calibration_source": "Previous owner",
   "engine_modifications": [
     "Hardened connecting rods; manufacturer and specifications unconfirmed",
