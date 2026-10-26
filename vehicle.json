@@ -65,7 +65,9 @@
   "cooling_and_charging": {
     "fans": "Factory fans (owner confirmed)",
     "fan_start_speed": "Owner describes an immediate high-speed-like roar; factory fan resistor is bypassed",
-    "fan_resistor": "Owner confirms bypassed long ago following melting issues; bypass topology, connector condition and original cause not yet inspected",
+    "fan_resistor": "Owner confirms resistor pigtail removed and two wires joined, with factory relays/fuses intact; turbo sits close to resistor location and creates significant heat; original cause of melting and motor current not verified",
+    "fan_repair_plan": "Owner plans replacement resistor and new wiring with heat shielding; preserve appropriate resistor mounting/cooling",
+    "temporary_fan_path": "v003 prepared from v002: high-speed ECT 225/215 to 195/190 F, matching existing low thresholds to test enabled high-speed idle pathway. Embedded temporary notes and retirement instructions. Not flashed by agent; effectiveness unverified.",
     "alternator": "Stock alternator (owner confirmed)",
     "alternator_clutch": "Owner believes clutched; Ford SVT training documents a one-way generator clutch for this model; actual installed pulley condition not inspected",
     "battery_ground_route": null,

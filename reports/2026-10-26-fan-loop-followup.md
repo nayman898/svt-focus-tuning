@@ -64,8 +64,10 @@ voltage drop or explain why the original connector/resistor overheated.
 Restore a correctly rated factory-style low-speed circuit after inspecting and
 repairing heat-damaged terminals/wiring and checking fan-motor current. Do not
 simply install a resistor in a damaged connector or assume the original melting
-was caused by calibration. Keep v002 unchanged and repeat the fan-cycle log after
-hardware repair before selecting fan-related calibration compensation.
+was caused by calibration. The owner requested an interim test because of turbo
+heat exposure; [temporary v003](../tunes/v003-temp-fan-stage-match.md) matches the
+ECU high-speed temperature pathway to the physical bypass behavior. Its
+effectiveness is unverified and it does not replace the hardware repair.
 
 The owner reports that engagement sounds like a high-speed roar. Treat this as
 an observation, not confirmation of the actual fan stage. Determine whether
