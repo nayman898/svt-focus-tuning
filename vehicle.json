@@ -64,7 +64,7 @@
   ],
   "cooling_and_charging": {
     "fans": "Factory fans (owner confirmed)",
-    "fan_start_speed": "Not yet confirmed: low-speed start versus direct high-speed engagement",
+    "fan_start_speed": "Owner describes an immediate high-speed-like roar; actual commanded and physical fan stage remain unverified",
     "alternator": "Stock alternator (owner confirmed)",
     "alternator_clutch": "Owner believes clutched; Ford SVT training documents a one-way generator clutch for this model; actual installed pulley condition not inspected",
     "battery_ground_route": null,

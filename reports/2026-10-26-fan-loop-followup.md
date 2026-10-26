@@ -54,7 +54,10 @@ inspection before choosing a calibration change.
 
 ## Measurements to distinguish causes
 
-Determine whether the fans start at low speed or jump straight to high speed.
+The owner reports that engagement sounds like a high-speed roar. Treat this as
+an observation, not confirmation of the actual fan stage. Determine whether
+the fans operate correctly at low speed and separately at high speed before
+changing fan-related compensation or replacing components.
 If a suitable meter is available, compare battery-post voltage and accessible
 underhood supply voltage during fan engagement with the ECU-reported trace.
 A verified voltage-drop test can then distinguish supply sag from cable/ground
