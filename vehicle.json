@@ -47,7 +47,8 @@
     "nozzle_and_flow": null,
     "activation_strategy": null,
     "failsafe": null,
-    "current_calibration_dependency": "unknown"
+    "current_calibration_dependency": "unknown",
+    "idle_test_state": "Owner confirms water/meth injection off"
   },
   "drivetrain_modifications": [
     "Limited-slip differential; model unconfirmed",
@@ -59,8 +60,17 @@
     "Fully adjustable rear suspension"
   ],
   "electrical_modifications": [
-    "Battery relocation"
+    "Battery relocated to trunk"
   ],
+  "cooling_and_charging": {
+    "fans": "Factory fans (owner confirmed)",
+    "fan_start_speed": "Not yet confirmed: low-speed start versus direct high-speed engagement",
+    "alternator": "Stock alternator (owner confirmed)",
+    "alternator_clutch": "Owner believes clutched; Ford SVT training documents a one-way generator clutch for this model; actual installed pulley condition not inspected",
+    "battery_ground_route": null,
+    "engine_to_chassis_ground_strap": null,
+    "battery_post_voltage_at_fan_start": null
+  },
   "modification_list_complete": false,
   "details_source": "Owner report, 2026-10-26; hardware not independently inspected",
   "fuel_grade_and_units": {
@@ -71,6 +81,7 @@
   "wideband": {
     "brand": "Innovate",
     "model": "SCG-1",
+    "sensor": "Separate Bosch LSU wideband (owner confirmed; exact model unconfirmed)",
     "functions": ["AFR measurement", "Boost control"],
     "hp_tuners_logging_connection": "SCG-1 serial logging in separate LogWorks recording; PROLINK+ cable ordered, not yet arrived",
     "output_scaling": null,
@@ -85,6 +96,7 @@
     }
   },
   "known_faults": [],
+  "factory_oxygen_sensor": "Original upstream O2 sensor remains installed separately from Bosch LSU wideband (owner confirmed)",
   "tuning_goals": [
     "Optimize idle first",
     "Optimize cruise and light-load drivability next",
