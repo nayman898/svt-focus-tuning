@@ -27,6 +27,8 @@ baselines, scan logs, and documented calibration changes.
 
 ## Project layout
 
+- [v002 idle review](reports/2026-10-26-v002-idle-review.md): first post-write
+  comparison, temperature-matched idle statistics and the remaining load/AFR issues.
 - [First idle review](reports/2026-10-26-idle-review.md): ECU RPM is recorded,
   high commanded idle, inactive closed-loop reporting, AFR variation, a voltage/RPM
   event, and missing-channel follow-up.

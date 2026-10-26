@@ -31,7 +31,7 @@
                           "parent":  "v001",
                           "bytes":  215069,
                           "sha256":  "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
-                          "status":  "Owner reports ECU write completed on 2026-10-26; post-write idle log pending",
+                          "status":  "Owner reports write completed; first post-write log reviewed 2026-10-26. Warm mean RPM 1103.5; retain as test baseline pending fan/load and fuel-control follow-up.",
                           "changes":  [
                                           "Target Idle Speed Park/Neutral: 1200 -\u003e 1100 rpm",
                                           "Target Idle Speed Drive: 1200 -\u003e 1100 rpm"
