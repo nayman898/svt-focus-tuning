@@ -1,0 +1,18 @@
+# Raw reports and vehicle files may contain VINs, device IDs, or license data.
+.local/
+backups/*
+!backups/.gitkeep
+logs/*
+!logs/.gitkeep
+tunes/*
+!tunes/.gitkeep
+*.hpt
+# Explicitly version tune revisions and their catalog in this local repository.
+!tunes/*.hpt
+!tunes/*.md
+!tunes/*.json
+*.hpl
+*.bak
+*.tmp
+Thumbs.db
+.DS_Store

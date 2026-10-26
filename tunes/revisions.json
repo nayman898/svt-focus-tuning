@@ -1,0 +1,41 @@
+﻿{
+    "created_at":  "2026-10-26T12:08:33.2224213-04:00",
+    "baseline_source_hash":  "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+    "verification":  "VCM Editor comparison showed exactly two parameters for v002 vs v001; saved v002 reopened and both targets read 1100 rpm",
+    "revisions":  [
+                      {
+                          "version":  "v000",
+                          "file":  "v000-ecu-read-20261026-102710.hpt",
+                          "parent":  null,
+                          "bytes":  214941,
+                          "sha256":  "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
+                          "status":  "Archived earlier ECU-read cache; differences from v001 not cataloged",
+                          "changes":  [
+
+                                      ]
+                      },
+                      {
+                          "version":  "v001",
+                          "file":  "v001-baseline-with-mil.hpt",
+                          "parent":  null,
+                          "bytes":  215037,
+                          "sha256":  "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+                          "status":  "Owner-confirmed fresh-read baseline with MIL changes",
+                          "changes":  [
+                                          "Existing owner calibration; retained without parameter edits"
+                                      ]
+                      },
+                      {
+                          "version":  "v002",
+                          "file":  "v002-idle-1100.hpt",
+                          "parent":  "v001",
+                          "bytes":  215069,
+                          "sha256":  "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
+                          "status":  "Prepared, reopened and checked; not flashed by agent",
+                          "changes":  [
+                                          "Target Idle Speed Park/Neutral: 1200 -\u003e 1100 rpm",
+                                          "Target Idle Speed Drive: 1200 -\u003e 1100 rpm"
+                                      ]
+                      }
+                  ]
+}

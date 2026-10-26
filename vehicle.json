@@ -1,0 +1,112 @@
+{
+  "make": "Ford",
+  "model": "Focus SVT",
+  "model_year": 2004,
+  "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
+  "prepared_test_revision": "v002-idle-1100: P/N and Drive idle targets 1200 to 1100 rpm; saved and checked in VCM Editor; not flashed by agent",
+  "current_calibration_source": "Previous owner",
+  "engine_modifications": [
+    "Hardened connecting rods; manufacturer and specifications unconfirmed",
+    "Forged pistons; manufacturer, bore and compression ratio unconfirmed"
+  ],
+  "intake_exhaust_modifications": [],
+  "injectors": {
+    "brand": "Siemens (owner reported)",
+    "nominal_flow_lb_per_hr": 60,
+    "part_number": null,
+    "rated_flow_reference_pressure_psi": null,
+    "characterization_data_source": null
+  },
+  "forced_induction": {
+    "type": "turbocharger",
+    "turbo_model": null,
+    "boost_pressure_psi": null,
+    "wastegate_and_boost_control": "Innovate SCG-1 controller; wastegate and settings unconfirmed"
+  },
+  "fuel_system": {
+    "layout": "return style",
+    "pump": "Upgraded Stealth fuel pump; exact model unconfirmed",
+    "base_pressure_psi": 43,
+    "base_pressure_measurement_conditions": "43 psi measured with engine off (owner reported); regulator reference hose state and pump operation during measurement not yet recorded",
+    "regulator_brand": "Aeromotive",
+    "regulator_model": null,
+    "regulator_reference": "Manifold boost/vacuum referenced, 1:1 (owner reported)"
+  },
+  "maf": {
+    "type": "blade style",
+    "brand": "PMAS",
+    "part_number": null,
+    "housing_nominal_diameter_inches": 3,
+    "housing_inside_diameter": null,
+    "installation_location": null
+  },
+  "water_methanol_injection": {
+    "installed": true,
+    "kit_and_controller": null,
+    "mixture": null,
+    "nozzle_and_flow": null,
+    "activation_strategy": null,
+    "failsafe": null,
+    "current_calibration_dependency": "unknown"
+  },
+  "drivetrain_modifications": [
+    "Limited-slip differential; model unconfirmed",
+    "SBC Stage 3 clutch; exact part number unconfirmed"
+  ],
+  "chassis_modifications": [
+    "Electric power steering",
+    "Tubular lower control arms",
+    "Fully adjustable rear suspension"
+  ],
+  "electrical_modifications": [
+    "Battery relocation"
+  ],
+  "modification_list_complete": false,
+  "details_source": "Owner report, 2026-10-26; hardware not independently inspected",
+  "fuel_grade_and_units": {
+    "reported_octane": 93,
+    "octane_rating_system": "Not explicitly confirmed",
+    "ethanol_content": null
+  },
+  "wideband": {
+    "brand": "Innovate",
+    "model": "SCG-1",
+    "functions": ["AFR measurement", "Boost control"],
+    "hp_tuners_logging_connection": "SCG-1 serial logging in separate LogWorks recording; PROLINK+ cable ordered, not yet arrived",
+    "output_scaling": null,
+    "tach_input_attempt": {
+      "reported_tap": "Coil connector pin 3, green/black wire (owner description; exact harness pinout not verified)",
+      "reported_symptoms": [
+        "SCG-1 resets, freezes, or displays an error; exact behavior/code to confirm",
+        "RPM reads incorrectly or jumps"
+      ],
+      "coil_or_ignition_model": "Stock Ford coil pack (owner confirmed)",
+      "operation_after_tach_disconnect": "SCG-1 returns to normal when the purple tach lead is disconnected (owner confirmed)"
+    }
+  },
+  "known_faults": [],
+  "tuning_goals": [
+    "Optimize idle first",
+    "Optimize cruise and light-load drivability next",
+    "Then evaluate SCG-1 wastegate duty cycle (WGDC) and gain to establish a stable, owner-accepted boost-control baseline",
+    "Optimize power after idle, cruise and boost control are stable"
+  ],
+  "paired_logging_plan": "Continue recording both VCM Scanner and LogWorks every session for ECU data plus SCG-1 WGDC, boost and O2. Use original session clock metadata for provisional pairing; validate offset/drift with shared AFR once PROLINK+ is connected.",
+  "boost_control_baseline": {
+    "scg1_wgdc": null,
+    "scg1_gain": null,
+    "other_controller_settings": null,
+    "wastegate_spring_pressure_psi": null,
+    "owner_accepted_boost_target_psi": null
+  },
+  "existing_interface_license_matches_vehicle": true,
+  "license_match_evidence": "VCM Scanner connected vehicle VIN matched the interface's existing Ford license on 2026-10-26; VIN retained privately",
+  "scanner_setup": {
+    "channels": "profiles/2004 Focus SVT - Idle and Cruise.Channels.xml",
+    "layout": "profiles/2004 Focus SVT - Idle and Cruise.Layout.xml",
+    "live_channel_validation": "Live data confirmed using Vehicle Defaults; generic SAE template did not work. Idle/cruise channels file replaced with working defaults. Some channels and layout mappings still need saved-log validation.",
+    "working_channel_source": "VCM Scanner Load Vehicle Defaults, selected by owner; extended with controller-listed Common ID channels via Channel Selector",
+    "idle_additions_status": "Added voltage, run time, A/C states, fan duty, vehicle speed, MAF volts, long-term idle air corrections and closed-loop readiness/fault status. Layout loaded with actual/desired RPM and idle-air duty. Per-channel live validation pending new idle log.",
+    "initial_observation": "Coolant 106-118 F; MAF 1.50-1.43 lb/min; desired idle 1616-1520 rpm; Closed Loop Active reported No. Actual RPM and some other cells were not available through UI automation."
+  }
+}
