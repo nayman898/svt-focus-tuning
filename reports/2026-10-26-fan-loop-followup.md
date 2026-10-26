@@ -54,6 +54,19 @@ inspection before choosing a calibration change.
 
 ## Measurements to distinguish causes
 
+**New owner clarification:** the factory fan resistor was bypassed long ago
+following melting issues. The owner did not then realize its role in the
+low/high-speed circuit. The bypass is a strong explanation for high-speed-like
+engagement when the calibration requests the low-speed stage. Exact bypass
+wiring has not been inspected. It does not prove the full cause of the measured
+voltage drop or explain why the original connector/resistor overheated.
+
+Restore a correctly rated factory-style low-speed circuit after inspecting and
+repairing heat-damaged terminals/wiring and checking fan-motor current. Do not
+simply install a resistor in a damaged connector or assume the original melting
+was caused by calibration. Keep v002 unchanged and repeat the fan-cycle log after
+hardware repair before selecting fan-related calibration compensation.
+
 The owner reports that engagement sounds like a high-speed roar. Treat this as
 an observation, not confirmation of the actual fan stage. Determine whether
 the fans operate correctly at low speed and separately at high speed before

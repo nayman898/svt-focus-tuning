@@ -64,7 +64,8 @@
   ],
   "cooling_and_charging": {
     "fans": "Factory fans (owner confirmed)",
-    "fan_start_speed": "Owner describes an immediate high-speed-like roar; actual commanded and physical fan stage remain unverified",
+    "fan_start_speed": "Owner describes an immediate high-speed-like roar; factory fan resistor is bypassed",
+    "fan_resistor": "Owner confirms bypassed long ago following melting issues; bypass topology, connector condition and original cause not yet inspected",
     "alternator": "Stock alternator (owner confirmed)",
     "alternator_clutch": "Owner believes clutched; Ford SVT training documents a one-way generator clutch for this model; actual installed pulley condition not inspected",
     "battery_ground_route": null,
