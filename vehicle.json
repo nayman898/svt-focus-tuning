@@ -3,7 +3,7 @@
   "model": "Focus SVT",
   "model_year": 2004,
   "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
-  "prepared_test_revision": "v002-idle-1100: P/N and Drive idle targets 1200 to 1100 rpm; saved and checked in VCM Editor; not flashed by agent",
+  "prepared_test_revision": "v002-idle-1100: P/N and Drive idle targets 1200 to 1100 rpm; owner reports write completed 2026-10-26; post-write idle log pending",
   "current_calibration_source": "Previous owner",
   "engine_modifications": [
     "Hardened connecting rods; manufacturer and specifications unconfirmed",

@@ -7,7 +7,7 @@ request. No remote repository or publication has been configured.
 | --- | --- | --- | --- |
 | v000 | [Earlier ECU read](v000-ecu-read-20261026-102710.hpt) | Archived HP Tuners vehicle-cache read dated 2026-10-26 10:27:10. Differences from v001 have not been cataloged. | Historical capture; not a test candidate |
 | v001 | [Current baseline](v001-baseline-with-mil.hpt) | Exact copy of SVT Base (from chuck). Owner confirms this is a fresh ECU read plus their MIL changes. | Owner-confirmed current baseline |
-| v002 | [Idle 1100 test](v002-idle-1100.hpt) | Derived from v001. P/N idle target 1,200 to 1,100 rpm; Drive idle target 1,200 to 1,100 rpm. | Prepared; not flashed by the agent |
+| v002 | [Idle 1100 test](v002-idle-1100.hpt) | Derived from v001. P/N idle target 1,200 to 1,100 rpm; Drive idle target 1,200 to 1,100 rpm. | Owner reports write completed 2026-10-26; comparison log pending |
 
 ## v002 verification
 
