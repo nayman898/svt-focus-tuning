@@ -1,4 +1,4 @@
-﻿{
+{
     "created_at":  "2026-10-26T12:08:33.2224213-04:00",
     "baseline_source_hash":  "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
     "verification":  "VCM Editor comparison showed exactly two parameters for v002 vs v001; saved v002 reopened and both targets read 1100 rpm",
@@ -61,7 +61,8 @@
                           "parent":  "v003",
                           "bytes":  217053,
                           "sha256":  "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
-                          "status":  "Prepared; saved and reopened; not flashed by agent; stationary warm-idle CL-entry test only",
+                          "status":  "Owner supplied v004 test logs; 2026-10-26 review confirms Closed Loop Active No, Ready Yes, Power Demand Enrich throughout, including fully warm operation beyond startup delay. Not accepted as a CL-entry fix; no agent write or ECU binary readback. Stationary idle scope retained.",
+                          "test_report":  "../reports/2026-10-26-v004-log-review.md",
                           "changes":  [
                                           "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 0.00 -\u003e 8.00 AD counts",
                                           "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 0.00 -\u003e 8.00 AD counts",
@@ -71,7 +72,50 @@
                           "inherited_temporary_pathway":  "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
                           "test_scope":  "Stationary warm idle, beyond retained 254-second startup gates; driving/boost not validated",
                           "rollback":  "v003-temp-fan-stage-match.hpt"
+                      },
+                      {
+                          "version": "v005",
+                          "file": "v005-idle-absolute-tps-entry-test.hpt",
+                          "parent": "v004",
+                          "bytes": 218621,
+                          "sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
+                          "status": "Owner reports running fresh session after v005 handoff. Saved startup log shows CL entry at offset 75.636 s and OL Conditions No. Initial failed catch, 2915.25 RPM flare and reported 7 V cranking dip remain unresolved. Stationary-only experiment, mixture not validated; no agent write or ECU readback.",
+                          "test_report": "../reports/2026-10-26-v005-startup-review.md",
+                          "warm_test_report": "../reports/2026-10-26-v005-closed-loop-review.md",
+                          "settled_idle_report": "../reports/2026-10-26-v005-settled-idle-review.md",
+                          "fan_off_report": "../reports/2026-10-26-v005-fan-off-review.md",
+                          "changes": [
+                              "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 8.00 -> 200.00 AD counts",
+                              "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 8.00 -> 200.00 AD counts",
+                              "Calibration Details Notes appended with absolute-TPS evidence, stationary test scope and inherited temporary fan pathway"
+                          ],
+                          "evidence": "First baseline log: 8333 closed-throttle absolute TPS observations, min 181.822265625, max 183.8203125, mean 182.823491519131. v002 relative TPS 0-0.998046875. v004/follow-up retain OL Conditions Yes.",
+                          "verification": "Saved file reopened; all seven rows checked (200,200,0,0,0,0,0). Editor comparison lists only Notes and ECM 32731 table. Saved Notes checked; inherited v003/v004 history preserved. All earlier tune hashes unchanged.",
+                          "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
+                          "test_scope": "Stationary warm idle, throttle untouched; 1500-2000 RPM interpolation changes and may postpone off-idle enrichment. No driving or boost validation.",
+                          "rollback": "v004-idle-closed-loop-entry-test.hpt",
+                          "notes": "v005-idle-absolute-tps-entry-test.md"
+                      },
+                      {
+                          "version": "v006",
+                          "file": "v006-post-repair-fan-baseline.hpt",
+                          "parent": "v005",
+                          "bytes": 220541,
+                          "sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
+                          "status": "Prepared and verified for use after proper fan resistor/pigtail/wiring restoration. Hardware repair pending; not flashed by agent. Stationary-only inherited TPS experiment remains.",
+                          "changes": [
+                              "Fan High Speed Enable ECT: 195 -> 225 F, restoring pre-v003 value",
+                              "Fan High Speed Disable ECT: 190 -> 215 F, restoring pre-v003 value",
+                              "Calibration Details Notes appended with pending hardware status, post-repair-only conditions and temporary-path retirement explanation"
+                          ],
+                          "verification": "Final saved/reopened Editor comparison lists only Notes and the two named high-speed thresholds. Main-file Fans readback low195/190, high225/215 F; remaining fan fields and inherited Notes checked. Initial uncommitted scalar draft corrected before final comparison.",
+                          "hardware_repair_required": true,
+                          "temporary_pathway_retirement": "Prepared calibration restoration; not evidence the hardware or installed ECU pathway is already retired",
+                          "test_scope": "Stationary warm idle after circuit restoration; no throttle/road/boost validation. Do not provoke overheating to force fan thresholds.",
+                          "rollback": "v005-idle-absolute-tps-entry-test.hpt",
+                          "rollback_caveat": "Parent intentionally requests high speed at195 F and reinstates temporary stage-match calibration",
+                          "notes": "v006-post-repair-fan-baseline.md"
                       }
                   ],
-    "updated_at":  "2026-10-26T14:25:35.0938285-04:00"
+    "updated_at": "2026-10-26T16:53:08.3439598-04:00"
 }

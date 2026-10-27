@@ -89,7 +89,50 @@ Injector pulse width was not found in the inspected Fuel > Flow list; it was
 not added with a guessed identifier. External wideband/boost remain pending.
 See [idle log notes](../docs/idle-log.md) before the next recording.
 
-## Reloading
+## v004 loop-diagnostic update (2026-10-26)
+
+The [v004 logging audit](../reports/2026-10-26-v004-log-review.md) confirms
+Ready=Yes, Active=No and Power Demand Enrich through the recording, including
+fully warm operation beyond the startup gate. The idle/cruise profile and
+active Scanner now also request Open Loop Active (12946), Open Loop Conditions
+(12978), Open Loop FMEM (12947), O2 B1 Fail (12923), O2 B1S1 Heater (12933) and
+O2 B1S1 Htr Fault (12925), all at 1 s. IDs/types were verified in the connected
+controller's selector and the active configuration was saved through Scanner.
+The [active follow-up observations](../reports/2026-10-26-v004-live-loop-followup.md)
+now show live values for Open Loop Active/Conditions/FMEM and O2 B1 Fail;
+the two heater channels remain null. Idle-air duty also now shows live values.
+These live observations have since been checked against saved exports below.
+
+The follow-up and a subsequent 31-second test are now saved and audited in the
+[channel-test report](../reports/2026-10-26-v004-channel-test.md). Both confirm
+the four new loop/O2-failure status channels in CSV. Two more controller-listed
+Common ID trials were added: Air Load (2323, 200 ms), which is absent from the
+test export, and Coolant Temperature Sensor Fail (12972, 1 s), which records
+Pass. The load trial remains unvalidated and must not be treated as a working
+measurement. Upstream O2 voltage and raw TPS remain empty in both new exports.
+
+Fuel trims, idle-air duty/STIT, vehicle speed and several existing channels
+remain absent or empty in v004. Raw TPS counts, MAF volts/counts, fuel pressure,
+fan PWM and A/C clutch are empty. Engine Run Time caps at 255 seconds; use log
+elapsed time after that point. A populated channel file does not establish
+complete logging. Confirm actual values during acquisition and in a short
+all-channel export before the next extended test. Keep the working measured
+RPM source despite the separate empty duplicate. Continue LogWorks for AFR;
+its RPM and WGDC remain unvalidated zero signals.
+
+## Focused idle fuel-recovery trial
+
+[Idle Fuel Recovery channels](2004%20Focus%20SVT%20-%20Idle%20Fuel%20Recovery.Channels.xml)
+is a separate 27-channel trial prepared after the owner-marked fan-off event.
+It retains existing parameter types and requests moderate intervals for
+RPM/target, voltage, actual spark/source, commanded mixture, O2 B1S1, B1 STFT,
+MAF flow/volts/counts, load/TPS, idle air and loop states. It has been parsed
+and checked against existing IDs, but **has not been loaded or live-validated**.
+The established idle/cruise profile is preserved unchanged. A smaller request
+list is a data-acquisition experiment, not proof that missing channels will
+populate. See the [fan-off review](../reports/2026-10-26-v005-fan-off-review.md).
+
+## Loading a channel configuration
 
 In the Channels pane, open its configuration menu and select **Open Channel
 Config**, then choose the idle/cruise channels file. Use **Layout > Open Layout**
@@ -97,3 +140,20 @@ to choose the corresponding layout file. The prior active configuration and
 layout were preserved privately under `.local/before-focus-profile.*`.
 
 No ECU calibration, SCG-1 setting, firmware or licensing change was performed.
+
+## Focused profile engine-off check, 2026-10-26
+
+The Idle Fuel Recovery profile was loaded and tested with the engine off.
+Saved HPL/CSV confirms absolute TPS, upstream O2, B1 STFT and MAF populate;
+this does not validate running fuel control. Coolant and relative TPS were
+empty in this short capture. Restore/verify coolant acquisition before a
+running test. Scanner was left stopped with the focused profile loaded.
+The previous configuration is backed up privately. See the
+[engine-off validation and enrichment review](../reports/2026-10-26-koeo-channel-and-enrichment-review.md).
+
+The subsequent [running focused-channel test](../reports/2026-10-26-v005-focused-fuel-recovery-review.md)
+restored ECT acquisition after loading `.local/fuel-recovery-ect-fast.Channels.xml`,
+a copy with only the ECT request interval changed to the previous 50 ms.
+Interval causality remains unproven. O2/STFT/MAF/absolute TPS and ECT were
+recorded through startup and a fan cycle; IAT/relative TPS/O2 B1 Fail remained
+blank. The private trial profile remains loaded and Scanner is stopped.

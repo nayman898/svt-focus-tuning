@@ -1,17 +1,38 @@
 # SVT Focus tuning
 
-Local project for the Ford SVT Focus: original calibration backups, diagnostic
-baselines, scan logs, and documented calibration changes.
+Calibration history, diagnostic reviews, and scanner profiles for a modified
+2004 Ford Focus SVT.
 
 ## Current baseline
 
+- Prepared next file: [v006 post-repair fan baseline](tunes/v006-post-repair-fan-baseline.md),
+  for use after the pending resistor/pigtail repair. It restores high-speed
+  225/215 F while retaining low-speed 195/190 F and v005's other settings.
+  [ECT idle-adder contingency](docs/fan-repair-and-idle-adder.md) is documented
+  separately; no RPM adder was changed.
+- Latest running experiment: [v005 absolute-TPS entry test](tunes/v005-idle-absolute-tps-entry-test.md).
+  [Startup review](reports/2026-10-26-v005-startup-review.md) confirms closed-loop
+  entry, but records a failed initial catch, large startup flare and reported
+  cranking supply dip. Stationary idle scope remains; mixture is not validated.
+  The [closed-loop AFR review](reports/2026-10-26-v005-closed-loop-review.md)
+  provisionally pairs the delayed LogWorks capture and documents remaining
+  electrical/load disturbances and measured mixture excursions.
+- Earlier test: [v004 closed-loop-entry test](tunes/v004-idle-closed-loop-entry-test.md).
+  Owner-supplied logs confirm no closed-loop entry. See the
+  [result and logging audit](reports/2026-10-26-v004-log-review.md) for observed
+  states, missing measurements and six added diagnostic channels. Stationary
+  idle scope was retained for the following experiment.
+- [Agent instructions](AGENTS.md) define calibration evidence, revision
+  verification, logging and flash-readiness handoffs for this repository.
 - MPVI4 communication confirmed over USB on 2026-10-26.
 - VCM Editor 5.3.1332 Beta is installed.
 - MPVI4 firmware is 1.33.1 Release; Pro Feature Set is licensed.
 - One existing Ford controller license is present. Two credits purchased, two
-  used, zero available. Whether that license matches this car remains unverified.
-- The interface was not connected to the car. No ECU read, scan, flash, firmware
-  update, or credit purchase was performed.
+  used, zero available. The connected vehicle VIN was subsequently confirmed
+  to match that license; identifiers remain private.
+- The initial device-only inspection was followed by vehicle connection,
+  saved calibration revisions and owner-supplied post-write logs. Flash status
+  is tracked per revision in the tune history.
 - Owner reports a 2004 Focus SVT with a turbocharger, hardened rods, forged
   pistons, return-style fuel system, upgraded Stealth pump, blade-style MAF,
   water/methanol injection, LSD, SBC Stage 3 clutch, electric power steering,
@@ -27,6 +48,9 @@ baselines, scan logs, and documented calibration changes.
 
 ## Project layout
 
+- [Lower-idle roadmap](docs/lower-idle-roadmap.md): owner goal of 800-850 RPM
+  warm idle, priority checks and staged target-only trials; startup-airflow
+  proposal deferred as a separate experiment.
 - [v003 timing review](reports/2026-10-26-v003-timing-review.md): how idle spark
   responds during RPM dips, temporary fan-path results and IMRC follow-up.
 - [v002 idle review](reports/2026-10-26-v002-idle-review.md): first post-write
@@ -51,5 +75,7 @@ baselines, scan logs, and documented calibration changes.
 - `.local/`: private interface reports and vehicle identifiers.
 
 Raw logs, working backups and private reports are ignored by Git. Numbered tune
-binaries under `tunes/` are tracked at the owner's request. This repository is
-local; no GitHub repository or remote has been created.
+binaries under `tunes/` are tracked at the owner's request in the private
+[GitHub repository](https://github.com/nayman898/svt-focus-tuning).
+The revision catalog records each file's SHA-256 hash and size; committing a
+revision does not mean it has been flashed or validated.

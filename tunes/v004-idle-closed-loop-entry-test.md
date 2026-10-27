@@ -1,6 +1,8 @@
 # v004 — stationary warm-idle closed-loop entry test
 
-**Prepared; not flashed by the agent.** Parent:
+**Owner supplied v004 test logs; closed-loop entry was not achieved.** See the
+[test result and logging audit](../reports/2026-10-26-v004-log-review.md).
+The actual ECU binary was not read back; no agent write was performed. Parent:
 [v003](v003-temp-fan-stage-match.hpt). Candidate:
 [v004](v004-idle-closed-loop-entry-test.hpt).
 

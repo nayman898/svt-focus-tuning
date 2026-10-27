@@ -19,6 +19,14 @@
   <channel ParameterID="2300" Interval="00:00:00.2000000" />
   <channel ParameterID="16408" ParamterType="2" Interval="00:00:00.2000000" />
   <channel ParameterID="2127" Interval="00:00:00.0100000" />
+  <channel ParameterID="12946" Interval="00:00:01" />
+  <channel ParameterID="12978" Interval="00:00:01" />
+  <channel ParameterID="2323" Interval="00:00:00.2000000" />
+  <channel ParameterID="12972" Interval="00:00:01" />
+  <channel ParameterID="12947" Interval="00:00:01" />
+  <channel ParameterID="12923" Interval="00:00:01" />
+  <channel ParameterID="12933" Interval="00:00:01" />
+  <channel ParameterID="12925" Interval="00:00:01" />
   <channel ParameterID="2342" Interval="00:00:00.2000000" />
   <channel ParameterID="2100" Interval="00:00:01" />
   <channel ParameterID="2131" Interval="00:00:01" />
