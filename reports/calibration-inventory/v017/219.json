@@ -1,0 +1,131 @@
+﻿{
+    "index":  219,
+    "path":  "Engine / Spark / Knock Sensors / General / Knock Sensors Fitted",
+    "name":  "Knock Sensors Fitted",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:38:00.7070004Z",
+    "kind":  "scalar_or_switch",
+    "status":  "captured",
+    "title":  null,
+    "parameter_id":  20227,
+    "description":  "[ECM] 20227 - Knock Sensors Fitted: The number of Knock Sensors fitted to the engine.",
+    "controls":  [
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "General",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "1",
+                         "value":  "1",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Sensors Fitted",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "[ECM] 20227 - Knock Sensors Fitted: The number of Knock Sensors fitted to the engine.",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "B",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "A",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+
+              ]
+}

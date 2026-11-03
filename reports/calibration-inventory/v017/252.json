@@ -1,0 +1,143 @@
+﻿{
+    "index":  252,
+    "path":  "Engine Diagnostics / Exhaust / Rich/Lean DTC / LTFT P0172/P0175 Rich Thresh",
+    "name":  "LTFT P0172/P0175 Rich Thresh",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:39:20.3931737Z",
+    "kind":  "scalar_or_switch",
+    "status":  "captured",
+    "title":  null,
+    "parameter_id":  19040,
+    "description":  "[ECM] 19040 - LTFT P0172/P0175 Rich Thresh: P0172/P0175 will be set if the LTFT value is lower than this.",
+    "controls":  [
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Parameter Access",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "0 to 256",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Rich/Lean DTC",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "0.7900",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "P0172/P0175 Thresh",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "[ECM] 19040 - LTFT P0172/P0175 Rich Thresh: P0172/P0175 will be set if the LTFT value is lower than this.",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "B",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "A",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+
+              ]
+}

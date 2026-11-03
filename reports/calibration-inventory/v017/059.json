@@ -1,0 +1,131 @@
+﻿{
+    "index":  59,
+    "path":  "Engine / Airflow / IMRC / General / IMRC Type",
+    "name":  "IMRC Type",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:31.1768328Z",
+    "kind":  "scalar_or_switch",
+    "status":  "captured",
+    "title":  null,
+    "parameter_id":  25253,
+    "description":  "[ECM] 25253 - IMRC Type: Switch to determine if vacuum actuated or electric actuated IMRCs are used.",
+    "controls":  [
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "General",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "Electric",
+                         "value":  "Electric",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Type",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "[ECM] 25253 - IMRC Type: Switch to determine if vacuum actuated or electric actuated IMRCs are used.",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "B",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "A",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+
+              ]
+}

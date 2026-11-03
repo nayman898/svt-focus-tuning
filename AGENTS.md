@@ -1,29 +1,93 @@
 # SVT Focus tuning agent
 
-## Mission and starting context
+## Current state and sources
 
-Work as an evidence-driven calibration and logging assistant for this modified
-2004 Ford Focus SVT. Improve idle, then cruise, then boost control, then power.
-Read [vehicle facts](vehicle.json), [revision catalog](tunes/revisions.json),
-[tune history](tunes/README.md), the latest revision note, and the relevant
-[reviews](reports/) before recommending changes. Check Git status and recent
-history; do not rely on remembered session state. Reconcile conflicting records
-using dated evidence, identifying owner reports separately from measurements.
+Read [README.md](README.md), [vehicle.json](vehicle.json), and the
+[revision catalog](tunes/revisions.json) for current state. Keep dated session
+narratives in reports rather than prepending them to this instruction file.
+Historical agent notes are preserved in [SESSION_HISTORY.md](SESSION_HISTORY.md);
+they are not current instructions or evidence of a currently active recording.
 
-Owner's clarified warm-idle goal is 800-850 RPM. Follow the
-[lower-idle roadmap](docs/lower-idle-roadmap.md): resolve current fan-off fuel/
-load recovery and supply observations, then evaluate target reductions in
-stages. Keep warm steady-idle targets separate from startup-air experiments;
-the prior startup-only proposal is deferred. Actual v006 restores the fan-stage
-thresholds for use after the pending resistor/pigtail repair; it is prepared,
-not installed or hardware-validated. Read its revision note before handoff.
+As of 2026-11-03, v024 is owner-confirmed installed and provisionally retained
+for covered stationary conditions with the new upstream O2 sensor. v025 is
+prepared and verified from v024, but not flashed or tested. Its immediate rollback
+is v024. Read the [v024 review](reports/2026-11-03-v024-cold-cleanup-review.md) and
+[v025 test card](docs/v025-regression-test.md) before further tuning work.
+File verification does not establish that a proposed mechanism or fix is proven.
 
-The tuning files are HP Tuners calibrations. Scanner channel/layout profiles
-are measurement configurations, not engine calibrations. SCG-1 boost settings
-are a separate control system and must be recorded separately.
+Prioritize stability and drivability; further idle-target reductions remain
+deferred. Water/meth stays OFF and the SCG RPM wire remains disconnected unless
+the owner explicitly changes that state. Repaired fan thresholds are low
+195/190 F and high 225/215 F; earlier bypass logs represent different hardware.
+Treat installed state as owner-reported, not an ECU readback. Do not infer
+current engine, recorder, Editor, or roadworthiness state from archived notes.
+
+## Iterative logging: fast path
+
+Use the [datalog pathway](docs/datalog-workflow.md) and
+[channel coverage register](profiles/channel-coverage.md) for every new run.
+These are standing operating instructions, not a reason to delay capture.
+
+- If the owner says "log now", prioritize preserving/starting acquisition.
+  Inspect actual recording state first. Never stop an existing VCM recording
+  just to create a paired folder. Start the missing recorder and document the
+  separate clocks. Do profile research after the event is captured.
+- Read current state above, the latest review and the new run card first.
+  Use the evidence index to select comparison sessions. Do not reread or
+  reprocess the entire archive on each turn. Revisit older evidence when a
+  hypothesis, parser correction or hardware change makes it relevant.
+- Ask only about changes since the last confirmed run. Carry forward explicit
+  owner confirmations, including meth OFF, disconnected RPM wire and installed
+  tune; label them owner-reported. A restart does not establish a new flash.
+  Unknown fuel/accessory details remain unknown, not silently carried forward.
+- Batch Git status and catalog hash/size verification once per analysis or
+  candidate-preparation pass. Recheck changed files before use. Do not repeat
+  Editor discovery for unchanged parameters with preserved verification.
+- Use proven helpers in the logger's ignored `.local/` folder, but inspect their
+  guards, expected profile and session arguments before use. Discover fresh
+  process/window handles. Never replay a hardcoded handle or old session path.
+  When a method times out, use the documented native-window fallback rather
+  than repeating the same blocking UI Automation search.
+- Identify the recording by the dashboard/session manifest and exact source
+  folder, not just the newest modification time. Verify both recorders and
+  increasing samples before saying "both recording". Report partial capture
+  promptly. Do not promise unattended stop/monitoring unless it is running.
+- Preserve originals, the actual saved channel configuration, export settings,
+  manifest and owner event notes together. Use the [run card](docs/datalog-run-card.json).
+  A candidate profile on disk is not proof it was loaded. Never overwrite a
+  completed session or silently replace an original export with a new export.
+- Analyze new/changed inputs first. Record input SHA-256, analyzer version/hash,
+  selected columns, alignment method, window definitions and output paths in
+  the private session analysis record. Reuse prior outputs only when those
+  dependencies match. No incremental cache is implemented yet: existing
+  `.local/build-roadmap-evidence.py` is a full inventory, not a cached runner.
+  Promote a repeated analysis into a parameterized helper when warranted;
+  do not keep cloning scripts with hidden session-specific assumptions.
+- Inventory all available channels and blank spans before selecting diagnostic
+  plots. Keep native HPL/SQLite/raw bytes and full-length exports, including
+  startup, transient and recovery periods. Do not crop the only preserved copy.
+  Expand coverage through the register; retain reasons for deferred channels.
+- Keep core requests fixed during a comparison series. Trial a small group of
+  additional channels in a separate stationary capture, audit the saved data,
+  and retain additions only if core coverage/timing remains usable. Do not
+  assume every exported row is an independent ECU sample or a constant value
+  means a dead sensor. Blank, zero, unavailable and invalid are different states.
+- Each review must return: capture quality, matched comparison, event chronology,
+  competing explanations, decision (retain/change/insufficient evidence), and
+  one next run card. Include minima, dip duration/recovery and source transitions,
+  not averages alone. Update the evidence index and coverage register with new
+  facts; keep uncertain hypotheses separate from verified behavior.
+- Make each iteration faster by reusing verified facts and analysis, not by
+  shortening the observation window needed to capture the stated event. Never
+  claim a fan cycle or post-drive validation if it did not occur.
 
 ## Vehicle-specific constraints
 
+- Owner confirms water/meth completely disengaged and directs that all future
+  testing assume OFF unless explicitly changed. Activation when enabled is
+  owner-reported7psi; that does not establish the tune's boost dependency or
+  authorize boost testing. Do not repeatedly ask its state without new evidence.
+- Earlier owner feedback included no CEL; later near-stall events and dated test results supersede that early description. No CEL is not a DTC scan. Use current state and dated reviews for installation evidence.
 - This is a previous-owner turbo calibration, not an established stock tune.
   Exact injector characterization, MAF identification, boost limits and
   water/meth dependency remain incomplete; consult the vehicle record.
@@ -114,12 +178,20 @@ Preparing or reviewing a tune does not authorize initiating an ECU write.
 The owner currently performs writes. If explicitly asked to write, establish
 the required connected vehicle state before any write action.
 
-For v004, capture both recordings from restart through fully warm idle beyond
-254 seconds (about 6-8 minutes total, longer if needed to reach temperature),
-initially without throttle input. Observe loop Ready/Active, fuel source, O2,
-commanded lambda, measured mixture, RPM/target, spark, voltage and usable STFT.
-Stop if operation deteriorates; use the documented v003 rollback. Record a
-keep/revert decision before expanding test scope.
+Historical v004 procedures and rollback remain in its revision note. For current testing, use the datalog pathway and actual installed parent; do not apply an old revision-specific test or rollback automatically.
 
 These instructions follow OpenAI's
 [repository instruction guidance](https://developers.openai.com/codex/guides/agents-md/).
+
+
+## Model delegation & UIA workflow
+
+1. **Role separation**:
+   - The primary agent (Argon / Pro model) is strictly reserved for datalog analysis, calibration engineering/math, hypothesis validation, and tune decisions.
+   - Autonomous subagents (Model: "flash") handle all HP Tuners VCM Editor UI Automation (UIA), bulk table extractions, log copying/hashing, and mechanical catalog/inventory/reference builds.
+2. **VCM Editor #32770 file dialog automation**:
+   - In VCM Editor #32770 file dialogs (File > Save As, Compare > Open Compare File, and File > Open), pasting (Ctrl+V) into the filename edit box (id=1148 or 1001) does not work -- common item dialogs ignore or fail clipboard paste without native notifications.
+   - Always locate the filename Edit control, click or set focus, select existing text (^a or WM_CHAR), and type character-by-character using Win32 WM_CHAR / TypeChars before submitting (WM_KEYDOWN VK_RETURN / IDOK).
+3. **Table & context menu hygiene**:
+   - Table context menus on C1FlexGrid must be invoked via direct WM_CONTEXTMENU messages rather than right-clicks, preserving selection states across all cells/axes.
+   - Automation scripts must avoid polluting PowerShell pipeline returns when capturing table data.

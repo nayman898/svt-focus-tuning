@@ -1,0 +1,143 @@
+﻿{
+    "index":  175,
+    "path":  "Engine / Fuel / Transient / Accelerator Pump / Accelerator Pump Tip In Filter",
+    "name":  "Accelerator Pump Tip In Filter",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:36:27.6543755Z",
+    "kind":  "scalar_or_switch",
+    "status":  "captured",
+    "title":  null,
+    "parameter_id":  33263,
+    "description":  "[ECM] 33263 - Accelerator Pump Tip In Filter: Filter for tip in.",
+    "controls":  [
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "0.000 to 1.000 s",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Accelerator Pump",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "s",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "1.000",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Filter",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "[ECM] 33263 - Accelerator Pump Tip In Filter: Filter for tip in.",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "B",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "A",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+
+              ]
+}

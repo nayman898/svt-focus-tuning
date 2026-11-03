@@ -1,0 +1,131 @@
+﻿{
+    "index":  41,
+    "path":  "Engine / Airflow / General / MAF Calibration / MAF Backflow Low Throttle Enable",
+    "name":  "MAF Backflow Low Throttle Enable",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:00.4649800Z",
+    "kind":  "scalar_or_switch",
+    "status":  "captured",
+    "title":  null,
+    "parameter_id":  2006,
+    "description":  "[ECM] 2006 - MAF Backflow Low Throttle Enable: ",
+    "controls":  [
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "MAF Calibration",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.ComboBox",
+                         "name":  "Disabled",
+                         "value":  "Disabled",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Text",
+                         "name":  "Backflow Low Throttle",
+                         "value":  null,
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.Edit",
+                         "name":  "",
+                         "value":  "[ECM] 2006 - MAF Backflow Low Throttle Enable: ",
+                         "toggle":  null
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "B",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "A",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+
+              ]
+}

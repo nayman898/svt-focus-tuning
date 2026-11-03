@@ -1,5 +1,55 @@
 # Focus scanner setup
 
+## Current test reference — 2026-11-03
+
+Use the [v025 regression card](../docs/v025-regression-test.md) and
+[run card](../docs/v025-run-card.json). The latest v024 capture populated all
+18 requested channels in the V023 Idle Spark Trial profile. Verify the actual
+active profile and capture coverage each time; saved XML does not establish
+current Scanner or recording state.
+
+## Historical setup and profile trials
+
+The dated notes below preserve earlier profile selections and their validation
+limits. References to loaded profiles or stopped recordings describe those
+sessions, not the current desktop state.
+
+For the prepared v013 fuel-model experiment, use the separate
+[Target Return Fuel Trial13](2004%20Focus%20SVT%20-%20Target%20Return%20Fuel%20Trial.Channels.xml):
+Core Stationary12 plus existing B1 STFT6304 at200ms. Prepared/XML-checked only;
+not loaded or live-validated. Require actual data before extending the test.
+See the [v013 card](../docs/v013-stationary-test.md); do not silently switch inside
+a recording or interpret linked trim/command fields as independent measurements.
+
+Prepared-only addition: [Target Idle Runtime Trial](2004%20Focus%20SVT%20-%20Target%20Idle%20Runtime%20Trial.Channels.xml)
+preserves Target Idle Air15 and adds saved Engine Run Time2131 at1s. Not loaded
+or live-validated. Runtime previously capped255s; use it for the early airflow
+multiplier question, not as an unlimited clock. See the
+[calibration audit](../reports/2026-10-29-v012-calibration-audit.md).
+
+**Selected profiles:** follow the [operating policy](operating-profiles.md).
+Core Stationary12 is loaded/saved and stopped. The [second survey](../reports/2026-10-29-core-profile-selection.md)
+retained all12 core fields across five captures; Target Idle Air15 additionally
+recorded STIT/LTIT/source. Load-context fields still need acquisition work.
+This supersedes the first survey's28-channel fallback below.
+
+**Latest status,2026-10-29:** the [stationary survey](../reports/2026-10-29-channel-survey.md)
+tested31,28 and34 channels. All pairs saved; availability varied and expanded
+profiles lost core fields. The28-channel fallback is restored, Scanner stopped.
+The older prepared-only statements below describe pre-survey status.
+
+The [next stationary test card](../docs/next-stationary-test.md) stages the
+31-channel adaptation check before a longer comparison. A separate
+[34-channel Load Context Trial](2004%20Focus%20SVT%20-%20Load%20Context%20Trial.Channels.xml)
+adds fan/A/C context at1s, with all31 parent entries unchanged. Both trials are
+offline-prepared only. Owner confirms stationary operation is safe as of
+2026-10-29; parked validation may proceed when ready. Driving remains on hold.
+
+For current operations, use the [datalog pathway](../docs/datalog-workflow.md)
+and [channel coverage register](channel-coverage.md). The dated sections below
+preserve historical setup and validation; statements that a profile was loaded
+describe that session, not necessarily the current Scanner configuration.
+
 Working Vehicle Defaults captured from VCM Scanner on 2026-10-26 after the
 initial generic SAE template did not produce a working scan. The connected
 vehicle was identified as a 2004 Ford Focus ZX3 SVT,
@@ -157,3 +207,66 @@ a copy with only the ECT request interval changed to the previous 50 ms.
 Interval causality remains unproven. O2/STFT/MAF/absolute TPS and ECT were
 recorded through startup and a fan cycle; IAT/relative TPS/O2 B1 Fail remained
 blank. The private trial profile remains loaded and Scanner is stopped.
+
+## Startup O2 readiness profile
+
+[Startup O2 Readiness channels](2004%20Focus%20SVT%20-%20Startup%20O2%20Readiness.Channels.xml)
+is prepared for the [paired startup finding](../reports/2026-10-27-v006-paired-idle-review.md).
+It preserves the private focused profile's existing 27 channels and intervals,
+including ECT at 50 ms, and adds two status channels at their earlier 1-s interval:
+
+| Parameter ID | Recorded channel name | Evidence |
+| --- | --- | --- |
+| 12933 | O2 B1S1 Heater | Prior saved startup CSV and existing idle/cruise XML; values populated historically |
+| 12925 | O2 B1S1 Htr Fault | Prior saved startup CSV and existing idle/cruise XML; values populated historically |
+
+The new 29-channel combination was XML-checked and loaded into Scanner on
+2026-10-27. Both heater channel names were visible, and the next paired recording
+started successfully with SCG samples increasing. A copy of the profile is saved
+with the session. The later owner-marked blower recording exported both heater
+columns blank in all18,808 rows. Their names being visible did not establish
+usable acquisition. Do not interpret those blanks as heater OFF or a fault;
+controller/request-type support or alternative measurement remains to be checked.
+Existing profiles are preserved. Heater command/fault status does not establish
+measured heater current or wiring integrity. Retain the wideband, upstream O2,
+trim and supply observations alongside these status bits.
+
+## Drive torque diagnostics
+
+[Drive Torque Diagnostics](2004%20Focus%20SVT%20-%20Drive%20Torque%20Diagnostics.Channels.xml)
+is the new28-channel template. Core engine channels are retained alongside
+Torque Source, Total Misfires, Misfire Detected, Vehicle Speed, Brake Pedal
+and Trans In Gear. It was built from the controller selector and Scanner's
+saved parameter definitions, preserving type/address attributes.
+
+An exploratory33-channel stationary capture populated those additions, but
+pressure stayed40psi with sensor voltage near5V, MAP stayed0, and Borderline
+Knock was blank. Those five fields were removed from the reusable version.
+No dedicated knock-retard or clutch-switch channel was exposed. Trans In Gear
+is not clutch state, and zero misfires does not validate counter sensitivity.
+Four loop-status fields were blank; request intervals returned to their earlier
+500ms values. The final28-channel profile is loaded but still needs saved-log
+coverage validation. See the [idle-dip review](../reports/2026-10-27-v009-stationary-idle-dips.md).
+The previous profile and exploratory capture profile remain backed up privately.
+
+The subsequent v010 drive populated changing Vehicle Speed and Torque Source
+(Driver Dem, Oscillation, TipOut Limit, TipIn Limit), and throttle state values.
+Air Load and four loop-state fields remained blank. Reported misfire counts
+stayed zero; that is not sensitivity validation. See the
+[v010 drive review](../reports/2026-10-27-v010-drive-review.md).
+
+## Stability and drivability measurement trial
+
+The [31-channel trial](2004%20Focus%20SVT%20-%20Stability%20and%20Drivability%20Trial.Channels.xml)
+preserves the28-channel diagnostic profile and restores LTIT PN/ACoff(2231),
+Idle Adapt/STIT(2240), and Idle Speed Source(19049). Definitions were copied
+from the earlier Scanner-saved Idle and Cruise XML; names were independently
+matched to preserved VCM CSV headers. Type/address attributes are preserved;
+LTIT/STIT request500ms, Idle Speed Source100ms.
+
+Prepared and XML-validated only; not loaded or live-validated. First perform a
+short stationary export and check coverage/timing before using it for driving.
+Return to the working28-channel profile if core fields become sparse. The
+purpose is to distinguish learned idle-air and control-state effects, not to
+infer valid adaptation from a channel name alone. See the
+[current roadmap](../docs/stability-and-drivability-roadmap.md).

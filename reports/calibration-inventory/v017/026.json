@@ -1,0 +1,92 @@
+﻿{
+    "index":  26,
+    "path":  "Engine / Idle / Airflow / Dashpot Airflow / Idle Dashpot Decay vs. Dashpot Airflow",
+    "name":  "Idle Dashpot Decay vs. Dashpot Airflow",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:31:38.6967377Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32984 - Idle Dashpot Decay vs. Dashpot Airflow",
+    "parameter_id":  32984,
+    "description":  "[ECM] 32984 - Idle Dashpot Decay vs. Dashpot Airflow: This is the decay rate of the dashpot in relation to the current dashpot airflow. Smaller numbers mean slower decay.",
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.2"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.4"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0.6"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "0.8"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.06"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "1.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.08"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "3.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.10"
+                  }
+              ]
+}

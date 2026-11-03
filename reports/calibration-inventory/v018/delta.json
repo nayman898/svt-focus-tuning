@@ -1,0 +1,19 @@
+{
+  "revision": "v018",
+  "file": "tunes/v018-dfco-recovery-diagnostics.hpt",
+  "sha256": "2E4E3711B2E6AFA5A343D54CBA9331CB48FB6B3774882CB0446B569ACCD9A082",
+  "bytes": 241645,
+  "parent": "v016",
+  "parent_sha256": "7F069587C62FACC4A2E79556A48131A2DF7D527BFE0B9ECA5E388291BF410D14",
+  "status": "prepared, not flashed or tested",
+  "changes_from_parent": [
+    {"parameter_id": 2291, "name": "Maximum RPM to Disable DFCO", "before": "750", "after": "1,000", "units": "RPM"},
+    {"parameter_id": 50, "row_key": "P0132", "column": "Error Mode", "before": "No Error Reported", "after": "MIL Light"},
+    {"name": "Notes", "change": "Complete parent prefix preserved, v018 scope appended"}
+  ],
+  "retained_verified_scalars": {"44218": "950", "44217": "950", "2290": "1,200", "12115": "520.00"},
+  "full_inventory_reference": "../v017/inventory.json",
+  "reference_relationship": "Relative to immutable v017 inventory:12115 is520F instead of600F;2291 is1000RPM instead of750; P0132 reportsMIL instead ofNoErrorReported; Notes differ. Other values inherit through verified v017-v016 and v018-v016 comparisons.",
+  "verification": "Saved/reopened scalars and Notes; all163 DTC rows compared with exactly one mode change; whole-file Editor comparison only DFCO exit, Master DTC List and Notes. All18 previous tune hashes and lengths unchanged.",
+  "ecu_readback": false
+}

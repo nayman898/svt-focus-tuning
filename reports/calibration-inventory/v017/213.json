@@ -1,0 +1,220 @@
+﻿{
+    "index":  213,
+    "path":  "Engine / Spark / Advance / Transient / Spark Decel vs. RPM vs. ECT",
+    "name":  "Spark Decel vs. RPM vs. ECT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:48.1503935Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44605 - Spark Decel vs. RPM vs. ECT",
+    "parameter_id":  44605,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "800"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "2,000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "3,000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "4,000"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "5,000"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "6,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "13.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "16.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "17.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "13.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 2",
+                      "value":  "16.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 2",
+                      "value":  "17.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "60"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 3",
+                      "value":  "16.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 3",
+                      "value":  "17.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "100"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "5.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 4",
+                      "value":  "16.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 4",
+                      "value":  "17.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "200"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "13.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "14.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 5",
+                      "value":  "16.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 5",
+                      "value":  "17.00"
+                  }
+              ]
+}

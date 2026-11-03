@@ -1,9 +1,22 @@
 # v006 - post-repair fan-stage baseline
 
-**Prepared and verified for use only after the proper fan resistor/pigtail/
-wiring circuit is restored and fan-stage operation is checked. Hardware repair
-is pending; no ECU write was performed.** Parts are expected 2026-10-27 per
-the owner. File readiness does not establish hardware readiness.
+**Prepared and verified for use after proper fan resistor/pigtail/wiring
+restoration.** On 2026-10-27 the owner reported the resistor fixed and supplied
+v006-labeled logs, with fan engagement observed at 195 F. The
+[earlier post-repair review](../reports/2026-10-27-v006-post-repair-review.md)
+finds improved fan-load response. The
+[latest paired recording](../reports/2026-10-27-v006-paired-idle-review.md)
+adds complete first fan-off recovery, with near-zero late trim and lambda 1.0.
+Startup O2 feedback disagreement and a 7.56-V cranking module observation now
+remain separate follow-up items. The owner subsequently confirmed this exact
+v006 file installed. The [latest blower comparison](../reports/2026-10-27-v006-startup-blower-review.md)
+supports preparing the separate [v007 target trial](v007-idle-1000.md); v006
+remains its installed parent/rollback. Independent high-stage verification
+remains pending. No ECU write was performed by the agent.
+
+The preparation and saved-file verification below describe the original
+pending-repair handoff. Embedded Notes retain that historical wording; the
+numbered binary has not been rewritten to update test status.
 
 Parent: [v005](v005-idle-absolute-tps-entry-test.hpt).
 Candidate: [v006](v006-post-repair-fan-baseline.hpt).

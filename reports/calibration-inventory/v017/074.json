@@ -1,0 +1,84 @@
+﻿{
+    "index":  74,
+    "path":  "Engine / Fuel / General / General / Wide Open Throttle TPS Enable",
+    "name":  "Wide Open Throttle TPS Enable",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:58.0142736Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44431 - Wide Open Throttle TPS Enable",
+    "parameter_id":  44431,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "420.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "9,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "420.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "9,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "420.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "9,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "420.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "9,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "420.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "9,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "420.00"
+                  }
+              ]
+}

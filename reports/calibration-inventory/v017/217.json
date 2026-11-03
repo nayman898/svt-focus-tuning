@@ -1,0 +1,132 @@
+﻿{
+    "index":  217,
+    "path":  "Engine / Spark / Advance / Misc / Spark Firing Order vs. Cylinder #",
+    "name":  "Spark Firing Order vs. Cylinder #",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:56.5495790Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44602 - Spark Firing Order vs. Cylinder #",
+    "parameter_id":  44602,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "1"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "2"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "3"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "4"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "5"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "6"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "7"
+                  },
+                  {
+                      "cell":  "Column 8 Row 0",
+                      "value":  "8"
+                  },
+                  {
+                      "cell":  "Column 9 Row 0",
+                      "value":  "9"
+                  },
+                  {
+                      "cell":  "Column 10 Row 0",
+                      "value":  "10"
+                  },
+                  {
+                      "cell":  "Column 11 Row 0",
+                      "value":  "11"
+                  },
+                  {
+                      "cell":  "Column 12 Row 0",
+                      "value":  "12"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "Cylinder Number"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "3"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "4"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "2"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "1"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "3"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "4"
+                  },
+                  {
+                      "cell":  "Column 8 Row 1",
+                      "value":  "2"
+                  },
+                  {
+                      "cell":  "Column 9 Row 1",
+                      "value":  "1"
+                  },
+                  {
+                      "cell":  "Column 10 Row 1",
+                      "value":  "3"
+                  },
+                  {
+                      "cell":  "Column 11 Row 1",
+                      "value":  "4"
+                  },
+                  {
+                      "cell":  "Column 12 Row 1",
+                      "value":  "2"
+                  }
+              ]
+}

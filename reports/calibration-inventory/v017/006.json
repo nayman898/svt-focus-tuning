@@ -1,0 +1,84 @@
+﻿{
+    "index":  6,
+    "path":  "Engine / Idle / General / General / Idle AC Delay Initial vs. RPM",
+    "name":  "Idle AC Delay Initial vs. RPM",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:30:54.9124912Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44215 - Idle AC Delay Initial vs. RPM",
+    "parameter_id":  44215,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "4.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "4.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "4.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "700"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "4.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "4,500"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "4.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "4.000"
+                  }
+              ]
+}

@@ -1,0 +1,100 @@
+﻿{
+    "index":  40,
+    "path":  "Engine / Airflow / General / MAF Calibration / MAF Backflow Entry TPS (low throttle) vs. RPM",
+    "name":  "MAF Backflow Entry TPS (low throttle) vs. RPM",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:31:59.4509220Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44322 - MAF Backflow Entry TPS (low throttle) vs. RPM",
+    "parameter_id":  44322,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "0.00"
+                  }
+              ]
+}

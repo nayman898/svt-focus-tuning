@@ -1,0 +1,86 @@
+﻿{
+    "revision":  "v021",
+    "parent":  "v019",
+    "sha256":  "078E91786A07793A4EB6607B8B870BDC9558562C0FE75AF95E6D5AB1A1A87ACA",
+    "bytes":  247597,
+    "changes":  [
+                    {
+                        "parameter_id":  7596,
+                        "row":  1,
+                        "column":  1,
+                        "adc":  0,
+                        "before":  40,
+                        "after":  0,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  2,
+                        "column":  1,
+                        "adc":  0,
+                        "before":  40,
+                        "after":  0,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  3,
+                        "column":  1,
+                        "adc":  0,
+                        "before":  40,
+                        "after":  0,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  4,
+                        "column":  1,
+                        "adc":  0,
+                        "before":  40,
+                        "after":  0,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  5,
+                        "column":  1,
+                        "adc":  102,
+                        "before":  40,
+                        "after":  0,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  6,
+                        "column":  1,
+                        "adc":  921,
+                        "before":  40,
+                        "after":  70,
+                        "unit":  "psi differential"
+                    },
+                    {
+                        "parameter_id":  7596,
+                        "row":  7,
+                        "column":  1,
+                        "adc":  1023,
+                        "before":  40,
+                        "after":  78.717948913574219,
+                        "unit":  "psi differential"
+                    }
+                ],
+    "axes_unchanged":  true,
+    "notes_parent_prefix_verified":  true,
+    "comparison":  {
+                       "value":  [
+                                     "Notes",
+                                     "Fuel System",
+                                     "General",
+                                     "Fuel Pressure Sensor",
+                                     "Fuel Pressure Sensor Transfer Function"
+                                 ],
+                       "Count":  5
+                   },
+    "status":  "Prepared verified measurement baseline; not flashed",
+    "source":  "Ford gasoline FRP nominal0.5-4.5V/0-70psi; roundedexistingADCanchors102/921; below102clamp0, above921linear extension",
+    "ecu_readback":  false
+}

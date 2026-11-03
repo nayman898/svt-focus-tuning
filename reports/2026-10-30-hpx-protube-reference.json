@@ -1,0 +1,13 @@
+{
+  "manufacturer_source": "https://pmas-maf.com/wp-content/uploads/2019/01/PMASHPXTOOL2014_2.xls",
+  "sha256": "14b7db48ba6f12098173ff02ba12f41f579d5b7e117e257583f67b0a565969d3",
+  "sheet": "PMAS 3\" PROTUBE",
+  "diameter_input_inches": 2.8,
+  "area": 6.157521593999999,
+  "cached_g_s_validation_max_error": 5.945821612840518e-11,
+  "applicability": "Likely PMAS3inch housing reference; exact housing revision/serial flow sheet unverified",
+  "ECU_scaling": "BLOCKED: Editor lb/h vs help g/sec vs Scanner flow do not reconcile",
+  "flashable": false,
+  "columns": 30,
+  "voltage_axes_changed": false
+}

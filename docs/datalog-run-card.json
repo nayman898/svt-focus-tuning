@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "session": null,
+  "purpose": null,
+  "tune": {"filename": null, "sha256": null, "installation_evidence": null},
+  "changes_since_previous_run": null,
+  "profile": {"filename": null, "sha256": null, "saved_from_active_scanner": false},
+  "conditions": {"start_ect_f": null, "soak_minutes": null, "fuel_or_refueling": null, "accessories": null, "water_meth": "OFF per standing owner instruction"},
+  "planned_actions": [],
+  "completion_event": null,
+  "stop_conditions": [],
+  "events": [],
+  "event_example": {"elapsed_s": null, "clock": "VCM / SCG / wall time", "approximate": true, "event": "fan observed on / blower off / felt dip", "source": "owner / directly recorded / inferred"},
+  "owner_observations": null,
+  "export_status": null,
+  "comparison_session": null,
+  "analysis": {"input_hashes": {}, "analyzer_version_or_hash": null, "alignment": null, "windows": [], "coverage_report": null, "decision": null, "next_test": null}
+}

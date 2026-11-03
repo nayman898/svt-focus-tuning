@@ -1,0 +1,85 @@
+{
+  "version": "v025",
+  "file": "v025-maf-idle-offidle-smooth.hpt",
+  "parent": "v024",
+  "parent_file": "v024-fuel-cleanup-diagnostics.hpt",
+  "bytes": 255949,
+  "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
+  "parent_sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+  "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for staged testing under docs/v025-regression-test.md.",
+  "parameter_id": 12163,
+  "parameter_name": "MAF Airflow vs. Voltage",
+  "axes_edited": false,
+  "axes_unchanged": true,
+  "displayed_axes_match_parent": true,
+  "changes": [
+    {
+      "column": 6,
+      "voltage": 0.5,
+      "old_editor_lb_min": 0.06069101420375014,
+      "new_editor_lb_min": 0.061203098462465418,
+      "actual_pct": 0.8437562852277028
+    },
+    {
+      "column": 7,
+      "voltage": 0.5289999842643738,
+      "old_editor_lb_min": 0.0611412142393897,
+      "new_editor_lb_min": 0.0651055062161634,
+      "actual_pct": 6.48382932207903
+    },
+    {
+      "column": 8,
+      "voltage": 0.5400000214576721,
+      "old_editor_lb_min": 0.061979690665868635,
+      "new_editor_lb_min": 0.066668798353124364,
+      "actual_pct": 7.565555163148175
+    },
+    {
+      "column": 9,
+      "voltage": 0.6000000238418579,
+      "old_editor_lb_min": 0.07814464368677637,
+      "new_editor_lb_min": 0.075999999379030847,
+      "actual_pct": -2.7444546504550505
+    },
+    {
+      "column": 10,
+      "voltage": 0.6489999890327454,
+      "old_editor_lb_min": 0.08050138475652467,
+      "new_editor_lb_min": 0.084628728927885866,
+      "actual_pct": 5.127047421376801
+    },
+    {
+      "column": 11,
+      "voltage": 0.6990000009536743,
+      "old_editor_lb_min": 0.10930553791110728,
+      "new_editor_lb_min": 0.094367999992488974,
+      "actual_pct": -13.665856464029752
+    },
+    {
+      "column": 12,
+      "voltage": 0.8980000019073486,
+      "old_editor_lb_min": 0.16918274580355291,
+      "new_editor_lb_min": 0.14248431983031731,
+      "actual_pct": -15.780820819764687
+    },
+    {
+      "column": 13,
+      "voltage": 1.0,
+      "old_editor_lb_min": 0.18928889755503878,
+      "new_editor_lb_min": 0.17294274257759679,
+      "actual_pct": -8.635559286246309
+    }
+  ],
+  "other_columns_exact": 22,
+  "notes_parent_prefix_verified": true,
+  "comparison": [
+    "Notes",
+    "Engine",
+    "Airflow",
+    "General",
+    "MAF Calibration",
+    "MAF Airflow vs. Voltage"
+  ],
+  "prior_25_hashes_intact": true,
+  "ecu_readback": false
+}

@@ -1,0 +1,92 @@
+﻿{
+    "index":  159,
+    "path":  "Engine / Fuel / Cutoff, DFCO / RPM Limits / Torque Ratio Limiting",
+    "name":  "Torque Ratio Limiting",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:35:52.5198349Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 43881 - Torque Ratio Limiting",
+    "parameter_id":  43881,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "7,100"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "7,400"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "7,400"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "7,450"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "16,383"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "16,383"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.40"
+                  }
+              ]
+}

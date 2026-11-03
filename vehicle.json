@@ -3,28 +3,31 @@
   "model": "Focus SVT",
   "model_year": 2004,
   "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
-  "prepared_test_revision": "v006-post-repair-fan-baseline: saved, reopened and compared against v005. Restores high-speed fan195/190 to225/215 F; low195/190, idle adders and all other calibration retained. FOR USE AFTER proper resistor/pigtail circuit restoration; hardware pending, not flashed by agent. See tunes/v006-post-repair-fan-baseline.md.",
-  "candidate_test_revision": "v005-idle-absolute-tps-entry-test: owner running fresh session after handoff. Saved startup log shows CL Ready/Active Yes and Stoich at offset 75.636 s, runtime 65 s, ECT 186 F; OL Conditions No throughout. Initial failed catch, 2915.25 RPM flare versus target 1568 and reported cranking module voltage 7 V remain unresolved. Commanded lambda, timing advance and O2 voltage blank in startup export; no measured AFR recording. Stationary-only experiment, not accepted as finished; no agent write/readback. See reports/2026-10-26-v005-startup-review.md.",
+  "prepared_test_revision": "v025-maf-idle-offidle-smooth.hpt; saved/reopened/compared, ready for staged testing under docs/v025-regression-test.md",
+  "candidate_test_revision": "v025 from exact v024: single-table ECM12163 MAF transfer convex smoothing across columns 6–13 (0.500–1.000 V)",
+  "installed_tune": "v024-fuel-cleanup-diagnostics.hpt",
+  "prepared_candidate": "v025-maf-idle-offidle-smooth.hpt",
   "channel_population_owner_observation": "Owner reports some Scanner readings do not populate initially but eventually do; blank snapshots are missing observations and do not establish unsupported channels.",
   "owner_load_test_observations": "Owner reports abnormal running after fan OFF near LogWorks54 s in load-step session; headlights held longer than planned had no perceptible idle effect on/off; interior blower caused subtle idle change. Exact headlight/blower times and HVAC mode not recorded. Saved trace retains closed loop and shows a sustained displayed lean excursion around fan-off. See reports/2026-10-26-v005-fan-off-review.md.",
   "v005_warm_review_summary": "Saved VCM warm segment sustains CL Active/Ready Yes and Stoich. Delayed LogWorks file contains historical Session1 plus current Session2; only Session2 analyzed. Provisional native-clock mapping LW elapsed = VCM offset -99 s; overlap AFR mean 14.796, central 90 percent 13.61-16.08, range 12.47-18.83. LogWorks display reference Gasoline14.7 checked. RPM/load and voltage dips remain; no MAF/fuel correction or road/boost acceptance. See reports/2026-10-26-v005-closed-loop-review.md.",
   "current_calibration_source": "Previous owner",
   "desired_warm_idle": {
     "owner_requested_range_rpm": [
-      800,
-      850
+      900,
+      900
     ],
-    "goal": "Smoother, more comfortable fully warm idle with reliable starts and load recovery",
+    "goal": "Stable900RPM, reliable starts/load recovery, then ordinary drivability; owner is comfortable with900 on this turbo application",
     "feasibility": "Unvalidated for actual camshafts, injector low-flow control, hot oil pressure and charging behavior",
     "proposed_target_stages_rpm": [
-      1000,
-      950,
-      900,
-      850
+      900
     ],
-    "optional_later_target_rpm": 800,
-    "priority": "Fan-off fuel/load recovery and supply verification before lower-target tests; startup-airflow proposal deferred as separate experiment",
-    "roadmap": "docs/lower-idle-roadmap.md"
+    "optional_later_target_rpm": null,
+    "priority": "2026-10-28 owner explicitly defers lower idle. Hold v012900RPM/gain1.000; validate post-drive stability and select changes only from specific evidence.",
+    "roadmap": "docs/stability-and-drivability-roadmap.md",
+    "historical_goal_rpm": [
+      800,
+      850
+    ]
   },
   "engine_modifications": [
     "Hardened connecting rods; manufacturer and specifications unconfirmed",
@@ -48,28 +51,51 @@
     "layout": "return style",
     "pump": "Upgraded Stealth fuel pump; exact model unconfirmed",
     "base_pressure_psi": 43,
-    "base_pressure_measurement_conditions": "43 psi measured with engine off (owner reported); regulator reference hose state and pump operation during measurement not yet recorded",
+    "base_pressure_measurement_conditions": "Owner explicitly confirms43psi base with1:1 manifold-referenced regulation. Earlier measurement was reported engine-off; dynamic pressure behavior is not independently measured.",
     "regulator_brand": "Aeromotive",
     "regulator_model": null,
-    "regulator_reference": "Manifold boost/vacuum referenced, 1:1 (owner reported)"
+    "regulator_reference": "Owner-confirmed1:1 manifold vacuum/boost reference",
+    "pressure_sensor_installation_plan": "Owner plans an adapter to reinstall the OEM pressure sensor at the regulator with its own manifold reference. Planned, not yet installed or validated; exact sensor/adapter and pump wiring remain unverified.",
+    "independent_pressure_gauge": "Digital GlowShift; sender at regulator;41psi engine-off/pump-on owner report2026-10-29. Prior43psi base report retained; do not infer a transfer/injector change.",
+    "pump_wiring_owner_confirmed": "2026-10-30: battery-fed relay, energized by ignition-on power with owner-reported fuel-shutoff-switch interruption. ECU/FPDM pump-speed control bypassed. Actual pump-terminal voltage/pressure under load not measured; shutoff implementation not independently inspected.",
+    "pressure_sensor_installation_owner_report": "2026-11-02 original SVT fuel pressure sensor now installed; owner reports approximately3.0V with43psi independent regulator gauge. Engine/pump/reference conditions and multi-point transfer verification pending. No ECUtransfer restoration yet.",
+    "pressure_sensor_running_check": {
+      "date": "2026-11-02",
+      "source": "Owner simultaneous running observation",
+      "rail_gauge_psi": 39,
+      "manifold_vacuum_inhg": 13,
+      "sensor_voltage": 3.07,
+      "koeo_pump_on_gauge_psi": 43,
+      "koeo_sensor_voltage_approx": 3,
+      "calculated_differential_psi": 45.385002,
+      "nominal_ford_curve_sensor_psi": 44.975,
+      "limitations": "Reported precision; independent gauge accuracy and VREF not measured; exact sensor part/transfer applicability not fully verified; no ECU pressure table changed"
+    },
+    "pressure_sensor_validation": "2026-11-02 owner confirms originalSVT sensor installed and bothreferences share manifold via distributionmanifold. KOEO43psi/~3V. Running39psi/13inHg/3.07V. Savedv019pressuretest raw3.046875-3.0859375V; no repeatedpressurecollapse around17targetrelativedips. Absolutecurve/VREF/partPN notfullyverified; noECUtransferchange."
   },
   "maf": {
     "type": "blade style",
     "brand": "PMAS",
-    "part_number": null,
+    "part_number": "HPX (plain), owner confirmed",
     "housing_nominal_diameter_inches": 3,
     "housing_inside_diameter": null,
-    "installation_location": null
+    "installation_location": "Blow-through after turbo near throttle body, owner confirmed",
+    "calibration_review": "reports/2026-10-30-hpx-scaling-status.md; dedicatedProTube reference ready, application blocked by ECU unit/scaling verification",
+    "housing_owner_confirmed": "PMAS3inch housing sold with plainHPX byLMR for1996\u20132004Mustang4.6; blowthrough nearTB",
+    "likely_retail_kit": "LRS-MH30HPXS; seller listing matches description, receipt/serial not inspected",
+    "housing_reference_status": "PMAS dedicated3inch/ProTube workbook is stronger candidate than generic3.000inch curve; exact housing revision/flow sheet and units unresolved"
   },
   "water_methanol_injection": {
     "installed": true,
     "kit_and_controller": null,
     "mixture": null,
     "nozzle_and_flow": null,
-    "activation_strategy": null,
+    "activation_strategy": "Owner reports activation at 7 psi boost when enabled; controller setting not independently read",
     "failsafe": null,
     "current_calibration_dependency": "unknown",
-    "idle_test_state": "Owner confirms water/meth injection off"
+    "idle_test_state": "Owner confirms water/meth injection off",
+    "future_test_default": "2026-10-27: owner confirms system completely disengaged; assume OFF for all future testing unless owner explicitly changes this state",
+    "latest_owner_drivability_observation": "2026-10-27: no check-engine light reported; occasional small idle blips described as nothing out of the ordinary. No code scan or exact installed-file confirmation inferred."
   },
   "drivetrain_modifications": [
     "Limited-slip differential; model unconfirmed",
@@ -85,10 +111,10 @@
   ],
   "cooling_and_charging": {
     "fans": "Factory fans (owner confirmed)",
-    "fan_start_speed": "Owner describes an immediate high-speed-like roar; factory fan resistor is bypassed",
-    "fan_resistor": "Owner confirms resistor pigtail removed and two wires joined, with factory relays/fuses intact; turbo sits close to resistor location and creates significant heat; original cause of melting and motor current not verified",
-    "fan_repair_plan": "Owner expects resistor and pigtail on2026-10-27 and plans circuit repair and retest; preserve proper resistor mounting/cooling and heat protection. Installation and low/high-stage verification pending.",
-    "temporary_fan_path": "v005 inherits temporary high-speed195/190 F stage match from v003. v006 is prepared with high225/215 F restored for use after circuit repair, low195/190 retained. No v006 write or hardware retirement is confirmed; ECT idle adder remains unchanged.",
+    "fan_start_speed": "Owner reports fan turns on at ECT195 F after resistor repair on2026-10-27. Recorded fan-load disturbance is smaller; actual stage/current not independently measured.",
+    "fan_resistor": "Previously bypassed resistor with pigtail wires joined; owner now reports resistor fixed. Repair details, pigtail/mounting/heat protection and motor current have not been independently inspected.",
+    "fan_repair_plan": "Owner reports repair completed2026-10-27 and fan-on at195 F. Confirm long-term heat protection and low/high-stage function; this recording alone does not verify the high stage.",
+    "temporary_fan_path": "Owner reports resistor repair and explicitly confirms v006 installed. v006 restores high225/215 F and retains low195/190; historical v003-v005 bypass stage-match is retired in the confirmed calibration. Physical repair/high-stage/current/heat protection are not independently verified; preserve historical notes.",
     "alternator": "Stock alternator (owner confirmed)",
     "alternator_clutch": "Owner believes clutched; Ford SVT training documents a one-way generator clutch for this model; actual installed pulley condition not inspected",
     "battery_ground_route": null,
@@ -110,7 +136,7 @@
       "AFR measurement",
       "Boost control"
     ],
-    "hp_tuners_logging_connection": "SCG-1 serial logging in separate LogWorks recording; PROLINK+ cable ordered, not yet arrived",
+    "hp_tuners_logging_connection": "SCG Logger receives SCG-1 serial data independently of VCM Scanner. Purple RPM lead remains disconnected. PROLINK+ was previously ordered; arrival/integration not confirmed.",
     "output_scaling": null,
     "tach_input_attempt": {
       "reported_tap": "Coil connector pin 3, green/black wire (owner description; exact harness pinout not verified)",
@@ -122,7 +148,11 @@
       "operation_after_tach_disconnect": "SCG-1 returns to normal when the purple tach lead is disconnected (owner confirmed)"
     }
   },
-  "known_faults": [],
+  "known_faults": [
+    "Owner-reported pending P0320 Ignition/Distributor Engine Speed Input Circuit, 2026-10-29; occurrence time and freeze-frame unverified",
+    "2026-10-30 owner reports current P1132 Lack Of HO2S11 Switches - Sensor Indicates Rich during active151051v015 log; occurrence time/freeze-frame unverified",
+    "2026-10-30 post-run VCM read confirms P1132Current and MILTrue; freeze-frame read returns none; no clearing"
+  ],
   "factory_oxygen_sensor": "Original upstream O2 sensor remains installed separately from Bosch LSU wideband (owner confirmed)",
   "tuning_goals": [
     "Optimize idle first",
@@ -131,7 +161,7 @@
     "Then evaluate SCG-1 wastegate duty cycle (WGDC) and gain to establish a stable, owner-accepted boost-control baseline",
     "Optimize power after idle, cruise and boost control are stable"
   ],
-  "paired_logging_plan": "Continue recording both VCM Scanner and LogWorks every session for ECU data plus SCG-1 WGDC, boost and O2. Use original session clock metadata for provisional pairing; validate offset/drift with shared AFR once PROLINK+ is connected.",
+  "paired_logging_plan": "Use SCG Logger Start both / Stop both & export; latest owner paired session saved all four outputs and a complete manifest. First full fan-off recovery is captured. No additional identical fan-only repetition is the main missing observation; next focus is startup O2/heater/readiness and cranking supply with fresh per-session alignment.",
   "boost_control_baseline": {
     "scg1_wgdc": null,
     "scg1_gain": null,
@@ -150,8 +180,411 @@
     "initial_observation": "Coolant 106-118 F; MAF 1.50-1.43 lb/min; desired idle 1616-1520 rpm; Closed Loop Active reported No. Actual RPM and some other cells were not available through UI automation."
   },
   "latest_fuel_recovery_review": {
-    "report": "reports/2026-10-26-v005-focused-fuel-recovery-review.md",
-    "revision": "v005 owner confirmed",
-    "result": "Key fuel channels captured; fan-on RPM854.25/module11.5625V minima; post-off negative STFT with provisionally paired lean excursion; settled pre/post trim near zero. Commanded-mixture export equals1-STFT/100 to rounding precision. Cranking reported6.5625V; first-attempt catch owner confirmed. No new tune edit."
+    "report": "reports/2026-10-27-v006-startup-blower-review.md",
+    "revision": "Owner-confirmed exact v006 installed; no ECU readback",
+    "source": "paired-20261027-152710-619daeb2, preserved in logs/2026-10-27-v006-startup-blower-01",
+    "owner_markers": "Blower ON6:40/OFF7:10, interpreted as VCM400-430s; radiator fan reported in expected temperature window.",
+    "warm_result": "Baseline mean1100.21 RPM/STFT-0.91%/measured lambda1.0046. Blower ON mean1097.70 RPM/min1037.25, module min12.5625 V, measured lambda mean0.9822; post-blower coverage~10s. No stall observed.",
+    "startup_result": "CL begins44.612s, about37.9s after first RPM>500; positive STFT while wideband rich repeats. Cranking module minimum7.5V. Both heater columns blank in all18808 rows; no heater-state diagnosis.",
+    "decision": "Prepared separate v007 target-only1000rpm trial, preserving all fuel/airflow/O2/spark/fan/startup settings. No flash or v007 engine test performed."
+  },
+  "installed_calibration": {
+    "version": "v015",
+    "file": "tunes/v015-restore-closed-loop.hpt",
+    "owner_confirmed": "2026-10-30 write complete",
+    "ECU_readback": false
+  },
+  "startup_delay_review": {
+    "report": "docs/closed-loop-startup-temperature.md",
+    "finding": "ECM12462 already indexed by Startup ECT F,40s at120F and24s at200F; three separate254-s scalars are not the complete logged timing model.",
+    "decision": "No further shortening selected while early feedback/mixture disagree; v007 unchanged.",
+    "owner_priority": "Focus on startup temperature control; owner considers crank supply likely battery-related, not independently established."
+  },
+  "latest_idle_fluctuation_review": {
+    "report": "reports/2026-10-27-v007-idle-fluctuation-review.md",
+    "source": "paired-20261027-161458-25c32a11 preserved in logs/2026-10-27-v007-idle-01",
+    "owner_context": "Exact v007 confirmed; no accessory/throttle changes; fan did not run. Focus after2:30 interpreted VCM150s.",
+    "finding": "RPM variation narrows after150s: SD17.98 versus20.93 before; fixed reported desired992 with nominal1000 scalar. Spark source Idle Feedback, contemporaneous RPM/spark association~-0.88. Air demand/trim still settling. No justified numerical gain/fuel/airflow fix from this40s window.",
+    "decision": "Prepared v008950 target-only experiment; v007 immediate rollback and v006 earlier1100 load-tested fallback. No engine write or v008 test performed."
+  },
+  "latest_950_fan_recovery_review": {
+    "report": "reports/2026-10-27-v008-fan-recovery-review.md",
+    "source": "paired-20261027-163856-296cf13d preserved in logs/2026-10-27-v008-idle-01",
+    "owner_context": "Exact v008 confirmed by owner; no ECU readback. Fan state inferred from coolant/IAC/supply, not a direct command channel.",
+    "finding": "Pre-load mean951.94RPM SD13.30; min835.5 near267.291s recovers toward target within seconds; late mean950.30 SD12.71. No sustained stall/hunt recorded or justified gain/fuel/airflow correction selected.",
+    "decision": "Prepare900 target-only v009; retain tested v008950 rollback. No agent ECU write."
+  },
+  "owner_prior_driving_history": "2026-10-27: owner reports car was stable before the recent changes, drove it home from North Carolina and used substantial throttle. Exact prior flashed file and measured operating conditions are not established. Plans gentle fuel trip tonight, no hard acceleration; this history does not independently validate v009 or operation with water/meth disabled.",
+  "latest_stationary_dip_review": {
+    "report": "reports/2026-10-27-v009-stationary-idle-dips.md",
+    "owner_marker_s": 200,
+    "observed_minimum_rpm": 629.75,
+    "observed_minimum_vcm_s": 201.494,
+    "conditions": "Driveway,0mph,closed throttle,188F; Torque Source Driver Dem; spark30deg, IAC57.7%",
+    "decision": "No further target reduction or driving acceptance. Preserve captures and investigate. No tune edit/write.",
+    "pressure": "Generic40psi and near5V not validated; no actual fuel-pressure diagnosis",
+    "template": "profiles/2004 Focus SVT - Drive Torque Diagnostics.Channels.xml,28 channels; loaded, final saved-log coverage unverified"
+  },
+  "latest_cross_session_review": {
+    "report": "reports/2026-10-27-v009-cross-session-diagnosis.md",
+    "latest_source": "paired-20261027-205952-414a073f",
+    "calibration": "Owner explicitly confirms unchanged v009",
+    "latest_minimum": "571RPM at128.900s;690.5 at103.911s before first raw-TPS input",
+    "hypothesis": "Idle air/spark balance and handoff under changed operating/load conditions; not proven cause",
+    "owner_input": "Some throttle admitted; raw TPS marks inputs around106-120s and133s",
+    "limits": "Adaptation and loop-state gaps; unvalidated pressure/knock channels; cross-device alignment provisional",
+    "decision": "No calibration change. Preserve captures; avoid combined or guessed corrections."
+  },
+  "fuel_feedback_audit": {
+    "report": "docs/fuel-pressure-feedback-review.md",
+    "transfer": "ECM7596 all displayed outputs40psi; inherited from v001 per Editor comparison",
+    "injector_reference_psi": 40,
+    "pressure_compensation": "Enabled",
+    "physical_sensor_wiring": "OEM sensor reinstall planned at regulator with independent manifold reference; completed installation/wiring not yet confirmed",
+    "pump_control": "FPDM vs relay requested; not established from calibration switches",
+    "decision": "Preserve current calibration while hardware is prepared; validate OEM sensor, raw signal and actual pressure, then review exact transfer restoration and pump/injector implications in a separate revision.43psi base confirmation is not an instruction to change injector reference or flatten transfer to43.",
+    "no_calibration_changes": true
+  },
+  "latest_v010_drive_review": {
+    "source": "paired-20261027-221039-985bf46e",
+    "report": "reports/2026-10-27-v010-drive-review.md",
+    "owner_feedback": "Cruise really good; acceleration good without previous hesitation; mainly idle dips",
+    "finding": "Final stationary446.932-509.315s mean900.91RPM SD22.62 min737.25, lambda mean1.0035; reported6.307psi elsewhere and dynamic torque source Oscillation remain separately unvalidated",
+    "next_candidate": "v011 gain-only1.250 trial; retain v010 rollback"
+  },
+  "latest_stability_roadmap": {
+    "path": "docs/stability-and-drivability-roadmap.md",
+    "coverage": "All25 preserved vehicle-session folders inventoried;25 recognized VCM exports read for headers/counts/coverage; earlier native/LogWorks interpretation uses existing detailed reviews",
+    "latest_report": "reports/2026-10-28-v012-stability-review.md",
+    "next": "Validate31-channel trial briefly, then unchanged-v012 hot restart/light-load drivability/post-drive idle comparison",
+    "v013": "Deferred pending a supported one-variable target",
+    "pressure_sensor": "OEM installation planned; not confirmed complete",
+    "accessories_latest_run": "State requested but not confirmed"
+  },
+  "operation_hold": {
+    "date": "2026-10-29",
+    "source": "Owner report",
+    "reason": "Driver-side front strut large center shaft sheared; compromised spring retention",
+    "scope": "Owner reports suspension/car fixed; mechanical driving hold retired on owner report, not agent inspection. Engine stalling remains unresolved; owner requested trip logging, not road-readiness validation.",
+    "review": "reports/2026-10-28-idle-followup-and-mechanical-hold.md"
+  },
+  "latest_channel_survey": {
+    "date": "2026-10-29",
+    "report": "reports/2026-10-29-core-profile-selection.md",
+    "captures": 8,
+    "profiles": [
+      31,
+      28,
+      34
+    ],
+    "status": "All8 survey pairs saved; stopped; Core Stationary12 loaded/saved",
+    "result": "12 core fields complete across five follow-up captures; Target Idle Air15 all populated once; Target Electrical Load15 optional fields blank",
+    "next": "Use Target Idle Air15 for unchanged-v012 warm idle/adaptation comparison, with per-run coverage audit"
+  },
+  "latest_stall": {
+    "date": "2026-10-29",
+    "session": "paired-20261029-154228-0cbfb558-v012",
+    "report": "reports/2026-10-29-v012-stall-review.md",
+    "state": "Engine stalled; owner advised leave off; routine tests paused pending review",
+    "capture": "VCM manually stopped/exported; unfinalized SCG SQLite recovered, overlaps stall",
+    "tune": "v012 label carried forward; no edits or flashing"
+  },
+  "post_stall_plan": "docs/post-stall-comparison.md; initiating disturbance and spark/air arbitration investigated separately; logger persistence and channel coverage first; no new running capture requested",
+  "owner_stall_history_correction": "2026-10-29: v010 also stalled occasionally, uncaptured. Owner reports steadier idle after spark changes between random stumbles. No gain regression established.",
+  "stall_owner_context": {
+    "date": "2026-10-29",
+    "stall": "Untouched idle",
+    "ac": "OFF",
+    "defrost": "OFF",
+    "radiator_fan": "Owner does not believe related; exact state/time unconfirmed",
+    "oem_pressure_sensor": "Still awaiting installation",
+    "independent_pressure": "Digital GlowShift gauge, sender at regulator; owner reports41psi engine off with pump ON. Gauge reference/calibration and dynamic trace unverified."
+  },
+  "logger_persistence_test": {
+    "date": "2026-10-29",
+    "mode": "Detached Windows launch; Qt UI + simulated worker only",
+    "elapsed_s": 145.014,
+    "max_sample_elapsed_s": 144.398,
+    "rows": 1635,
+    "closed_cleanly": true,
+    "worker_exit": 0,
+    "limits": "No serial/VCM capture or USB recovery exercised; original exit cause unknown",
+    "evidence": "C:/source/repos/scg-logger/.local/persistence-20261029-155847/result.json"
+  },
+  "latest_pressure_video_trial": {
+    "date": "2026-10-29",
+    "session": "paired-20261029-160556-870a7d58-v012",
+    "pressure": "Owner reset regulator to43psi engine off; new hardware condition vs earlier41psi",
+    "camera": "Video received, preserved and reviewed; report reports/2026-10-29-pressure-video-review.md",
+    "tune": "v012 carried forward unchanged",
+    "duration_s": 180,
+    "launch": "Detached Windows process with stdout/stderr; inspect session manifest for live/final state"
+  },
+  "latest_drive_review": {
+    "session": "paired-20261029-161604-b543b769-v012",
+    "report": "reports/2026-10-29-v012-drive-review.md",
+    "owner": "Mostly good; instability; driveway stall while moving off",
+    "parked": "225-274.525s mean901.34RPM,min708.5,all exported Spark Source Idle Feedback; additional754RPM dip",
+    "decision": "No tune change; gauge video pending; distinguish onset from correction",
+    "capture": "Both cleanly finalized/exported, no recording active",
+    "pressure": "Owner-adjusted43psi base; no dynamic trip pressure measured"
+  },
+  "pressure_video_review": {
+    "date": "2026-10-29",
+    "report": "reports/2026-10-29-pressure-video-review.md",
+    "video": "PXL_20261029_200524935.mp4",
+    "session": "paired-20261029-160556-870a7d58-v012",
+    "observation": "Reviewed frames mostly37-38psi; no large displayed collapse near nominal764RPM recovered dip",
+    "limits": "Metadata-only alignment, gauge delay/accuracy unverified; earlier actual stall not filmed",
+    "adaptation": "LTIT steady near-0.201lb/min; STIT/IAC rise through recovery; Idle Feedback",
+    "decision": "No tune change; offline air-control/eligibility and actual air-path/load review"
+  },
+  "calibration_audit": {
+    "date": "2026-10-29",
+    "report": "reports/2026-10-29-v012-calibration-audit.md",
+    "scope": "Read-only focused idle/air/fuel/VCT review",
+    "leads": [
+      "6950 vacuum multiplier0.484 with return-style regulator",
+      "Warm airflow multiplier decline165-200s",
+      "VCT low-RPM phasing and missing actual tracking",
+      "Idle aircharge filtering0.11"
+    ],
+    "decision": "No edits; coupled model and matching stock reference first",
+    "stock_reference": "SCT BEF received and preserved; no supported decoded comparison yet; see reports/2026-10-29-sct-backup-intake.md",
+    "runtime_profile": "Target Idle Runtime Trial16; prepared only; adds2131 at1s",
+    "post_check": "All13 cataloged binary hashes/sizes unchanged"
+  },
+  "sct_stock_backup": {
+    "received": "2026-10-29",
+    "private_copy": "backups/sct-original-20261029.bef",
+    "bytes": 7420760,
+    "sha256": "297B7F3CA423C1AF23579E33855241D78F294F7417CC888AF2BD863F597FBCDB",
+    "provenance": "Owner SCT device original/stock backup",
+    "format": "BEF device backup",
+    "decoded": false,
+    "strategy_identity": "Not authenticated from container",
+    "status": "Preserved; readable export or matching supported stock reference needed",
+    "report": "reports/2026-10-29-sct-backup-intake.md"
+  },
+  "v013_trial": {
+    "file": "tunes/v013-return-vacuum-comp-zero.hpt",
+    "parent": "v012",
+    "status": "Owner-confirmed installed; two initial captures saved/exported; stumble persists; not accepted; no agent ECU write/readback",
+    "change": "ECM6950 multiplier0.484 ->0; Notes append",
+    "retained": "900RPM,gain1.000,airflow,VCT,fuel/pressure transfer/reference/compensation,fans",
+    "scope": "Global potential effect; supervised parked diagnostic first",
+    "test": "docs/v013-stationary-test.md",
+    "rollback": "tunes/v012-idle-spark-gain-1p0.hpt",
+    "installed_state": "Owner-confirmed v013; no ECU readback",
+    "review": "reports/2026-10-29-v013-deep-review.md",
+    "owner_event": "Owner clarifies stall with self-recovery and no starter input",
+    "pending_dtc": "Owner reports P0320 pending; prioritize ignition/engine-speed signal diagnosis before further tuning"
+  },
+  "latest_active_capture": {
+    "session": "paired-20261030-151051-2c4afe95-v015-idle-drive-off",
+    "status": "saved/exported; stopped after owner parked",
+    "preserved": "logs/2026-10-30-v015-p1132-01",
+    "dtc": "Read confirmed P1132Current,1confirmed emissionsDTC,MILTrue",
+    "freeze_frame": "Read returned No Freeze Frames detected",
+    "actions": "No clear/reset; deep review pending"
+  },
+  "v014_trial": {
+    "file": "tunes/v014-warm-idle-open-loop-isolation.hpt",
+    "parent": "v013",
+    "status": "Rejected after severe owner-reported driving regression; trip saved/exported",
+    "change": "ECM32731 at0/1500RPM200 ->0, plus Notes",
+    "test": "docs/v014-open-loop-isolation-test.md",
+    "independent_review": "Astra: distinguish actual pre-stall modest trim from later large correction; OL same warm target/measured mixture isolation",
+    "limits": "Richer OL can mask other fault; inherited startup corrections and P0320 unresolved",
+    "rollback": "tunes/v013-return-vacuum-comp-zero.hpt",
+    "report": "reports/2026-10-29-v014-open-loop-review.md"
+  },
+  "v015_trial": {
+    "file": "tunes/v015-restore-closed-loop.hpt",
+    "status": "Owner-installed; first cold-start/onset capture completed; unresolved dips, no accepted fix",
+    "calibration": "Exactlyv013, Notes only differ",
+    "notes": "tunes/v015-restore-closed-loop.md"
+  },
+  "v015_pressure_audit": {
+    "date": "2026-10-30",
+    "report": "reports/2026-10-30-v015-pressure-injector-audit.md",
+    "pressure_multipliers": "Low/high/breakpoint1.00; offset1.0000 at all displayed cells",
+    "command_path": "AAT desired-pressure table nonconstant; exact command/model/substitution injector input path unverified",
+    "cold_table_correction": "Cold base1.03 minus finaldecay0.03 nominally1.00; no isolated tail edit",
+    "decision": "Keepv015 unchanged; validateLoopState20 and realpressure evidence",
+    "verification": "Read-only; all16 tune hashes unchanged"
+  },
+  "sct_logging_device": {
+    "model": "SCT X3",
+    "part_number": "3000",
+    "firmware_owner_reported": "1.2.159",
+    "status": "LiveLinkGenII2.26.294.2: No part number found in SCT device",
+    "serial": "Provided privately by owner; omitted from tracked metadata",
+    "vehicle_communication": "Not verified",
+    "actions": "No firmware update/reset/restore/ECU write; VCMScanner disconnected"
+  },
+  "v016_trial": {
+    "file": "tunes/v016-idle-margin-950.hpt",
+    "status": "Owner-confirmed installed; first recording reviewed",
+    "parent": "v015",
+    "changes": "Both idle targets900 ->950RPM; Notes only otherwise",
+    "notes": "tunes/v016-idle-margin-950.md"
+  },
+  "v017_trial": {
+    "file": "tunes/v017-o2-readiness-600.hpt",
+    "status": "v017-labeled test reviewed; +25%trim and lambda0.723 persist; rollbackv016 recommended",
+    "parent": "v016",
+    "notes": "tunes/v017-o2-readiness-600.md"
+  },
+  "v018_trial": {
+    "file": "tunes/v018-dfco-recovery-diagnostics.hpt",
+    "status": "Owner-installed;2Astationary capture reviewed; DFCO moving behavior untested",
+    "parent": "v016",
+    "notes": "tunes/v018-dfco-recovery-diagnostics.md"
+  },
+  "idle_hardware_owner_confirmed": {
+    "reported_date": "2026-10-30",
+    "flywheel": "SBC single-mass",
+    "flywheel_part_number": null,
+    "flywheel_mass_or_inertia": null,
+    "iac": "Stock IAC, owner reported",
+    "iac_part_number": null,
+    "iac_condition": "Not independently tested",
+    "write_state": "v018 write complete, owner confirmed",
+    "catalog_research": {
+      "likely_kit": "SBCSVT-SS-TZ",
+      "installed_part_number_verified": true,
+      "historical_catalog": "Stage3Endurance, includesaluminumflywheel,425ft-lb",
+      "current_cross_reference": "SD3-2636-45",
+      "bare_flywheel_weight": null,
+      "rotational_inertia": null,
+      "weight_caution": "Catalog24 is product/kit-row weight, not verified bare flywheel",
+      "research": "docs/south-bend-svt-clutch-research.md",
+      "verification_basis": "Owner confirms SBCSVT-SS-TZ kit; no physical marking inspection"
+    }
+  },
+  "v019_trial": {
+    "file": "tunes/v019-maf-low-flow-trial.hpt",
+    "status": "Installed; cold capture stopped at128F after FMEM; warm trial inconclusive",
+    "parent": "v018",
+    "notes": "tunes/v019-maf-low-flow-trial.md"
+  },
+  "next_capture_context": {
+    "revision": "v019",
+    "label": "v019-2A-cold",
+    "condition": "Owner reports cold start",
+    "profile": "2004 Focus SVT - Stage 2A Air Spark Trial.Channels.xml",
+    "profile_status": "Saved-back profile matches20 definitions/intervals2026-10-31",
+    "recording": "Stopped and exported2026-10-31; no new run requested"
+  },
+  "v020_trial": {
+    "version": "v020",
+    "file": "v020-base-idle-air-trial.hpt",
+    "parent": "v019",
+    "bytes": 247277,
+    "sha256": "17F421379EA038CE1938EDD8A080F6D517DCF90CE60CABC340B4CFB8C3ACADDA",
+    "status": "Owner-reported installed/tested; rejected after increased stutters. Return exactv019 recommended, not confirmed.",
+    "changes": [
+      "ECM44242 and44239:900/1000RPM base airflow points reduced5%; axes/otherpoints unchanged",
+      "Notes appended; entire parent retained"
+    ],
+    "verification": "Full-precision saved/reopened four cells verified; whole-file Editor comparison onlytwoairtables+Notes; all20olderhashes unchanged",
+    "notes": "v020-base-idle-air-trial.md",
+    "rollback": "v019-maf-low-flow-trial.hpt",
+    "inventory_delta": "../reports/calibration-inventory/v020/delta.json",
+    "source_report": "../reports/2026-10-31-v019-warm-review.md"
+  },
+  "v021_trial": {
+    "version": "v021",
+    "file": "v021-fuel-pressure-feedback.hpt",
+    "parent": "v019",
+    "bytes": 247597,
+    "sha256": "078E91786A07793A4EB6607B8B870BDC9558562C0FE75AF95E6D5AB1A1A87ACA",
+    "status": "v021-labeled baseline capture reviewed; operating-range pressure verified; warm dips remain. Baseline retained, no ECU readback.",
+    "changes": [
+      "ECM7596:flat40psi replaced with nominalFordFRP conversion at retainedADCaxes; below102zero clamp, upperlinear extension",
+      "Notes appended; v020aircut not inherited"
+    ],
+    "verification": "Saved/reopened7outputs/allaxes; wholefilecomparisononly7596+Notes; parentNotesprefixretained; all21earlierhashes unchanged",
+    "notes": "v021-fuel-pressure-feedback.md",
+    "rollback": "v019-maf-low-flow-trial.hpt",
+    "inventory_delta": "../reports/calibration-inventory/v021/delta.json",
+    "source_report": "../reports/2026-11-02-v019-pressure-review.md"
+  },
+  "designated_baseline_revision": "v021 pressure measurement operating-range verified; v021-labeled run reviewed, noECUreadback",
+  "v022_trial": {
+    "version": "v022",
+    "file": "v022-idle-spark-gain-0p75.hpt",
+    "parent": "v021",
+    "bytes": 250669,
+    "sha256": "577F775782A98705C2F3A6205BBC32BF7461238967255CCD1105303A0C7DD29F",
+    "status": "Ownerconfirmedwritten/tested; newoscillation reported, notadopted. Exactv021rollbackrecommendednotconfirmed; causalcomparisonconfounded.",
+    "changes": [
+      "ECM47996 idle spark proportional gain1.000->0.750",
+      "Notes appended, full parent retained"
+    ],
+    "notes": "v022-idle-spark-gain-0p75.md",
+    "rollback": "v021-fuel-pressure-feedback.hpt",
+    "verification": "Reopenedgain0.750/floor-6; wholefileonlygain+Notes; fullparentprefixverified; all22olderidentitiesunchanged",
+    "inventory_delta": "../reports/calibration-inventory/v022/delta.json",
+    "source_report": "../reports/2026-11-02-v021-baseline-review.md"
+  },
+  "latest_owner_reported_calibration": "Latest capture owner-labeled v023; physical stall reported. Exact v021 rollback recommended, not confirmed.",
+  "v023_trial": {
+    "version": "v023",
+    "file": "v023-idle-spark-10deg.hpt",
+    "parent": "v021",
+    "bytes": 250845,
+    "sha256": "BA0E2CD969743295AD0556C6B5EFED6F5B8419D1FD8912887A1B6C2DE6FBBCAD",
+    "status": "Owner-labeled v023 trial reviewed; fluctuations and physical stall. Not adopted; exact v021 rollback recommended, not confirmed. No ECU readback.",
+    "changes": [
+      "ECM44579P/N and44578InGear nominalidle spark allfivecells12->10degrees each; axesnotedited",
+      "Notesappendix/fullparentprefixretained"
+    ],
+    "notes": "v023-idle-spark-10deg.md",
+    "rollback": "v021-fuel-pressure-feedback.hpt",
+    "verification": "Saved/reopened10bodyvalues, displayedaxesmatch, gain1/floor-6verified, wholefileonlytwoidlesparktables+Notes, all23olderidentitiesunchanged",
+    "inventory_delta": "../reports/calibration-inventory/v023/delta.json",
+    "source_report": "../reports/2026-11-02-v022-spark-response-review.md",
+    "outcome_report": "../reports/2026-11-02-v023-stall-review.md"
+  },
+  "next_hardware_comparison": "Tested 2026-11-03 with new upstream O2 sensor. Clean 60s warmup to switching at 84 F and zero CKP sync drops across 15.11 min.",
+  "v024_trial": {
+    "version": "v024",
+    "file": "v024-fuel-cleanup-diagnostics.hpt",
+    "parent": "v021",
+    "bytes": 251773,
+    "sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+    "status": "tested_2026-11-03; owner confirmed flashed with new upstream O2; cold start, warm idle, and fan-off recovery verified clean; 2.18k OL hold (0.735 lambda) and mid-warmup FMEM (-23.9% STFT) motivate v025 MAF smoothing; provisionally adopted as parent for v025 in covered stationary modes; no ECU readback.",
+    "changes": [
+      "ECM44511 at2500RPM/TPS15.625% and19.53125%: lambda1.07/1.14 ->1.00; other78bodycells/axes retained",
+      "ECM50 P0190/P0192 No Error Reported ->MIL Light; P0193 No MIL Light ->MIL Light; other160rows unchanged",
+      "Notes appended; full v021 history retained"
+    ],
+    "notes": "v024-fuel-cleanup-diagnostics.md",
+    "rollback": "v021-fuel-pressure-feedback.hpt",
+    "verification": "Saved/reopened all80fuelbodyvalues,163DTCrows,parentNotes prefix; whole-file comparison exactly44511,50,Notes; all24olderfiles preserved",
+    "inventory_delta": "../reports/calibration-inventory/v024/delta.json",
+    "source_report": "../reports/2026-11-02-v021-complete-calibration-audit.md",
+    "outcome_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
+  },
+  "v025_trial": {
+    "version": "v025",
+    "file": "v025-maf-idle-offidle-smooth.hpt",
+    "parent": "v024",
+    "bytes": 255949,
+    "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
+    "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing",
+    "changes": [
+      "ECM12163 MAF Airflow vs. Voltage: columns 6–13 (0.500–1.000 V) convex smoothing replacing 0.600 V slope discontinuity (5.35 -> 24.64 -> 2.89 g/s/V) and 0.70–1.00 V rich bulge; columns 1–5 and 14–30 and all 30 voltage breakpoints identical to v024",
+      "Calibration Details Notes appended with v025 rationale and staged test criteria; full v024 prefix preserved"
+    ],
+    "notes": "tunes/v025-maf-idle-offidle-smooth.md",
+    "run_card": "docs/v025-run-card.json",
+    "regression_test": "docs/v025-regression-test.md",
+    "rollback": "v024-fuel-cleanup-diagnostics.hpt",
+    "verification": "Saved/reopened all 30 MAF flow cells and axes, full Notes prefix; whole-file comparison exactly 12163, Notes; all 25 older files preserved",
+    "inventory_delta": "../reports/calibration-inventory/v025/delta.json",
+    "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
   }
 }

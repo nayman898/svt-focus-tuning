@@ -1,0 +1,100 @@
+﻿{
+    "index":  222,
+    "path":  "Engine / Torque Model / General / Fuel Effects / Ethanol Efficiency",
+    "name":  "Ethanol Efficiency",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:38:07.3491915Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 21343 - Ethanol Efficiency",
+    "parameter_id":  21343,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 8 Row 0",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 8 Row 1",
+                      "value":  "1.000"
+                  }
+              ]
+}

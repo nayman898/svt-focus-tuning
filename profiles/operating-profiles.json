@@ -1,0 +1,79 @@
+﻿{
+    "profiles":  [
+                     {
+                         "status":  "Selected; complete core in five captures",
+                         "sha256":  "8948CF238101C6114C6199F580F0A936DAD9AB7F6566D1C6145C26BA3B2A245C",
+                         "purpose":  "Default parked idle",
+                         "file":  "2004 Focus SVT - Core Stationary.Channels.xml",
+                         "channels":  12
+                     },
+                     {
+                         "status":  "Conditional; subsequent stall run lost CL Active/STIT after one prior complete capture",
+                         "sha256":  "CA99AAFE03EEC31EF7311A9C00FBBE98839C655279786D6BEC3FCA008E7A4B58",
+                         "purpose":  "Parked adaptation/source diagnosis",
+                         "file":  "2004 Focus SVT - Target Idle Air.Channels.xml",
+                         "channels":  15
+                     },
+                     {
+                         "status":  "Not accepted for load attribution; optional fields blank",
+                         "sha256":  "E37256742D2FB022F4DA7C941AE530BABB41C2832FFCD20487FE9EA739BE22B6",
+                         "purpose":  "Acquisition survey only",
+                         "file":  "2004 Focus SVT - Target Electrical Load.Channels.xml",
+                         "channels":  15
+                     },
+                     {
+                         "status":  "All20fields populated in one v018warm trial; requested100ms delivery not verified",
+                         "sha256":  "21BC63D6629A30C7D033E97D3E3FAC774B4BD59EF63161634014D36D3A5EAC25",
+                         "purpose":  "Conditional warm air/spark dynamics",
+                         "file":  "2004 Focus SVT - Stage 2A Air Spark Trial.Channels.xml",
+                         "channels":  20
+                     },
+                     {
+                         "status":  "Loaded and saved-back verified21; new source channel live validation pending",
+                         "sha256":  "8D6BB19DC2C14AE7AB896187A2769722E3558CFEB8A594A1615CA63CCD44A605",
+                         "purpose":  "Warm air/control source context; no v020 prepared",
+                         "file":  "2004 Focus SVT - Warm Air Response Trial.Channels.xml",
+                         "channels":  21
+                     },
+                     {
+                         "file":  "2004 Focus SVT - Idle Cause Cam Trial.Channels.xml",
+                         "channels":  24,
+                         "sha256":  "0677FF08AE13777DA3E2834C25E8B3BE8272D1FE3A07565ED5620EF5A1BC3A47",
+                         "purpose":  "Add actual cam tracking context before choosing idle-control changes",
+                         "status":  "Trial failed core coverage: ECT and absolute TPS blank; cam angle/error populated, duty constant0. See 2026-11-01 cam startup review"
+                     },
+                     {
+                         "file":  "2004 Focus SVT - Base Air Trial.Channels.xml",
+                         "channels":  18,
+                         "sha256":  "E6B1A551841B2C733E4E1E8A6AB743D1AD2C17C5A4BEA7D7349A2225D0F4236E",
+                         "purpose":  "v020 base-air bias experiment: essential airflow/corrections plus cold-loop context",
+                         "status":  "v020 capture all18populated, ECT/TPS restored; rates not validated; v020 experiment rejected"
+                     },
+                     {
+                         "file":  "2004 Focus SVT - Pressure Baseline.Channels.xml",
+                         "channels":  20,
+                         "sha256":  "EBF55B1BCFC35DBDC37AF6626C5DE887FFF1D4A441F24991F8C2962DC85A9DA8",
+                         "purpose":  "v021 raw+convertedFRP acceptance and baseline recording",
+                         "status":  "v021capturereviewed18/20populated; desiredRPM/TPSblank. Pressuredataworking; notacceptedfullcoverage"
+                     },
+                     {
+                         "file":  "2004 Focus SVT - Spark Response Trial.Channels.xml",
+                         "channels":  18,
+                         "sha256":  "54F7D8060ACFD70C8F72241798D61A1335000F1ABCB8D02EF9AF1D9903789C19",
+                         "purpose":  "v022 sparkresponse; retainrawpressure, omitconvertedpressure/runtimerequest",
+                         "status":  "v022capture16/18populated; desiredRPM/TPSstillblank, profiledoesnotfixcorecoverage; preserved"
+                     },
+                     {
+                         "file":  "2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+                         "channels":  18,
+                         "sha256":  "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+                         "purpose":  "v023 nominalidle10 trial; refreshednative desiredRPM/TPS",
+                         "status":  "Loaded/savednative18;2210and3017both200ms; runtimecoverageunverified"
+                     }
+                 ],
+    "scope":  "Warm parked operation only; no driving validation",
+    "active_profile":  "2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "policy":  "profiles/operating-profiles.md",
+    "recording":  "Stopped and saved v023 trial; all18 channels populated in export including desiredRPM/TPS. Stall reviewed; no new recording requested.",
+    "date":  "2026-11-02"
+}

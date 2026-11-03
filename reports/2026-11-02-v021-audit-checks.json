@@ -1,0 +1,346 @@
+{
+  "review_date_local": "2026-11-02",
+  "timezone": "America/New_York",
+  "revision": "v021",
+  "scope": "All exposed saved-file calibration values; not hidden strategy, physical validation or ECU readback.",
+  "inputs_sha256": {
+    "tunes/revisions.json": "3EBA0FD6BA58E1EEFDB2D8D80435913D29DF8ABAF98F7926950B8E8FC792ECD5",
+    "reports/calibration-inventory/revision-reference.json": "AC2EF7B25FFB60795D0BE09CE5AF7D7D2280EEFD5BD18D627F76291BE852A0BA",
+    "reports/calibration-inventory/v017/inventory.json": "9DC9821E79049D2F085A368421B91766280BAC01458CC94812E8C9FD0543EC22",
+    "reports/calibration-inventory/v017/index.csv": "B3887A752B5F760A5AC1E98F99A074233F51ADB382443BAAC0937220A9A478CB",
+    "reports/calibration-inventory/maf-comparison-evidence.json": "F624867D33A92605A02341C332079232D49085E6B4BF4B990BE624D99B017A2A",
+    "vehicle.json": "87A960005062F4749A50F50A2B55F2BFCCD3224323B3759B56CB0F9BD34A5BF1",
+    "tools/build-calibration-reference.ps1": "5F7B69008FCF9CE83C68A1126508B8F71AB530A9EDCE7CD17AA4D83B0EAD2F6A",
+    ".local/audit-v021.py": "D9BEA365CB7362CC2E9CE3789B4DEFAA1A6216B256BACE43B204CC6C4C16C2CE",
+    "reports/calibration-inventory/v018/delta.json": "F28A671E3E174C02ED6CDFB647C4C443A3B6F279FB83ABDC4D3B0E025E50302B",
+    "reports/calibration-inventory/v019/delta.json": "CC111F5AC54076C0C164C1033938A5F4475EC70FE9D28273C59445305BC7EC40",
+    "reports/calibration-inventory/v020/delta.json": "D5AA1DFF7392B12BD346355C24EE5B9C6716D3070009B241E0C95F136A537870",
+    "reports/calibration-inventory/v021/delta.json": "B1DDC6BD2313E21BA29C6FB163F64417A85D348A5C25ACEF0747FF452E5145DB",
+    "reports/calibration-inventory/v022/delta.json": "5913839E255DEB549E36432148C78BB6EC7341D0241296B11647F560B32B0003",
+    "reports/calibration-inventory/v023/delta.json": "E628F94317562BE01210157D19FB4C97EF618C534F0C81FF2C39A9B3DA9F20D0"
+  },
+  "catalog_identity_checks": [
+    {
+      "revision": "v000",
+      "sha256": "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
+      "bytes": 214941,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v001",
+      "sha256": "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+      "bytes": 215037,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v002",
+      "sha256": "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
+      "bytes": 215069,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v003",
+      "sha256": "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
+      "bytes": 215709,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v004",
+      "sha256": "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
+      "bytes": 217053,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v005",
+      "sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
+      "bytes": 218621,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v006",
+      "sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
+      "bytes": 220541,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v007",
+      "sha256": "AB9BA83EDB08E09E10042087152631C5D70360A1B28128E85D0E08B9279BDE55",
+      "bytes": 222397,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v008",
+      "sha256": "255A4FF56EF40B9E84D0A032C77B22D7FF50256151D3A6A54F8037144E8DC278",
+      "bytes": 224141,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v009",
+      "sha256": "20B35A1C01B1C9610611D588F87E4688A2613C2471B5C44E20710251D1380EC9",
+      "bytes": 226397,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v010",
+      "sha256": "E2A2650F93CD9084BC41353ADAEBE5D69E23AB238F0F9B9A48A382786331BC47",
+      "bytes": 228029,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v011",
+      "sha256": "703A5B9E7061BE733B43665DF1F30F44E2E4CA29F51BD3B07D9272A5BA20A9C3",
+      "bytes": 230397,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v012",
+      "sha256": "77EDEBF355AB432BEB56C08BF3041E97C155FDAF2FC446BB3A30CA461F341082",
+      "bytes": 230685,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v013",
+      "sha256": "78AAD3DC86BE89835C333BC95EF5CE1359DD5B4CAAD2645032C1A64F49505B70",
+      "bytes": 233629,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v014",
+      "sha256": "ACA288B1BA25A87A6C92824D00E2028468DBEDE6279ED00420C3271BB3521790",
+      "bytes": 236733,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v015",
+      "sha256": "9D3C4FF9CD68D24665957CC6FDB310C51B246E8DD3D0F439A0E33D2EFA936EFD",
+      "bytes": 236525,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v016",
+      "sha256": "7F069587C62FACC4A2E79556A48131A2DF7D527BFE0B9ECA5E388291BF410D14",
+      "bytes": 239085,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v017",
+      "sha256": "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+      "bytes": 241517,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v018",
+      "sha256": "2E4E3711B2E6AFA5A343D54CBA9331CB48FB6B3774882CB0446B569ACCD9A082",
+      "bytes": 241645,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v019",
+      "sha256": "C2EDAC9A76F9501A827A7DEF30D4A65C52A62B03D9DE4B6BC08F453E8755CFF5",
+      "bytes": 244445,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v020",
+      "sha256": "17F421379EA038CE1938EDD8A080F6D517DCF90CE60CABC340B4CFB8C3ACADDA",
+      "bytes": 247277,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v021",
+      "sha256": "078E91786A07793A4EB6607B8B870BDC9558562C0FE75AF95E6D5AB1A1A87ACA",
+      "bytes": 247597,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v022",
+      "sha256": "577F775782A98705C2F3A6205BBC32BF7461238967255CCD1105303A0C7DD29F",
+      "bytes": 250669,
+      "matches_catalog": true
+    },
+    {
+      "revision": "v023",
+      "sha256": "BA0E2CD969743295AD0556C6B5EFED6F5B8419D1FD8912887A1B6C2DE6FBBCAD",
+      "bytes": 250845,
+      "matches_catalog": true
+    }
+  ],
+  "independent_v021_reconstruction_matches": true,
+  "individual_v017_records_match_combined_inventory": true,
+  "numeric_comparison_tolerance": {
+    "relative": 1e-13,
+    "absolute": 1e-14,
+    "purpose": "JSON/string serialization only"
+  },
+  "parameters": 342,
+  "tables": 96,
+  "scalars_switches": 246,
+  "grid_cells_including_headers": 4692,
+  "missing_descriptions": 94,
+  "malformed_grids": [],
+  "decreasing_numeric_axes": [],
+  "tables_with_repeated_numeric_axes": [
+    4219,
+    7596,
+    14683,
+    21343,
+    32042,
+    32050,
+    32052,
+    32060,
+    32062,
+    32064,
+    32085,
+    32720,
+    32916,
+    32937,
+    32955,
+    32957,
+    32959,
+    32961,
+    43000,
+    43005,
+    43881,
+    44169,
+    44215,
+    44321,
+    44322,
+    44403,
+    44413,
+    44431,
+    44578,
+    44579
+  ],
+  "repeated_axes_with_differing_outputs": [
+    {
+      "parameter_id": "14683",
+      "axis": "row",
+      "value": 1.0,
+      "adjacent_axis_positions": [
+        7,
+        8
+      ]
+    },
+    {
+      "parameter_id": "14683",
+      "axis": "row",
+      "value": 1.0,
+      "adjacent_axis_positions": [
+        8,
+        9
+      ]
+    }
+  ],
+  "dtc_rows": 163,
+  "dtc_modes": {
+    "No MIL Light": 43,
+    "MIL Light": 66,
+    "No Error Reported": 54
+  },
+  "revision_differences": [
+    {
+      "from": "v017",
+      "to": "v016",
+      "changed_parameter_ids": [
+        12115
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v016",
+      "to": "v018",
+      "changed_parameter_ids": [
+        50,
+        2291
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v018",
+      "to": "v019",
+      "changed_parameter_ids": [
+        12163
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v019",
+      "to": "v021",
+      "changed_parameter_ids": [
+        7596
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v021",
+      "to": "v020",
+      "changed_parameter_ids": [
+        7596,
+        44239,
+        44242
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v021",
+      "to": "v022",
+      "changed_parameter_ids": [
+        47996
+      ],
+      "notes_excluded": true
+    },
+    {
+      "from": "v021",
+      "to": "v023",
+      "changed_parameter_ids": [
+        44578,
+        44579
+      ],
+      "notes_excluded": true
+    }
+  ],
+  "coverage_by_group": {
+    "Engine / Airflow": 42,
+    "Engine / Exhaust": 1,
+    "Engine / Fuel": 107,
+    "Engine / General": 2,
+    "Engine / Idle": 28,
+    "Engine / Spark": 40,
+    "Engine / Torque Management": 6,
+    "Engine / Torque Model": 3,
+    "Engine Diagnostics / Airflow": 3,
+    "Engine Diagnostics / DTCs": 1,
+    "Engine Diagnostics / Exhaust": 13,
+    "Engine Diagnostics / General": 4,
+    "Engine Diagnostics / Misfire": 7,
+    "Fuel System / Diagnostics": 7,
+    "Fuel System / Fuel Pressure": 2,
+    "Fuel System / Fuel Pump": 18,
+    "Fuel System / General": 4,
+    "Speedometer / Calibration": 9,
+    "Speedometer / Limiter": 5,
+    "System / A/C": 4,
+    "System / Braking": 1,
+    "System / Fans": 11,
+    "System / General": 9,
+    "Transmission / General": 7,
+    "Transmission / Manual": 7,
+    "Transmission / Torque Converter": 1
+  },
+  "findings_by_parameter_count": {
+    "F01": 6,
+    "F11": 32,
+    "F12": 133,
+    "F08": 36,
+    "F10": 17,
+    "F09": 43,
+    "F06": 22,
+    "F07": 17,
+    "F04": 8,
+    "F05": 16,
+    "F03": 11,
+    "F02": 1
+  },
+  "binary_changes": false,
+  "vcm_used": false
+}

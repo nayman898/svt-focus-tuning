@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "session": "planned-v025-maf-smooth",
+  "purpose": "v025 MAF transfer convex smoothing verification (mid-warmup FMEM avoidance, warm 950-RPM idle stability, fan-off recovery, and stationary 1,500/2,000/2,500 RPM off-idle holds)",
+  "tune": {
+    "filename": "v025-maf-idle-offidle-smooth.hpt",
+    "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
+    "bytes": 255949,
+    "installation_evidence": "Prepared candidate; owner write pending; no ECU readback"
+  },
+  "parent_tune": {
+    "filename": "v024-fuel-cleanup-diagnostics.hpt",
+    "sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+    "bytes": 251773
+  },
+  "changes_since_previous_run": "Relative to v024: single table ECM12163 MAF Airflow vs. Voltage smoothed across columns 6-13 (0.500-1.000 V); all other 22 columns and all 30 voltage breakpoints 100% identical. Notes appended; zero DTC or fuel/spark table changes. New upstream O2 sensor retained.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Cool or cold preferred (<90 F) to check mid-warmup FMEM retention at 128-162 F",
+    "fuel_or_refueling": "Unchanged 93 octane reported baseline",
+    "accessories": "Fixed OFF during warmup/baseline (A/C, defrost, blower, headlights OFF)",
+    "water_meth": "OFF per standing owner instruction",
+    "upstream_o2": "New upstream O2 installed prior to v024 test; confirmed active switching",
+    "crank_sensor_and_grounds": "Unchanged CKP sensor; zero sync drops in v024 test"
+  },
+  "planned_actions": [
+    "Stage A1: Cold/cool start through 60-90s CL entry and mid-warmup (115-165 F, 1,100-1,350 RPM); verify Open Loop FMEM remains No and fast-idle STFT within authority (-5% to -12%)",
+    "Stage A2: Settled warm idle (180-195 F, 60-90s untouched in neutral, clutch up); assess RPM SD (target <= 22 RPM), STFT (+-5%), and lambda (~1.00)",
+    "Stage A3: Warm radiator fan cycle (~196 F ON, ~188 F OFF) followed by at least 60 seconds of untouched idle post-fan-off recovery",
+    "Stage B1: Parked 1,500 RPM hold (15-20s, MAF_V ~ 0.82-0.86 V); verify Stoich CL active, STFT +-8%, and clean return without lean spike",
+    "Stage B2: Parked 2,000 RPM hold (15-20s, MAF_V ~ 0.94-0.99 V); verify Power Demand Enrich OL active, steady SCG lambda ~0.83-0.88, no lean misfire",
+    "Stage B3: Parked 2,500 RPM hold (15-20s, MAF_V ~ 1.05-1.15 V); verify Power Demand Enrich OL active, steady SCG lambda ~0.80-1.02, clean return to 950 RPM"
+  ],
+  "stop_conditions": [
+    "Stall or near-stall (<650 RPM), or worsening repeated stumbles relative to v024 (min 816.5 RPM)",
+    "Steady warm SCG Lambda > 1.08 for >3 seconds at idle/CL, or steady SCG Lambda > 1.05 for >3 seconds during 2,000-2,500 RPM OL holds",
+    "Warm closed-loop STFT pinned positive (> +18%) or negative (< -20%)",
+    "Fuel rail pressure sensor anomaly (FRP collapse or new P0190/P0192/P0193 MIL) or CKP sync fault (P0320)"
+  ],
+  "comparison_session": "logs/2026-11-03-v024-cold-cleanup-01",
+  "rollback": "v024-fuel-cleanup-diagnostics.hpt (retaining new upstream O2)",
+  "uncovered_until_tested": [
+    "Moving / road load operation",
+    "Boost operation (>= 1.100 V untouched, not boost-validated)",
+    "Hot restart after heat soak"
+  ]
+}

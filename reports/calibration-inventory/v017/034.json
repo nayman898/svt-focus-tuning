@@ -1,0 +1,276 @@
+﻿{
+    "index":  34,
+    "path":  "Engine / Airflow / General / MAF Calibration / MAF Airflow vs. Voltage",
+    "name":  "MAF Airflow vs. Voltage",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:31:50.5704547Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 12163 - MAF Airflow vs. Voltage",
+    "parameter_id":  12163,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "0.38"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "0.44"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "0.48"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "0.50"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "0.53"
+                  },
+                  {
+                      "cell":  "Column 8 Row 0",
+                      "value":  "0.54"
+                  },
+                  {
+                      "cell":  "Column 9 Row 0",
+                      "value":  "0.60"
+                  },
+                  {
+                      "cell":  "Column 10 Row 0",
+                      "value":  "0.65"
+                  },
+                  {
+                      "cell":  "Column 11 Row 0",
+                      "value":  "0.70"
+                  },
+                  {
+                      "cell":  "Column 12 Row 0",
+                      "value":  "0.90"
+                  },
+                  {
+                      "cell":  "Column 13 Row 0",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 14 Row 0",
+                      "value":  "1.10"
+                  },
+                  {
+                      "cell":  "Column 15 Row 0",
+                      "value":  "1.20"
+                  },
+                  {
+                      "cell":  "Column 16 Row 0",
+                      "value":  "1.30"
+                  },
+                  {
+                      "cell":  "Column 17 Row 0",
+                      "value":  "1.40"
+                  },
+                  {
+                      "cell":  "Column 18 Row 0",
+                      "value":  "1.50"
+                  },
+                  {
+                      "cell":  "Column 19 Row 0",
+                      "value":  "1.60"
+                  },
+                  {
+                      "cell":  "Column 20 Row 0",
+                      "value":  "1.80"
+                  },
+                  {
+                      "cell":  "Column 21 Row 0",
+                      "value":  "2.00"
+                  },
+                  {
+                      "cell":  "Column 22 Row 0",
+                      "value":  "2.20"
+                  },
+                  {
+                      "cell":  "Column 23 Row 0",
+                      "value":  "2.40"
+                  },
+                  {
+                      "cell":  "Column 24 Row 0",
+                      "value":  "2.60"
+                  },
+                  {
+                      "cell":  "Column 25 Row 0",
+                      "value":  "2.80"
+                  },
+                  {
+                      "cell":  "Column 26 Row 0",
+                      "value":  "3.00"
+                  },
+                  {
+                      "cell":  "Column 27 Row 0",
+                      "value":  "3.20"
+                  },
+                  {
+                      "cell":  "Column 28 Row 0",
+                      "value":  "3.40"
+                  },
+                  {
+                      "cell":  "Column 29 Row 0",
+                      "value":  "3.80"
+                  },
+                  {
+                      "cell":  "Column 30 Row 0",
+                      "value":  "4.80"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "2.0"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "2.5"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "3.0"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "3.7"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "3.8"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "3.8"
+                  },
+                  {
+                      "cell":  "Column 8 Row 1",
+                      "value":  "3.9"
+                  },
+                  {
+                      "cell":  "Column 9 Row 1",
+                      "value":  "4.9"
+                  },
+                  {
+                      "cell":  "Column 10 Row 1",
+                      "value":  "5.0"
+                  },
+                  {
+                      "cell":  "Column 11 Row 1",
+                      "value":  "6.9"
+                  },
+                  {
+                      "cell":  "Column 12 Row 1",
+                      "value":  "10.2"
+                  },
+                  {
+                      "cell":  "Column 13 Row 1",
+                      "value":  "11.4"
+                  },
+                  {
+                      "cell":  "Column 14 Row 1",
+                      "value":  "12.4"
+                  },
+                  {
+                      "cell":  "Column 15 Row 1",
+                      "value":  "16.4"
+                  },
+                  {
+                      "cell":  "Column 16 Row 1",
+                      "value":  "18.4"
+                  },
+                  {
+                      "cell":  "Column 17 Row 1",
+                      "value":  "22.6"
+                  },
+                  {
+                      "cell":  "Column 18 Row 1",
+                      "value":  "25.3"
+                  },
+                  {
+                      "cell":  "Column 19 Row 1",
+                      "value":  "29.3"
+                  },
+                  {
+                      "cell":  "Column 20 Row 1",
+                      "value":  "39.0"
+                  },
+                  {
+                      "cell":  "Column 21 Row 1",
+                      "value":  "49.8"
+                  },
+                  {
+                      "cell":  "Column 22 Row 1",
+                      "value":  "71.2"
+                  },
+                  {
+                      "cell":  "Column 23 Row 1",
+                      "value":  "89.3"
+                  },
+                  {
+                      "cell":  "Column 24 Row 1",
+                      "value":  "112.9"
+                  },
+                  {
+                      "cell":  "Column 25 Row 1",
+                      "value":  "139.4"
+                  },
+                  {
+                      "cell":  "Column 26 Row 1",
+                      "value":  "165.1"
+                  },
+                  {
+                      "cell":  "Column 27 Row 1",
+                      "value":  "194.9"
+                  },
+                  {
+                      "cell":  "Column 28 Row 1",
+                      "value":  "239.1"
+                  },
+                  {
+                      "cell":  "Column 29 Row 1",
+                      "value":  "329.1"
+                  },
+                  {
+                      "cell":  "Column 30 Row 1",
+                      "value":  "410.6"
+                  }
+              ]
+}

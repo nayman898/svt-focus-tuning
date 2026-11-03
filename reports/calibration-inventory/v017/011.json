@@ -1,0 +1,100 @@
+﻿{
+    "index":  11,
+    "path":  "Engine / Idle / RPM / Idle Adders / Idle RPM Adder vs. ECT",
+    "name":  "Idle RPM Adder vs. ECT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:31:19.2353048Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32955 - Idle RPM Adder vs. ECT",
+    "parameter_id":  32955,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-256"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "710.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "-256"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "710.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "-20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "710.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "5"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "710.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "76"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "710.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "112"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "350.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "162"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "0.00"
+                  }
+              ]
+}

@@ -1,121 +1,475 @@
 {
-    "created_at":  "2026-10-26T12:08:33.2224213-04:00",
-    "baseline_source_hash":  "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
-    "verification":  "VCM Editor comparison showed exactly two parameters for v002 vs v001; saved v002 reopened and both targets read 1100 rpm",
-    "revisions":  [
-                      {
-                          "version":  "v000",
-                          "file":  "v000-ecu-read-20261026-102710.hpt",
-                          "parent":  null,
-                          "bytes":  214941,
-                          "sha256":  "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
-                          "status":  "Archived earlier ECU-read cache; differences from v001 not cataloged",
-                          "changes":  [
-
-                                      ]
-                      },
-                      {
-                          "version":  "v001",
-                          "file":  "v001-baseline-with-mil.hpt",
-                          "parent":  null,
-                          "bytes":  215037,
-                          "sha256":  "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
-                          "status":  "Owner-confirmed fresh-read baseline with MIL changes",
-                          "changes":  [
-                                          "Existing owner calibration; retained without parameter edits"
-                                      ]
-                      },
-                      {
-                          "version":  "v002",
-                          "file":  "v002-idle-1100.hpt",
-                          "parent":  "v001",
-                          "bytes":  215069,
-                          "sha256":  "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
-                          "status":  "Owner reports write completed; first post-write log reviewed 2026-10-26. Warm mean RPM 1103.5; retain as test baseline pending fan/load and fuel-control follow-up.",
-                          "changes":  [
-                                          "Target Idle Speed Park/Neutral: 1200 -\u003e 1100 rpm",
-                                          "Target Idle Speed Drive: 1200 -\u003e 1100 rpm"
-                                      ]
-                      },
-                      {
-                          "version":  "v003",
-                          "file":  "v003-temp-fan-stage-match.hpt",
-                          "parent":  "v002",
-                          "bytes":  215709,
-                          "sha256":  "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
-                          "status":  "Owner supplied v003 test logs and reports slight improvement; reviewed 2026-10-26. Warm mean 1100.5 rpm; voltage/load disturbances remain. Temporary-path effectiveness not independently established.",
-                          "temporary":  true,
-                          "pathway":  "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
-                          "changes":  [
-                                          "Fan High Speed Enable ECT: 225 -\u003e 195 F",
-                                          "Fan High Speed Disable ECT: 215 -\u003e 190 F",
-                                          "Calibration Details Notes: temporary resistor-bypass test, limits and retirement instructions"
-                                      ],
-                          "verification":  "Reopened file: only two fan-threshold parameters and Notes differ from v002; high and low thresholds read 195/190 F; embedded note verified",
-                          "retirement":  "After resistor circuit repair, restore high-speed 225/215 F while preserving later unrelated changes",
-                          "hardware_assumption":  "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact"
-                      },
-                      {
-                          "version":  "v004",
-                          "file":  "v004-idle-closed-loop-entry-test.hpt",
-                          "parent":  "v003",
-                          "bytes":  217053,
-                          "sha256":  "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
-                          "status":  "Owner supplied v004 test logs; 2026-10-26 review confirms Closed Loop Active No, Ready Yes, Power Demand Enrich throughout, including fully warm operation beyond startup delay. Not accepted as a CL-entry fix; no agent write or ECU binary readback. Stationary idle scope retained.",
-                          "test_report":  "../reports/2026-10-26-v004-log-review.md",
-                          "changes":  [
-                                          "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 0.00 -\u003e 8.00 AD counts",
-                                          "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 0.00 -\u003e 8.00 AD counts",
-                                          "Calibration Details Notes appended with idle-only test scope and inherited temporary fan path"
-                                      ],
-                          "verification":  "Reopened comparison: only Notes and ECM 32731 table differ from v003; all seven rows verified; pressure-compensation toggle removed and Enabled retained",
-                          "inherited_temporary_pathway":  "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
-                          "test_scope":  "Stationary warm idle, beyond retained 254-second startup gates; driving/boost not validated",
-                          "rollback":  "v003-temp-fan-stage-match.hpt"
-                      },
-                      {
-                          "version": "v005",
-                          "file": "v005-idle-absolute-tps-entry-test.hpt",
-                          "parent": "v004",
-                          "bytes": 218621,
-                          "sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
-                          "status": "Owner reports running fresh session after v005 handoff. Saved startup log shows CL entry at offset 75.636 s and OL Conditions No. Initial failed catch, 2915.25 RPM flare and reported 7 V cranking dip remain unresolved. Stationary-only experiment, mixture not validated; no agent write or ECU readback.",
-                          "test_report": "../reports/2026-10-26-v005-startup-review.md",
-                          "warm_test_report": "../reports/2026-10-26-v005-closed-loop-review.md",
-                          "settled_idle_report": "../reports/2026-10-26-v005-settled-idle-review.md",
-                          "fan_off_report": "../reports/2026-10-26-v005-fan-off-review.md",
-                          "changes": [
-                              "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 8.00 -> 200.00 AD counts",
-                              "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 8.00 -> 200.00 AD counts",
-                              "Calibration Details Notes appended with absolute-TPS evidence, stationary test scope and inherited temporary fan pathway"
-                          ],
-                          "evidence": "First baseline log: 8333 closed-throttle absolute TPS observations, min 181.822265625, max 183.8203125, mean 182.823491519131. v002 relative TPS 0-0.998046875. v004/follow-up retain OL Conditions Yes.",
-                          "verification": "Saved file reopened; all seven rows checked (200,200,0,0,0,0,0). Editor comparison lists only Notes and ECM 32731 table. Saved Notes checked; inherited v003/v004 history preserved. All earlier tune hashes unchanged.",
-                          "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
-                          "test_scope": "Stationary warm idle, throttle untouched; 1500-2000 RPM interpolation changes and may postpone off-idle enrichment. No driving or boost validation.",
-                          "rollback": "v004-idle-closed-loop-entry-test.hpt",
-                          "notes": "v005-idle-absolute-tps-entry-test.md"
-                      },
-                      {
-                          "version": "v006",
-                          "file": "v006-post-repair-fan-baseline.hpt",
-                          "parent": "v005",
-                          "bytes": 220541,
-                          "sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
-                          "status": "Prepared and verified for use after proper fan resistor/pigtail/wiring restoration. Hardware repair pending; not flashed by agent. Stationary-only inherited TPS experiment remains.",
-                          "changes": [
-                              "Fan High Speed Enable ECT: 195 -> 225 F, restoring pre-v003 value",
-                              "Fan High Speed Disable ECT: 190 -> 215 F, restoring pre-v003 value",
-                              "Calibration Details Notes appended with pending hardware status, post-repair-only conditions and temporary-path retirement explanation"
-                          ],
-                          "verification": "Final saved/reopened Editor comparison lists only Notes and the two named high-speed thresholds. Main-file Fans readback low195/190, high225/215 F; remaining fan fields and inherited Notes checked. Initial uncommitted scalar draft corrected before final comparison.",
-                          "hardware_repair_required": true,
-                          "temporary_pathway_retirement": "Prepared calibration restoration; not evidence the hardware or installed ECU pathway is already retired",
-                          "test_scope": "Stationary warm idle after circuit restoration; no throttle/road/boost validation. Do not provoke overheating to force fan thresholds.",
-                          "rollback": "v005-idle-absolute-tps-entry-test.hpt",
-                          "rollback_caveat": "Parent intentionally requests high speed at195 F and reinstates temporary stage-match calibration",
-                          "notes": "v006-post-repair-fan-baseline.md"
-                      }
-                  ],
-    "updated_at": "2026-10-26T16:53:08.3439598-04:00"
+  "created_at": "2026-10-26T12:08:33.2224213-04:00",
+  "baseline_source_hash": "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+  "verification": "VCM Editor comparison showed exactly two parameters for v002 vs v001; saved v002 reopened and both targets read 1100 rpm",
+  "revisions": [
+    {
+      "version": "v000",
+      "file": "v000-ecu-read-20261026-102710.hpt",
+      "parent": null,
+      "bytes": 214941,
+      "sha256": "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
+      "status": "Archived earlier ECU-read cache; differences from v001 not cataloged",
+      "changes": []
+    },
+    {
+      "version": "v001",
+      "file": "v001-baseline-with-mil.hpt",
+      "parent": null,
+      "bytes": 215037,
+      "sha256": "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+      "status": "Owner-confirmed fresh-read baseline with MIL changes",
+      "changes": [
+        "Existing owner calibration; retained without parameter edits"
+      ]
+    },
+    {
+      "version": "v002",
+      "file": "v002-idle-1100.hpt",
+      "parent": "v001",
+      "bytes": 215069,
+      "sha256": "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
+      "status": "Owner reports write completed; first post-write log reviewed 2026-10-26. Warm mean RPM 1103.5; retain as test baseline pending fan/load and fuel-control follow-up.",
+      "changes": [
+        "Target Idle Speed Park/Neutral: 1200 -> 1100 rpm",
+        "Target Idle Speed Drive: 1200 -> 1100 rpm"
+      ]
+    },
+    {
+      "version": "v003",
+      "file": "v003-temp-fan-stage-match.hpt",
+      "parent": "v002",
+      "bytes": 215709,
+      "sha256": "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
+      "status": "Owner supplied v003 test logs and reports slight improvement; reviewed 2026-10-26. Warm mean 1100.5 rpm; voltage/load disturbances remain. Temporary-path effectiveness not independently established.",
+      "temporary": true,
+      "pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
+      "changes": [
+        "Fan High Speed Enable ECT: 225 -> 195 F",
+        "Fan High Speed Disable ECT: 215 -> 190 F",
+        "Calibration Details Notes: temporary resistor-bypass test, limits and retirement instructions"
+      ],
+      "verification": "Reopened file: only two fan-threshold parameters and Notes differ from v002; high and low thresholds read 195/190 F; embedded note verified",
+      "retirement": "After resistor circuit repair, restore high-speed 225/215 F while preserving later unrelated changes",
+      "hardware_assumption": "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact"
+    },
+    {
+      "version": "v004",
+      "file": "v004-idle-closed-loop-entry-test.hpt",
+      "parent": "v003",
+      "bytes": 217053,
+      "sha256": "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
+      "status": "Owner supplied v004 test logs; 2026-10-26 review confirms Closed Loop Active No, Ready Yes, Power Demand Enrich throughout, including fully warm operation beyond startup delay. Not accepted as a CL-entry fix; no agent write or ECU binary readback. Stationary idle scope retained.",
+      "test_report": "../reports/2026-10-26-v004-log-review.md",
+      "changes": [
+        "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 0.00 -> 8.00 AD counts",
+        "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 0.00 -> 8.00 AD counts",
+        "Calibration Details Notes appended with idle-only test scope and inherited temporary fan path"
+      ],
+      "verification": "Reopened comparison: only Notes and ECM 32731 table differ from v003; all seven rows verified; pressure-compensation toggle removed and Enabled retained",
+      "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
+      "test_scope": "Stationary warm idle, beyond retained 254-second startup gates; driving/boost not validated",
+      "rollback": "v003-temp-fan-stage-match.hpt"
+    },
+    {
+      "version": "v005",
+      "file": "v005-idle-absolute-tps-entry-test.hpt",
+      "parent": "v004",
+      "bytes": 218621,
+      "sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
+      "status": "Owner reports running fresh session after v005 handoff. Saved startup log shows CL entry at offset 75.636 s and OL Conditions No. Initial failed catch, 2915.25 RPM flare and reported 7 V cranking dip remain unresolved. Stationary-only experiment, mixture not validated; no agent write or ECU readback.",
+      "test_report": "../reports/2026-10-26-v005-startup-review.md",
+      "warm_test_report": "../reports/2026-10-26-v005-closed-loop-review.md",
+      "settled_idle_report": "../reports/2026-10-26-v005-settled-idle-review.md",
+      "fan_off_report": "../reports/2026-10-26-v005-fan-off-review.md",
+      "changes": [
+        "ECM 32731 OL Fuel TPS Thresh vs RPM: 0 RPM cell 8.00 -> 200.00 AD counts",
+        "ECM 32731 OL Fuel TPS Thresh vs RPM: 1500 RPM cell 8.00 -> 200.00 AD counts",
+        "Calibration Details Notes appended with absolute-TPS evidence, stationary test scope and inherited temporary fan pathway"
+      ],
+      "evidence": "First baseline log: 8333 closed-throttle absolute TPS observations, min 181.822265625, max 183.8203125, mean 182.823491519131. v002 relative TPS 0-0.998046875. v004/follow-up retain OL Conditions Yes.",
+      "verification": "Saved file reopened; all seven rows checked (200,200,0,0,0,0,0). Editor comparison lists only Notes and ECM 32731 table. Saved Notes checked; inherited v003/v004 history preserved. All earlier tune hashes unchanged.",
+      "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
+      "test_scope": "Stationary warm idle, throttle untouched; 1500-2000 RPM interpolation changes and may postpone off-idle enrichment. No driving or boost validation.",
+      "rollback": "v004-idle-closed-loop-entry-test.hpt",
+      "notes": "v005-idle-absolute-tps-entry-test.md"
+    },
+    {
+      "version": "v006",
+      "file": "v006-post-repair-fan-baseline.hpt",
+      "parent": "v005",
+      "bytes": 220541,
+      "sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
+      "status": "Owner reports resistor repaired and supplies v006-labeled logs on 2026-10-27. Latest paired run captures full first fan-off recovery: late STFT about-0.78%, lambda1.003, mean1100.4 RPM. Startup O2 feedback disagreement and cranking module7.5625 V remain. Owner subsequently confirms exact v006 installed; no agent write/readback. Stationary-only inherited TPS experiment remains.",
+      "test_report": "../reports/2026-10-27-v006-paired-idle-review.md",
+      "post_repair_report": "../reports/2026-10-27-v006-post-repair-review.md",
+      "changes": [
+        "Fan High Speed Enable ECT: 195 -> 225 F, restoring pre-v003 value",
+        "Fan High Speed Disable ECT: 190 -> 215 F, restoring pre-v003 value",
+        "Calibration Details Notes appended with pending hardware status, post-repair-only conditions and temporary-path retirement explanation"
+      ],
+      "verification": "Final saved/reopened Editor comparison lists only Notes and the two named high-speed thresholds. Main-file Fans readback low195/190, high225/215 F; remaining fan fields and inherited Notes checked. Initial uncommitted scalar draft corrected before final comparison.",
+      "hardware_repair_required": true,
+      "temporary_pathway_retirement": "Owner reports resistor repair and fan engagement at195 F. Exact installed file, high-stage operation, wiring/current and physical repair details are not independently verified; preserve historical temporary-path notes.",
+      "test_scope": "Stationary warm idle after circuit restoration; no throttle/road/boost validation. Do not provoke overheating to force fan thresholds.",
+      "rollback": "v005-idle-absolute-tps-entry-test.hpt",
+      "rollback_caveat": "Parent intentionally requests high speed at195 F and reinstates temporary stage-match calibration",
+      "notes": "v006-post-repair-fan-baseline.md"
+    },
+    {
+      "version": "v007",
+      "file": "v007-idle-1000.hpt",
+      "parent": "v006",
+      "bytes": 222397,
+      "sha256": "AB9BA83EDB08E09E10042087152631C5D70360A1B28128E85D0E08B9279BDE55",
+      "status": "Owner explicitly confirms v007 installed for latest gap-free unloaded recording. After150s mean1000.09RPM, SD17.98, min927.75; no fan/accessory changes. Full warm/fan margin not validated. No agent ECU write/readback.",
+      "changes": [
+        "ECM44218 Target Idle Speed Park/Neutral:1100 ->1000 rpm",
+        "ECM44217 Target Idle Speed Drive:1100 ->1000 rpm",
+        "Calibration Details Notes append v007 scope, retained settings, unresolved observations and v006 rollback; prior notes preserved"
+      ],
+      "verification": "Reopened main-file controls both1000 rpm; saved Notes retain parent prefix and v007 addition. Repeated Editor Comparison Log versus exact v006 lists only Notes and the two target scalars. Earlier numbered binaries unchanged.",
+      "evidence": "Owner-confirmed v006; warm baseline300-330 s mean1100.2 RPM/STFT-0.91%/measured lambda1.005. Owner blower ON400-430 s, min1037.25 RPM, no stall; prior complete fan-off recovery returns to near-zero trim.",
+      "source_report": "../reports/2026-10-27-v006-startup-blower-review.md",
+      "test_scope": "Stationary warm idle/no throttle; paired startup/warm/fan/blower recovery comparison. Retained adders mean target change can affect startup demand; not a startup fueling fix. No road/boost acceptance.",
+      "rollback": "v006-post-repair-fan-baseline.hpt",
+      "notes": "v007-idle-1000.md"
+    },
+    {
+      "version": "v008",
+      "file": "v008-idle-950.hpt",
+      "parent": "v007",
+      "bytes": 224141,
+      "sha256": "255A4FF56EF40B9E84D0A032C77B22D7FF50256151D3A6A54F8037144E8DC278",
+      "status": "Owner explicitly confirms exact v008 installed for monitored paired run. One inferred fan cycle and65s recovery recorded; mean near950, brief835.5 dip recovered within seconds. Separate blower/hot-restart acceptance remains. No agent ECU write/readback.",
+      "changes": [
+        "ECM44218 P/N target1000 ->950 rpm",
+        "ECM44217 Drive target1000 ->950 rpm",
+        "Notes append trial rationale, retained controls, load-validation limits and v007 rollback; prior history preserved"
+      ],
+      "verification": "Reopened950/950 controls and parent-prefix/v008 Notes verified. Reopened comparison lists only Notes, P/N and Drive targets. All eight earlier files unchanged.",
+      "evidence": "Owner-confirmed v007, no fan or accessory changes. VCM150-190.4s mean1000.09 RPM, central90%971.5-1028.25, min927.75, SD17.98. Spark appears corrective; no justified alternative setting change identified.",
+      "source_report": "../reports/2026-10-27-v007-idle-fluctuation-review.md",
+      "test_scope": "Stationary warm idle; capture normal fan/blower recovery, not yet validated at1000 in the short parent clip. No road/boost acceptance; existing feedback and startup controls retained.",
+      "rollback": "v007-idle-1000.hpt",
+      "earlier_load_tested_fallback": "v006-post-repair-fan-baseline.hpt",
+      "notes": "v008-idle-950.md"
+    },
+    {
+      "version": "v009",
+      "file": "v009-idle-900.hpt",
+      "parent": "v008",
+      "bytes": 226397,
+      "sha256": "20B35A1C01B1C9610611D588F87E4688A2613C2471B5C44E20710251D1380EC9",
+      "status": "Owner confirms exact v009 installed without additional edits for latest900-RPM accessory/fan run. Last60s mean900.62RPM, brief810.75 dip recovered near target within seconds; no CEL reported. Stationary evidence only; hot restart and road/boost validation outstanding. No agent write/readback.",
+      "changes": [
+        "ECM44218 P/N target950 ->900 rpm",
+        "ECM44217 Drive target950 ->900 rpm",
+        "Notes append rationale, retained controls, test scope and v008 rollback; full prior Notes retained"
+      ],
+      "verification": "Reopened main controls900/900; saved prior Notes prefix and owner-confirmed parent verified. Editor comparison against exact v008 lists only Notes and both targets. All nine earlier binary hashes and sizes match catalog.",
+      "evidence": "Owner confirms latest monitored run used exact v008. Pre-load210-250s mean951.94RPM, SD13.30; inferred fan-load minimum835.5 with recovery toward950 within seconds; late330-365s mean950.30, SD12.71. No justified gain/fuel/airflow correction selected.",
+      "source_report": "../reports/2026-10-27-v008-fan-recovery-review.md",
+      "test_scope": "Stationary startup and fully warm idle, normal fan on/off plus60s recovery, separately marked blower30s on/off and hot restart. Inherited TPS experiment remains; no road/boost acceptance.",
+      "rollback": "v008-idle-950.hpt",
+      "earlier_load_tested_fallback": "v006-post-repair-fan-baseline.hpt",
+      "notes": "v009-idle-900.md"
+    },
+    {
+      "version": "v010",
+      "file": "v010-idle-spark-gain-1p5.hpt",
+      "parent": "v009",
+      "bytes": 228029,
+      "sha256": "E2A2650F93CD9084BC41353ADAEBE5D69E23AB238F0F9B9A48A382786331BC47",
+      "status": "Owner explicitly confirms exact v010 for cruise/acceleration/idle recording; reports good cruise, normal acceleration without previous hesitation, remaining idle dips. Minimum737.25RPM, final idle mean900.91. Not accepted as fully resolved or boost validated; no agent write/readback. Later owner correction2026-10-29: also stalled occasionally without recorded evidence; not stall-free.",
+      "changes": [
+        "ECM47996 Idle Spark Proportional Gain2.000 ->1.500",
+        "Notes append hypothesis, experimental value, retained settings, test/stop criteria and rollback; full parent Notes retained"
+      ],
+      "rationale": "25percent diagnostic reduction in proportional gain to test aggressive spark correction/overshoot hypothesis.1.500 is an experimental step, not a validated optimum or proven fix.",
+      "retained": "Both900RPM targets, spark minimum-6, MBT/borderline, idle airflow/dashpot, fuel/pressure conversion, fan and boost settings unchanged",
+      "verification": "Saved file reopened: gain1.500, spark minimum-6.00, targets900/900, prior Notes prefix verified. Editor comparison against exact v009 contains only Notes and Idle Spark Proportional Gain. All10 earlier tune hashes/sizes unchanged.",
+      "source_report": "../reports/2026-10-27-v009-cross-session-diagnosis.md",
+      "test_scope": "Stationary hot restart and matched warm idle/fan recovery; stop if near-stalling or recovery worsens. No road/boost acceptance.",
+      "rollback": "v009-idle-900.hpt (reverses this experiment, retains known near-stall behavior)",
+      "earlier_stationary_fallback": "v008-idle-950.hpt",
+      "notes": "v010-idle-spark-gain-1p5.md"
+    },
+    {
+      "version": "v011",
+      "file": "v011-idle-spark-gain-1p25.hpt",
+      "parent": "v010",
+      "bytes": 230397,
+      "sha256": "703A5B9E7061BE733B43665DF1F30F44E2E4CA29F51BD3B07D9272A5BA20A9C3",
+      "status": "Prepared, saved, reopened and compared. Not flashed or engine-tested. Smaller stationary gain experiment; no blanket driving/boost acceptance.",
+      "changes": [
+        "ECM47996 Idle Spark Proportional Gain1.500 ->1.250",
+        "Notes append evidence, experimental rationale, retained settings, test and rollback; parent history preserved"
+      ],
+      "rationale": "16.7percent diagnostic step after v010 owner-reported cruise/acceleration improvement and shallower remaining idle dips. Not a validated optimum; lower gain could worsen recovery.",
+      "verification": "Reopened gain1.250, minimum-6.00, targets900/900 and saved Notes prefix verified. Exact-v010 comparison contains only gain and Notes. All11 prior hashes/sizes unchanged.",
+      "retained": "900RPM targets, MBT/borderline/torque controls, spark minimum, dashpot/airflow/adaptation, fuel/pressure, fans and SCG settings",
+      "source_report": "../reports/2026-10-27-v010-drive-review.md",
+      "rollback": "v010-idle-spark-gain-1p5.hpt",
+      "test_scope": "Stationary hot restart and warm idle/fan recovery first; stop/revert if dips deepen, near-stall, slower recovery or sustained hunting.",
+      "notes": "v011-idle-spark-gain-1p25.md"
+    },
+    {
+      "version": "v012",
+      "file": "v012-idle-spark-gain-1p0.hpt",
+      "parent": "v010",
+      "bytes": 230685,
+      "sha256": "77EDEBF355AB432BEB56C08BF3041E97C155FDAF2FC446BB3A30CA461F341082",
+      "status": "Owner-confirmed v012 installed/tested2026-10-28; later carried-forward-v012 run stalled, captured2026-10-29. Owner confirms v010 also stalled uncaptured and later gains felt steadier between random stumbles. Stability unresolved; no gain regression established; rollback suggestion withdrawn. Diagnose onset/handoff on unchanged file. No agent write/readback.",
+      "changes": [
+        "ECM47996 Idle Spark Proportional Gain 1.500 -> 1.000",
+        "Notes append larger-step rationale, retained controls, stationary criteria and v010 rollback; full parent Notes preserved"
+      ],
+      "rationale": "Owner proposes larger diagnostic step: 33.3 percent below installed v010 gain, 50 percent below original 2.000. Not a proven optimum; may weaken disturbance rejection or slow recovery.",
+      "verification": "Reopened gain1.000, minimum-6.00, targets900/900 and full parent Notes prefix verified. Comparison against exact v010 lists only gain and Notes. All12 earlier hashes and sizes preserved.",
+      "retained": "900RPM, spark limits/MBT/borderline, torque controls, airflow/dashpot/adaptation, fuel/pressure conversion, fans and SCG settings",
+      "rollback": "v010-idle-spark-gain-1p5.hpt",
+      "untested_alternative": "v011-idle-spark-gain-1p25.hpt",
+      "test_scope": "Stationary hot restart and warm idle/fan recovery first. Stop/revert for near-stall, deeper dips, slower recovery or increased hunting. Not driving or boost acceptance.",
+      "notes": "v012-idle-spark-gain-1p0.md"
+    },
+    {
+      "version": "v013",
+      "file": "v013-return-vacuum-comp-zero.hpt",
+      "parent": "v012",
+      "bytes": 233629,
+      "sha256": "78AAD3DC86BE89835C333BC95EF5CE1359DD5B4CAAD2645032C1A64F49505B70",
+      "status": "Owner-confirmed installed; initial stationary captures saved/exported. STFT restored after recording-only restart. Stumble with brief reported zero RPM and cranking states, no starter used; not accepted; no driving/boost validation.",
+      "changes": [
+        "ECM6950 Manifold Vacuum Multiplier0.484 ->0.000",
+        "Notes preserve full parent prefix and append isolated trial, limitations and test/rollback"
+      ],
+      "rationale": "Installed Editor guidance specifies zero for return-style conversion; owner has1:1 referenced return regulation. Diagnose the effect while retaining other pressure/injector assumptions; not a proven stall cure.",
+      "verification": "Saved file reopened: multiplier0.000; targets900/900, gain1.000 and idle floor-6 confirmed. Full parent Notes prefix verified. Comparison against exact v012 lists only Manifold Vacuum Multiplier and Notes. All13 earlier catalog hashes/sizes preserved.",
+      "retained": "Targets/gain, spark/torque/MBT, airflow/runtime/adaptation, VCT/IMRC, MAF/injector tables, flat40psi pressure transfer/reference and enabled compensation, fans and SCG unchanged",
+      "test_scope": "Supervised three-minute parked test with valid wideband/pressure video and usable fuel/core data; stop on worsening or persistent unexplained mixture departure. Setting affects beyond idle; no road/boost acceptance.",
+      "rollback": "v012-idle-spark-gain-1p0.hpt; retains known unresolved stalling",
+      "notes": "v013-return-vacuum-comp-zero.md",
+      "source_report": "../reports/2026-10-29-v012-calibration-audit.md",
+      "test_report": "../reports/2026-10-29-v013-first-review.md"
+    },
+    {
+      "version": "v014",
+      "file": "v014-warm-idle-open-loop-isolation.hpt",
+      "parent": "v013",
+      "bytes": 236733,
+      "sha256": "ACA288B1BA25A87A6C92824D00E2028468DBEDE6279ED00420C3271BB3521790",
+      "status": "Rejected after trip: owner reports no low-end, hard pull-away and severe power loss; stationary diagnostic did not cure progressive dips. Do not retain as driving solution.",
+      "changes": [
+        "ECM32731 0RPM and1500RPM cells200 ->0 AD counts; other5 cells unchanged0",
+        "Appended diagnostic Notes; full parent retained"
+      ],
+      "rationale": "Owner reports progressive closed-loop-only instability; Astra independent review supports warm same-target isolation before guessing feedback gains",
+      "verification": "Saved all7 TPS values zero; full v013 comparison only Notes and Open Loop Fuel TPS Thresh; parent Notes preserved; all14 prior binaries unchanged",
+      "retained": "900RPM,gain1.000,idlefloor-6,v013manvac0,basefuel/air/runtime/MAF/injectors/pressure/O2/learning/VCT/spark/fans",
+      "test_scope": "Warm parked900RPM, measured-lambda comparison; max5minute settled interval, stop on deterioration. Also alters1500-2000RPM interpolation.",
+      "rollback": "v013-return-vacuum-comp-zero.hpt; parent remains unaccepted with unresolved stalling",
+      "notes": "v014-warm-idle-open-loop-isolation.md",
+      "source_report": "../reports/2026-10-29-v013-deep-review.md",
+      "test": "../docs/v014-open-loop-isolation-test.md"
+    },
+    {
+      "version": "v015",
+      "file": "v015-restore-closed-loop.hpt",
+      "parent": "v013",
+      "replaces": "v014",
+      "bytes": 236525,
+      "sha256": "9D3C4FF9CD68D24665957CC6FDB310C51B246E8DD3D0F439A0E33D2EFA936EFD",
+      "status": "Owner-confirmed write complete2026-10-30; first validation pending, no agent readback; unresolved stall history",
+      "changes": [
+        "Relative to v013: Notes only",
+        "Relative to v014: ECM32731 0/1500RPM thresholds0 ->200; Notes"
+      ],
+      "verification": "Saved comparison vs exactv013 onlyNotes; full v013 Notes prefix verified; all15 earlier hashes unchanged",
+      "rationale": "Reverse failed v014 isolation; Astra review supports restoration without extra numerical changes",
+      "notes": "v015-restore-closed-loop.md",
+      "source_report": "../reports/2026-10-29-v014-drive-review.md",
+      "rollback": "v013-return-vacuum-comp-zero.hpt is calibration-equivalent; v014 return not recommended"
+    },
+    {
+      "version": "v016",
+      "file": "v016-idle-margin-950.hpt",
+      "parent": "v015",
+      "bytes": 239085,
+      "sha256": "7F069587C62FACC4A2E79556A48131A2DF7D527BFE0B9ECA5E388291BF410D14",
+      "status": "Owner-confirmed installed; first recording reviewed, warm950RPM margin but feedback-entry excursion remains",
+      "changes": [
+        "ECM44218 Target Idle Speed Park/Neutral900 ->950RPM",
+        "ECM44217 Target Idle Speed Drive900 ->950RPM",
+        "Notes appendix; full parent history retained"
+      ],
+      "verification": "Reopened950/950; saved parent Notes prefix verified; Editor comparison only two target settings and Notes; all16 prior tune hashes unchanged",
+      "rationale": "Owner-approved950RPM margin trial after repeated900RPM dips, including684.5RPM load pickup; not a diagnosed fault repair",
+      "notes": "v016-idle-margin-950.md",
+      "source_report": "../reports/2026-10-30-v015-load-step-review.md",
+      "rollback": "v015-restore-closed-loop.hpt"
+    },
+    {
+      "version": "v017",
+      "file": "v017-o2-readiness-600.hpt",
+      "parent": "v016",
+      "bytes": 241517,
+      "sha256": "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+      "status": "v017-labeled trial reviewed: failed rich-entry goal; rollbackv016 recommended, not owner-confirmed",
+      "changes": [
+        "ECM12115 Closed Loop O2 Sensor Temp520 ->600F",
+        "Notes appendix; complete parent retained"
+      ],
+      "verification": "Reopened600F; only threshold and Notes in Editor comparison; all17 older identities unchanged",
+      "notes": "v017-o2-readiness-600.md",
+      "source_report": "../reports/2026-10-30-v016-first-start-review.md",
+      "rollback": "v016-idle-margin-950.hpt",
+      "rationale": "Experimental later feedback-entry gate after repeated nearzeroNB and richWB at CL entry; no verified fuel gain exposed"
+    },
+    {
+      "version": "v018",
+      "file": "v018-dfco-recovery-diagnostics.hpt",
+      "parent": "v016",
+      "bytes": 241645,
+      "sha256": "2E4E3711B2E6AFA5A343D54CBA9331CB48FB6B3774882CB0446B569ACCD9A082",
+      "status": "Owner-confirmed write complete; no ECU readback; testing pending",
+      "changes": [
+        "ECM2291 DFCO exit750 ->1000RPM",
+        "ECM50 P0132 No Error Reported ->MIL Light",
+        "Notes appendix with complete parent prefix"
+      ],
+      "verification": "Reopened scalars; all163 DTC rows checked, onlyP0132changed; whole-file comparison onlyDFCOexit,DTCList,Notes; all18earlier binaries unchanged",
+      "notes": "v018-dfco-recovery-diagnostics.md",
+      "source_report": "../docs/calibration-correction-plan.md",
+      "rollback": "v016-idle-margin-950.hpt",
+      "inventory_delta": "../reports/calibration-inventory/v018/delta.json"
+    },
+    {
+      "version": "v019",
+      "file": "v019-maf-low-flow-trial.hpt",
+      "parent": "v018",
+      "bytes": 244445,
+      "sha256": "C2EDAC9A76F9501A827A7DEF30D4A65C52A62B03D9DE4B6BC08F453E8755CFF5",
+      "status": "Owner-installed; cold test stopped after FMEM; warm MAF comparison not reached, not accepted",
+      "changes": [
+        "ECM12163nine lowVcells reduced3.72\u20134.80%, exactaxes retained",
+        "Notes appendix"
+      ],
+      "verification": "Fullprecisionreopen all30axes same, other21flowcells same; fullEditorcomparison onlyMAF andNotes; all19earlieridentitiesunchanged",
+      "notes": "v019-maf-low-flow-trial.md",
+      "rollback": "v018-dfco-recovery-diagnostics.hpt",
+      "source_report": "../reports/2026-10-30-hpx-maf-review.md",
+      "inventory_delta": "../reports/calibration-inventory/v019/delta.json"
+    },
+    {
+      "version": "v020",
+      "file": "v020-base-idle-air-trial.hpt",
+      "parent": "v019",
+      "bytes": 247277,
+      "sha256": "17F421379EA038CE1938EDD8A080F6D517DCF90CE60CABC340B4CFB8C3ACADDA",
+      "status": "Owner-reported installed/tested; rejected after increased stutters. Return exactv019 recommended, not confirmed.",
+      "changes": [
+        "ECM44242 and44239:900/1000RPM base airflow points reduced5%; axes/otherpoints unchanged",
+        "Notes appended; entire parent retained"
+      ],
+      "verification": "Full-precision saved/reopened four cells verified; whole-file Editor comparison onlytwoairtables+Notes; all20olderhashes unchanged",
+      "notes": "v020-base-idle-air-trial.md",
+      "rollback": "v019-maf-low-flow-trial.hpt",
+      "inventory_delta": "../reports/calibration-inventory/v020/delta.json",
+      "source_report": "../reports/2026-10-31-v019-warm-review.md",
+      "outcome_report": "../reports/2026-11-02-v020-base-air-review.md"
+    },
+    {
+      "version": "v021",
+      "file": "v021-fuel-pressure-feedback.hpt",
+      "parent": "v019",
+      "bytes": 247597,
+      "sha256": "078E91786A07793A4EB6607B8B870BDC9558562C0FE75AF95E6D5AB1A1A87ACA",
+      "status": "v021-labeled run reviewed: pressure conversion consistent in operating range; baseline retained, warm dips remain; no ECUreadback",
+      "changes": [
+        "ECM7596:flat40psi replaced with nominalFordFRP conversion at retainedADCaxes; below102zero clamp, upperlinear extension",
+        "Notes appended; v020aircut not inherited"
+      ],
+      "verification": "Saved/reopened7outputs/allaxes; wholefilecomparisononly7596+Notes; parentNotesprefixretained; all21earlierhashes unchanged",
+      "notes": "v021-fuel-pressure-feedback.md",
+      "rollback": "v019-maf-low-flow-trial.hpt",
+      "inventory_delta": "../reports/calibration-inventory/v021/delta.json",
+      "source_report": "../reports/2026-11-02-v019-pressure-review.md"
+    },
+    {
+      "version": "v022",
+      "file": "v022-idle-spark-gain-0p75.hpt",
+      "parent": "v021",
+      "bytes": 250669,
+      "sha256": "577F775782A98705C2F3A6205BBC32BF7461238967255CCD1105303A0C7DD29F",
+      "status": "Ownerconfirmedwritten/tested; newoscillation reported, notadopted. Exactv021rollbackrecommendednotconfirmed; causalcomparisonconfounded.",
+      "changes": [
+        "ECM47996 idle spark proportional gain1.000->0.750",
+        "Notes appended, full parent retained"
+      ],
+      "notes": "v022-idle-spark-gain-0p75.md",
+      "rollback": "v021-fuel-pressure-feedback.hpt",
+      "verification": "Reopenedgain0.750/floor-6; wholefileonlygain+Notes; fullparentprefixverified; all22olderidentitiesunchanged",
+      "inventory_delta": "../reports/calibration-inventory/v022/delta.json",
+      "source_report": "../reports/2026-11-02-v021-baseline-review.md",
+      "outcome_report": "../reports/2026-11-02-v022-spark-response-review.md"
+    },
+    {
+      "version": "v023",
+      "file": "v023-idle-spark-10deg.hpt",
+      "parent": "v021",
+      "bytes": 250845,
+      "sha256": "BA0E2CD969743295AD0556C6B5EFED6F5B8419D1FD8912887A1B6C2DE6FBBCAD",
+      "status": "Owner-labeled v023 trial reviewed; fluctuations and physical stall. Not adopted; exact v021 rollback recommended, not confirmed. No ECU readback.",
+      "changes": [
+        "ECM44579P/N and44578InGear nominalidle spark allfivecells12->10degrees each; axesnotedited",
+        "Notesappendix/fullparentprefixretained"
+      ],
+      "notes": "v023-idle-spark-10deg.md",
+      "rollback": "v021-fuel-pressure-feedback.hpt",
+      "verification": "Saved/reopened10bodyvalues, displayedaxesmatch, gain1/floor-6verified, wholefileonlytwoidlesparktables+Notes, all23olderidentitiesunchanged",
+      "inventory_delta": "../reports/calibration-inventory/v023/delta.json",
+      "source_report": "../reports/2026-11-02-v022-spark-response-review.md",
+      "outcome_report": "../reports/2026-11-02-v023-stall-review.md"
+    },
+    {
+      "version": "v024",
+      "file": "v024-fuel-cleanup-diagnostics.hpt",
+      "parent": "v021",
+      "bytes": 251773,
+      "sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+      "status": "tested_2026-11-03; owner confirmed flashed with new upstream O2; cold start, warm idle, and fan-off recovery verified clean; 2.18k OL hold (0.735 lambda) and mid-warmup FMEM (-23.9% STFT) motivate v025 MAF smoothing; provisionally adopted as parent for v025 in covered stationary modes; no ECU readback.",
+      "changes": [
+        "ECM44511 at2500RPM/TPS15.625% and19.53125%: lambda1.07/1.14 ->1.00; other78bodycells/axes retained",
+        "ECM50 P0190/P0192 No Error Reported ->MIL Light; P0193 No MIL Light ->MIL Light; other160rows unchanged",
+        "Notes appended; full v021 history retained"
+      ],
+      "notes": "v024-fuel-cleanup-diagnostics.md",
+      "rollback": "v021-fuel-pressure-feedback.hpt",
+      "verification": "Saved/reopened all80fuelbodyvalues,163DTCrows,parentNotes prefix; whole-file comparison exactly44511,50,Notes; all24olderfiles preserved",
+      "inventory_delta": "../reports/calibration-inventory/v024/delta.json",
+      "source_report": "../reports/2026-11-02-v021-complete-calibration-audit.md",
+      "outcome_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
+    },
+    {
+      "version": "v025",
+      "file": "v025-maf-idle-offidle-smooth.hpt",
+      "parent": "v024",
+      "bytes": 255949,
+      "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
+      "status": "prepared",
+      "title": "MAF Transfer Idle & Off-Idle Smoothing",
+      "description": "Single-table ECM12163 MAF transfer convex smoothing across columns 6–13 (0.500–1.000 V); eliminates 0.600 V slope discontinuity and 0.70–1.00 V excess airflow that triggered mid-warmup FMEM in v024",
+      "changes": [
+        "ECM12163 MAF Airflow vs. Voltage: columns 6–13 (0.500–1.000 V) convex smoothing replacing 0.600 V slope discontinuity (5.35 -> 24.64 -> 2.89 g/s/V) and 0.70–1.00 V rich bulge; columns 1–5 and 14–30 and all 30 voltage breakpoints identical to v024",
+        "Calibration Details Notes appended with v025 rationale and staged test criteria; full v024 prefix preserved"
+      ],
+      "notes": "v025-maf-idle-offidle-smooth.md",
+      "rollback": "v024-fuel-cleanup-diagnostics.hpt",
+      "verification": "Saved/reopened all 30 MAF flow cells and axes, full Notes prefix; whole-file comparison exactly 12163, Notes; all 25 older files preserved",
+      "inventory_delta": "../reports/calibration-inventory/v025/delta.json",
+      "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
+    }
+  ],
+  "updated_at": "2026-11-03T16:45:00.0000000Z"
 }

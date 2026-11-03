@@ -1,0 +1,84 @@
+﻿{
+    "index":  82,
+    "path":  "Engine / Fuel / General / Injector Control / Injector Breakpoint Mult vs. Pressure",
+    "name":  "Injector Breakpoint Mult vs. Pressure",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:33:13.2166886Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32064 - Injector Breakpoint Mult vs. Pressure",
+    "parameter_id":  32064,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "1.00"
+                  }
+              ]
+}

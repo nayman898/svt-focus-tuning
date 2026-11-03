@@ -1,0 +1,172 @@
+﻿{
+    "index":  228,
+    "path":  "Engine / Torque Management / General / Torque Ratio / Spark Torque Ratio Limit vs. Requestor",
+    "name":  "Spark Torque Ratio Limit vs. Requestor",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:38:22.5745151Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44776 - Spark Torque Ratio Limit vs. Requestor",
+    "parameter_id":  44776,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "Driver Demand"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "Trans Tq Trunc"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.800"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "Traction Control"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.800"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "Vehicle Speed Limit"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "Engine Speed Limit"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "Tipin"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "DFSO"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.600"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "Shift Modulation"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "0.500"
+                  },
+                  {
+                      "cell":  "Column 0 Row 9",
+                      "value":  "Unused"
+                  },
+                  {
+                      "cell":  "Column 1 Row 9",
+                      "value":  "0.800"
+                  },
+                  {
+                      "cell":  "Column 0 Row 10",
+                      "value":  "Target N"
+                  },
+                  {
+                      "cell":  "Column 1 Row 10",
+                      "value":  "1.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 11",
+                      "value":  "PTLP FMEM"
+                  },
+                  {
+                      "cell":  "Column 1 Row 11",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 12",
+                      "value":  "RPM Gaurd"
+                  },
+                  {
+                      "cell":  "Column 1 Row 12",
+                      "value":  "0.800"
+                  },
+                  {
+                      "cell":  "Column 0 Row 13",
+                      "value":  "PATS"
+                  },
+                  {
+                      "cell":  "Column 1 Row 13",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 14",
+                      "value":  "OSCMOD / Anti-Shuffle"
+                  },
+                  {
+                      "cell":  "Column 1 Row 14",
+                      "value":  "0.250"
+                  },
+                  {
+                      "cell":  "Column 0 Row 15",
+                      "value":  "Cruise Control"
+                  },
+                  {
+                      "cell":  "Column 1 Row 15",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 16",
+                      "value":  "Driveshaft Protection"
+                  },
+                  {
+                      "cell":  "Column 1 Row 16",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 17",
+                      "value":  "Dashpot"
+                  },
+                  {
+                      "cell":  "Column 1 Row 17",
+                      "value":  "0.000"
+                  }
+              ]
+}

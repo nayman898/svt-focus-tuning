@@ -1,0 +1,92 @@
+﻿{
+    "index":  108,
+    "path":  "Engine / Fuel / Oxygen Sensors / Heaters / O2S1 Heater Duty Cycle",
+    "name":  "O2S1 Heater Duty Cycle",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:34:05.7852840Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32916 - O2S1 Heater Duty Cycle",
+    "parameter_id":  32916,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "100.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "30"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "100.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "31"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "75.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "72"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "73"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "35.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "255"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "35.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "255"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "35.00"
+                  }
+              ]
+}

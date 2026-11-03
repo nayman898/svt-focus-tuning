@@ -1,3 +1,8 @@
+> Historical roadmap, superseded2026-10-28: the owner is comfortable with900RPM
+> and now prioritizes stability followed by drivability. Further idle reductions
+> are deferred. Use the [current roadmap](stability-and-drivability-roadmap.md).
+> The875RPM draft was withdrawn without flashing. The stages below are history,
+> not instructions to continue reducing the target.
 # Working toward an 800-850 RPM warm idle
 
 Owner goal: a smoother, more comfortable **800-850 RPM fully warm idle**.
@@ -8,6 +13,24 @@ what can be promised. Cold-start and initial catch speeds are a separate
 calibration requirement from fully warm idle.
 
 ## Current position and revised priority
+
+The [latest paired recording](../reports/2026-10-27-v006-paired-idle-review.md)
+now captures a complete first fan-off recovery: 30-60 s afterward, mean STFT
+is -0.78%, measured lambda 1.003, and RPM 1100.4. The repaired fan system's
+disturbance is smaller than the bypassed baseline. The earlier
+[post-repair recording](../reports/2026-10-27-v006-post-repair-review.md) was
+too short after fan off to show this recovery; do not treat its negative trim
+as a permanent fully warm MAF correction.
+
+The owner confirms exact v008950 installed for the latest
+[monitored fan-cycle run](../reports/2026-10-27-v008-fan-recovery-review.md).
+It holds near950, recovers from a brief835.5-RPM load dip within seconds, and
+includes65s after the inferred cycle. Late mean950.30RPM, SD12.71. This supports
+a separate [v009900 trial](../tunes/v009-idle-900.md), saved/reopened/compared
+against v008 with only targets and Notes changed. v009 is not engine-tested or
+agent-flashed. Repeat full warm fan/recovery plus separately marked blower and
+hot restart before850. v008 is immediate rollback; final850/800 suitability
+remains unestablished. Startup O2/readiness remains a separate follow-up.
 
 v005 averages approximately 1,100 RPM and sustains closed loop. It also has
 brief dips into approximately 870-930 RPM in reviewed recordings, a separate

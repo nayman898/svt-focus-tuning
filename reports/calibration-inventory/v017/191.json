@@ -1,0 +1,84 @@
+﻿{
+    "index":  191,
+    "path":  "Engine / Spark / Advance / Borderline Corrections / Spark Borderline EGR Adder",
+    "name":  "Spark Borderline EGR Adder",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:01.0820519Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 48000 - Spark Borderline EGR Adder",
+    "parameter_id":  48000,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.2"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.4"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.50"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0.6"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.41"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "0.8"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.19"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "2.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.09"
+                  }
+              ]
+}

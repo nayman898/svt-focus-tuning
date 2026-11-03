@@ -1,0 +1,117 @@
+﻿{
+    "revision":  "v023",
+    "parent":  "v021",
+    "sha256":  "BA0E2CD969743295AD0556C6B5EFED6F5B8419D1FD8912887A1B6C2DE6FBBCAD",
+    "bytes":  250845,
+    "changes":  [
+                    {
+                        "parameter_id":  44579,
+                        "row":  1,
+                        "column":  1,
+                        "ect_display":  "-254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44579,
+                        "row":  2,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44579,
+                        "row":  3,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44579,
+                        "row":  4,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44579,
+                        "row":  5,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44578,
+                        "row":  1,
+                        "column":  1,
+                        "ect_display":  "-254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44578,
+                        "row":  2,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44578,
+                        "row":  3,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44578,
+                        "row":  4,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    },
+                    {
+                        "parameter_id":  44578,
+                        "row":  5,
+                        "column":  1,
+                        "ect_display":  "254",
+                        "before":  12,
+                        "after":  10,
+                        "unit":  "degrees"
+                    }
+                ],
+    "axes_not_edited":  true,
+    "displayed_axes_match_inherited_capture":  true,
+    "retained_gain":  "1.000",
+    "retained_floor":  "-6.00",
+    "comparison":  {
+                       "value":  [
+                                     "Notes",
+                                     "Engine",
+                                     "Spark",
+                                     "Advance",
+                                     "Idle Spark Advance",
+                                     "Spark Idle In Gear vs. ECT",
+                                     "Spark Idle P/N vs. ECT"
+                                 ],
+                       "Count":  7
+                   },
+    "notes_parent_prefix_verified":  true,
+    "ecu_readback":  false,
+    "status":  "Prepared not flashed/tested"
+}

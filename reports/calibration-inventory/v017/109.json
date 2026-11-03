@@ -1,0 +1,352 @@
+﻿{
+    "index":  109,
+    "path":  "Engine / Fuel / Oxygen Sensors / Heaters / O2 Heater Tip Temperature vs. EGT vs. Duty Cycle",
+    "name":  "O2 Heater Tip Temperature vs. EGT vs. Duty Cycle",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:34:08.8266567Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44211 - O2 Heater Tip Temperature vs. EGT vs. Duty Cycle",
+    "parameter_id":  44211,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "400"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "500"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "600"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "700"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "925"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "1,150"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "1,375"
+                  },
+                  {
+                      "cell":  "Column 8 Row 0",
+                      "value":  "1,600"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 8 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "10"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "110"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "103"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "96"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "90"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "74"
+                  },
+                  {
+                      "cell":  "Column 6 Row 2",
+                      "value":  "59"
+                  },
+                  {
+                      "cell":  "Column 7 Row 2",
+                      "value":  "44"
+                  },
+                  {
+                      "cell":  "Column 8 Row 2",
+                      "value":  "29"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "222"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "208"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "195"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "181"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "150"
+                  },
+                  {
+                      "cell":  "Column 6 Row 3",
+                      "value":  "119"
+                  },
+                  {
+                      "cell":  "Column 7 Row 3",
+                      "value":  "88"
+                  },
+                  {
+                      "cell":  "Column 8 Row 3",
+                      "value":  "57"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "30"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "250"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "318"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "307"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "282"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "249"
+                  },
+                  {
+                      "cell":  "Column 6 Row 4",
+                      "value":  "205"
+                  },
+                  {
+                      "cell":  "Column 7 Row 4",
+                      "value":  "164"
+                  },
+                  {
+                      "cell":  "Column 8 Row 4",
+                      "value":  "91"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "50"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "536"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "525"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "514"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "456"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "373"
+                  },
+                  {
+                      "cell":  "Column 6 Row 5",
+                      "value":  "304"
+                  },
+                  {
+                      "cell":  "Column 7 Row 5",
+                      "value":  "246"
+                  },
+                  {
+                      "cell":  "Column 8 Row 5",
+                      "value":  "160"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "75"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "805"
+                  },
+                  {
+                      "cell":  "Column 2 Row 6",
+                      "value":  "794"
+                  },
+                  {
+                      "cell":  "Column 3 Row 6",
+                      "value":  "777"
+                  },
+                  {
+                      "cell":  "Column 4 Row 6",
+                      "value":  "680"
+                  },
+                  {
+                      "cell":  "Column 5 Row 6",
+                      "value":  "550"
+                  },
+                  {
+                      "cell":  "Column 6 Row 6",
+                      "value":  "453"
+                  },
+                  {
+                      "cell":  "Column 7 Row 6",
+                      "value":  "362"
+                  },
+                  {
+                      "cell":  "Column 8 Row 6",
+                      "value":  "240"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "100"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "1,067"
+                  },
+                  {
+                      "cell":  "Column 2 Row 7",
+                      "value":  "1,056"
+                  },
+                  {
+                      "cell":  "Column 3 Row 7",
+                      "value":  "1,042"
+                  },
+                  {
+                      "cell":  "Column 4 Row 7",
+                      "value":  "893"
+                  },
+                  {
+                      "cell":  "Column 5 Row 7",
+                      "value":  "713"
+                  },
+                  {
+                      "cell":  "Column 6 Row 7",
+                      "value":  "592"
+                  },
+                  {
+                      "cell":  "Column 7 Row 7",
+                      "value":  "473"
+                  },
+                  {
+                      "cell":  "Column 8 Row 7",
+                      "value":  "315"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "190"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "1,067"
+                  },
+                  {
+                      "cell":  "Column 2 Row 8",
+                      "value":  "1,056"
+                  },
+                  {
+                      "cell":  "Column 3 Row 8",
+                      "value":  "1,042"
+                  },
+                  {
+                      "cell":  "Column 4 Row 8",
+                      "value":  "893"
+                  },
+                  {
+                      "cell":  "Column 5 Row 8",
+                      "value":  "713"
+                  },
+                  {
+                      "cell":  "Column 6 Row 8",
+                      "value":  "592"
+                  },
+                  {
+                      "cell":  "Column 7 Row 8",
+                      "value":  "473"
+                  },
+                  {
+                      "cell":  "Column 8 Row 8",
+                      "value":  "315"
+                  }
+              ]
+}

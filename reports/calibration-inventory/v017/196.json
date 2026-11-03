@@ -1,0 +1,76 @@
+﻿{
+    "index":  196,
+    "path":  "Engine / Spark / Advance / Idle Spark Advance / Spark Idle In Gear vs. ECT",
+    "name":  "Spark Idle In Gear vs. ECT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:10.5818747Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44578 - Spark Idle In Gear vs. ECT",
+    "parameter_id":  44578,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "12.00"
+                  }
+              ]
+}

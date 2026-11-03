@@ -1,0 +1,92 @@
+﻿{
+    "index":  60,
+    "path":  "Engine / Airflow / IMRC / General / IMRC Opening RPM vs TPS",
+    "name":  "IMRC Opening RPM vs TPS",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:33.7655457Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 25262 - IMRC Opening RPM vs TPS",
+    "parameter_id":  25262,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "500"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "2,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "2,500"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "4,999"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "5,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "8,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0"
+                  }
+              ]
+}

@@ -1,0 +1,172 @@
+﻿{
+    "index":  112,
+    "path":  "Engine / Fuel / Oxygen Sensors / Sensor Bias / O2 Closed Loop Bias Bank 2",
+    "name":  "O2 Closed Loop Bias Bank 2",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:34:17.0305430Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32908 - O2 Closed Loop Bias Bank 2",
+    "parameter_id":  32908,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "800"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "1,750"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "2,500"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "3,500"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "4,500"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.30"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0.50"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "0.70"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "0.000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "0.000"
+                  }
+              ]
+}

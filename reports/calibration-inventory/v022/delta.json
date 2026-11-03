@@ -1,0 +1,23 @@
+﻿{
+    "revision":  "v022",
+    "parent":  "v021",
+    "sha256":  "577F775782A98705C2F3A6205BBC32BF7461238967255CCD1105303A0C7DD29F",
+    "bytes":  250669,
+    "parameter_id":  47996,
+    "before":  "1.000",
+    "after":  "0.750",
+    "comparison":  {
+                       "value":  [
+                                     "Notes",
+                                     "Engine",
+                                     "Spark",
+                                     "Advance",
+                                     "Idle Spark Advance",
+                                     "Idle Spark Proportional Gain"
+                                 ],
+                       "Count":  6
+                   },
+    "notes_parent_prefix_verified":  true,
+    "ecu_readback":  false,
+    "status":  "Prepared not flashed/tested"
+}

@@ -1,0 +1,74 @@
+﻿{
+    "axes_unchanged":  true,
+    "higher_flow_exactly_unchanged":  true,
+    "changes":  [
+                    {
+                        "column":  3,
+                        "voltage":  0.4000000059604645,
+                        "old_editor_lb_min":  0.041945144534713194,
+                        "new_editor_lb_min":  0.03993177851163096,
+                        "actual_pct":  -4.799997819571223
+                    },
+                    {
+                        "column":  4,
+                        "voltage":  0.4390000104904175,
+                        "old_editor_lb_min":  0.05041751175562355,
+                        "new_editor_lb_min":  0.047997471222891,
+                        "actual_pct":  -4.799999937447563
+                    },
+                    {
+                        "column":  5,
+                        "voltage":  0.4790000021457672,
+                        "old_editor_lb_min":  0.061528808634395714,
+                        "new_editor_lb_min":  0.05857542764911273,
+                        "actual_pct":  -4.79999702713566
+                    },
+                    {
+                        "column":  6,
+                        "voltage":  0.5,
+                        "old_editor_lb_min":  0.06375106643328117,
+                        "new_editor_lb_min":  0.06069101420375014,
+                        "actual_pct":  -4.800001632495876
+                    },
+                    {
+                        "column":  7,
+                        "voltage":  0.5289999842643738,
+                        "old_editor_lb_min":  0.0638899609951124,
+                        "new_editor_lb_min":  0.0611412142393897,
+                        "actual_pct":  -4.302314030107146
+                    },
+                    {
+                        "column":  8,
+                        "voltage":  0.5400000214576721,
+                        "old_editor_lb_min":  0.06444552347374755,
+                        "new_editor_lb_min":  0.061979690665868635,
+                        "actual_pct":  -3.8262282234132083
+                    },
+                    {
+                        "column":  9,
+                        "voltage":  0.6000000238418579,
+                        "old_editor_lb_min":  0.08208471101386218,
+                        "new_editor_lb_min":  0.07814464368677637,
+                        "actual_pct":  -4.800001459980074
+                    },
+                    {
+                        "column":  10,
+                        "voltage":  0.6489999890327454,
+                        "old_editor_lb_min":  0.0836125157144537,
+                        "new_editor_lb_min":  0.08050138475652467,
+                        "actual_pct":  -3.7208914614576316
+                    },
+                    {
+                        "column":  11,
+                        "voltage":  0.6990000009536743,
+                        "old_editor_lb_min":  0.11481674229832393,
+                        "new_editor_lb_min":  0.10930553791110728,
+                        "actual_pct":  -4.800000659221892
+                    }
+                ],
+    "revision":  "v019",
+    "parent":  "v018",
+    "parameter_id":  12163,
+    "sha256":  "C2EDAC9A76F9501A827A7DEF30D4A65C52A62B03D9DE4B6BC08F453E8755CFF5",
+    "status":  "Preparednotflashed; relativeboundedexperiment, absoluteunitsunresolved"
+}

@@ -1,0 +1,100 @@
+﻿{
+    "index":  275,
+    "path":  "Fuel System / General / Fuel Rail / Ambient Rail Temp Time Constant vs. Fuel Flow",
+    "name":  "Ambient Rail Temp Time Constant vs. Fuel Flow",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:40:15.9811888Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 43010 - Ambient Rail Temp Time Constant vs. Fuel Flow",
+    "parameter_id":  43010,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "175.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.09"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "155.09"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.18"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "112.28"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0.27"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "0.45"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "0.68"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "3.17"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "0.90"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "24.30"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "4.00"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "24.30"
+                  }
+              ]
+}

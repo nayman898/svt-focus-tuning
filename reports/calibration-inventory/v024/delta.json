@@ -1,0 +1,77 @@
+{
+  "version": "v024",
+  "file": "v024-fuel-cleanup-diagnostics.hpt",
+  "parent": "v021",
+  "bytes": 251773,
+  "sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+  "status": "Saved/reopened/compared; not flashed or tested; candidate, not adopted baseline.",
+  "changes": [
+    {
+      "parameter_id": 44511,
+      "row": 1,
+      "column": 2,
+      "rpm": 2500,
+      "tps_percent": 15.625,
+      "before": 1.0700000524520874,
+      "after": 1.0,
+      "unit": "lambda"
+    },
+    {
+      "parameter_id": 44511,
+      "row": 2,
+      "column": 2,
+      "rpm": 2500,
+      "tps_percent": 19.53125,
+      "before": 1.1399999856948853,
+      "after": 1.0,
+      "unit": "lambda"
+    }
+  ],
+  "dtc_changes": [
+    {
+      "parameter_id": 50,
+      "row": 39,
+      "column": 2,
+      "dtc": "P0190",
+      "before": "No Error Reported",
+      "after": "MIL Light"
+    },
+    {
+      "parameter_id": 50,
+      "row": 40,
+      "column": 2,
+      "dtc": "P0192",
+      "before": "No Error Reported",
+      "after": "MIL Light"
+    },
+    {
+      "parameter_id": 50,
+      "row": 41,
+      "column": 2,
+      "dtc": "P0193",
+      "before": "No MIL Light",
+      "after": "MIL Light"
+    }
+  ],
+  "axes_edited": false,
+  "displayed_axes_match_parent": true,
+  "fuel_body_cells_checked": 80,
+  "other_fuel_body_cells_exact": 78,
+  "dtc_rows_checked": 163,
+  "other_dtc_rows_unchanged": 160,
+  "notes_parent_prefix_verified": true,
+  "comparison": [
+    "Notes",
+    "Engine",
+    "Fuel",
+    "Open Loop / Base",
+    "Base Fuel",
+    "Fuel Base vs. RPM vs. TPS",
+    "Engine Diagnostics",
+    "DTCs",
+    "List",
+    "Master DTC List"
+  ],
+  "ecu_readback": false,
+  "owner_first_test_context": "Cold start with new upstream O2; unchanged crank sensor. Part number/install timing not recorded; no candidate flash confirmation."
+}

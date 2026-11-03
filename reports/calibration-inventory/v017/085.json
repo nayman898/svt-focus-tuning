@@ -1,0 +1,132 @@
+﻿{
+    "index":  85,
+    "path":  "Engine / Fuel / General / Injector Control / Injector Offset vs IGNV",
+    "name":  "Injector Offset vs IGNV",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:33:18.7936683Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32050 - Injector Offset vs IGNV",
+    "parameter_id":  32050,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00258000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.00258000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.00258000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "6.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.00258000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "8.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.00144000"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "10.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.00092100"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "11.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.00075800"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "12.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "0.00063600"
+                  },
+                  {
+                      "cell":  "Column 0 Row 9",
+                      "value":  "13.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 9",
+                      "value":  "0.00051700"
+                  },
+                  {
+                      "cell":  "Column 0 Row 10",
+                      "value":  "14.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 10",
+                      "value":  "0.00042900"
+                  },
+                  {
+                      "cell":  "Column 0 Row 11",
+                      "value":  "15.0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 11",
+                      "value":  "0.00032700"
+                  },
+                  {
+                      "cell":  "Column 0 Row 12",
+                      "value":  "15.9"
+                  },
+                  {
+                      "cell":  "Column 1 Row 12",
+                      "value":  "0.00032700"
+                  }
+              ]
+}

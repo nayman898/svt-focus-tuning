@@ -1,0 +1,224 @@
+﻿{
+    "index":  181,
+    "path":  "Engine / Spark / Advance / Base / Spark Emissions Reduction Adder (Driver Demand vs. Catalyst Temperature)",
+    "name":  "Spark Emissions Reduction Adder (Driver Demand vs. Catalyst Temperature)",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:36:42.0518859Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 11545 - Spark Emissions Reduction Adder (Driver Demand vs. Catalyst Temperature)",
+    "parameter_id":  11545,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "120"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "200"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "260"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "300"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "500"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "600"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "2.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "4.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "6.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "20.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "800"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "4.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "6.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "10.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "20.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 2",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "900"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "6.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "10.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "20.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 3",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "4.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "8.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "12.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "20.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 4",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "1,050"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "8.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "10.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "15.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "18.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "20.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 5",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "1,250"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 6",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 6",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 6",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 6",
+                      "value":  "50.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 6",
+                      "value":  "50.00"
+                  }
+              ]
+}

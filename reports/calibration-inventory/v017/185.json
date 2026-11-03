@@ -1,0 +1,196 @@
+﻿{
+    "index":  185,
+    "path":  "Engine / Spark / Advance / Borderline Corrections / Spark VID Octane Adjust vs. RPM vs. Load",
+    "name":  "Spark VID Octane Adjust vs. RPM vs. Load",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:36:49.8836884Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32295 - Spark VID Octane Adjust vs. RPM vs. Load",
+    "parameter_id":  32295,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "2,600"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "3,250"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "5,000"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "6,000"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "7,200"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0.15"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "0.20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "-0.45"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "-0.25"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "-0.75"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "-1.40"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "-1.10"
+                  },
+                  {
+                      "cell":  "Column 6 Row 2",
+                      "value":  "-0.68"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "0.60"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "-1.70"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "-0.93"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "-1.33"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "-1.75"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "-1.75"
+                  },
+                  {
+                      "cell":  "Column 6 Row 3",
+                      "value":  "-1.08"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "0.80"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "-2.80"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "-1.67"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "-1.60"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "-1.50"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "-1.70"
+                  },
+                  {
+                      "cell":  "Column 6 Row 4",
+                      "value":  "-1.33"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "-3.00"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "-2.30"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "-2.00"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "-2.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "-2.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 5",
+                      "value":  "-2.00"
+                  }
+              ]
+}

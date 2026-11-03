@@ -1,0 +1,352 @@
+﻿{
+    "index":  52,
+    "path":  "Engine / Airflow / Speed Density / General / VE Correction vs. ACT vs. ECT",
+    "name":  "VE Correction vs. ACT vs. ECT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:19.4581599Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32044 - VE Correction vs. ACT vs. ECT",
+    "parameter_id":  32044,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  "-25"
+                  },
+                  {
+                      "cell":  "Column 2 Row 0",
+                      "value":  "10"
+                  },
+                  {
+                      "cell":  "Column 3 Row 0",
+                      "value":  "45"
+                  },
+                  {
+                      "cell":  "Column 4 Row 0",
+                      "value":  "80"
+                  },
+                  {
+                      "cell":  "Column 5 Row 0",
+                      "value":  "115"
+                  },
+                  {
+                      "cell":  "Column 6 Row 0",
+                      "value":  "150"
+                  },
+                  {
+                      "cell":  "Column 7 Row 0",
+                      "value":  "185"
+                  },
+                  {
+                      "cell":  "Column 8 Row 0",
+                      "value":  "220"
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-25"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.03"
+                  },
+                  {
+                      "cell":  "Column 2 Row 1",
+                      "value":  "1.11"
+                  },
+                  {
+                      "cell":  "Column 3 Row 1",
+                      "value":  "1.14"
+                  },
+                  {
+                      "cell":  "Column 4 Row 1",
+                      "value":  "1.17"
+                  },
+                  {
+                      "cell":  "Column 5 Row 1",
+                      "value":  "1.18"
+                  },
+                  {
+                      "cell":  "Column 6 Row 1",
+                      "value":  "1.19"
+                  },
+                  {
+                      "cell":  "Column 7 Row 1",
+                      "value":  "1.19"
+                  },
+                  {
+                      "cell":  "Column 8 Row 1",
+                      "value":  "1.19"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "10"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.91"
+                  },
+                  {
+                      "cell":  "Column 2 Row 2",
+                      "value":  "0.97"
+                  },
+                  {
+                      "cell":  "Column 3 Row 2",
+                      "value":  "1.03"
+                  },
+                  {
+                      "cell":  "Column 4 Row 2",
+                      "value":  "1.06"
+                  },
+                  {
+                      "cell":  "Column 5 Row 2",
+                      "value":  "1.08"
+                  },
+                  {
+                      "cell":  "Column 6 Row 2",
+                      "value":  "1.09"
+                  },
+                  {
+                      "cell":  "Column 7 Row 2",
+                      "value":  "1.09"
+                  },
+                  {
+                      "cell":  "Column 8 Row 2",
+                      "value":  "1.09"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "45"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0.81"
+                  },
+                  {
+                      "cell":  "Column 2 Row 3",
+                      "value":  "0.90"
+                  },
+                  {
+                      "cell":  "Column 3 Row 3",
+                      "value":  "0.99"
+                  },
+                  {
+                      "cell":  "Column 4 Row 3",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 5 Row 3",
+                      "value":  "1.03"
+                  },
+                  {
+                      "cell":  "Column 6 Row 3",
+                      "value":  "1.04"
+                  },
+                  {
+                      "cell":  "Column 7 Row 3",
+                      "value":  "1.04"
+                  },
+                  {
+                      "cell":  "Column 8 Row 3",
+                      "value":  "1.04"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "80"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.80"
+                  },
+                  {
+                      "cell":  "Column 2 Row 4",
+                      "value":  "0.89"
+                  },
+                  {
+                      "cell":  "Column 3 Row 4",
+                      "value":  "0.98"
+                  },
+                  {
+                      "cell":  "Column 4 Row 4",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 4",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 6 Row 4",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 7 Row 4",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 8 Row 4",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "115"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.80"
+                  },
+                  {
+                      "cell":  "Column 2 Row 5",
+                      "value":  "0.89"
+                  },
+                  {
+                      "cell":  "Column 3 Row 5",
+                      "value":  "0.97"
+                  },
+                  {
+                      "cell":  "Column 4 Row 5",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 5",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 6 Row 5",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 7 Row 5",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 8 Row 5",
+                      "value":  "1.01"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "150"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.83"
+                  },
+                  {
+                      "cell":  "Column 2 Row 6",
+                      "value":  "0.90"
+                  },
+                  {
+                      "cell":  "Column 3 Row 6",
+                      "value":  "0.98"
+                  },
+                  {
+                      "cell":  "Column 4 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 8 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "185"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.86"
+                  },
+                  {
+                      "cell":  "Column 2 Row 7",
+                      "value":  "0.91"
+                  },
+                  {
+                      "cell":  "Column 3 Row 7",
+                      "value":  "0.98"
+                  },
+                  {
+                      "cell":  "Column 4 Row 7",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 7",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 7",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 7",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 8 Row 7",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "220"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "0.87"
+                  },
+                  {
+                      "cell":  "Column 2 Row 8",
+                      "value":  "0.92"
+                  },
+                  {
+                      "cell":  "Column 3 Row 8",
+                      "value":  "0.98"
+                  },
+                  {
+                      "cell":  "Column 4 Row 8",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 5 Row 8",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 6 Row 8",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 7 Row 8",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 8 Row 8",
+                      "value":  "1.00"
+                  }
+              ]
+}

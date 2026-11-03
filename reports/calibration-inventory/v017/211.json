@@ -1,0 +1,68 @@
+﻿{
+    "index":  211,
+    "path":  "Engine / Spark / Advance / Transient / Spark Tip-In Retard Multiplier",
+    "name":  "Spark Tip-In Retard Multiplier",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:44.1370796Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 20887 - Spark Tip-In Retard Multiplier",
+    "parameter_id":  20887,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-256"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "170"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "200"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "1.00"
+                  }
+              ]
+}

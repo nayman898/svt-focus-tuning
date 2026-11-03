@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "session": "paired-20261103-093505-f70dae31-v024 (preserved in logs/2026-11-03-v024-cold-cleanup-01)",
+  "purpose": "v024 combined cold-start/new-O2 regression check, warm clutch-in/out flywheel chatter A/B isolation, and stationary off-idle fuel coverage",
+  "tune": {
+    "filename": "v024-fuel-cleanup-diagnostics.hpt",
+    "sha256": "80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E",
+    "installation_evidence": "Owner-confirmed flashed prior to capture; no ECU readback"
+  },
+  "changes_since_previous_run": "Relative to v021: two ECM44511 2500-RPM cells (1.07/1.14 -> 1.00) plus three FRP DTC modes (P0190/P0192/P0193 -> MIL Light). Owner installed new upstream O2 before run. v023 rejected, not parent.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels 100.0% populated across 38,438 VCM rows"
+  },
+  "conditions": {
+    "start_ect_f": 60.0,
+    "soak_minutes": null,
+    "fuel_or_refueling": "Unchanged 93 octane reported baseline",
+    "accessories": "Fixed during warmup/baseline; owner-marked clutch_down (12:00), clutch_up (12:30), 1.5k hold (13:00-13:21), 2k hold (13:45-14:00), fan_on (~14:20), fan_off (~14:50)",
+    "water_meth": "OFF per standing owner instruction",
+    "planned_start": "True 60.0 F cold start (below 64.00 F ECM44519 cranking step)",
+    "upstream_o2": "New upstream O2 installed by owner prior to this run; woke up cleanly at +59-60s runtime (84 F)",
+    "o2_heater_circuit_check": "Functionally verified by clean 60s warmup to switching at 84 F and continuous 0.70-0.999V response during rich FMEM",
+    "crank_sensor_and_grounds": "Zero post-start rows <500 RPM and zero closed-throttle upward single-frame RPM spikes across 15.11 min"
+  },
+  "planned_actions": [
+    "Stage A: captured 60.0 F cold start, 65.4s CL entry, mid-warmup FMEM (177.5-390.0s) and recovery, plus settled warm idle (540-720s, 180-184 F)",
+    "Stage A2: captured 30s clutch_down (720-750s) vs adjacent 30s clutch_up controls (690-720s, 750-779s)",
+    "Stage B: captured warm 1.62k RPM CL hold (787-797.5s) and 2.18k RPM OL hold (832-843.5s) with return-to-idle recoveries; omitted 2.5k hold after 2.18k OL hold measured 0.735 lambda",
+    "Warm fan cycle: captured full fan-on window (859-888.5s, 196->190 F) and 17.6s post-fan-off recovery (889-906.6s, 188->186 F)"
+  ],
+  "completion_event": "Stopped and exported by owner at 15.11 min after fan-off",
+  "stop_conditions": [
+    "Stall/nearstall or repeated worsening dips (NONE observed; min warm idle 816.5 RPM, min post-fan-off 871.2 RPM)",
+    "Warm OL steady lambda <0.80 for >5s review trigger: OBSERVED during 2,181 RPM OL hold (0.7345 lambda for 11.5s), diagnosed to +26% ECM12163 MAF bulge at 0.70-1.00V"
+  ],
+  "events": [
+    {"time_vcm_s": 4.137, "label": "crank_start", "detail": "ECT 60.0F, Vbatt 8.69V"},
+    {"time_vcm_s": 65.431, "label": "closed_loop_entry", "detail": "ECT 84.0F, O2 active, clean entry"},
+    {"time_vcm_s": 177.548, "label": "open_loop_fmem_on", "detail": "ECT 128.0F after STFT reached -23.92% at 0.85V MAF"},
+    {"time_vcm_s": 389.959, "label": "open_loop_fmem_off", "detail": "ECT 162.0F at 944 desired RPM / 0.605V MAF; CL resumed"},
+    {"time_vcm_s": 720.0, "label": "clutch_down", "detail": "Owner marker 12m00s"},
+    {"time_vcm_s": 750.0, "label": "clutch_up", "detail": "Owner marker 12m30s"},
+    {"time_vcm_s": 787.0, "label": "hold_1500_steady", "detail": "Owner marker 13m00s-13m21s; CL Stoich, STFT -15.5% to -21.9%"},
+    {"time_vcm_s": 832.0, "label": "hold_2000_steady", "detail": "Owner marker 13m45s-14m00s; OL Power Demand Enrich, SCG lambda 0.7345"},
+    {"time_vcm_s": 859.0, "label": "fan_on", "detail": "Owner marker ~14m20s, ECT 196F -> 190F, RPM SD 18.13"},
+    {"time_vcm_s": 889.0, "label": "fan_off", "detail": "Owner marker ~14m50s, ECT 188F -> 186F, no stall, min 871.2 RPM"}
+  ],
+  "owner_observations": "New upstream O2 installed before run. Clutch down at 12m, clutch up at 12m30s, 1.5k hold 13m-13m21s, idle until 13m45s, 2k hold 13m45s-14m, fan on ~14m20s, fan off ~14m50s.",
+  "export_status": "All 4 data files complete and verified; session.json marked partial only due to transient Errno 13 lock 208ms after vcm.csv export",
+  "comparison_session": "logs/2026-11-02-v021-baseline-01",
+  "rollback": "v021-fuel-pressure-feedback.hpt (retaining new upstream O2)",
+  "acceptance": "Provisionally adopted as parent for v025 in covered stationary modes; 2.18k OL richness (0.735 lambda) and mid-warmup FMEM (-23.9% STFT) motivate bounded ECM12163 smoothing in v025.",
+  "uncovered_until_tested": [
+    "2,500 RPM warm hold (deferred until v025 corrects 0.70-1.00V MAF bulge)",
+    "Full 60s post-fan-off window (17.6s captured clean)",
+    "Hot restart",
+    "Moving/load/boost"
+  ],
+  "analysis": {
+    "input_hashes": {
+      "session.json": "E8E8EED208275321014EB933275E453E52621D1FF4475532D66C4D158DB6BB9F",
+      "vcm.hpl": "35F23CD40CD1BEB443C0C3D738D63C96015FEFA72992A97C5B558DC2A5FBE8CF",
+      "vcm.csv": "A4B64A839BFBB4B84BCEF565302970C47075AC53971404702FF5F88F66D6490B",
+      "scg.sqlite": "6A98B630FCEBDAFACFB0091452B115EB9C1A86707D163463AD6E405194DE0E81",
+      "scg.csv": "EC355662B6528AD0CB4DB56513104E36D23532D5E094ACDAFD11155F32E14397"
+    },
+    "analyzer_version_or_hash": "reports/2026-11-03-v024-cold-cleanup-review.md",
+    "alignment": "SCG elapsed_s = VCM Offset + 3.150 s (provisional metadata alignment from vcm_start.acknowledged_utc)",
+    "windows": [
+      {"name": "warm_pre_clutch_540_720", "rpm_mean": 950.28, "rpm_sd": 22.23, "rpm_min": 816.5, "rpm_max": 1001.0, "sub900_per_min": 11.66, "lambda_mean": 1.0116},
+      {"name": "clutch_down_720_750", "rpm_mean": 950.23, "rpm_sd": 24.29, "rpm_min": 849.5, "rpm_max": 1002.5, "sub900_per_min": 10.68, "lambda_mean": 1.0086},
+      {"name": "hold_1622_cl_787_797p5", "rpm_mean": 1621.5, "stft_mean": -15.54, "lambda_mean": 0.9964},
+      {"name": "hold_2181_ol_832_843p5", "rpm_mean": 2181.0, "stft_mean": 0.0, "lambda_mean": 0.7345},
+      {"name": "fan_on_859_888p5", "rpm_mean": 951.3, "rpm_sd": 18.13, "rpm_min": 888.5, "rpm_max": 1002.2, "sub900_per_min": 4.1, "lambda_mean": 1.0141},
+      {"name": "fan_off_889_906p6", "rpm_mean": 951.9, "rpm_sd": 31.54, "rpm_min": 871.2, "rpm_max": 1005.5, "sub900_per_min": 17.1, "lambda_mean": 1.0053}
+    ],
+    "coverage_report": "reports/2026-11-03-v024-cold-cleanup-review.md",
+    "decision": "Adopt v024 as parent for v025; prepare v025 smoothing ECM12163 columns 6-13 (0.500-1.000 V)",
+    "next_test": "docs/v025-regression-test.md"
+  },
+  "human_card": "docs/v024-regression-test.md"
+}

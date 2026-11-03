@@ -1,0 +1,92 @@
+﻿{
+    "index":  14,
+    "path":  "Engine / Idle / RPM / Idle Adders / Idle RPM Adder vs. Startup IAT",
+    "name":  "Idle RPM Adder vs. Startup IAT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:31:21.7817022Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32961 - Idle RPM Adder vs. Startup IAT",
+    "parameter_id":  32961,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-256"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0"
+                  }
+              ]
+}

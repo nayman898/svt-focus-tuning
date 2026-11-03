@@ -1,0 +1,92 @@
+﻿{
+    "index":  51,
+    "path":  "Engine / Airflow / Speed Density / General / VE Correction (Density) vs. ACT",
+    "name":  "VE Correction (Density) vs. ACT",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:32:18.1848988Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 32042 - VE Correction (Density) vs. ACT",
+    "parameter_id":  32042,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.29"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1.12"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "80"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "160"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "0.87"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "200"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "0.82"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.76"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "254"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.76"
+                  }
+              ]
+}

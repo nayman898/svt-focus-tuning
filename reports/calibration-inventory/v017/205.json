@@ -1,0 +1,92 @@
+﻿{
+    "index":  205,
+    "path":  "Engine / Spark / Advance / Maximum Spark / Spark Low Load Maximum vs. Time",
+    "name":  "Spark Low Load Maximum vs. Time",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:37:29.5918883Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 44603 - Spark Low Load Maximum vs. Time",
+    "parameter_id":  44603,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "60.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "480"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "10.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "600"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "8.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "720"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "4.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "860"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "2.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "1,000"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "0.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "65,535"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "0.00"
+                  }
+              ]
+}

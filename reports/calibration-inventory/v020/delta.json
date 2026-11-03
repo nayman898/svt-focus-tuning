@@ -1,0 +1,65 @@
+﻿{
+    "revision":  "v020",
+    "parent":  "v019",
+    "sha256":  "17F421379EA038CE1938EDD8A080F6D517DCF90CE60CABC340B4CFB8C3ACADDA",
+    "bytes":  247277,
+    "status":  "Prepared and verified; not flashed or tested",
+    "changes":  [
+                    {
+                        "parameter_id":  44242,
+                        "row":  3,
+                        "column":  1,
+                        "rpm":  900,
+                        "before":  0.40537700057029724,
+                        "after":  0.38510814309120178,
+                        "unit":  "lb/min",
+                        "actual_pct":  -5.0000018379386617
+                    },
+                    {
+                        "parameter_id":  44242,
+                        "row":  4,
+                        "column":  1,
+                        "rpm":  1000,
+                        "before":  0.46118998527526855,
+                        "after":  0.43813049793243408,
+                        "unit":  "lb/min",
+                        "actual_pct":  -4.9999974151804345
+                    },
+                    {
+                        "parameter_id":  44239,
+                        "row":  3,
+                        "column":  1,
+                        "rpm":  900,
+                        "before":  0.40537700057029724,
+                        "after":  0.38510814309120178,
+                        "unit":  "lb/min",
+                        "actual_pct":  -5.0000018379386617
+                    },
+                    {
+                        "parameter_id":  44239,
+                        "row":  4,
+                        "column":  1,
+                        "rpm":  1000,
+                        "before":  0.46118998527526855,
+                        "after":  0.43813049793243408,
+                        "unit":  "lb/min",
+                        "actual_pct":  -4.9999974151804345
+                    }
+                ],
+    "axes_unchanged":  true,
+    "other_cells_unchanged":  true,
+    "comparison":  {
+                       "value":  [
+                                     "Notes",
+                                     "Engine",
+                                     "Idle",
+                                     "Airflow",
+                                     "Idle Airflow",
+                                     "Idle Airflow (Drive) vs. Desired Idle RPM",
+                                     "Idle Airflow (P/N) vs. Desired Idle RPM"
+                                 ],
+                       "Count":  7
+                   },
+    "notes_parent_prefix_verified":  true,
+    "ecu_readback":  false
+}

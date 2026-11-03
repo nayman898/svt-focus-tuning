@@ -1,1 +1,3 @@
-tunes/*.hpt binary
+# Scanner exports and captured evidence retain their native Windows line endings.
+* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.md text eol=lf

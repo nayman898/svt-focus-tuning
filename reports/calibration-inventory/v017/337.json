@@ -1,0 +1,92 @@
+﻿{
+    "index":  337,
+    "path":  "Speedometer / Limiter / Limits / Torque Ratio vs. Output Shaft Speed",
+    "name":  "Torque Ratio vs. Output Shaft Speed",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:42:53.3637686Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 4219 - Torque Ratio vs. Output Shaft Speed",
+    "parameter_id":  4219,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "0"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "1.00"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "16,384"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "1.00"
+                  }
+              ]
+}

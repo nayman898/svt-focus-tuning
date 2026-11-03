@@ -1,0 +1,108 @@
+﻿{
+    "index":  96,
+    "path":  "Engine / Fuel / Oxygen Sensors / Feedback / Closed Loop Enable Delay",
+    "name":  "Closed Loop Enable Delay",
+    "source_sha256":  "9597BAB2DB9DEB063298C7814F8B9930C530DBDB3FE114D80F8EE44B6463E7CE",
+    "captured_utc":  "2026-10-30T21:33:42.0016358Z",
+    "kind":  "table",
+    "status":  "captured",
+    "title":  "[ECM] 12462 - Closed Loop Enable Delay",
+    "parameter_id":  12462,
+    "description":  null,
+    "controls":  [
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     },
+                     {
+                         "type":  "ControlType.CheckBox",
+                         "name":  "",
+                         "value":  null,
+                         "toggle":  "On"
+                     }
+                 ],
+    "cells":  [
+                  {
+                      "cell":  "Column 0 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 1 Row 0",
+                      "value":  ""
+                  },
+                  {
+                      "cell":  "Column 0 Row 1",
+                      "value":  "-20"
+                  },
+                  {
+                      "cell":  "Column 1 Row 1",
+                      "value":  "150"
+                  },
+                  {
+                      "cell":  "Column 0 Row 2",
+                      "value":  "-5"
+                  },
+                  {
+                      "cell":  "Column 1 Row 2",
+                      "value":  "120"
+                  },
+                  {
+                      "cell":  "Column 0 Row 3",
+                      "value":  "25"
+                  },
+                  {
+                      "cell":  "Column 1 Row 3",
+                      "value":  "100"
+                  },
+                  {
+                      "cell":  "Column 0 Row 4",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 1 Row 4",
+                      "value":  "78"
+                  },
+                  {
+                      "cell":  "Column 0 Row 5",
+                      "value":  "50"
+                  },
+                  {
+                      "cell":  "Column 1 Row 5",
+                      "value":  "72"
+                  },
+                  {
+                      "cell":  "Column 0 Row 6",
+                      "value":  "62"
+                  },
+                  {
+                      "cell":  "Column 1 Row 6",
+                      "value":  "48"
+                  },
+                  {
+                      "cell":  "Column 0 Row 7",
+                      "value":  "85"
+                  },
+                  {
+                      "cell":  "Column 1 Row 7",
+                      "value":  "48"
+                  },
+                  {
+                      "cell":  "Column 0 Row 8",
+                      "value":  "120"
+                  },
+                  {
+                      "cell":  "Column 1 Row 8",
+                      "value":  "40"
+                  },
+                  {
+                      "cell":  "Column 0 Row 9",
+                      "value":  "200"
+                  },
+                  {
+                      "cell":  "Column 1 Row 9",
+                      "value":  "24"
+                  }
+              ]
+}

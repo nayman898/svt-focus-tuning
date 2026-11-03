@@ -3,52 +3,38 @@
 Calibration history, diagnostic reviews, and scanner profiles for a modified
 2004 Ford Focus SVT.
 
-## Current baseline
+## Current state — 2026-11-03
 
-- Prepared next file: [v006 post-repair fan baseline](tunes/v006-post-repair-fan-baseline.md),
-  for use after the pending resistor/pigtail repair. It restores high-speed
-  225/215 F while retaining low-speed 195/190 F and v005's other settings.
-  [ECT idle-adder contingency](docs/fan-repair-and-idle-adder.md) is documented
-  separately; no RPM adder was changed.
-- Latest running experiment: [v005 absolute-TPS entry test](tunes/v005-idle-absolute-tps-entry-test.md).
-  [Startup review](reports/2026-10-26-v005-startup-review.md) confirms closed-loop
-  entry, but records a failed initial catch, large startup flare and reported
-  cranking supply dip. Stationary idle scope remains; mixture is not validated.
-  The [closed-loop AFR review](reports/2026-10-26-v005-closed-loop-review.md)
-  provisionally pairs the delayed LogWorks capture and documents remaining
-  electrical/load disturbances and measured mixture excursions.
-- Earlier test: [v004 closed-loop-entry test](tunes/v004-idle-closed-loop-entry-test.md).
-  Owner-supplied logs confirm no closed-loop entry. See the
-  [result and logging audit](reports/2026-10-26-v004-log-review.md) for observed
-  states, missing measurements and six added diagnostic channels. Stationary
-  idle scope was retained for the following experiment.
-- [Agent instructions](AGENTS.md) define calibration evidence, revision
-  verification, logging and flash-readiness handoffs for this repository.
-- MPVI4 communication confirmed over USB on 2026-10-26.
-- VCM Editor 5.3.1332 Beta is installed.
-- MPVI4 firmware is 1.33.1 Release; Pro Feature Set is licensed.
-- One existing Ford controller license is present. Two credits purchased, two
-  used, zero available. The connected vehicle VIN was subsequently confirmed
-  to match that license; identifiers remain private.
-- The initial device-only inspection was followed by vehicle connection,
-  saved calibration revisions and owner-supplied post-write logs. Flash status
-  is tracked per revision in the tune history.
-- Owner reports a 2004 Focus SVT with a turbocharger, hardened rods, forged
-  pistons, return-style fuel system, upgraded Stealth pump, blade-style MAF,
-  water/methanol injection, LSD, SBC Stage 3 clutch, electric power steering,
-  tubular lower control arms, fully adjustable rear suspension, and relocated
-  battery. The modification list is incomplete; exact component specs, fuel,
-  boost, and tuning goals remain to be confirmed in [the vehicle record](vehicle.json).
-- Additional owner-reported specs: Siemens 60 lb/hr injectors, 93-octane fuel,
-  43 psi base fuel pressure, Aeromotive 1:1 boost/vacuum-referenced regulator,
-  PMAS blade-style MAF in a nominal 3-inch housing, and Innovate SCG-1 AFR/boost
-  controller. The current tune was supplied by the previous owner; the goal is
-  to improve it. Exact injector/MAF identifiers, boost settings, water/meth details,
-  and wideband logging integration remain unconfirmed.
+- **Installed working parent:** [v024](tunes/v024-fuel-cleanup-diagnostics.md),
+  owner-confirmed flashed and tested with a new upstream O2 sensor. It is
+  provisionally retained for the stationary conditions covered by the
+  [latest review](reports/2026-11-03-v024-cold-cleanup-review.md).
+- **Prepared candidate:** [v025](tunes/v025-maf-idle-offidle-smooth.md), derived
+  from v024 with MAF transfer changes at 0.500–1.000 V. Saved, reopened and
+  compared in Editor; **not flashed or tested**. Its immediate rollback is v024.
+- **Next test:** [v025 regression card](docs/v025-regression-test.md) and
+  [session run card](docs/v025-run-card.json). Verify the active profile and
+  actual channel coverage before using a capture for comparison.
+- **Scope:** stability and drivability remain unfinished. Stationary evidence
+  does not establish road/boost validation or a proven root cause. Water/meth
+  remains OFF; the SCG RPM wire remains disconnected.
+
+The [revision catalog](tunes/revisions.json) records file identities, parents,
+verification and outcomes. [vehicle.json](vehicle.json) retains hardware and
+owner observations. Prepared, installed, tested and accepted are distinct states;
+there is no new ECU readback implied by this repository update.
+
+## Working references
+
+- [Tune revision history](tunes/README.md) and [calibration reference](docs/calibration-reference.md).
+- [Datalog workflow](docs/datalog-workflow.md), [operating profiles](profiles/operating-profiles.md),
+  and [channel coverage](profiles/channel-coverage.md).
+- [v021 complete calibration audit](reports/2026-11-02-v021-complete-calibration-audit.md).
+- [Agent instructions](AGENTS.md) and [archived session notes](SESSION_HISTORY.md).
 
 ## Project layout
 
-- [Lower-idle roadmap](docs/lower-idle-roadmap.md): owner goal of 800-850 RPM
+- [Historical lower-idle roadmap](docs/lower-idle-roadmap.md): previous 800-850 RPM goal, now deferred;
   warm idle, priority checks and staged target-only trials; startup-airflow
   proposal deferred as a separate experiment.
 - [v003 timing review](reports/2026-10-26-v003-timing-review.md): how idle spark

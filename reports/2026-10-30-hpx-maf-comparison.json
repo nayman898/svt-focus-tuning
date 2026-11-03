@@ -1,0 +1,12 @@
+{
+  "workbook_sha256": "14b7db48ba6f12098173ff02ba12f41f579d5b7e117e257583f67b0a565969d3",
+  "formula_cached_validation_max_abs_g_s": 7.992184691829607e-11,
+  "default_workbook_tube_inches": 3.4,
+  "comparison_generic_tube_inches": 3,
+  "generic_formula_area_correction": 0.91,
+  "pmas_protube_tab_inches": 2.8,
+  "warm_logged_lb_hr_over_editor_interpolated_numeric_median": 7.582548643471198,
+  "warm_voltage_min": 0.5170440674,
+  "warm_voltage_max": 0.638961792,
+  "unit_warning": "Editor labelled lb/h and conversion tolb/min observed. Logged MAF lb/min implies roughlyg/s-scale table numerics. Asynchronous measurements and corrections limit direct mapping; unresolved definition/scaling. Do not flash reference blindly."
+}
