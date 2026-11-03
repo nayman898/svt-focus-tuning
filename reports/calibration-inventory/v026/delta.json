@@ -1,0 +1,53 @@
+{
+  "version": "v026",
+  "file": "v026-open-loop-tps-threshold.hpt",
+  "parent": "v025",
+  "parent_file": "v025-maf-idle-offidle-smooth.hpt",
+  "bytes": 257885,
+  "sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
+  "parent_sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
+  "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for staged testing under docs/v026-regression-test.md.",
+  "parameter_id": 32731,
+  "parameter_name": "Open Loop Fuel TPS Thresh vs. RPM",
+  "parameter_path": "Engine / Fuel / Open Loop / Base / Open Loop / Open Loop Fuel TPS Thresh vs. RPM",
+  "axes_edited": false,
+  "axes_unchanged": true,
+  "displayed_axes_match_parent": true,
+  "changes": [
+    {
+      "row": 3,
+      "rpm": 2000,
+      "before": 0.0,
+      "after": 350.0,
+      "diff": 350.0,
+      "units": "A/D counts"
+    },
+    {
+      "row": 4,
+      "rpm": 2500,
+      "before": 0.0,
+      "after": 350.0,
+      "diff": 350.0,
+      "units": "A/D counts"
+    }
+  ],
+  "unchanged_rows": [
+    { "row": 1, "rpm": 0, "value": 200.0, "units": "A/D counts" },
+    { "row": 2, "rpm": 1500, "value": 200.0, "units": "A/D counts" },
+    { "row": 5, "rpm": 5500, "value": 0.0, "units": "A/D counts" },
+    { "row": 6, "rpm": 6500, "value": 0.0, "units": "A/D counts" },
+    { "row": 7, "rpm": 16384, "value": 0.0, "units": "A/D counts" }
+  ],
+  "notes_parent_prefix_verified": true,
+  "comparison": [
+    "Notes",
+    "Engine",
+    "Fuel",
+    "Open Loop / Base",
+    "Open Loop",
+    "Open Loop Fuel TPS Thresh vs. RPM"
+  ],
+  "prior_26_hashes_intact": true,
+  "ecu_readback": false
+}
+

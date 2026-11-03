@@ -8,11 +8,11 @@ narratives in reports rather than prepending them to this instruction file.
 Historical agent notes are preserved in [SESSION_HISTORY.md](SESSION_HISTORY.md);
 they are not current instructions or evidence of a currently active recording.
 
-As of 2026-11-03, v024 is owner-confirmed installed and provisionally retained
-for covered stationary conditions with the new upstream O2 sensor. v025 is
-prepared and verified from v024, but not flashed or tested. Its immediate rollback
-is v024. Read the [v024 review](reports/2026-11-03-v024-cold-cleanup-review.md) and
-[v025 test card](docs/v025-regression-test.md) before further tuning work.
+As of 2026-11-03, v025 is owner-confirmed tested and provisionally retained
+for covered stationary conditions with the new upstream O2 sensor (0 mid-warmup FMEM events,
+centered 952 RPM warm idle). v026 is prepared and verified from v025, but not flashed or tested.
+Its immediate rollback is v025. Read the [v025 review](reports/2026-11-03-v025-test-review.md) and
+[v026 test card](docs/v026-regression-test.md) before further tuning work.
 File verification does not establish that a proposed mechanism or fix is proven.
 
 Prioritize stability and drivability; further idle-target reductions remain

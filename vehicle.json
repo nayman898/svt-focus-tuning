@@ -3,10 +3,10 @@
   "model": "Focus SVT",
   "model_year": 2004,
   "current_calibration_stock_status": "Previous-owner modified tune; owner clarified SVT Base (from chuck) is a fresh ECU read with their MIL changes already included; preserved as v001",
-  "prepared_test_revision": "v025-maf-idle-offidle-smooth.hpt; saved/reopened/compared, ready for staged testing under docs/v025-regression-test.md",
-  "candidate_test_revision": "v025 from exact v024: single-table ECM12163 MAF transfer convex smoothing across columns 6–13 (0.500–1.000 V)",
-  "installed_tune": "v024-fuel-cleanup-diagnostics.hpt",
-  "prepared_candidate": "v025-maf-idle-offidle-smooth.hpt",
+  "prepared_test_revision": "v026-open-loop-tps-threshold.hpt; saved/reopened/compared, ready for staged testing under docs/v026-regression-test.md",
+  "candidate_test_revision": "v026 from exact v025: single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts",
+  "installed_tune": "v025-maf-idle-offidle-smooth.hpt",
+  "prepared_candidate": "v026-open-loop-tps-threshold.hpt",
   "channel_population_owner_observation": "Owner reports some Scanner readings do not populate initially but eventually do; blank snapshots are missing observations and do not establish unsupported channels.",
   "owner_load_test_observations": "Owner reports abnormal running after fan OFF near LogWorks54 s in load-step session; headlights held longer than planned had no perceptible idle effect on/off; interior blower caused subtle idle change. Exact headlight/blower times and HVAC mode not recorded. Saved trace retains closed loop and shows a sustained displayed lean excursion around fan-off. See reports/2026-10-26-v005-fan-off-review.md.",
   "v005_warm_review_summary": "Saved VCM warm segment sustains CL Active/Ready Yes and Stoich. Delayed LogWorks file contains historical Session1 plus current Session2; only Session2 analyzed. Provisional native-clock mapping LW elapsed = VCM offset -99 s; overlap AFR mean 14.796, central 90 percent 13.61-16.08, range 12.47-18.83. LogWorks display reference Gasoline14.7 checked. RPM/load and voltage dips remain; no MAF/fuel correction or road/boost acceptance. See reports/2026-10-26-v005-closed-loop-review.md.",
@@ -574,7 +574,7 @@
     "parent": "v024",
     "bytes": 255949,
     "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
-    "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing",
+    "status": "tested_2026-11-03; owner confirmed flashed; test session paired-20261103-131810-a51ccd21-v025 preserved in logs/2026-11-03-v025-maf-hold-fan-01; verified 0 mid-warmup FMEM events, centered 952 RPM warm idle, and 1.5k stoich hold; 2.0k/2.5k hold OL power enrichment trigger motivates v026 TPS threshold cleanup; provisionally adopted as parent for v026; no ECU readback.",
     "changes": [
       "ECM12163 MAF Airflow vs. Voltage: columns 6–13 (0.500–1.000 V) convex smoothing replacing 0.600 V slope discontinuity (5.35 -> 24.64 -> 2.89 g/s/V) and 0.70–1.00 V rich bulge; columns 1–5 and 14–30 and all 30 voltage breakpoints identical to v024",
       "Calibration Details Notes appended with v025 rationale and staged test criteria; full v024 prefix preserved"
@@ -585,6 +585,26 @@
     "rollback": "v024-fuel-cleanup-diagnostics.hpt",
     "verification": "Saved/reopened all 30 MAF flow cells and axes, full Notes prefix; whole-file comparison exactly 12163, Notes; all 25 older files preserved",
     "inventory_delta": "../reports/calibration-inventory/v025/delta.json",
-    "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
+    "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md",
+    "outcome_report": "../reports/2026-11-03-v025-test-review.md"
+  },
+  "v026_trial": {
+    "version": "v026",
+    "file": "v026-open-loop-tps-threshold.hpt",
+    "parent": "v025",
+    "bytes": 257885,
+    "sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
+    "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing under docs/v026-regression-test.md",
+    "changes": [
+      "ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; all other 5 rows and all 7 RPM breakpoints identical to v025",
+      "Calibration Details Notes appended with v026 rationale; full v025 prefix preserved"
+    ],
+    "notes": "tunes/v026-open-loop-tps-threshold.md",
+    "run_card": "docs/v026-run-card.json",
+    "regression_test": "docs/v026-regression-test.md",
+    "rollback": "v025-maf-idle-offidle-smooth.hpt",
+    "verification": "Saved/reopened all 7 rows, full Notes prefix; whole-file comparison exactly 32731, Notes; all 26 older files preserved",
+    "inventory_delta": "../reports/calibration-inventory/v026/delta.json",
+    "source_report": "../reports/2026-11-03-v025-test-review.md"
   }
 }

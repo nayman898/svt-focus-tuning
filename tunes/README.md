@@ -1,13 +1,13 @@
 # Tune revisions
 
-Latest prepared candidate: [v025 MAF smoothing](v025-maf-idle-offidle-smooth.md),
-from exact v024. Saved, reopened and compared; **not flashed or tested**.
-Use the [v025 regression test](../docs/v025-regression-test.md).
+Latest prepared candidate: [v026 Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.md),
+from exact v025. Saved, reopened and compared; **not flashed or tested**.
+Use the [v026 regression test](../docs/v026-regression-test.md).
 
-Installed working parent and immediate rollback: [v024](v024-fuel-cleanup-diagnostics.md),
-owner-confirmed tested on 2026-11-03 with a new upstream O2 sensor. Acceptance
-is provisional and limited to covered stationary conditions. See the
-[latest review](../reports/2026-11-03-v024-cold-cleanup-review.md).
+Installed working parent and immediate rollback: [v025](v025-maf-idle-offidle-smooth.md),
+owner-confirmed tested on 2026-11-03. Acceptance is provisional and limited to
+covered stationary conditions. See the
+[latest review](../reports/2026-11-03-v025-test-review.md).
 
 The table below is historical; each status describes that revision's recorded
 outcome, not the current installed file. The [catalog](revisions.json) records
@@ -30,7 +30,8 @@ by Git.
 | v008 | [950-RPM idle target trial](v008-idle-950.hpt) | Same two targets: 1,000 to950 RPM, plus Notes. [Verification and scope](v008-idle-950.md). | Owner confirms exact file installed. [Monitored review](../reports/2026-10-27-v008-fan-recovery-review.md): one inferred fan cycle and65s recovery; brief835.5 dip recovers within seconds. Separate blower/hot-restart acceptance remains. No agent write/readback. |
 | v009 | [900-RPM idle target trial](v009-idle-900.hpt) | Same two targets: 950 to900 RPM, plus Notes. [Verification and scope](v009-idle-900.md). | Owner confirms exact file installed without edits for [latest900 run](../reports/2026-10-27-900-load-capture.md). Last-minute mean900.62; recovered fan/load dip810.75. Hold900 for off-idle review; hot restart and driving unvalidated. No agent write/readback. v008 rollback. |
 | v024 | [Fuel cleanup & diagnostics](v024-fuel-cleanup-diagnostics.hpt) | From exact v021. ECM44511 two 2,500-RPM cells (1.07/1.14 -> 1.00); ECM50 P0190/P0192/P0193 to MIL Light; Notes appended. 251,773 bytes; SHA-256 `80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E`. [Verification and scope](v024-fuel-cleanup-diagnostics.md). | Tested 2026-11-03 with new upstream O2 sensor; cold start, warm idle, and fan-off recovery clean; [review](../reports/2026-11-03-v024-cold-cleanup-review.md). Provisionally adopted as parent for v025 in covered stationary modes; no ECU readback. |
-| v025 | [MAF idle & off-idle smoothing](v025-maf-idle-offidle-smooth.hpt) | From exact v024. Single-table ECM12163 MAF transfer smoothed across columns 6–13 (0.500–1.000 V); all other 22 columns and all 30 voltage breakpoints identical to v024. 255,949 bytes; SHA-256 `2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17`. [Verification and scope](v025-maf-idle-offidle-smooth.md). | Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing under [v025 regression test](../docs/v025-regression-test.md). Rollback v024. |
+| v025 | [MAF idle & off-idle smoothing](v025-maf-idle-offidle-smooth.hpt) | From exact v024. Single-table ECM12163 MAF transfer smoothed across columns 6–13 (0.500–1.000 V); all other 22 columns and all 30 voltage breakpoints identical to v024. 255,949 bytes; SHA-256 `2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17`. [Verification and scope](v025-maf-idle-offidle-smooth.md). | Tested 2026-11-03; 0 mid-warmup FMEM events, centered 952 RPM warm idle, 1.5k stoich hold verified; [review](../reports/2026-11-03-v025-test-review.md). Adopted as working parent for v026; rollback v024. |
+| v026 | [Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.hpt) | From exact v025. Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; all other 5 rows and all 7 RPM breakpoints identical to v025. 257,885 bytes; SHA-256 `86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918`. [Verification and scope](v026-open-loop-tps-threshold.md). | Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing under [v026 regression test](../docs/v026-regression-test.md). Rollback v025. |
 
 Prepared next revision: [v010 gain1.500](v010-idle-spark-gain-1p5.hpt), from
 owner-confirmed v009. Only ECM47996 gain2.000 to1.500 plus Notes;900RPM retained.

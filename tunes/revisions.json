@@ -457,7 +457,7 @@
       "parent": "v024",
       "bytes": 255949,
       "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
-      "status": "prepared",
+      "status": "tested_2026-11-03; owner confirmed flashed; test session paired-20261103-131810-a51ccd21-v025 preserved in logs/2026-11-03-v025-maf-hold-fan-01; verified 0 mid-warmup FMEM events, centered 952 RPM warm idle, and 1.5k stoich hold; 2.0k/2.5k hold OL power enrichment trigger motivates v026 TPS threshold cleanup; provisionally adopted as parent for v026; no ECU readback.",
       "title": "MAF Transfer Idle & Off-Idle Smoothing",
       "description": "Single-table ECM12163 MAF transfer convex smoothing across columns 6–13 (0.500–1.000 V); eliminates 0.600 V slope discontinuity and 0.70–1.00 V excess airflow that triggered mid-warmup FMEM in v024",
       "changes": [
@@ -468,8 +468,28 @@
       "rollback": "v024-fuel-cleanup-diagnostics.hpt",
       "verification": "Saved/reopened all 30 MAF flow cells and axes, full Notes prefix; whole-file comparison exactly 12163, Notes; all 25 older files preserved",
       "inventory_delta": "../reports/calibration-inventory/v025/delta.json",
-      "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md"
+      "source_report": "../reports/2026-11-03-v024-cold-cleanup-review.md",
+      "outcome_report": "../reports/2026-11-03-v025-test-review.md"
+    },
+    {
+      "version": "v026",
+      "file": "v026-open-loop-tps-threshold.hpt",
+      "parent": "v025",
+      "bytes": 257885,
+      "sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
+      "status": "prepared",
+      "title": "Open Loop Fuel TPS Threshold Cleanup",
+      "description": "Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; eliminates premature Open Loop Power Demand Enrichment during stationary holds and light-throttle cruising while preserving Closed Loop Stoichiometry",
+      "changes": [
+        "ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: 2,000 RPM (row 3) 0.00 -> 350.00 counts; 2,500 RPM (row 4) 0.00 -> 350.00 counts; rows 1, 2, 5, 6, 7 and all 7 RPM breakpoints 100% identical to v025",
+        "Calibration Details Notes appended with v026 rationale; full v025 prefix preserved"
+      ],
+      "notes": "v026-open-loop-tps-threshold.md",
+      "rollback": "v025-maf-idle-offidle-smooth.hpt",
+      "verification": "Saved/reopened all 7 rows, full Notes prefix; whole-file comparison exactly 32731, Notes; all 26 older files preserved",
+      "inventory_delta": "../reports/calibration-inventory/v026/delta.json",
+      "source_report": "../reports/2026-11-03-v025-test-review.md"
     }
   ],
-  "updated_at": "2026-11-03T16:45:00.0000000Z"
+  "updated_at": "2026-11-03T20:15:00.0000000Z"
 }

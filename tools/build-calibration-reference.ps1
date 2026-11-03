@@ -161,12 +161,26 @@ if ($catalog.revisions.version -contains 'v025') {
     }
     $snapshots.v025.'12163'.cells = $cells
     foreach ($p in $snapshots.v025.PSObject.Properties) {
-        $p.Value.evidence = 'Exact v024 parent; verified saved/reopened comparison changes only 12163 MAF Airflow vs. Voltage (columns 6-13, 0.500-1.000 V) and Notes. Prepared candidate, ready for staged testing under docs/v025-regression-test.md.'
+        $p.Value.evidence = 'Exact v024 parent; verified saved/reopened comparison changes only 12163 MAF Airflow vs. Voltage (columns 6-13, 0.500-1.000 V) and Notes. Tested 2026-11-03; adopted as parent for v026 in covered stationary modes.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v025 prepared from exact v024: single-table ECM12163 MAF transfer convex smoothing across columns 6-13 (0.500-1.000 V) replacing 0.600 V discontinuity and 0.70-1.00 V rich bulge. Saved/reopened/compared in VCM Editor; ready for staged testing under docs/v025-regression-test.md.'; installed='v024 tested 2026-11-03 with new upstream O2 sensor; cold start, warm idle, and fan recovery verified clean; provisionally adopted as parent for v025 in covered stationary modes; no ECU readback.'}
+if ($catalog.revisions.version -contains 'v026') {
+    $d26 = Get-Content (Join-Path $folder 'v026/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v026 = Clone $snapshots.v025
+    foreach ($change in $d26.changes) {
+        $cell = $snapshots.v026.'32731'.cells | Where-Object cell -eq "Column 1 Row $($change.row)"
+        if (-not $cell) { throw "v026 cell missing for row $($change.row)" }
+        $cell.value = ('{0:F2}' -f [double]$change.after)
+    }
+    foreach ($p in $snapshots.v026.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v025 parent; verified saved/reopened comparison changes only 32731 Open Loop Fuel TPS Thresh vs. RPM (rows 3 & 4, 2,000-2,500 RPM lifted to 350 counts) and Notes. Prepared candidate, ready for staged testing under docs/v026-regression-test.md.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v026 prepared from exact v025: single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM lifted from 0.00 to 350.00 counts at 2,000 and 2,500 RPM. Saved/reopened/compared in VCM Editor; ready for staged testing under docs/v026-regression-test.md.'; installed='v025 tested 2026-11-03; 0 mid-warmup FMEM events, centered 952 RPM warm idle, and 1.5k stoich hold verified; provisionally adopted as parent for v026 in covered stationary modes; no ECU readback.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8
-$template.Replace('__DATA__',$json.Replace('<','\u003c')) | Set-Content (Join-Path $folder 'index.html') -Encoding UTF8 -NoNewline
+$tmpHtml = Join-Path $folder 'index.html.tmp'
+$template.Replace('__DATA__',$json.Replace('<','\u003c')) | Set-Content $tmpHtml -Encoding UTF8 -NoNewline
+Move-Item -Path $tmpHtml -Destination (Join-Path $folder 'index.html') -Force
 Write-Output "Built revision reference: $($catalog.revisions.Count) revisions; $($records.Count) parameters in each of $($snapshots.Count) snapshots. All tune hashes match."
