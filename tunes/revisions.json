@@ -459,9 +459,9 @@
       "sha256": "2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17",
       "status": "tested_2026-11-03; owner confirmed flashed; test session paired-20261103-131810-a51ccd21-v025 preserved in logs/2026-11-03-v025-maf-hold-fan-01; verified 0 mid-warmup FMEM events, centered 952 RPM warm idle, and 1.5k stoich hold; 2.0k/2.5k hold OL power enrichment trigger motivates v026 TPS threshold cleanup; provisionally adopted as parent for v026; no ECU readback.",
       "title": "MAF Transfer Idle & Off-Idle Smoothing",
-      "description": "Single-table ECM12163 MAF transfer convex smoothing across columns 6–13 (0.500–1.000 V); eliminates 0.600 V slope discontinuity and 0.70–1.00 V excess airflow that triggered mid-warmup FMEM in v024",
+      "description": "Single-table ECM12163 MAF transfer convex smoothing across columns 6\u201313 (0.500\u20131.000 V); eliminates 0.600 V slope discontinuity and 0.70\u20131.00 V excess airflow that triggered mid-warmup FMEM in v024",
       "changes": [
-        "ECM12163 MAF Airflow vs. Voltage: columns 6–13 (0.500–1.000 V) convex smoothing replacing 0.600 V slope discontinuity (5.35 -> 24.64 -> 2.89 g/s/V) and 0.70–1.00 V rich bulge; columns 1–5 and 14–30 and all 30 voltage breakpoints identical to v024",
+        "ECM12163 MAF Airflow vs. Voltage: columns 6\u201313 (0.500\u20131.000 V) convex smoothing replacing 0.600 V slope discontinuity (5.35 -> 24.64 -> 2.89 g/s/V) and 0.70\u20131.00 V rich bulge; columns 1\u20135 and 14\u201330 and all 30 voltage breakpoints identical to v024",
         "Calibration Details Notes appended with v025 rationale and staged test criteria; full v024 prefix preserved"
       ],
       "notes": "v025-maf-idle-offidle-smooth.md",
@@ -502,7 +502,7 @@
       "changes": [
         "ECM 44491 Minimum VSS to Allow DFCO: 35.00 -> 18.00 mph",
         "ECM 44496 DFCO Closed Throttle Delay: 3.00 -> 1.00 s",
-        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200°F ECT row, 3,000 RPM 14.00 -> 0.00 deg, 4,000-6,000 RPM 15.00-17.00 -> -2.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200\u00b0F ECT row, 3,000 RPM 14.00 -> 0.00 deg, 4,000-6,000 RPM 15.00-17.00 -> -2.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
         "ECM 32988 Idle Dashpot Pre-Position vs. RPM: 3,150 RPM 1.11 -> 0.80 lb/min, 4,150 RPM 1.50 -> 1.00 lb/min; rows 1-4 untouched",
         "Calibration Details Notes appended with v027 rationale and staged test criteria; full v026 prefix preserved"
       ],
@@ -527,7 +527,7 @@
         "ECM 44491 Minimum VSS to Allow DFCO: 18.00 -> 14.00 mph",
         "ECM 44492 Maximum VSS to Disable DFCO: 12.00 -> 10.00 mph",
         "ECM 44496 DFCO Closed Throttle Delay: 1.00 -> 1.25 s",
-        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200°F ECT row, 3,000 RPM 0.00 -> -2.00 deg, 4,000-6,000 RPM -2.00 -> -4.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200\u00b0F ECT row, 3,000 RPM 0.00 -> -2.00 deg, 4,000-6,000 RPM -2.00 -> -4.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
         "Calibration Details Notes appended with v028 rationale and staged test criteria; full v027 prefix preserved"
       ],
       "notes": "v028-engine-braking-pop-dashpot-decay.md",
@@ -540,9 +540,9 @@
       "version": "v029",
       "file": "v029-decel-pop-cruise-smooth.hpt",
       "parent": "v028",
-      "bytes": 259325,
-      "sha256": "PENDING_OWNER_FLASH_SAVE",
-      "status": "prepared_2026-11-03; candidate prepared for owner entry and flash; staged test under docs/v029-regression-test.md; activates overrun decel pops by updating Row 4 (100 ECT) in [ECM] 44605 to -2 to -4 deg ATDC; eliminates low-throttle cruising stutter by scaling MAF airflow by +3.0% across 0.90V to 1.20V in [ECM] 12163; preserves v028 dashpot decay and DFCO calibrations; no ECU readback.",
+      "bytes": 259421,
+      "sha256": "E5846434088486A13F43EEE65F8F21E8DF38B972C84868AE580E5593BB966021",
+      "status": "tested_2026-11-03; owner confirmed flashed and road tested in paired-20261103-213600-70c17f58-v029; verified cruising lean bias eliminated (STFT centered at -0.8% to -2.0%); verified decel overrun spark retard (-2.0 to -3.2 deg ATDC); verified 6% WGDC held 11.24 psi peak boost with zero boost cuts; diagnosed low-RPM tip-in lean gap (0.70-0.88V) and 15-17 deg Tip-In Torque Control spark drops below 2,400 RPM. Parent for v030.",
       "title": "Decel Overrun Pop Activation & Cruising Stutter Elimination",
       "description": "Populates Row 4 (100 ECT) in [ECM] 44605 with target decel retard (-2 deg at 3k, -4 deg at 4-6k RPM) to activate overrun pops at normal operating temperature; scales airflow in [ECM] 12163 by +3.0% across 0.90V to 1.20V to eliminate cruising lean bias and stutter; retains all v028 dashpot decay rates and DFCO thresholds.",
       "changes": [
@@ -552,9 +552,31 @@
       ],
       "notes": "v029-decel-pop-cruise-smooth.md",
       "rollback": "v028-engine-braking-pop-dashpot-decay.hpt",
-      "verification": "Ready for owner entry/flash; all 29 prior files preserved",
+      "verification": "Owner flashed and confirmed; road test log analyzed in reports/2026-11-03-v029-drive-review.md; all 29 prior files preserved",
       "inventory_delta": "../reports/calibration-inventory/v029/delta.json",
       "source_report": "../reports/2026-11-03-v028-drive-review.md"
+    },
+    {
+      "version": "v030",
+      "file": "v030-smooth-tipin-enhanced-pop.hpt",
+      "parent": "v029",
+      "bytes": 259421,
+      "sha256": "PENDING_OWNER_FLASH_SAVE",
+      "status": "prepared_2026-11-03; candidate prepared for owner entry and flash; staged test under docs/v030-regression-test.md; eliminates low-RPM tip-in stutter by raising [ECM] 44607 Tip-In Torque Control RPM Min to 2,400 RPM and bumping [ECM] 12163 Column 11 (0.699V) by +6.0% to 6.00 lb/h; enhances safe decel overrun pops by deepening [ECM] 44605 Rows 4 & 5 to 2.0 deg (2k), -4.0 deg (3k), -6.0 deg (4-6k RPM) and extending [ECM] 44496 DFCO delay to 1.75s; preserves v029 cruising MAF, dashpot decay, and boost control.",
+      "title": "Smooth Tip-In & Enhanced Safe Decel Pops",
+      "description": "Raises [ECM] 44607 Spark Tip-In Torque Control RPM Min from 775 to 2,400 RPM to eliminate low-speed 15-17 deg timing chops; bumps [ECM] 12163 Column 11 (0.699V) by +6.0% to 6.00 lb/h to bridge tip-in lean gap; deepens warm decel spark in [ECM] 44605 to -4 deg at 3k and -6 deg at 4-6k RPM across Rows 4 & 5; extends [ECM] 44496 DFCO delay to 1.75s for a longer burble window.",
+      "changes": [
+        "ECM 44607 Spark Tip-In Torque Control RPM Min: 775 -> 2,400 RPM",
+        "ECM 12163 MAF Airflow vs. Voltage: Column 11 (0.699V) 5.66 -> 6.00 lb/h (0.0944 -> 0.1000 lb/min)",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: Rows 4 & 5 (100 & 200 ECT) 2,000 RPM 5.00/13.00 -> 2.00 deg, 3,000 RPM -2.00 -> -4.00 deg, 4,000-6,000 RPM -4.00 -> -6.00 deg ATDC; Columns <= 1,000 RPM untouched",
+        "ECM 44496 Minimum Time to Delay DFCO: 1.25 -> 1.75 s",
+        "Calibration Details Notes appended with v030 rationale and staged test criteria; full v029 prefix preserved"
+      ],
+      "notes": "v030-smooth-tipin-enhanced-pop.md",
+      "rollback": "v029-decel-pop-cruise-smooth.hpt",
+      "verification": "Ready for owner entry/flash; all 30 prior files preserved",
+      "inventory_delta": "../reports/calibration-inventory/v030/delta.json",
+      "source_report": "../reports/2026-11-03-v029-drive-review.md"
     }
   ],
   "updated_at": "2026-11-03T20:55:00.0000000Z"

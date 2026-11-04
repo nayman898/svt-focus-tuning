@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v030-drive-01",
+  "purpose": "v030 smooth low-RPM tip-in (ECM 44607 to 2400 RPM & ECM 12163 0.699V to 6.00 lb/h) and enhanced safe decel pops (ECM 44605 to -4/-6 deg ATDC & ECM 44496 DFCO delay to 1.75s)",
+  "tune": {
+    "filename": "v030-smooth-tipin-enhanced-pop.hpt",
+    "sha256": "PENDING_OWNER_FLASH_SAVE",
+    "bytes": 259421,
+    "parent_filename": "v029-decel-pop-cruise-smooth.hpt",
+    "status": "Candidate prepared for owner entry and flash"
+  },
+  "parent_tune": {
+    "filename": "v029-decel-pop-cruise-smooth.hpt",
+    "sha256": "E5846434088486A13F43EEE65F8F21E8DF38B972C84868AE580E5593BB966021",
+    "bytes": 259421
+  },
+  "changes_since_previous_run": "Relative to v029: raised [ECM] 44607 Spark Tip-In Torque Control RPM Min from 775 to 2,400 RPM to eliminate low-speed 15-17 deg timing drop oscillations; bumped [ECM] 12163 Column 11 (0.699V) by +6.0% from 5.66 to 6.00 lb/h (0.0944 to 0.1000 lb/min) to bridge the 0.70-0.88V tip-in lean gap; deepened warm decel retard in [ECM] 44605 Rows 4 & 5 to 2.0 deg (2k), -4.0 deg (3k), -6.0 deg (4-6k RPM) for crisper, safe overrun pops; extended [ECM] 44496 DFCO delay from 1.25 to 1.75s (+0.5s burble window). All v029 dashpot decay, DFCO VSS, and MAF 0.90-1.20V cruising calibrations preserved.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "water_meth": "OFF per standing owner instruction",
+    "upstream_o2": "Active switching upstream O2 retained",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "spring_weight_psi": 7.0,
+      "duty_cycle_pct": 6.0,
+      "boost_cut_psi": 16.0,
+      "cut_percent": 100,
+      "active_press_psi": 5.0,
+      "lean_cut_afr": 12.8
+    }
+  },
+  "planned_actions": [
+    "Stage A: Low-RPM tip-in and low-speed drivability check. In 1st and 2nd gear from 1,200-2,000 RPM, lightly modulate throttle (10-25% pedal) to confirm elimination of the previous hesitation/bucking and verify spark advance stays smooth (no Torque Control cuts below 2,400 RPM).",
+    "Stage B: Enhanced overrun decel pop evaluation. Perform in-gear deceleration from 4,500-5,500 RPM down to 2,000 RPM in 2nd or 3rd gear. Verify that crisp, audible sports-car exhaust crackles occur for ~1.5-1.7s before DFCO cut.",
+    "Stage C: Steady light-throttle cruising and rolling stop verification. Hold steady 35-45 mph cruise; coast down to 0 mph in neutral/clutch-in to verify that cruising trims remain centered within +-3% and idle settles cleanly at 950 RPM.",
+    "Stage D: Boost pull check (optional). Perform a moderate boost pull up to ~6,000 RPM, confirming WGDC remains at 6% with peak boost ~11.5 psi."
+  ],
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Fuel rail pressure collapse (< 35 psi differential)"
+  ]
+}

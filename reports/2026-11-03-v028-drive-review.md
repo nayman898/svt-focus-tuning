@@ -175,3 +175,4 @@ Synchronized telemetry between VCM Scanner and SCG Logger (`offset = +2.60 s`):
      - `1.200 V`: `0.2734` $\to$ **`0.2816 lb/min`**
 3. **Preserve Dashpot Decay (`[ECM] 32984`)**:
    - Maintain the `v028` decay rates (`0.02, 0.03, 0.04, 0.05 lb/min`) that successfully eliminated the rolling idle hang.
+

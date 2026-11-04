@@ -240,10 +240,40 @@ if ($catalog.revisions.version -contains 'v029') {
     ($snapshots.v029.'12163'.cells | Where-Object cell -eq 'Column 15 Row 1').value = '0.2816'
 
     foreach ($p in $snapshots.v029.PSObject.Properties) {
-        $p.Value.evidence = 'Exact v028 parent; prepared candidate activating decel overrun pops by populating Row 4 (100 ECT) in [ECM] 44605 (-2 to -4 deg ATDC) and eliminating low-throttle cruising stutter by scaling MAF airflow +3.0% across 0.90V-1.20V in [ECM] 12163. Retains validated v028 dashpot decay and DFCO calibrations.'
+        $p.Value.evidence = 'Exact v028 parent; tested 2026-11-03 in paired-20261103-213600-70c17f58-v029; verified overrun decel pops activated via Row 4 (100 ECT) in [ECM] 44605 (-2 to -3.2 deg ATDC) and eliminated low-throttle cruising stutter by scaling MAF airflow +3.0% across 0.90V-1.20V in [ECM] 12163 (STFT centered at -0.8% to -2.0%). Boost stabilized at 11.24 psi at 6% WGDC. Adopted as parent for v030.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v029 prepared candidate for owner entry and flash under docs/v029-regression-test.md. Activates overrun pops at operating ECT and smooths cruising MAF transfer curve to eliminate stutter.'; installed='v028 flashed 2026-11-03 by vehicle owner; road tested; 100% eliminated rolling idle hang, verified 14 DFCO cut events down to 10 mph, full +17.3 psi pull; no ECU readback.'}
+if ($catalog.revisions.version -contains 'v030') {
+    $d30 = Get-Content (Join-Path $folder 'v030/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v030 = Clone $snapshots.v029
+
+    # 44607 Spark Tip-In Torque Control RPM Min
+    $snapshots.v030.'44607'.value = '2,400'
+
+    # 44496 Minimum Time to Delay DFCO
+    $snapshots.v030.'44496'.value = '1.75'
+
+    # 12163 MAF Airflow vs. Voltage: Column 11 (0.699V)
+    ($snapshots.v030.'12163'.cells | Where-Object cell -eq 'Column 11 Row 1').value = '0.1000'
+
+    # 44605 Spark Decel vs. RPM vs. ECT: Rows 4 & 5 (100 & 200 ECT)
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 3 Row 4').value = '2.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 4 Row 4').value = '-4.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 5 Row 4').value = '-6.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 6 Row 4').value = '-6.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 7 Row 4').value = '-6.00'
+
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 3 Row 5').value = '2.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '-4.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-6.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-6.00'
+    ($snapshots.v030.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-6.00'
+
+    foreach ($p in $snapshots.v030.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v029 parent; prepared candidate eliminating low-RPM tip-in stutter by raising [ECM] 44607 Tip-In Torque Control RPM Min to 2,400 RPM and bumping [ECM] 12163 Column 11 (0.699V) by +6.0% to 6.00 lb/h (0.1000 lb/min); enhances safe decel overrun pops by deepening [ECM] 44605 Rows 4 & 5 to 2.0 deg (2k), -4.0 deg (3k), -6.0 deg (4-6k RPM) and extending [ECM] 44496 DFCO delay to 1.75s; preserves v029 cruising MAF, dashpot decay, and boost control.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v030 prepared candidate for owner entry and flash under docs/v030-regression-test.md. Eliminates low-RPM tip-in stutter and enhances safe decel overrun pops.'; installed='v029 flashed 2026-11-03 by vehicle owner; road tested in paired-20261103-213600-70c17f58-v029; verified cruising lean bias eliminated (STFT centered at -0.8% to -2.0%), verified decel retard (-2.0 to -3.2 deg ATDC), 6% WGDC held 11.24 psi peak boost with zero boost cuts.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

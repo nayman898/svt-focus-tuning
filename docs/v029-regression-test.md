@@ -95,3 +95,4 @@ Immediately discontinue road testing, transition to neutral, and pull over safel
 - Fuel rail pressure differential drops below `35 psi` (`FRP sensor voltage < 2.50 V`).
 
 **Immediate Rollback Target**: `v028-engine-braking-pop-dashpot-decay.hpt` (`259,325` bytes, SHA-256 `0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752`).
+

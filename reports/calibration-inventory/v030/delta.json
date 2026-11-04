@@ -1,0 +1,47 @@
+{
+  "version": "v030",
+  "parent": "v029",
+  "summary": "Low-RPM Tip-In Stutter Elimination (ECM 44607 to 2400 RPM & ECM 12163 0.699V to 6.00 lb/h) and Enhanced Safe Decel Pops (ECM 44605 to -4/-6 deg ATDC & ECM 44496 to 1.75s)",
+  "changes": [
+    {
+      "parameter_id": 44607,
+      "parameter_name": "Spark Tip-In Torque Control RPM Min",
+      "path": "Engine / Spark / Advance / Transient / Spark Tip-In Torque Control RPM Min",
+      "kind": "scalar_or_switch",
+      "parent_value": "775 RPM",
+      "candidate_value": "2,400 RPM",
+      "detail": "Raises minimum RPM for transient tip-in torque control from 775 to 2,400 RPM.",
+      "rationale": "Prevents aggressive 15-17 deg timing chops during low-RPM tip-in (1,200-2,400 RPM) that caused rapid spark oscillations (toggling between 23 and 6 deg) and low-speed bucking/hesitation."
+    },
+    {
+      "parameter_id": 12163,
+      "parameter_name": "MAF Airflow vs. Voltage",
+      "path": "Engine / Airflow / General / MAF Calibration / MAF Airflow vs. Voltage",
+      "kind": "table",
+      "parent_value": "Column 11 (0.699V): 0.0944 lb/min (5.66 lb/h)",
+      "candidate_value": "Column 11 (0.699V): 0.1000 lb/min (6.00 lb/h)",
+      "detail": "Increases Column 11 airflow by +6.0% (0.0944 -> 0.1000 lb/min, or 5.66 -> 6.00 lb/h).",
+      "rationale": "Bridges the lean pocket (1.15-1.28 lambda) observed when cracking throttle open from idle/coast across 0.70V-0.88V MAF voltage."
+    },
+    {
+      "parameter_id": 44605,
+      "parameter_name": "Spark Decel vs. RPM vs. ECT",
+      "path": "Engine / Spark / Advance / Transient / Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "parent_value": "Row 4 (100 ECT): 5, -2, -4, -4, -4 deg; Row 5 (200 ECT): 13, -2, -4, -4, -4 deg",
+      "candidate_value": "Rows 4 & 5 (100 & 200 ECT): 2k=2.00, 3k=-4.00, 4-6k=-6.00 deg ATDC",
+      "detail": "Deepens retard for crisper, audible sports-car overrun pops: 2,000 RPM (5/13 -> 2.00 deg), 3,000 RPM (-2.00 -> -4.00 deg), 4,000-6,000 RPM (-4.00 -> -6.00 deg ATDC). Columns 1 & 2 (800 and 1,000 RPM) untouched to guarantee idle catch protection.",
+      "rationale": "Enhances overrun pop clarity and carry-down safely without excessive exhaust valve thermal load."
+    },
+    {
+      "parameter_id": 44496,
+      "parameter_name": "Minimum Time to Delay DFCO",
+      "path": "Engine / Fuel / Cutoff, DFCO / Deceleration Fuel Cutoff / Minimum Time to Delay DFCO",
+      "kind": "scalar_or_switch",
+      "parent_value": "1.25 s",
+      "candidate_value": "1.75 s",
+      "detail": "Extends closed-throttle DFCO delay timer from 1.25s to 1.75s.",
+      "rationale": "Provides a clean, enjoyable ~1.5-1.7 second overrun burble window before injectors cleanly shut off for fuel economy and engine braking."
+    }
+  ]
+}
