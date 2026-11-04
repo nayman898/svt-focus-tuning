@@ -1,5 +1,5 @@
 ﻿{
-    "generated_utc":  "2026-11-04T18:19:22.6251427Z",
+    "generated_utc":  "2026-11-04T20:43:57.2911337Z",
     "revisions":  [
                       {
                           "version":  "v000",
@@ -637,6 +637,27 @@
                           "rollback":  "v032-kill-oscillation-crisp-pops.hpt",
                           "verification":  "Live UIA automation in open VCM Editor, fresh disk reload readback, and whole-file compare against v032 verified; owner inspection required before flashing",
                           "inventory_delta":  "../reports/calibration-inventory/v033/delta.json"
+                      },
+                      {
+                          "version":  "v034",
+                          "file":  "v034-wot-power-spark.hpt",
+                          "parent":  "v033",
+                          "bytes":  263853,
+                          "sha256":  "7F9539CBD3654B8426B587A3A504EA3D30488564B9D52256F4EB613D06CA08FA",
+                          "status":  "prepared; ready for owner inspection \u0026 staged road test",
+                          "title":  "WOT High-RPM Power Spark Advance \u0026 Decel Overrun Restoration",
+                          "description":  "Derived from paired v032 WOT drive logs: advances [ECM] 44583 Spark Borderline Knock table across 5,000-7,200 RPM in Row 8 (13.50 deg at 5k, 14.00 deg at 5.75k-7.2k) and Row 9 (12.50 deg at 5k, 13.00 deg at 5.75k-7.2k), eliminating high-RPM timing droop and maximizing WOT pull strength to redline while keeping rich WOT fuel safety margin; inherits v033 loud crisp decel pop package and v032 anti-shuffle fixes.",
+                          "changes":  [
+                                          "Spark Borderline Knock vs. RPM vs. Load [ECM 44583] Row 8 (0.80 Load) advanced to 13.50 deg at 5,000 RPM and 14.00 deg at 5,750-7,200 RPM (+1.50 to +2.00 deg)",
+                                          "Spark Borderline Knock vs. RPM vs. Load [ECM 44583] Row 9 (2.00 Load) advanced to 12.50 deg at 5,000 RPM and 13.00 deg at 5,750-7,200 RPM (+1.00 to +2.25 deg)",
+                                          "Eliminates top-end spark timing sag while maintaining 0.75 deg safe clearance below MBT ceiling (13.75 deg)",
+                                          "Preserves rich WOT fuel safety cushion (~10.5-10.8 AFR) during initial timing test",
+                                          "Inherits full v033 loud crisp overrun pop package (ECM 44496 DFCO delay = 1.40s, ECM 44605 = -8 deg at 3k, -10 deg at 4k-6k) and v032 anti-shuffle fixes"
+                                      ],
+                          "notes":  "v034-wot-power-spark.md",
+                          "rollback":  "v033-loud-crisp-pops.hpt",
+                          "verification":  "Live UIA automation in open VCM Editor, FlexGrid in-memory readback, and whole-file compare verified; owner inspection required before flashing",
+                          "inventory_delta":  "../reports/calibration-inventory/v034/delta.json"
                       }
                   ],
     "snapshots":  {

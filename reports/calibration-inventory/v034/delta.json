@@ -1,0 +1,106 @@
+{
+  "version": "v034",
+  "file": "v034-wot-power-spark.hpt",
+  "parent": "v033",
+  "parent_file": "v033-loud-crisp-pops.hpt",
+  "bytes": 263853,
+  "sha256": "7F9539CBD3654B8426B587A3A504EA3D30488564B9D52256F4EB613D06CA08FA",
+  "parent_bytes": 262381,
+  "parent_sha256": "41B8D374770A0F15231EF0D3C8E5DF26C132F3A198B439CEC3E479E821397C23",
+  "status": "Prepared and verified in open VCM Editor instance; ready for owner flash and road test validation.",
+  "rationale": "Derived from paired-20261104-123109-5f5905f7-v032-2 WOT pull telemetry and owner feedback ('pull strength felt good, definitely peaking around 5k as it tapered out'): (1) Telemetry analysis of 3rd gear WOT pull (3,100 to 6,266 RPM at 13.1 psi boost) confirmed the SCG-1 boost controller held a solid 13.0-13.3 psi all the way to 6,266 RPM with WGDC=6%, but actual ignition timing drooped from 13.2 deg at 5,550 RPM down to 11.2 deg at 6,143 RPM (and 10.75 deg in the table) due to high-load taper in [ECM] 44583 Spark Borderline Knock table. (2) In [ECM] 44583, Row 8 (0.80 Load) and Row 9 (2.00 Load) taper downward above 5,000 RPM (Row 9 falls from 11.5 deg to 10.75 deg at 7,200 RPM), while MBT [ECM] 32265 allows 13.75 deg. Candidate v034 advances [ECM] 44583 Rows 8 and 9 by +1.00 deg to +2.25 deg across 5,000-7,200 RPM (Row 8: 13.50 deg at 5k, 14.00 deg at 5.75k-7.2k; Row 9: 12.50 deg at 5k, 13.00 deg at 5.75k-7.2k), eliminating top-end power droop and letting the engine pull hard past 5,000 RPM to redline. (3) Keeps the existing rich WOT fuel cushion (0.706-0.740 lambda / ~10.5-10.8 AFR) intact for absolute knock safety during this initial timing increase. (4) Inherits the full v033 loud crisp decel pop package ([ECM] 44496 DFCO delay = 1.40s, [ECM] 44605 pop cells: -8 deg at 3k, -10 deg at 4k-6k) and v032 anti-shuffle fixes so the owner can flash both features in one go.",
+  "parameters": [
+    {
+      "id": 44583,
+      "name": "Spark Borderline Knock vs. RPM vs. Load",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        {
+          "row": 8,
+          "col": 6,
+          "parent_value": "12.00",
+          "new_value": "13.50",
+          "note": "Row 8 (0.80 Load) 5,000 RPM (+1.50 deg)"
+        },
+        {
+          "row": 8,
+          "col": 7,
+          "parent_value": "12.00",
+          "new_value": "14.00",
+          "note": "Row 8 (0.80 Load) 5,750 RPM (+2.00 deg)"
+        },
+        {
+          "row": 8,
+          "col": 8,
+          "parent_value": "12.00",
+          "new_value": "14.00",
+          "note": "Row 8 (0.80 Load) 6,000 RPM (+2.00 deg)"
+        },
+        {
+          "row": 8,
+          "col": 9,
+          "parent_value": "12.00",
+          "new_value": "14.00",
+          "note": "Row 8 (0.80 Load) 6,250 RPM (+2.00 deg)"
+        },
+        {
+          "row": 8,
+          "col": 10,
+          "parent_value": "12.00",
+          "new_value": "14.00",
+          "note": "Row 8 (0.80 Load) 6,500 RPM (+2.00 deg)"
+        },
+        {
+          "row": 8,
+          "col": 11,
+          "parent_value": "12.00",
+          "new_value": "14.00",
+          "note": "Row 8 (0.80 Load) 7,200 RPM (+2.00 deg)"
+        },
+        {
+          "row": 9,
+          "col": 6,
+          "parent_value": "11.50",
+          "new_value": "12.50",
+          "note": "Row 9 (2.00 Load) 5,000 RPM (+1.00 deg)"
+        },
+        {
+          "row": 9,
+          "col": 7,
+          "parent_value": "11.50",
+          "new_value": "13.00",
+          "note": "Row 9 (2.00 Load) 5,750 RPM (+1.50 deg)"
+        },
+        {
+          "row": 9,
+          "col": 8,
+          "parent_value": "11.50",
+          "new_value": "13.00",
+          "note": "Row 9 (2.00 Load) 6,000 RPM (+1.50 deg)"
+        },
+        {
+          "row": 9,
+          "col": 9,
+          "parent_value": "11.25",
+          "new_value": "13.00",
+          "note": "Row 9 (2.00 Load) 6,250 RPM (+1.75 deg)"
+        },
+        {
+          "row": 9,
+          "col": 10,
+          "parent_value": "11.00",
+          "new_value": "13.00",
+          "note": "Row 9 (2.00 Load) 6,500 RPM (+2.00 deg)"
+        },
+        {
+          "row": 9,
+          "col": 11,
+          "parent_value": "10.75",
+          "new_value": "13.00",
+          "note": "Row 9 (2.00 Load) 7,200 RPM (+2.25 deg)"
+        }
+      ]
+    }
+  ]
+}

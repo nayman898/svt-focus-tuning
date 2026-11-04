@@ -262,38 +262,37 @@ if ($running.Count -gt 0) {
     Start-Sleep -Milliseconds 1500
 }
 
-# Execute automation inside dedicated STA desktop thread
+# Execute automation directly on STA desktop thread
 $scriptResults = @{}
-$scriptError = $null
 
-$thread = [System.Threading.Thread]::new([System.Threading.ThreadStart]{
-    try {
-        [VcmNative]::OpenWindowStation("WinSta0", $false, 0x037F) | Out-Null
-        $hDesk = [VcmNative]::OpenDesktop("default", 0, $false, 0x01FF)
-        $ok = [VcmNative]::SetThreadDesktop($hDesk)
-        if (-not $ok) { throw "Failed to attach thread desktop to default" }
+$hWinsta = [VcmNative]::OpenWindowStation("WinSta0", $false, 0x037F)
+if ($hWinsta -ne [IntPtr]::Zero) {
+    [VcmNative]::SetProcessWindowStation($hWinsta) | Out-Null
+}
+$hDesk = [VcmNative]::OpenDesktop("default", 0, $false, 0x01FF)
 
-        # Find main window handle
-        $foundHwnd = [IntPtr]::Zero
-        [VcmNative]::EnumDesktopWindows($hDesk, {
-            param($h, $l)
-            $p = 0
-            [VcmNative]::GetWindowThreadProcessId($h, [ref]$p) | Out-Null
-            if ($p -eq [uint32]$editorPid -and [VcmNative]::IsWindowVisible($h)) {
-                $sb = New-Object System.Text.StringBuilder 256
-                [VcmNative]::GetWindowText($h, $sb, 256) | Out-Null
-                $title = $sb.ToString()
-                if ($title -like 'VCM Editor*') {
-                    $foundHwnd = $h
-                    return $false
-                }
-            }
-            return $true
-        }, [IntPtr]::Zero) | Out-Null
+# Find main window handle
+$foundHwnd = [IntPtr]::Zero
+[VcmNative]::EnumDesktopWindows($hDesk, {
+    param($h, $l)
+    $p = 0
+    [VcmNative]::GetWindowThreadProcessId($h, [ref]$p) | Out-Null
+    if ($p -eq [uint32]$editorPid -and [VcmNative]::IsWindowVisible($h)) {
+        $sb = New-Object System.Text.StringBuilder 256
+        [VcmNative]::GetWindowText($h, $sb, 256) | Out-Null
+        $title = $sb.ToString()
+        if ($title -like 'VCM Editor*') {
+            $script:foundHwnd = $h
+            return $false
+        }
+    }
+    return $true
+}, [IntPtr]::Zero) | Out-Null
 
-        if ($foundHwnd -eq [IntPtr]::Zero) { throw "Could not find main VCM Editor window for PID $editorPid" }
+if ($foundHwnd -eq [IntPtr]::Zero) { throw "Could not find main VCM Editor window for PID $editorPid" }
 
-        [VcmNative]::ShowWindow($foundHwnd, 9) | Out-Null # SW_RESTORE
+try {
+    [VcmNative]::ShowWindow($foundHwnd, 9) | Out-Null # SW_RESTORE
         [VcmNative]::SetForegroundWindow($foundHwnd) | Out-Null
         [System.Threading.Thread]::Sleep(200)
 
@@ -303,10 +302,31 @@ $thread = [System.Threading.Thread]::new([System.Threading.ThreadStart]{
         # Check if Compare file is open; if so, close it so editing is clean
         if ($root.Current.Name -like "* vs. *") {
             Write-Host "Closing existing compare file before calibration edit..." -ForegroundColor Gray
-            [VcmNative]::SendAltKey(0x43) # Alt+C
-            [System.Threading.Thread]::Sleep(200)
-            [VcmNative]::SendKey(0x43)    # 'C' Close Compare File
-            [System.Threading.Thread]::Sleep(400)
+            $compMenu = $root.FindFirst([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), "Compare"))
+            if ($compMenu) {
+                $mrc = $compMenu.Current.BoundingRectangle
+                [VcmNative]::ClickScreen([int]($mrc.Left + $mrc.Width / 2), [int]($mrc.Top + $mrc.Height / 2))
+                [System.Threading.Thread]::Sleep(300)
+                $drops = @([System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid)))
+                $closeItem = $null
+                foreach ($d in $drops) {
+                    $found = $d.FindFirst([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), "Close Compare File"))
+                    if ($found) { $closeItem = $found; break }
+                }
+                if ($closeItem) {
+                    $trc = $closeItem.Current.BoundingRectangle
+                    [VcmNative]::ClickScreen([int]($trc.Left + $trc.Width / 2), [int]($trc.Top + $trc.Height / 2))
+                    [System.Threading.Thread]::Sleep(500)
+                } else {
+                    [VcmNative]::SendKey(0x43) # 'C'
+                    [System.Threading.Thread]::Sleep(400)
+                }
+            } else {
+                [VcmNative]::SendAltKey(0x43)
+                [System.Threading.Thread]::Sleep(200)
+                [VcmNative]::SendKey(0x43)
+                [System.Threading.Thread]::Sleep(400)
+            }
             $root = [System.Windows.Automation.AutomationElement]::FromHandle($foundHwnd)
         }
 
@@ -479,7 +499,17 @@ $thread = [System.Threading.Thread]::new([System.Threading.ThreadStart]{
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     $act = $vMatrix[$rIdx][$cIdx]
                     $exp = if ($ch.new_value) { [string]$ch.new_value } else { $matrix[$rIdx][$cIdx] }
-                    if ($act -ne $exp) { throw "Verification mismatch for [$pId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'" }
+                    $actNum = 0.0; $expNum = 0.0
+                    $isNum = [double]::TryParse($act, [ref]$actNum) -and [double]::TryParse($exp, [ref]$expNum)
+                    if ($isNum) {
+                        if ([Math]::Abs($actNum - $expNum) -gt 0.001) {
+                            throw "Verification mismatch for [$pId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
+                        }
+                    } else {
+                        if ($act -ne $exp) {
+                            throw "Verification mismatch for [$pId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
+                        }
+                    }
                 }
                 Write-Host "   [$pId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
 
@@ -605,19 +635,11 @@ $thread = [System.Threading.Thread]::new([System.Threading.ThreadStart]{
         } else {
             Write-Host "[OK] VCM Editor preserved open with candidate vs. parent comparison." -ForegroundColor Green
         }
-
     } catch {
-        $scriptError = $_
+        Write-Host "FATAL ERROR during tune build: $_" -ForegroundColor Red
+        Write-Host $_.ScriptStackTrace -ForegroundColor Red
+        throw $_
     }
-})
-
-$thread.SetApartmentState([System.Threading.ApartmentState]::STA)
-$thread.Start()
-$thread.Join()
-
-if ($scriptError) {
-    throw $scriptError
-}
 
 # Final Hash & Byte Size Calculation
 $candItem = Get-Item $candPath
