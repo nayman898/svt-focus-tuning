@@ -597,7 +597,28 @@
       "rollback": "v030-smooth-tipin-enhanced-pop.hpt",
       "verification": "Saved/reopened/compared in VCM Editor; owner inspection required before flashing",
       "inventory_delta": "../reports/calibration-inventory/v031/delta.json"
+    },
+    {
+      "version": "v032",
+      "file": "v032-kill-oscillation-crisp-pops.hpt",
+      "parent": "v031",
+      "bytes": 260813,
+      "sha256": "4C9D3DF100C49265632DAF2AC6C14D5065685C3025E308376E33DB8D56781BC3",
+      "status": "prepared; ready for owner inspection & staged road test",
+      "title": "Kill Cruising Spark Oscillation & Restore Crisp Overrun Pops",
+      "description": "Derived from paired-20261104-095419-1f8e78f4-v031-drive log analysis: (1) Permanently disables [ECM] 44771 Torque Oscillation Module and sets [ECM] 44776 Row 14 OSCMOD / Anti-Shuffle to 1.000 to eliminate the 12-15 Hz rapid spark chop limit cycle (24 deg <-> 4 deg) observed at 5:38 (t=340s); (2) Confirms [ECM] 44607 Tip-In Torque Control RPM Min raised to 7,500 RPM; (3) Extends [ECM] 44496 DFCO delay from 0.90s to 1.35s to widen the post-lift overrun pop window from ~300ms to ~850ms; (4) Calibrates [ECM] 44605 Spark Decel 3,000 RPM cell to -3.00 deg ATDC (Row 4 & 5) to restore crisp pops across typical 2,800-3,800 RPM driving coast-downs while keeping 4k-6k at -8.00 deg for loud crackles and 2k cushioned at +8.00 deg. Preserves v031 MAF -2.5% cruising trim centering.",
+      "changes": [
+        "ECM 44771 Torque Oscillation Module: Disabled",
+        "ECM 44776 Spark Torque Ratio Limit vs. Requestor: OSCMOD Row 14 = 1.000",
+        "ECM 44607 Spark Tip-In Torque Control RPM Min: 7,500",
+        "ECM 44496 DFCO Closed Throttle Delay: 1.35",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 3k deepened to -3.00 deg, 2k at +8.00 deg, 4k-6k at -8.00 deg"
+      ],
+      "notes": "v032-kill-oscillation-crisp-pops.md",
+      "rollback": "v031-smooth-drivability-crisp-pop.hpt",
+      "verification": "Created by owner in VCM Editor; owner inspection required before flashing",
+      "inventory_delta": "../reports/calibration-inventory/v032/delta.json"
     }
   ],
-  "updated_at": "2026-11-04T14:13:30.372313+00:00"
+  "updated_at": "2026-11-04T17:12:00.000000+00:00"
 }

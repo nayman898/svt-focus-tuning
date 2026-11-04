@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v032-drive-01",
+  "purpose": "Kill Cruising Spark Oscillation & Restore Crisp Overrun Pops",
+  "tune": {
+    "filename": "v032-kill-oscillation-crisp-pops.hpt",
+    "sha256": "4C9D3DF100C49265632DAF2AC6C14D5065685C3025E308376E33DB8D56781BC3",
+    "bytes": 260813,
+    "parent_filename": "v031-smooth-drivability-crisp-pop.hpt",
+    "status": "Candidate prepared for owner inspection and flash"
+  },
+  "parent_tune": {
+    "filename": "v031-smooth-drivability-crisp-pop.hpt",
+    "sha256": "7A19C33ED9396F8AA356A8BADCAA5A0243409FB008B02C1BBD6AA208DEC02B2A",
+    "bytes": 260781
+  },
+  "changes_since_previous_run": "Derived from paired-20261104-095419-1f8e78f4-v031-drive log analysis: (1) Permanently disables [ECM] 44771 Torque Oscillation Module and sets [ECM] 44776 Row 14 OSCMOD / Anti-Shuffle to 1.000 to eliminate the 12-15 Hz rapid spark chop limit cycle (24 deg <-> 4 deg) observed at 5:38 (t=340s); (2) Confirms [ECM] 44607 Tip-In Torque Control RPM Min raised to 7,500 RPM; (3) Extends [ECM] 44496 DFCO delay from 0.90s to 1.35s to widen the post-lift overrun pop window from ~300ms to ~850ms; (4) Calibrates [ECM] 44605 Spark Decel 3,000 RPM cell to -3.00 deg ATDC (Row 4 & 5) to restore crisp pops across typical 2,800-3,800 RPM driving coast-downs while keeping 4k-6k at -8.00 deg for loud crackles and 2k cushioned at +8.00 deg. Preserves v031 MAF -2.5% cruising trim centering.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "duty_cycle_pct": 6.0,
+      "boost_cut_psi": 16.0,
+      "active_press_psi": 5.0
+    }
+  },
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in"
+  ]
+}
