@@ -3,7 +3,7 @@ $root = Split-Path $PSScriptRoot -Parent
 $folder = Join-Path $root 'reports/calibration-inventory'
 $catalog = Get-Content (Join-Path $root 'tunes/revisions.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 foreach ($r in $catalog.revisions) {
-    if ($r.sha256 -eq 'PENDING_FLASH_SAVE') { continue }
+    if ($r.sha256 -like 'PENDING*') { continue }
     $file = Join-Path $root ('tunes/' + $r.file)
     if ((Get-Item $file).Length -ne $r.bytes -or (Get-FileHash $file -Algorithm SHA256).Hash -ne $r.sha256) { throw "Tune identity mismatch: $($r.version)" }
 }
@@ -220,10 +220,30 @@ if ($catalog.revisions.version -contains 'v028') {
     ($snapshots.v028.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-4.00'
 
     foreach ($p in $snapshots.v028.PSObject.Properties) {
-        $p.Value.evidence = 'Exact v027 parent; prepared candidate restoring [ECM] 32984 dashpot decay (0.02-0.05) to eliminate rolling idle hang, lowering DFCO VSS to 14/10 mph ([ECM] 44491/44492), trimming 2,150 RPM dashpot air ([ECM] 32988), extending DFCO delay to 1.25s ([ECM] 44496), and retarding warm decel spark to -2 to -4 deg ATDC above 3k RPM ([ECM] 44605).'
+        $p.Value.evidence = 'Exact v027 parent; verified saved/reopened comparison changes restoring [ECM] 32984 dashpot decay (0.02-0.05) to eliminate rolling idle hang, lowering DFCO VSS to 14/10 mph ([ECM] 44491/44492), trimming 2,150 RPM dashpot air ([ECM] 32988), extending DFCO delay to 1.25s ([ECM] 44496), and retarding warm decel spark to -2 to -4 deg ATDC above 3k RPM ([ECM] 44605). Road tested 2026-11-03.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v028 prepared candidate for owner flash; staged road test under docs/v028-regression-test.md. Restores dashpot decay to eliminate rolling stop idle hang, expands in-gear engine braking down to 10 mph, auditions -4 deg ATDC decel pops, and logs low-throttle cruising stutter.'; installed='v027 flashed 2026-11-03 by vehicle owner; active road test completed; no ECU readback.'}
+if ($catalog.revisions.version -contains 'v029') {
+    $d29 = Get-Content (Join-Path $folder 'v029/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v029 = Clone $snapshots.v028
+
+    # 44605 Spark Decel vs. RPM vs. ECT: Row 4 (100 ECT)
+    ($snapshots.v029.'44605'.cells | Where-Object cell -eq 'Column 4 Row 4').value = '-2.00'
+    ($snapshots.v029.'44605'.cells | Where-Object cell -eq 'Column 5 Row 4').value = '-4.00'
+    ($snapshots.v029.'44605'.cells | Where-Object cell -eq 'Column 6 Row 4').value = '-4.00'
+    ($snapshots.v029.'44605'.cells | Where-Object cell -eq 'Column 7 Row 4').value = '-4.00'
+
+    # 12163 MAF Airflow vs. Voltage (+3.0% at 0.898V, 1.000V, 1.100V, 1.200V)
+    ($snapshots.v029.'12163'.cells | Where-Object cell -eq 'Column 12 Row 1').value = '0.1468'
+    ($snapshots.v029.'12163'.cells | Where-Object cell -eq 'Column 13 Row 1').value = '0.1781'
+    ($snapshots.v029.'12163'.cells | Where-Object cell -eq 'Column 14 Row 1').value = '0.2128'
+    ($snapshots.v029.'12163'.cells | Where-Object cell -eq 'Column 15 Row 1').value = '0.2816'
+
+    foreach ($p in $snapshots.v029.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v028 parent; prepared candidate activating decel overrun pops by populating Row 4 (100 ECT) in [ECM] 44605 (-2 to -4 deg ATDC) and eliminating low-throttle cruising stutter by scaling MAF airflow +3.0% across 0.90V-1.20V in [ECM] 12163. Retains validated v028 dashpot decay and DFCO calibrations.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v029 prepared candidate for owner entry and flash under docs/v029-regression-test.md. Activates overrun pops at operating ECT and smooths cruising MAF transfer curve to eliminate stutter.'; installed='v028 flashed 2026-11-03 by vehicle owner; road tested; 100% eliminated rolling idle hang, verified 14 DFCO cut events down to 10 mph, full +17.3 psi pull; no ECU readback.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

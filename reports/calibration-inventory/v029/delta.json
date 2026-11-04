@@ -1,0 +1,27 @@
+{
+  "version": "v029",
+  "parent": "v028",
+  "summary": "Decel Overrun Spark Activation (Row 100 in ECM 44605) & Cruising MAF Lean Bias Elimination (+3.0% at 0.90V-1.20V in ECM 12163)",
+  "changes": [
+    {
+      "parameter_id": 44605,
+      "parameter_name": "Spark Decel vs. RPM vs. ECT",
+      "path": "Engine / Spark / Advance / Transient / Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "parent_value": "Row 4 (100 ECT): 5.0, 15.0, 16.0, 17.0 deg",
+      "candidate_value": "Row 4 (100 ECT): -2.0, -4.0, -4.0, -4.0 deg ATDC",
+      "detail": "Populates Row 4 (100 ECT) with target decel retard: 3,000 RPM (5.00 -> -2.00), 4,000 RPM (15.00 -> -4.00), 5,000 RPM (16.00 -> -4.00), 6,000 RPM (17.00 -> -4.00). Row 5 (200 ECT) retained at -2/-4/-4/-4. Columns <= 2,000 RPM untouched (5.0 deg / 12-14 deg) to preserve clutch-in anti-stall idle catch.",
+      "rationale": "Datalog v028 proved the PCM evaluates against Row 100 at operating temperature (180-195F / 82-90C). Populating Row 100 activates the commanded overrun exhaust burble/pops."
+    },
+    {
+      "parameter_id": 12163,
+      "parameter_name": "MAF Airflow vs. Voltage",
+      "path": "Engine / Airflow / General / MAF Calibration / MAF Airflow vs. Voltage",
+      "kind": "table",
+      "parent_value": "0.898V: 0.1425, 1.000V: 0.1729, 1.100V: 0.2066, 1.200V: 0.2734 lb/min",
+      "candidate_value": "0.898V: 0.1468, 1.000V: 0.1781, 1.100V: 0.2128, 1.200V: 0.2816 lb/min",
+      "detail": "Scales cruising airflow points by +3.0%: 0.898V (0.1425 -> 0.1468), 1.000V (0.1729 -> 0.1781), 1.100V (0.2066 -> 0.2128), 1.200V (0.2734 -> 0.2816 lb/min). All other 27 points untouched.",
+      "rationale": "Datalog v028 showed an average +2.0% to +3.4% lean fuel trim bias in this voltage range (peaking at +3.36% in the 1.00-1.10V bin), causing wideband lambda lean excursions (1.14-1.18) and cruising stutter during light-throttle holds."
+    }
+  ]
+}

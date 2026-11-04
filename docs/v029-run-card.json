@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v029-drive-01",
+  "purpose": "v029 decel overrun spark pop activation (Row 100 in ECM 44605) and low-throttle cruising stutter elimination (+3.0% MAF scaling at 0.90V-1.20V in ECM 12163)",
+  "tune": {
+    "filename": "v029-decel-pop-cruise-smooth.hpt",
+    "sha256": "PENDING_OWNER_FLASH_SAVE",
+    "bytes": 259325,
+    "parent_filename": "v028-engine-braking-pop-dashpot-decay.hpt",
+    "status": "Candidate prepared for owner entry and flash"
+  },
+  "parent_tune": {
+    "filename": "v028-engine-braking-pop-dashpot-decay.hpt",
+    "sha256": "0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752",
+    "bytes": 259325
+  },
+  "changes_since_previous_run": "Relative to v028: populated Row 4 (100 ECT) in [ECM] 44605 with target decel retard (-2 deg at 3k, -4 deg at 4-6k RPM) to activate overrun pops at normal operating ECT (175-195F); scaled airflow in [ECM] 12163 by +3.0% across 0.90V to 1.20V (0.898V 0.1425->0.1468, 1.000V 0.1729->0.1781, 1.100V 0.2066->0.2128, 1.200V 0.2734->0.2816 lb/min) to center cruising fuel trims at 0.0% and eliminate light-throttle cruising stutter. All v028 dashpot decay and DFCO settings preserved.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "water_meth": "OFF per standing owner instruction",
+    "upstream_o2": "Active switching upstream O2 retained",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "spring_weight_psi": 7.0,
+      "duty_cycle_pct": 8.0,
+      "boost_cut_psi": 16.0,
+      "lean_cut_afr": 12.8
+    }
+  },
+  "planned_actions": [
+    "Stage A: Steady light-throttle cruising evaluation. Hold steady cruise (35-45 mph in 3rd/4th gear, 2,000-2,500 RPM, 2-5% pedal) for 15-20 seconds. Verify that the previous low-throttle stutter/hesitation is completely smoothed out and STFT hovers around 0.0%.",
+    "Stage B: Overrun decel pop evaluation. Perform in-gear deceleration from 4,500-5,000 RPM down to 2,500 RPM in 2nd or 3rd gear. Verify that crisp, audible exhaust pops/burble occur during the 1.25s delay window before DFCO cut.",
+    "Stage C: Rolling stop idle verification. Coast down to 0 mph in neutral/clutch-in; re-verify that the engine glides smoothly into settled 950 RPM idle without hanging or dipping.",
+    "Stage D: Boost pull check (optional). Perform a moderate boost pull up to ~5,500-6,000 RPM if road conditions permit, confirming lambda remains safely in the 0.72-0.75 range."
+  ],
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Fuel rail pressure collapse (< 35 psi differential)"
+  ]
+}
