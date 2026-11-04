@@ -173,10 +173,17 @@ if ($catalog.revisions.version -contains 'v026') {
         $cell.value = ('{0:F2}' -f [double]$change.after)
     }
     foreach ($p in $snapshots.v026.PSObject.Properties) {
-        $p.Value.evidence = 'Exact v025 parent; verified saved/reopened comparison changes only 32731 Open Loop Fuel TPS Thresh vs. RPM (rows 3 & 4, 2,000-2,500 RPM lifted to 350 counts) and Notes. Prepared candidate, ready for staged testing under docs/v026-regression-test.md.'
+        $p.Value.evidence = 'Exact v025 parent; verified saved/reopened comparison changes only 32731 Open Loop Fuel TPS Thresh vs. RPM (rows 3 & 4, 2,000-2,500 RPM lifted to 350 counts) and Notes. Tested 2026-11-03; confirmed 12.09 psi boost, 0 knock retard, 40 psi rail pressure, rich 0.73-0.74 lambda at 7,000 RPM. Parent for v027.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v026 prepared from exact v025: single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM lifted from 0.00 to 350.00 counts at 2,000 and 2,500 RPM. Saved/reopened/compared in VCM Editor; ready for staged testing under docs/v026-regression-test.md.'; installed='v025 tested 2026-11-03; 0 mid-warmup FMEM events, centered 952 RPM warm idle, and 1.5k stoich hold verified; provisionally adopted as parent for v026 in covered stationary modes; no ECU readback.'}
+if ($catalog.revisions.version -contains 'v027') {
+    $d27 = Get-Content (Join-Path $folder 'v027/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v027 = Clone $snapshots.v026
+    foreach ($p in $snapshots.v027.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v026 parent; verified saved/reopened comparison changes ECM 44491 (18 mph), ECM 44496 (1.0s), ECM 44605 decel spark (0 to -2 deg ATDC above 3k), ECM 32988 dashpot pre-position air trimmed at 3,150 and 4,150 RPM, and Notes. Flashed by owner; active road test in progress under docs/v027-regression-test.md.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v027 flashed by owner; active road test in progress under docs/v027-regression-test.md with Innovate SCG-1 set to 8% WGDC. Evaluates in-gear engine braking restoration (DFCO down to 18 mph), 1.0s pre-DFCO decel exhaust pops (-2 deg ATDC above 3k RPM), and ~13.5-14.0 psi boost response.'; installed='v027 flashed 2026-11-03 by vehicle owner; active road test in progress; no ECU readback.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

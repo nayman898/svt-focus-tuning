@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "session": "active-v027-drive-01",
+  "purpose": "v027 engine braking restoration, decel overrun pop evaluation, and SCG-1 8% WGDC boost response validation",
+  "tune": {
+    "filename": "v027-engine-braking-decel-pop.hpt",
+    "sha256": "3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5",
+    "bytes": 257981,
+    "installation_evidence": "Flashed by owner; active road drive in progress; owner visual screenshots verified before flash"
+  },
+  "parent_tune": {
+    "filename": "v026-open-loop-tps-threshold.hpt",
+    "sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
+    "bytes": 257885
+  },
+  "changes_since_previous_run": "Relative to v026: lowered DFCO enable VSS from 35 to 18 mph ([ECM] 44491); shortened DFCO delay from 3.0s to 1.0s ([ECM] 44496); retarded warm decel spark above 3k RPM to 0 to -2 deg ATDC ([ECM] 44605); trimmed dashpot pre-position air at 3,150 and 4,150 RPM ([ECM] 32988). Innovate SCG-1 WGDC stepped from 6% to 8%.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "water_meth": "OFF per standing owner instruction",
+    "upstream_o2": "Active switching upstream O2 retained",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "spring_weight_psi": 7.0,
+      "duty_cycle_pct": 8.0,
+      "boost_cut_psi": 16.0,
+      "lean_cut_afr": 12.8
+    }
+  },
+  "planned_actions": [
+    "Stage A1: Startup through warm idle; verify clean idle catch and STFT within +-5%",
+    "Stage A2: Free-rev dashpot test in neutral; verify smooth return to 950 RPM without stalling",
+    "Stage B1: In-gear 2nd/3rd gear decel from 45 mph down to 18 mph; verify DFCO activation and engine braking deceleration torque",
+    "Stage B2: Overrun burble evaluation during 1.0s pre-DFCO window above 3,000 RPM",
+    "Stage B3: Clutch-in idle catch from road speed; verify zero stalling or severe undershoot (<800 RPM)",
+    "Stage C1: Progressive 3rd gear WOT pull with 8% SCG-1 WGDC; verify boost response (~13.5-14.0 psi), wideband lambda (0.73-0.75), and zero knock retard (0.00 deg)"
+  ],
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.0 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Fuel rail pressure collapse (< 35 psi differential)"
+  ],
+  "comparison_session": "logs/2026-11-03-v026-drive-01",
+  "rollback": "v026-open-loop-tps-threshold.hpt",
+  "uncovered_until_tested": [
+    "Boost operation above 14.5 psi",
+    "Water/methanol injection activation"
+  ]
+}

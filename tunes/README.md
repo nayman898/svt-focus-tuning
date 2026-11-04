@@ -1,13 +1,13 @@
 # Tune revisions
 
-Latest prepared candidate: [v026 Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.md),
-from exact v025. Saved, reopened and compared; **not flashed or tested**.
-Use the [v026 regression test](../docs/v026-regression-test.md).
+Latest active road test: [v027 Engine Braking & Decel Pop](v027-engine-braking-decel-pop.md),
+from exact v026. Flashed and road tested by vehicle owner with Innovate SCG-1 set to 8% WGDC.
+Use the [v027 regression test](../docs/v027-regression-test.md).
 
-Installed working parent and immediate rollback: [v025](v025-maf-idle-offidle-smooth.md),
-owner-confirmed tested on 2026-11-03. Acceptance is provisional and limited to
-covered stationary conditions. See the
-[latest review](../reports/2026-11-03-v025-test-review.md).
+Installed working parent and immediate rollback: [v026](v026-open-loop-tps-threshold.md),
+owner-confirmed road tested on 2026-11-03 (12.09 psi boost, 0 knock retard, 40 psi rail pressure,
+rich 0.73-0.74 lambda at 7,000 RPM). See the
+[v026 review](../reports/2026-11-03-v026-drive-review.md).
 
 The table below is historical; each status describes that revision's recorded
 outcome, not the current installed file. The [catalog](revisions.json) records
@@ -31,7 +31,8 @@ by Git.
 | v009 | [900-RPM idle target trial](v009-idle-900.hpt) | Same two targets: 950 to900 RPM, plus Notes. [Verification and scope](v009-idle-900.md). | Owner confirms exact file installed without edits for [latest900 run](../reports/2026-10-27-900-load-capture.md). Last-minute mean900.62; recovered fan/load dip810.75. Hold900 for off-idle review; hot restart and driving unvalidated. No agent write/readback. v008 rollback. |
 | v024 | [Fuel cleanup & diagnostics](v024-fuel-cleanup-diagnostics.hpt) | From exact v021. ECM44511 two 2,500-RPM cells (1.07/1.14 -> 1.00); ECM50 P0190/P0192/P0193 to MIL Light; Notes appended. 251,773 bytes; SHA-256 `80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E`. [Verification and scope](v024-fuel-cleanup-diagnostics.md). | Tested 2026-11-03 with new upstream O2 sensor; cold start, warm idle, and fan-off recovery clean; [review](../reports/2026-11-03-v024-cold-cleanup-review.md). Provisionally adopted as parent for v025 in covered stationary modes; no ECU readback. |
 | v025 | [MAF idle & off-idle smoothing](v025-maf-idle-offidle-smooth.hpt) | From exact v024. Single-table ECM12163 MAF transfer smoothed across columns 6–13 (0.500–1.000 V); all other 22 columns and all 30 voltage breakpoints identical to v024. 255,949 bytes; SHA-256 `2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17`. [Verification and scope](v025-maf-idle-offidle-smooth.md). | Tested 2026-11-03; 0 mid-warmup FMEM events, centered 952 RPM warm idle, 1.5k stoich hold verified; [review](../reports/2026-11-03-v025-test-review.md). Adopted as working parent for v026; rollback v024. |
-| v026 | [Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.hpt) | From exact v025. Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; all other 5 rows and all 7 RPM breakpoints identical to v025. 257,885 bytes; SHA-256 `86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918`. [Verification and scope](v026-open-loop-tps-threshold.md). | Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner flash and staged testing under [v026 regression test](../docs/v026-regression-test.md). Rollback v025. |
+| v026 | [Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.hpt) | From exact v025. Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; all other 5 rows and all 7 RPM breakpoints identical to v025. 257,885 bytes; SHA-256 `86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918`. [Verification and scope](v026-open-loop-tps-threshold.md). | Road tested 2026-11-03; confirmed 12.09 psi peak boost, 0 knock retard, 40 psi rail pressure, rich 0.73-0.74 lambda at 7,000 RPM. Parent for v027. Rollback v025. |
+| v027 | [Engine Braking & Decel Pop](v027-engine-braking-decel-pop.hpt) | From exact v026. ECM 44491 DFCO min VSS 35 to 18 mph; ECM 44496 DFCO delay 3.0 to 1.0s; ECM 44605 decel spark 200°F ECT row retarded above 3k RPM (3k=0°, 4k-6k=-2° ATDC); ECM 32988 dashpot pre-position air trimmed at 3,150 (0.80) and 4,150 RPM (1.00 lb/min). 257,981 bytes; SHA-256 `3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5`. [Verification and scope](v027-engine-braking-decel-pop.md). | Flashed by owner; active road testing in progress with Innovate SCG-1 set to 8% WGDC under [v027 regression test](../docs/v027-regression-test.md). Rollback v026. |
 
 Prepared next revision: [v010 gain1.500](v010-idle-spark-gain-1p5.hpt), from
 owner-confirmed v009. Only ECM47996 gain2.000 to1.500 plus Notes;900RPM retained.

@@ -21,19 +21,6 @@ from datetime import datetime, timezone
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-def check_com7_free():
-    import serial.tools.list_ports
-    ports = [p.device for p in serial.tools.list_ports.comports()]
-    if "COM7" in ports:
-        try:
-            import serial
-            s = serial.Serial("COM7", 9600, timeout=0.5)
-            s.close()
-            return True
-        except Exception:
-            return False
-    return True
-
 def scrub_check(text):
     vin_pat = re.compile(r"1FAFP3[A-Z0-9]{11}", re.I)
     serial_pat = re.compile(r"\b\d{10}\b")
@@ -77,10 +64,12 @@ def main():
         spec = json.load(f)
 
     # Basic validations
-    required_keys = ["version", "name", "file", "parent_file", "parameter_id", "parameter_name", "rationale"]
+    required_keys = ["version", "name", "file", "parent_file", "rationale"]
     for k in required_keys:
         if k not in spec:
             raise KeyError(f"Spec missing required key: '{k}'")
+    if "parameters" not in spec and "parameter_id" not in spec:
+        raise KeyError("Spec must contain either 'parameters' or 'parameter_id'")
 
     scrub_check(json.dumps(spec))
     print(f"[build_tune] Starting automated build for {spec['version']} ({spec['name']})...")
@@ -103,6 +92,21 @@ def main():
     delta_dir = os.path.join(REPO_ROOT, "reports", "calibration-inventory", spec["version"])
     os.makedirs(delta_dir, exist_ok=True)
     delta_path = os.path.join(delta_dir, "delta.json")
+
+    param_list = spec.get("parameters")
+    if not param_list:
+        param_list = [{
+            "id": spec.get("parameter_id"),
+            "name": spec.get("parameter_name"),
+            "kind": "table",
+            "changes": spec.get("changes", [])
+        }]
+
+    comp_list = ["Notes"]
+    for p in param_list:
+        name = p.get("name") or str(p.get("id"))
+        if name not in comp_list:
+            comp_list.append(name)
     
     delta_data = {
         "version": spec["version"],
@@ -113,10 +117,9 @@ def main():
         "sha256": cand_sha,
         "parent_sha256": spec.get("parent_sha256", ""),
         "status": f"Prepared candidate; saved/reopened/compared in VCM Editor; ready for testing.",
-        "parameter_id": spec["parameter_id"],
-        "parameter_name": spec["parameter_name"],
-        "changes": spec.get("changes", []),
-        "comparison": ["Notes", spec["parameter_name"]]
+        "rationale": spec["rationale"],
+        "parameters": param_list,
+        "comparison": comp_list
     }
     with open(delta_path, "w", encoding="utf-8") as f:
         json.dump(delta_data, f, indent=2)

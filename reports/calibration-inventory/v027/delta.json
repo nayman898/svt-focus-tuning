@@ -1,0 +1,65 @@
+{
+  "version": "v027",
+  "file": "v027-engine-braking-decel-pop.hpt",
+  "parent": "v026",
+  "parent_file": "v026-open-loop-tps-threshold.hpt",
+  "bytes": 257981,
+  "sha256": "3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5",
+  "parent_sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
+  "status": "Prepared and flashed by vehicle owner; active road testing in progress under docs/v027-regression-test.md.",
+  "rationale": "Restore in-gear engine braking by lowering DFCO enable VSS from 35 to 18 mph and reducing DFCO entry delay from 3.0s to 1.0s. Add subtle overrun exhaust pops during the 1.0s pre-DFCO window by retarding warm decel spark above 3,000 RPM (0° to -2° ATDC) while keeping <= 2,000 RPM decel spark intact (12-14°) to protect idle catch. Trim high-RPM dashpot pre-position air to prevent IAC throttle floating.",
+  "parameters": [
+    {
+      "id": 44491,
+      "name": "Minimum VSS to Allow DFCO",
+      "kind": "scalar",
+      "units": "mph",
+      "before": 35.0,
+      "after": 18.0,
+      "diff": -17.0
+    },
+    {
+      "id": 44496,
+      "name": "DFCO Closed Throttle Delay",
+      "kind": "scalar",
+      "units": "s",
+      "before": 3.0,
+      "after": 1.0,
+      "diff": -2.0
+    },
+    {
+      "id": 44605,
+      "name": "Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        { "row": 5, "col": 4, "rpm": 3000, "ect": 200, "before": 14.0, "after": 0.0, "diff": -14.0 },
+        { "row": 5, "col": 5, "rpm": 4000, "ect": 200, "before": 15.0, "after": -2.0, "diff": -17.0 },
+        { "row": 5, "col": 6, "rpm": 5000, "ect": 200, "before": 16.0, "after": -2.0, "diff": -18.0 },
+        { "row": 5, "col": 7, "rpm": 6000, "ect": 200, "before": 17.0, "after": -2.0, "diff": -19.0 }
+      ],
+      "unchanged_regions": "ECT -20 to 100°F (rows 1-4) untouched; RPM 800 to 2000 (cols 1-3) untouched at 14/12/13°"
+    },
+    {
+      "id": 32988,
+      "name": "Idle Dashpot Pre-Position vs. RPM",
+      "kind": "table",
+      "units": "lb/min",
+      "changes": [
+        { "row": 5, "col": 1, "rpm": 3150, "before": 1.11, "after": 0.80, "diff": -0.31 },
+        { "row": 6, "col": 1, "rpm": 4150, "before": 1.50, "after": 1.00, "diff": -0.50 }
+      ],
+      "unchanged_rows": "0 RPM (0.04), 150 RPM (0.04), 1,150 RPM (0.35), 2,150 RPM (0.78) untouched"
+    }
+  ],
+  "comparison": [
+    "Notes",
+    "Minimum VSS to Allow DFCO",
+    "DFCO Closed Throttle Delay",
+    "Spark Decel vs. RPM vs. ECT",
+    "Idle Dashpot Pre-Position vs. RPM"
+  ],
+  "owner_verified_screenshots": true,
+  "prior_27_hashes_intact": true,
+  "ecu_readback": false
+}

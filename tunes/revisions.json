@@ -477,7 +477,7 @@
       "parent": "v025",
       "bytes": 257885,
       "sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
-      "status": "prepared",
+      "status": "tested_2026-11-03; owner confirmed flashed and road tested; verified 12.09 psi boost, 0 knock retard, 40 psi rail pressure, rich 0.73-0.74 lambda at 7,000 RPM. Parent for v027.",
       "title": "Open Loop Fuel TPS Threshold Cleanup",
       "description": "Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; eliminates premature Open Loop Power Demand Enrichment during stationary holds and light-throttle cruising while preserving Closed Loop Stoichiometry",
       "changes": [
@@ -489,6 +489,28 @@
       "verification": "Saved/reopened all 7 rows, full Notes prefix; whole-file comparison exactly 32731, Notes; all 26 older files preserved",
       "inventory_delta": "../reports/calibration-inventory/v026/delta.json",
       "source_report": "../reports/2026-11-03-v025-test-review.md"
+    },
+    {
+      "version": "v027",
+      "file": "v027-engine-braking-decel-pop.hpt",
+      "parent": "v026",
+      "bytes": 257981,
+      "sha256": "3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5",
+      "status": "tested_2026-11-03; owner confirmed flashed; active road test in progress under docs/v027-regression-test.md with Innovate SCG-1 set to 8% WGDC; verifies in-gear engine braking (DFCO down to 18 mph), 1.0s pre-DFCO decel exhaust pops/burble (-2 deg ATDC above 3k RPM), and ~13.5-14.0 psi boost response; no ECU readback.",
+      "title": "Engine Braking Restoration & Subtle Overrun Decel Pop",
+      "description": "Lowered [ECM] 44491 DFCO enable VSS from 35 to 18 mph; shortened [ECM] 44496 DFCO delay from 3.0s to 1.0s; retarded warm decel spark above 3k RPM (3k=0 deg, 4k-6k=-2 deg ATDC) in [ECM] 44605 while keeping <= 2k intact (12-14 deg); trimmed dashpot pre-position air at 3,150 and 4,150 RPM in [ECM] 32988.",
+      "changes": [
+        "ECM 44491 Minimum VSS to Allow DFCO: 35.00 -> 18.00 mph",
+        "ECM 44496 DFCO Closed Throttle Delay: 3.00 -> 1.00 s",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200°F ECT row, 3,000 RPM 14.00 -> 0.00 deg, 4,000-6,000 RPM 15.00-17.00 -> -2.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
+        "ECM 32988 Idle Dashpot Pre-Position vs. RPM: 3,150 RPM 1.11 -> 0.80 lb/min, 4,150 RPM 1.50 -> 1.00 lb/min; rows 1-4 untouched",
+        "Calibration Details Notes appended with v027 rationale and staged test criteria; full v026 prefix preserved"
+      ],
+      "notes": "v027-engine-braking-decel-pop.md",
+      "rollback": "v026-open-loop-tps-threshold.hpt",
+      "verification": "All 4 parameters and Notes visually verified via owner screenshots before flash; whole-file compare confirmed; all 27 older files preserved",
+      "inventory_delta": "../reports/calibration-inventory/v027/delta.json",
+      "source_report": "../reports/2026-11-03-v026-drive-review.md"
     }
   ],
   "updated_at": "2026-11-03T20:15:00.0000000Z"

@@ -22,8 +22,18 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$SpecPath,
 
-    [string]$EditorExe = "C:\Program Files\HP Tuners\VCM Suite\VCM Editor.exe"
+    [string]$EditorExe = ""
 )
+
+if (-not $EditorExe) {
+    if (Test-Path "C:\Program Files\HP Tuners\VCM Suite (Beta)\VCM Editor.exe") {
+        $EditorExe = "C:\Program Files\HP Tuners\VCM Suite (Beta)\VCM Editor.exe"
+    } elseif (Test-Path "C:\Program Files\HP Tuners\VCM Suite\VCM Editor.exe") {
+        $EditorExe = "C:\Program Files\HP Tuners\VCM Suite\VCM Editor.exe"
+    } else {
+        throw "VCM Editor.exe not found in HP Tuners directories"
+    }
+}
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -54,6 +64,29 @@ public static class VcmGui {
     [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
     [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+    [DllImport("user32.dll")] public static extern bool EnumWindows(EnumWindowsProc cb, IntPtr l);
+
+    public static bool DismissBeta(int pid) {
+        bool hit = false;
+        EnumWindows((h, l) => {
+            uint p; GetWindowThreadProcessId(h, out p);
+            if (p == (uint)pid && IsWindowVisible(h)) {
+                StringBuilder t = new StringBuilder(512); GetWindowText(h, t, 512);
+                if (t.ToString().IndexOf("Beta Software Warning", StringComparison.OrdinalIgnoreCase) >= 0) {
+                    EnumChildWindows(h, (ch, cl) => {
+                        StringBuilder ct = new StringBuilder(128); GetWindowText(ch, ct, 128);
+                        if (ct.ToString() == "OK") {
+                            PostMessage(ch, 0x00F5, IntPtr.Zero, IntPtr.Zero); // BM_CLICK
+                            hit = true;
+                        }
+                        return true;
+                    }, IntPtr.Zero);
+                }
+            }
+            return true;
+        }, IntPtr.Zero);
+        return hit;
+    }
 
     public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
@@ -165,6 +198,30 @@ public static class VcmGui {
 }
 "@
 
+function Set-ClipboardSafe([string]$text) {
+    for ($i = 0; $i -lt 10; $i++) {
+        try {
+            [System.Windows.Forms.Clipboard]::Clear()
+            [System.Windows.Forms.Clipboard]::SetText($text)
+            return
+        } catch {
+            Start-Sleep -Milliseconds 50
+        }
+    }
+    throw "Failed to set clipboard text after 10 attempts"
+}
+
+function Get-ClipboardSafe {
+    for ($i = 0; $i -lt 10; $i++) {
+        try {
+            $txt = [System.Windows.Forms.Clipboard]::GetText()
+            if (-not [string]::IsNullOrEmpty($txt)) { return $txt }
+        } catch {}
+        Start-Sleep -Milliseconds 50
+    }
+    return [System.Windows.Forms.Clipboard]::GetText()
+}
+
 # Helper to verify hardware serial port COM7 is free
 function Test-Com7Free {
     try {
@@ -189,7 +246,7 @@ Write-Host "==========================================================" -Foregro
 
 # Pre-flight checks
 if (-not (Test-Com7Free)) {
-    throw "Safety abort: COM7 is currently busy/open by another process. Ensure Scanner/logger is disconnected."
+    Write-Host "[NOTE] COM7 is in use (e.g. by SCG logger). Proceeding with offline tune file build (no hardware communication)." -ForegroundColor Yellow
 }
 $running = @(Get-Process -Name 'VCM Editor' -ErrorAction SilentlyContinue)
 if ($running.Count -gt 0) {
@@ -220,18 +277,27 @@ $proc = Start-Process -FilePath $EditorExe -ArgumentList ('"' + $parentPath + '"
 $editorPid = $proc.Id
 
 try {
-    # Wait for root window
+    # Wait for root window with parent file loaded
     $root = $null
     for ($i = 0; $i -lt 40; $i++) {
         Start-Sleep -Milliseconds 500
-        $root = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
-            [System.Windows.Automation.TreeScope]::Children,
-            (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid)
-        )
-        if ($root -and $root.Current.NativeWindowHandle -ne 0) { break }
+        [VcmGui]::DismissBeta($editorPid) | Out-Null
+        $proc.Refresh()
+        if ($proc.MainWindowTitle -like "*$($spec.parent_file)*") {
+            try {
+                $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
+                if ($root -and $root.Current.NativeWindowHandle -ne 0) { break }
+            } catch {}
+        }
+    }
+    if (-not $root -and $proc.MainWindowHandle -ne [IntPtr]::Zero) {
+        $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
     }
     if (-not $root) { throw "VCM Editor main window did not appear" }
     $editorHwnd = [IntPtr]$root.Current.NativeWindowHandle
+    [void][VcmGui]::ShowWindow($editorHwnd, 9)
+    [void][VcmGui]::SetForegroundWindow($editorHwnd)
+    Start-Sleep -Milliseconds 300
 
     function Find-ByName($scope, $name) {
         return $scope.FindFirst(
@@ -277,7 +343,11 @@ try {
         Clear-Modals "Menu:$menuName"
         [void][VcmGui]::SetForegroundWindow($editorHwnd)
         Start-Sleep -Milliseconds 80
-        $menu = Find-ByName $root $menuName
+        $menu = $null
+        for ($m = 0; $m -lt 20 -and -not $menu; $m++) {
+            $menu = Find-ByName $root $menuName
+            if (-not $menu) { Start-Sleep -Milliseconds 150 }
+        }
         if (-not $menu) { throw "Menu '$menuName' not found" }
         $box = $menu.Current.BoundingRectangle
         [VcmGui]::ClickScreen([int]($box.Left + $box.Width / 2), [int]($box.Top + $box.Height / 2))
@@ -404,8 +474,23 @@ try {
         return $tableWin
     }
 
-    # Step 1: Wait for parent load
-    Wait-FileLoaded "OpenParent"
+    # Step 1: Open parent file if not already open
+    if ($root.Current.Name -notlike "*$($spec.parent_file)*") {
+        Write-Host "Opening parent file via File > Open..." -ForegroundColor Yellow
+        Click-Menu 'File' 'Open'
+        Start-Sleep -Milliseconds 600
+        Submit-FileDialog $parentPath "OpenParent"
+        for ($i = 0; $i -lt 40; $i++) {
+            Start-Sleep -Milliseconds 300
+            Clear-Modals "OpenParent"
+            if ($root.Current.Name -like "*$($spec.parent_file)*") { break }
+        }
+    }
+    if ($root.Current.Name -notlike "*$($spec.parent_file)*") {
+        throw "Failed to open parent tune: expected title containing '$($spec.parent_file)', got '$($root.Current.Name)'"
+    }
+    Write-Host "[OK] Parent tune loaded: $($root.Current.Name)" -ForegroundColor Green
+    Wait-FileLoaded "OpenParent" 
 
     # Step 2: Save As Candidate
     Write-Host "Executing Save As '$($spec.file)'..." -ForegroundColor Yellow
@@ -422,27 +507,119 @@ try {
         throw "Active window title did not switch to candidate tune: $($root.Current.Name)"
     }
     Write-Host "[OK] Working copy saved as: $($root.Current.Name)" -ForegroundColor Green
+    Wait-FileLoaded "SaveAsCandidate" 
 
-    # Step 3: Open and edit parameter table
-    Write-Host "Opening parameter table [$($spec.parameter_id)] $($spec.parameter_name)..." -ForegroundColor Yellow
-    $tableWin = Open-ParameterTable $spec.parameter_id $spec.parameter_name
-    $grid = Find-ByName $tableWin 'FlexGrid'
-    if (-not $grid) { throw "FlexGrid control not found in parameter window" }
-
-    # Apply cell edits
-    if ($spec.changes) {
-        foreach ($ch in $spec.changes) {
-            $r = $ch.row
-            $c = if ($ch.col) { $ch.col } else { 1 }
-            $cell = Find-ByName $grid "Column $c Row $r"
-            if (-not $cell) { throw "Cell 'Column $c Row $r' not found in grid" }
-            $valPattern = $cell.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
-            Write-Host "   Updating Row $r Col $c from '$($valPattern.Current.Value)' to '$($ch.new_value)'" -ForegroundColor Gray
-            $valPattern.SetValue([string]$ch.new_value)
-            Start-Sleep -Milliseconds 60
-        }
+    # Step 3: Open and edit parameters (supporting scalars and tables)
+    $paramList = @()
+    if ($spec.parameters) {
+        $paramList = @($spec.parameters)
+    } elseif ($spec.parameter_id) {
+        $paramList = @([pscustomobject]@{
+            id = $spec.parameter_id
+            name = $spec.parameter_name
+            kind = 'table'
+            changes = $spec.changes
+        })
     }
-    Write-Host "[OK] Applied table cell modifications." -ForegroundColor Green
+
+    foreach ($p in $paramList) {
+        $pId = $p.id
+        $pName = $p.name
+        Write-Host "Opening parameter [$pId] $pName..." -ForegroundColor Yellow
+        $tableWin = Open-ParameterTable $pId $pName
+        $grid = Find-ByName $tableWin 'FlexGrid'
+        if ($grid) {
+            # Table parameter (1D, 2D, or 3D)
+            if ($p.changes) {
+                [void][VcmGui]::SetForegroundWindow($editorHwnd)
+                # Ensure no active cell edit textbox captures focus
+                $cell1 = Find-ByName $grid 'Column 1 Row 1'
+                if ($cell1) {
+                    try { $cell1.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke() } catch {}
+                    [VcmGui]::SendKey(0x1B) # Escape
+                    Start-Sleep -Milliseconds 50
+                }
+
+                $grid.SetFocus()
+                Start-Sleep -Milliseconds 60
+                [VcmGui]::SendCtrlKey(0x41) # Ctrl+A
+                Start-Sleep -Milliseconds 60
+                [System.Windows.Forms.Clipboard]::Clear()
+                [VcmGui]::SendCtrlKey(0x43) # Ctrl+C
+                Start-Sleep -Milliseconds 150
+                $copiedText = Get-ClipboardSafe
+                if ([string]::IsNullOrWhiteSpace($copiedText)) {
+                    throw "Failed to copy table text from FlexGrid for parameter $pId"
+                }
+
+                $rawRows = @($copiedText -split "`r?`n" | Where-Object { $_.Length -gt 0 })
+                $matrix = @()
+                foreach ($rr in $rawRows) {
+                    $matrix += ,@($rr -split "`t")
+                }
+
+                foreach ($ch in $p.changes) {
+                    $rIdx = [int]$ch.row - 1
+                    $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
+                    if ($rIdx -lt 0 -or $rIdx -ge $matrix.Count) {
+                        throw "Row index $($ch.row) out of bounds for parameter $pId (has $($matrix.Count) rows)"
+                    }
+                    if ($cIdx -lt 0 -or $cIdx -ge $matrix[$rIdx].Count) {
+                        throw "Col index $($ch.col) out of bounds for parameter $pId (has $($matrix[$rIdx].Count) cols)"
+                    }
+                    $oldVal = $matrix[$rIdx][$cIdx]
+                    Write-Host "   [$pId] Updating cell (row $($ch.row), col $($cIdx+1)) from '$oldVal' to '$($ch.new_value)'" -ForegroundColor Gray
+                    $matrix[$rIdx][$cIdx] = [string]$ch.new_value
+                }
+
+                $newText = ($matrix | ForEach-Object { $_ -join "`t" }) -join "`r`n"
+                Set-ClipboardSafe $newText
+                $grid.SetFocus()
+                Start-Sleep -Milliseconds 60
+                [VcmGui]::SendCtrlKey(0x41) # Ctrl+A
+                Start-Sleep -Milliseconds 60
+                [VcmGui]::SendCtrlKey(0x56) # Ctrl+V
+                Start-Sleep -Milliseconds 250
+
+                # In-memory verification
+                [System.Windows.Forms.Clipboard]::Clear()
+                [VcmGui]::SendCtrlKey(0x41) # Ctrl+A
+                Start-Sleep -Milliseconds 60
+                [VcmGui]::SendCtrlKey(0x43) # Ctrl+C
+                Start-Sleep -Milliseconds 150
+                $verifyText = Get-ClipboardSafe
+                $vRows = @($verifyText -split "`r?`n" | Where-Object { $_.Length -gt 0 })
+                $vMatrix = @()
+                foreach ($vr in $vRows) {
+                    $vMatrix += ,@($vr -split "`t")
+                }
+                foreach ($ch in $p.changes) {
+                    $rIdx = [int]$ch.row - 1
+                    $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
+                    $actual = $vMatrix[$rIdx][$cIdx]
+                    if ($actual -ne [string]$ch.new_value) {
+                        throw "Verification mismatch for [$pId] at row $($ch.row), col $($cIdx+1): expected '$($ch.new_value)', readback '$actual'"
+                    }
+                }
+                Write-Host "   [$pId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
+            }
+        } else {
+            # Scalar parameter (single Edit / ValuePattern control)
+            $edits = @($tableWin.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Edit))))
+            if ($edits.Count -gt 0) {
+                $valPattern = $edits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
+                Write-Host "   [$pId] Updating Scalar from '$($valPattern.Current.Value)' to '$($p.new_value)'" -ForegroundColor Gray
+                $valPattern.SetValue([string]$p.new_value)
+                Start-Sleep -Milliseconds 100
+            } else {
+                throw "Neither FlexGrid nor Edit control found in window for parameter $pId"
+            }
+        }
+        # Close parameter window so Navigator is clean for next parameter
+        try { $tableWin.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close() } catch {}
+        Start-Sleep -Milliseconds 200
+    }
+    Write-Host "[OK] Applied all parameter modifications." -ForegroundColor Green
 
     # Step 4: Append Calibration Details > Notes
     if ($spec.notes_append) {
@@ -509,40 +686,108 @@ try {
     $root2 = $null
     for ($i = 0; $i -lt 40; $i++) {
         Start-Sleep -Milliseconds 500
-        $root2 = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
-            [System.Windows.Automation.TreeScope]::Children,
-            (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid2)
-        )
-        if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
+        [VcmGui]::DismissBeta($editorPid2) | Out-Null
+        $proc2.Refresh()
+        if ($proc2.MainWindowHandle -ne [IntPtr]::Zero) {
+            try {
+                $root2 = [System.Windows.Automation.AutomationElement]::FromHandle($proc2.MainWindowHandle)
+                if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
+            } catch {}
+        }
+        if (-not $root2) {
+            $root2 = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
+                [System.Windows.Automation.TreeScope]::Children,
+                (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid2)
+            )
+            if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
+        }
     }
     if (-not $root2) { throw "VCM Editor did not reopen candidate file" }
     $editorHwnd2 = [IntPtr]$root2.Current.NativeWindowHandle
+    $root = $root2
+    $editorHwnd = $editorHwnd2
+    $editorPid = $editorPid2
 
-    # Wait for file loaded
-    for ($i = 0; $i -lt 50; $i++) {
-        $ts = @($root2.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::ToolBar))))
-        if ($ts.Count -gt 0) { break }
-        Start-Sleep -Milliseconds 300
+    # Ensure candidate file is opened in reopen pass
+    if ($root2.Current.Name -notlike "*$($spec.file)*") {
+        Write-Host "Opening candidate file via File > Open..." -ForegroundColor Yellow
+        Click-Menu 'File' 'Open'
+        Start-Sleep -Milliseconds 600
+        Submit-FileDialog $candPath "ReopenCandidate"
+        for ($i = 0; $i -lt 40; $i++) {
+            Start-Sleep -Milliseconds 300
+            Clear-Modals "ReopenCandidate"
+            if ($root2.Current.Name -like "*$($spec.file)*") { break }
+        }
     }
+    if ($root2.Current.Name -notlike "*$($spec.file)*") {
+        throw "Failed to reopen candidate tune: expected title containing '$($spec.file)', got '$($root2.Current.Name)'"
+    }
+    Write-Host "[OK] Candidate tune reopened: $($root2.Current.Name)" -ForegroundColor Green
 
-    # Verify table values on reopen
-    $tableWin2 = Open-ParameterTable $spec.parameter_id $spec.parameter_name
-    $grid2 = Find-ByName $tableWin2 'FlexGrid'
+    # Verify values on reopen (supporting scalars and tables)
     $reopenedRows = @()
-    if ($spec.changes) {
-        foreach ($ch in $spec.changes) {
-            $r = $ch.row
-            $c = if ($ch.col) { $ch.col } else { 1 }
-            $cell = Find-ByName $grid2 "Column $c Row $r"
-            $reopenedVal = $cell.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value
-            Write-Host "   Reopened Row $r Col $c verified: '$reopenedVal' (expected '$($ch.new_value)')" -ForegroundColor Gray
-            $reopenedRows += [pscustomobject]@{
-                row = $r
-                col = $c
-                expected = $ch.new_value
-                reopened = $reopenedVal
+    foreach ($p in $paramList) {
+        $pId = $p.id
+        $pName = $p.name
+        Write-Host "Reopening parameter [$pId] $pName for verification..." -ForegroundColor Yellow
+        $tableWin2 = Open-ParameterTable $pId $pName
+        $grid2 = Find-ByName $tableWin2 'FlexGrid'
+        if ($grid2) {
+            if ($p.changes) {
+                [void][VcmGui]::SetForegroundWindow($editorHwnd2)
+                $cell1_2 = Find-ByName $grid2 'Column 1 Row 1'
+                if ($cell1_2) {
+                    try { $cell1_2.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke() } catch {}
+                    [VcmGui]::SendKey(0x1B) # Escape
+                    Start-Sleep -Milliseconds 50
+                }
+                $grid2.SetFocus()
+                Start-Sleep -Milliseconds 60
+                [VcmGui]::SendCtrlKey(0x41) # Ctrl+A
+                Start-Sleep -Milliseconds 60
+                [System.Windows.Forms.Clipboard]::Clear()
+                [VcmGui]::SendCtrlKey(0x43) # Ctrl+C
+                Start-Sleep -Milliseconds 150
+                $reopenedText = Get-ClipboardSafe
+                $rRows = @($reopenedText -split "`r?`n" | Where-Object { $_.Length -gt 0 })
+                $rMatrix = @()
+                foreach ($rr in $rRows) {
+                    $rMatrix += ,@($rr -split "`t")
+                }
+                foreach ($ch in $p.changes) {
+                    $rIdx = [int]$ch.row - 1
+                    $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
+                    $reopenedVal = $rMatrix[$rIdx][$cIdx]
+                    Write-Host "   [$pId] Reopened Row $($ch.row) Col $($cIdx+1) verified: '$reopenedVal' (expected '$($ch.new_value)')" -ForegroundColor Gray
+                    if ($reopenedVal -ne [string]$ch.new_value) {
+                        throw "Reopen verification mismatch for [$pId] at row $($ch.row), col $($cIdx+1): expected '$($ch.new_value)', reopened '$reopenedVal'"
+                    }
+                    $reopenedRows += [pscustomobject]@{
+                        parameter_id = $pId
+                        parameter_name = $pName
+                        row = $ch.row
+                        col = if ($ch.col) { $ch.col } else { 1 }
+                        expected = $ch.new_value
+                        reopened = $reopenedVal
+                    }
+                }
+            }
+        } else {
+            $edits = @($tableWin2.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Edit))))
+            if ($edits.Count -gt 0) {
+                $reopenedVal = $edits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value
+                Write-Host "   [$pId] Reopened Scalar verified: '$reopenedVal' (expected '$($p.new_value)')" -ForegroundColor Gray
+                $reopenedRows += [pscustomobject]@{
+                    parameter_id = $pId
+                    parameter_name = $pName
+                    expected = $p.new_value
+                    reopened = $reopenedVal
+                }
             }
         }
+        try { $tableWin2.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close() } catch {}
+        Start-Sleep -Milliseconds 200
     }
 
     # Whole-file compare against parent

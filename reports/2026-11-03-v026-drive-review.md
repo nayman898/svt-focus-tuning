@@ -77,3 +77,4 @@ With candidate `v026` proving completely drivable and safe to 7,000 RPM / 12 psi
    - Under 12 psi boost, the engine is running `0.733–0.740` Lambda (`~10.8 AFR`). For pump 93 octane, this is ultra-safe and rich. If crisper top-end power is desired, `[ECM] 44511` could be nudged to `0.77–0.78` Lambda (`~11.4 AFR`), or kept conservative as-is.
 3. **Decel / Dashpot Polish**:
    - Ensure seamless transition into closed-throttle idle without any brief floating above 1,100 RPM.
+
