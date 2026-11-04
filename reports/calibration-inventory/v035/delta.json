@@ -1,0 +1,50 @@
+{
+  "version": "v035",
+  "file": "v035-wot-fuel-spark-power.hpt",
+  "parent": "v034",
+  "parent_file": "v034-wot-power-spark.hpt",
+  "bytes": 265613,
+  "sha256": "037A69269671D8F487FA2269630B68351767623AB845A41BE4577ABBDF730A16",
+  "parent_bytes": 263853,
+  "parent_sha256": "7F9539CBD3654B8426B587A3A504EA3D30488564B9D52256F4EB613D06CA08FA",
+  "status": "Prepared and verified in open VCM Editor instance; ready for owner flash and road test validation.",
+  "rationale": "Derived from paired-20261104-160338-a0c65d0c-v034 telemetry review and owner road test feedback ('crackle came to life', 'felt better in the high range', peak MAF reached 33.14 lb/min with 0.0 deg knock retard): (1) Overrun decel crackles were validated with sustained negative spark down to -10.0 deg with 1.40s DFCO delay. (2) Missed shift event reached 7,610 RPM where factory ECU rev limiter cleanly intervened with Injector Cut for 8 frames, safely protecting the engine. (3) WOT wideband telemetry showed fueling remained rich at 0.712-0.747 lambda (~10.5-10.9 AFR). Candidate v035 leans [ECM] 44511 Fuel Base Rows 6 and 7 from 0.74 lambda to 0.76-0.77 lambda across 4,000-7,400 RPM (~11.2-11.4 AFR actual), accelerating flame speed and eliminating top-end power quench. (4) Having verified zero knock retard across all v034 pulls, [ECM] 44583 Row 9 (2.00 Load / Boost) is advanced +0.50 deg (5k: 13.00 deg, 5.75k-7.2k: 13.50 deg), reaching peak MBT efficiency under boost.",
+  "parameters": [
+    {
+      "id": 44583,
+      "name": "Spark Borderline Knock vs. RPM vs. Load",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        { "row": 9, "col": 6, "parent_value": "12.50", "new_value": "13.00", "note": "Row 9 (2.00 Load) 5,000 RPM (+0.50 deg)" },
+        { "row": 9, "col": 7, "parent_value": "13.00", "new_value": "13.50", "note": "Row 9 (2.00 Load) 5,750 RPM (+0.50 deg)" },
+        { "row": 9, "col": 8, "parent_value": "13.00", "new_value": "13.50", "note": "Row 9 (2.00 Load) 6,000 RPM (+0.50 deg)" },
+        { "row": 9, "col": 9, "parent_value": "13.00", "new_value": "13.50", "note": "Row 9 (2.00 Load) 6,250 RPM (+0.50 deg)" },
+        { "row": 9, "col": 10, "parent_value": "13.00", "new_value": "13.50", "note": "Row 9 (2.00 Load) 6,500 RPM (+0.50 deg)" },
+        { "row": 9, "col": 11, "parent_value": "13.00", "new_value": "13.50", "note": "Row 9 (2.00 Load) 7,200 RPM (+0.50 deg)" }
+      ]
+    },
+    {
+      "id": 44511,
+      "name": "Fuel Base vs. RPM vs. TPS",
+      "kind": "table",
+      "units": "lambda",
+      "changes": [
+        { "row": 7, "col": 4, "parent_value": "0.74", "new_value": "0.76", "note": "Row 6 (53.71% TPS) 4,000 RPM (+0.02 leaner)" },
+        { "row": 7, "col": 5, "parent_value": "0.74", "new_value": "0.76", "note": "Row 6 (53.71% TPS) 4,500 RPM (+0.02 leaner)" },
+        { "row": 7, "col": 6, "parent_value": "0.74", "new_value": "0.77", "note": "Row 6 (53.71% TPS) 5,000 RPM (+0.03 leaner)" },
+        { "row": 7, "col": 7, "parent_value": "0.74", "new_value": "0.77", "note": "Row 6 (53.71% TPS) 5,500 RPM (+0.03 leaner)" },
+        { "row": 7, "col": 8, "parent_value": "0.74", "new_value": "0.77", "note": "Row 6 (53.71% TPS) 6,000 RPM (+0.03 leaner)" },
+        { "row": 7, "col": 9, "parent_value": "0.74", "new_value": "0.77", "note": "Row 6 (53.71% TPS) 6,500 RPM (+0.03 leaner)" },
+        { "row": 7, "col": 10, "parent_value": "0.74", "new_value": "0.77", "note": "Row 6 (53.71% TPS) 7,400 RPM (+0.03 leaner)" },
+        { "row": 8, "col": 4, "parent_value": "0.74", "new_value": "0.76", "note": "Row 7 (68.36% WOT) 4,000 RPM (+0.02 leaner)" },
+        { "row": 8, "col": 5, "parent_value": "0.74", "new_value": "0.76", "note": "Row 7 (68.36% WOT) 4,500 RPM (+0.02 leaner)" },
+        { "row": 8, "col": 6, "parent_value": "0.74", "new_value": "0.77", "note": "Row 7 (68.36% WOT) 5,000 RPM (+0.03 leaner)" },
+        { "row": 8, "col": 7, "parent_value": "0.74", "new_value": "0.77", "note": "Row 7 (68.36% WOT) 5,500 RPM (+0.03 leaner)" },
+        { "row": 8, "col": 8, "parent_value": "0.74", "new_value": "0.77", "note": "Row 7 (68.36% WOT) 6,000 RPM (+0.03 leaner)" },
+        { "row": 8, "col": 9, "parent_value": "0.75", "new_value": "0.77", "note": "Row 7 (68.36% WOT) 6,500 RPM (+0.02 leaner)" },
+        { "row": 8, "col": 10, "parent_value": "0.74", "new_value": "0.77", "note": "Row 7 (68.36% WOT) 7,400 RPM (+0.03 leaner)" }
+      ]
+    }
+  ]
+}

@@ -658,7 +658,28 @@
       "rollback": "v033-loud-crisp-pops.hpt",
       "verification": "Live UIA automation in open VCM Editor, FlexGrid in-memory readback, and whole-file compare verified; owner inspection required before flashing",
       "inventory_delta": "../reports/calibration-inventory/v034/delta.json"
+    },
+    {
+      "version": "v035",
+      "file": "v035-wot-fuel-spark-power.hpt",
+      "parent": "v034",
+      "bytes": 265613,
+      "sha256": "037A69269671D8F487FA2269630B68351767623AB845A41BE4577ABBDF730A16",
+      "status": "prepared; ready for owner inspection & staged road test",
+      "title": "WOT Fuel Enleanment & Spark Power Advance Optimization",
+      "description": "Derived from paired-20261104-160338-a0c65d0c-v034 telemetry review and owner feedback: leans [ECM] 44511 Fuel Base Rows 6 and 7 from 0.74 lambda to 0.76-0.77 lambda across 4,000-7,400 RPM (~11.2-11.4 AFR actual), accelerating flame speed and eliminating high-RPM rich quench; advances [ECM] 44583 Row 9 (2.00 Load / Boost) +0.50 deg to 13.00 deg at 5k and 13.50 deg at 5.75k-7.2k, matching MBT efficiency under boost with zero knock retard; retains full v033 loud decel crackle calibration and v032 anti-shuffle fixes.",
+      "changes": [
+        "Fuel Base vs. RPM vs. TPS [ECM 44511] Row 6 (53.71% TPS) and Row 7 (68.36% WOT) leaned from 0.74 lambda to 0.76-0.77 lambda across 4,000-7,400 RPM (+0.02 to +0.03 leaner, target ~11.2-11.4 AFR actual)",
+        "Spark Borderline Knock vs. RPM vs. Load [ECM 44583] Row 9 (2.00 Load) advanced to 13.00 deg at 5,000 RPM and 13.50 deg at 5,750-7,200 RPM (+0.50 deg)",
+        "Brings boost spark directly to the MBT optimum knee (ECM 32265 is 13.75 deg) with proven zero knock retard on v034",
+        "Accelerates combustion flame front velocity to unlock substantial top-end horsepower while preserving safe 93 octane margin",
+        "Retains full v033 loud overrun crackle package (ECM 44496 DFCO delay = 1.40s, ECM 44605 = -8 deg at 3k, -10 deg at 4k-6k) and v032 anti-shuffle fixes"
+      ],
+      "notes": "v035-wot-fuel-spark-power.md",
+      "rollback": "v034-wot-power-spark.hpt",
+      "verification": "Live UIA automation in open VCM Editor, FlexGrid in-memory readback, and whole-file compare against v034 verified; owner inspection required before flashing",
+      "inventory_delta": "../reports/calibration-inventory/v035/delta.json"
     }
   ],
-  "updated_at": "2026-11-04T20:43:53.451757+00:00"
+  "updated_at": "2026-11-04T21:30:51.000000+00:00"
 }
