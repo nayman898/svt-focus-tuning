@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v031-drive-01",
+  "purpose": "Smooth Low-RPM Drivability & Crisp High-RPM Decel Pops",
+  "tune": {
+    "filename": "v031-smooth-drivability-crisp-pop.hpt",
+    "sha256": "7A19C33ED9396F8AA356A8BADCAA5A0243409FB008B02C1BBD6AA208DEC02B2A",
+    "bytes": 260781,
+    "parent_filename": "v030-smooth-tipin-enhanced-pop.hpt",
+    "status": "Candidate prepared for owner inspection and flash"
+  },
+  "parent_tune": {
+    "filename": "v030-smooth-tipin-enhanced-pop.hpt",
+    "sha256": "8607FCBF188FA6C9D5D6A54817DE2893682520A3D0FC95247A57CF82DCF2E467",
+    "bytes": 259501
+  },
+  "changes_since_previous_run": "Derived from paired-20261104-075425-a8636a50-v030 log analysis: (1) Completely disables Tip-In Torque Control spark chops by raising [ECM] 44607 to 7,500 RPM, eliminating the 2,400 RPM oscillation boundary that caused 561 torque-cut chops; (2) Shortens [ECM] 44496 DFCO delay from 1.75s to 0.90s for a concise, punchy pop burst; (3) Re-cushions [ECM] 44605 decel spark at 2,000 RPM (+10.0 deg) and 3,000 RPM (+2.0 deg) to prevent tip-in bogging, while deepening 4,000-6,000 RPM to -8.0 deg ATDC for louder, sharper pops on overrun; (4) Trims [ECM] 12163 MAF Columns 14-17 by -2.5% to zero out cruising STFT.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "duty_cycle_pct": 6.0,
+      "boost_cut_psi": 16.0,
+      "active_press_psi": 5.0
+    }
+  },
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "version": "v031",
+  "file": "v031-smooth-drivability-crisp-pop.hpt",
+  "parent": "v030",
+  "parent_file": "v030-smooth-tipin-enhanced-pop.hpt",
+  "bytes": 260781,
+  "sha256": "7A19C33ED9396F8AA356A8BADCAA5A0243409FB008B02C1BBD6AA208DEC02B2A",
+  "parent_sha256": "8607FCBF188FA6C9D5D6A54817DE2893682520A3D0FC95247A57CF82DCF2E467",
+  "status": "Prepared candidate; saved/reopened/compared in VCM Editor; ready for owner inspection & test.",
+  "rationale": "Derived from paired-20261104-075425-a8636a50-v030 log analysis: (1) Completely disables Tip-In Torque Control spark chops by raising [ECM] 44607 to 7,500 RPM, eliminating the 2,400 RPM oscillation boundary that caused 561 torque-cut chops; (2) Shortens [ECM] 44496 DFCO delay from 1.75s to 0.90s for a concise, punchy pop burst; (3) Re-cushions [ECM] 44605 decel spark at 2,000 RPM (+10.0 deg) and 3,000 RPM (+2.0 deg) to prevent tip-in bogging, while deepening 4,000-6,000 RPM to -8.0 deg ATDC for louder, sharper pops on overrun; (4) Trims [ECM] 12163 MAF Columns 14-17 by -2.5% to zero out cruising STFT.",
+  "parameters": [
+    {
+      "id": 44607,
+      "name": "Spark Tip-In Torque Control RPM Min",
+      "kind": "scalar",
+      "new_value": "7,500"
+    },
+    {
+      "id": 44496,
+      "name": "DFCO Closed Throttle Delay",
+      "kind": "scalar",
+      "new_value": "0.90"
+    },
+    {
+      "id": 44605,
+      "name": "Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "changes": [
+        {
+          "row": 4,
+          "col": 3,
+          "new_value": "10.00",
+          "note": "Row 4 (100 ECT) 2,000 RPM"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "new_value": "2.00",
+          "note": "Row 4 (100 ECT) 3,000 RPM"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "new_value": "-8.00",
+          "note": "Row 4 (100 ECT) 4,000 RPM"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "new_value": "-8.00",
+          "note": "Row 4 (100 ECT) 5,000 RPM"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "new_value": "-8.00",
+          "note": "Row 4 (100 ECT) 6,000 RPM"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "new_value": "10.00",
+          "note": "Row 5 (200 ECT) 2,000 RPM"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "new_value": "2.00",
+          "note": "Row 5 (200 ECT) 3,000 RPM"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "new_value": "-8.00",
+          "note": "Row 5 (200 ECT) 4,000 RPM"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "new_value": "-8.00",
+          "note": "Row 5 (200 ECT) 5,000 RPM"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "new_value": "-8.00",
+          "note": "Row 5 (200 ECT) 6,000 RPM"
+        }
+      ]
+    },
+    {
+      "id": 12163,
+      "name": "MAF Airflow vs. Voltage",
+      "kind": "table",
+      "changes": [
+        {
+          "row": 1,
+          "col": 14,
+          "delta_pct": -2.5,
+          "note": "Col 14 (1.000V)"
+        },
+        {
+          "row": 1,
+          "col": 15,
+          "delta_pct": -2.5,
+          "note": "Col 15 (1.100V)"
+        },
+        {
+          "row": 1,
+          "col": 16,
+          "delta_pct": -2.5,
+          "note": "Col 16 (1.200V)"
+        },
+        {
+          "row": 1,
+          "col": 17,
+          "delta_pct": -2.5,
+          "note": "Col 17 (1.299V)"
+        }
+      ]
+    }
+  ],
+  "changes": [
+    "ECM 44607 Spark Tip-In Torque Control RPM Min: 7,500",
+    "ECM 44496 DFCO Closed Throttle Delay: 0.90",
+    "ECM 44605 Spark Decel vs. RPM vs. ECT: 10 cells updated",
+    "ECM 12163 MAF Airflow vs. Voltage: 4 cells updated"
+  ]
+}

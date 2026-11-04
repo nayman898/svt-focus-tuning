@@ -343,8 +343,19 @@ def generate_markdown_readme(spec, delta_data):
                 r = ch.get("row", 1)
                 c = ch.get("col", 1)
                 ov = ch.get("old_value", "N/A")
-                nv = ch.get("new_value", "N/A")
-                extra = f"RPM {ch.get('rpm')}" if "rpm" in ch else (f"{ch.get('voltage')}V" if "voltage" in ch else "")
+                if "new_value" in ch:
+                    nv = ch["new_value"]
+                elif "delta_pct" in ch:
+                    nv = f"{ch['delta_pct']:+.2f}%"
+                elif "delta_add" in ch:
+                    nv = f"{ch['delta_add']:+.2f}"
+                else:
+                    nv = "N/A"
+                note_parts = []
+                if "rpm" in ch: note_parts.append(f"RPM {ch['rpm']}")
+                if "voltage" in ch: note_parts.append(f"{ch['voltage']}V")
+                if "note" in ch: note_parts.append(ch['note'])
+                extra = "; ".join(note_parts)
                 lines.append(f"| {r} | {c} | {ov} | **{nv}** | {extra} |")
         lines.append("")
 

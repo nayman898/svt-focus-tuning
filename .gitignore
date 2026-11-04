@@ -14,6 +14,8 @@ tunes/*
 *.hpl
 *.bak
 *.tmp
+__pycache__/
+*.pyc
 scratch/
 Thumbs.db
 .DS_Store

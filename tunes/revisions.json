@@ -577,7 +577,27 @@
       "verification": "Ready for owner entry/flash; all 30 prior files preserved",
       "inventory_delta": "../reports/calibration-inventory/v030/delta.json",
       "source_report": "../reports/2026-11-03-v029-drive-review.md"
+    },
+    {
+      "version": "v031",
+      "file": "v031-smooth-drivability-crisp-pop.hpt",
+      "parent": "v030",
+      "bytes": 260781,
+      "sha256": "7A19C33ED9396F8AA356A8BADCAA5A0243409FB008B02C1BBD6AA208DEC02B2A",
+      "status": "prepared; ready for owner inspection & staged road test",
+      "title": "Smooth Low-RPM Drivability & Crisp High-RPM Decel Pops",
+      "description": "Derived from paired-20261104-075425-a8636a50-v030 log analysis: (1) Completely disables Tip-In Torque Control spark chops by raising [ECM] 44607 to 7,500 RPM, eliminating the 2,400 RPM oscillation boundary that caused 561 torque-cut chops; (2) Shortens [ECM] 44496 DFCO delay from 1.75s to 0.90s for a concise, punchy pop burst; (3) Re-cushions [ECM] 44605 decel spark at 2,000 RPM (+10.0 deg) and 3,000 RPM (+2.0 deg) to prevent tip-in bogging, while deepening 4,000-6,000 RPM to -8.0 deg ATDC for louder, sharper pops on overrun; (4) Trims [ECM] 12163 MAF Columns 14-17 by -2.5% to zero out cruising STFT.",
+      "changes": [
+        "ECM 44607 Spark Tip-In Torque Control RPM Min: 7,500",
+        "ECM 44496 DFCO Closed Throttle Delay: 0.90",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 10 cells updated",
+        "ECM 12163 MAF Airflow vs. Voltage: 4 cells updated"
+      ],
+      "notes": "v031-smooth-drivability-crisp-pop.md",
+      "rollback": "v030-smooth-tipin-enhanced-pop.hpt",
+      "verification": "Saved/reopened/compared in VCM Editor; owner inspection required before flashing",
+      "inventory_delta": "../reports/calibration-inventory/v031/delta.json"
     }
   ],
-  "updated_at": "2026-11-03T20:55:00.0000000Z"
+  "updated_at": "2026-11-04T14:13:30.372313+00:00"
 }

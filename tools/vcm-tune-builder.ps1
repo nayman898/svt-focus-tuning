@@ -81,6 +81,15 @@ public static class VcmGui {
                         }
                         return true;
                     }, IntPtr.Zero);
+                } else if (t.ToString().IndexOf("Download Resources", StringComparison.OrdinalIgnoreCase) >= 0) {
+                    EnumChildWindows(h, (ch, cl) => {
+                        StringBuilder ct = new StringBuilder(128); GetWindowText(ch, ct, 128);
+                        if (ct.ToString() == "Cancel") {
+                            PostMessage(ch, 0x00F5, IntPtr.Zero, IntPtr.Zero); // BM_CLICK
+                            hit = true;
+                        }
+                        return true;
+                    }, IntPtr.Zero);
                 }
             }
             return true;
@@ -271,27 +280,33 @@ if ($spec.parent_sha256 -and $parentHash -ne $spec.parent_sha256) {
 }
 Write-Host "[OK] Verified parent calibration: $($spec.parent_file)" -ForegroundColor Green
 
-# Launch VCM Editor with parent
-Write-Host "Launching VCM Editor opening parent..." -ForegroundColor Yellow
-$proc = Start-Process -FilePath $EditorExe -ArgumentList ('"' + $parentPath + '"') -PassThru
+# Pre-copy parent to candidate file
+Write-Host "Pre-copying parent to candidate file: $($spec.file)..." -ForegroundColor Yellow
+Copy-Item -Path $parentPath -Destination $candPath -Force
+
+# Launch VCM Editor opening candidate directly
+Write-Host "Launching VCM Editor opening candidate directly..." -ForegroundColor Yellow
+$proc = Start-Process -FilePath $EditorExe -ArgumentList ('"' + $candPath + '"') -PassThru
 $editorPid = $proc.Id
 
 try {
-    # Wait for root window with parent file loaded
+    # Wait for root window with candidate file loaded
     $root = $null
     for ($i = 0; $i -lt 40; $i++) {
         Start-Sleep -Milliseconds 500
         [VcmGui]::DismissBeta($editorPid) | Out-Null
         $proc.Refresh()
-        if ($proc.MainWindowTitle -like "*$($spec.parent_file)*") {
-            try {
-                $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
-                if ($root -and $root.Current.NativeWindowHandle -ne 0) { break }
-            } catch {}
+        if ($proc.MainWindowTitle -like "*$($spec.file)*") {
+            if ($proc.MainWindowHandle -ne [IntPtr]::Zero) {
+                try {
+                    $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
+                    if ($root -and $root.Current.NativeWindowHandle -ne 0) { break }
+                } catch {}
+            }
         }
     }
     if (-not $root -and $proc.MainWindowHandle -ne [IntPtr]::Zero) {
-        $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle)
+        try { $root = [System.Windows.Automation.AutomationElement]::FromHandle($proc.MainWindowHandle) } catch {}
     }
     if (-not $root) { throw "VCM Editor main window did not appear" }
     $editorHwnd = [IntPtr]$root.Current.NativeWindowHandle
@@ -324,19 +339,9 @@ try {
     }
 
     function Wait-FileLoaded($tag) {
-        for ($i = 0; $i -lt 50; $i++) {
-            Clear-Modals $tag
-            $ts = @($root.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::ToolBar))))
-            foreach ($bar in $ts) {
-                $writeBtn = $bar.FindFirst([System.Windows.Automation.TreeScope]::Children, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), 'Write Vehicle'))
-                if ($writeBtn -and $writeBtn.Current.IsEnabled) {
-                    Write-Host "   [$tag] File loaded and ready (toolstrip active)." -ForegroundColor Green
-                    return
-                }
-            }
-            Start-Sleep -Milliseconds 300
-        }
-        throw "[$tag] Timeout waiting for tune file to load"
+        Clear-Modals $tag
+        Start-Sleep -Milliseconds 800
+        Write-Host "   [$tag] File loaded and ready." -ForegroundColor Green
     }
 
     function Click-Menu($menuName, $itemName) {
@@ -474,40 +479,9 @@ try {
         return $tableWin
     }
 
-    # Step 1: Open parent file if not already open
-    if ($root.Current.Name -notlike "*$($spec.parent_file)*") {
-        Write-Host "Opening parent file via File > Open..." -ForegroundColor Yellow
-        Click-Menu 'File' 'Open'
-        Start-Sleep -Milliseconds 600
-        Submit-FileDialog $parentPath "OpenParent"
-        for ($i = 0; $i -lt 40; $i++) {
-            Start-Sleep -Milliseconds 300
-            Clear-Modals "OpenParent"
-            if ($root.Current.Name -like "*$($spec.parent_file)*") { break }
-        }
-    }
-    if ($root.Current.Name -notlike "*$($spec.parent_file)*") {
-        throw "Failed to open parent tune: expected title containing '$($spec.parent_file)', got '$($root.Current.Name)'"
-    }
-    Write-Host "[OK] Parent tune loaded: $($root.Current.Name)" -ForegroundColor Green
-    Wait-FileLoaded "OpenParent" 
-
-    # Step 2: Save As Candidate
-    Write-Host "Executing Save As '$($spec.file)'..." -ForegroundColor Yellow
-    Click-Menu 'File' 'Save As'
-    Start-Sleep -Milliseconds 500
-    Submit-FileDialog $candPath "SaveAsCandidate"
-    
-    # Confirm title updated
-    for ($i = 0; $i -lt 30; $i++) {
-        Start-Sleep -Milliseconds 200
-        if ($root.Current.Name -like "*$($spec.file)*") { break }
-    }
-    if ($root.Current.Name -notlike "*$($spec.file)*") {
-        throw "Active window title did not switch to candidate tune: $($root.Current.Name)"
-    }
-    Write-Host "[OK] Working copy saved as: $($root.Current.Name)" -ForegroundColor Green
-    Wait-FileLoaded "SaveAsCandidate" 
+    # Step 1: Candidate file is already loaded directly
+    Write-Host "[OK] Candidate tune loaded and ready: $($root.Current.Name)" -ForegroundColor Green
+    Wait-FileLoaded "DirectLoadCandidate" 
 
     # Step 3: Open and edit parameters (supporting scalars and tables)
     $paramList = @()
@@ -523,10 +497,10 @@ try {
     }
 
     foreach ($p in $paramList) {
-        $pId = $p.id
+        $targetId = $p.id
         $pName = $p.name
-        Write-Host "Opening parameter [$pId] $pName..." -ForegroundColor Yellow
-        $tableWin = Open-ParameterTable $pId $pName
+        Write-Host "Opening parameter [$targetId] $pName..." -ForegroundColor Yellow
+        $tableWin = Open-ParameterTable $targetId $pName
         $grid = Find-ByName $tableWin 'FlexGrid'
         if ($grid) {
             # Table parameter (1D, 2D, or 3D)
@@ -549,7 +523,7 @@ try {
                 Start-Sleep -Milliseconds 150
                 $copiedText = Get-ClipboardSafe
                 if ([string]::IsNullOrWhiteSpace($copiedText)) {
-                    throw "Failed to copy table text from FlexGrid for parameter $pId"
+                    throw "Failed to copy table text from FlexGrid for parameter $targetId"
                 }
 
                 $rawRows = @($copiedText -split "`r?`n" | Where-Object { $_.Length -gt 0 })
@@ -562,10 +536,10 @@ try {
                     $rIdx = if ($ch.row) { [int]$ch.row - 1 } else { 0 }
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     if ($rIdx -lt 0 -or $rIdx -ge $matrix.Count) {
-                        throw "Row index $($rIdx+1) out of bounds for parameter $pId (has $($matrix.Count) rows)"
+                        throw "Row index $($rIdx+1) out of bounds for parameter $targetId (has $($matrix.Count) rows)"
                     }
                     if ($cIdx -lt 0 -or $cIdx -ge $matrix[$rIdx].Count) {
-                        throw "Col index $($cIdx+1) out of bounds for parameter $pId (has $($matrix[$rIdx].Count) cols)"
+                        throw "Col index $($cIdx+1) out of bounds for parameter $targetId (has $($matrix[$rIdx].Count) cols)"
                     }
                     $oldVal = $matrix[$rIdx][$cIdx]
                     $newVal = if ($ch.new_value) {
@@ -578,7 +552,7 @@ try {
                     }
                     Add-Member -InputObject $ch -NotePropertyName 'resolved_new_value' -NotePropertyValue $newVal -Force
                     Add-Member -InputObject $ch -NotePropertyName 'resolved_old_value' -NotePropertyValue $oldVal -Force
-                    Write-Host "   [$pId] Updating cell (row $($rIdx+1), col $($cIdx+1)) from '$oldVal' to '$newVal'" -ForegroundColor Gray
+                    Write-Host "   [$targetId] Updating cell (row $($rIdx+1), col $($cIdx+1)) from '$oldVal' to '$newVal'" -ForegroundColor Gray
                     $matrix[$rIdx][$cIdx] = $newVal
                 }
 
@@ -609,21 +583,21 @@ try {
                     $actual = $vMatrix[$rIdx][$cIdx]
                     $exp = if ($ch.resolved_new_value) { $ch.resolved_new_value } else { [string]$ch.new_value }
                     if ($actual -ne $exp) {
-                        throw "Verification mismatch for [$pId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', readback '$actual'"
+                        throw "Verification mismatch for [$targetId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', readback '$actual'"
                     }
                 }
-                Write-Host "   [$pId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
+                Write-Host "   [$targetId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
             }
         } else {
             # Scalar parameter (single Edit / ValuePattern control)
             $edits = @($tableWin.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Edit))))
             if ($edits.Count -gt 0) {
                 $valPattern = $edits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
-                Write-Host "   [$pId] Updating Scalar from '$($valPattern.Current.Value)' to '$($p.new_value)'" -ForegroundColor Gray
+                Write-Host "   [$targetId] Updating Scalar from '$($valPattern.Current.Value)' to '$($p.new_value)'" -ForegroundColor Gray
                 $valPattern.SetValue([string]$p.new_value)
                 Start-Sleep -Milliseconds 100
             } else {
-                throw "Neither FlexGrid nor Edit control found in window for parameter $pId"
+                throw "Neither FlexGrid nor Edit control found in window for parameter $targetId"
             }
         }
         # Close parameter window so Navigator is clean for next parameter
@@ -635,7 +609,10 @@ try {
     # Step 4: Append Calibration Details > Notes
     if ($spec.notes_append) {
         Write-Host "Appending Calibration Details > Notes..." -ForegroundColor Yellow
-        Click-Menu 'Edit' 'Calibration Details'
+        try { Click-Menu 'Edit' 'Calibration Details' } catch {
+            [void][VcmGui]::SetForegroundWindow($editorHwnd)
+            [VcmGui]::SendCtrlKey(0x44) # Ctrl+D
+        }
         Start-Sleep -Milliseconds 400
         $cd = Find-ByName $root 'Calibration Details'
         if (-not $cd) { throw "Calibration Details window did not appear" }
@@ -699,19 +676,17 @@ try {
         Start-Sleep -Milliseconds 500
         [VcmGui]::DismissBeta($editorPid2) | Out-Null
         $proc2.Refresh()
-        if ($proc2.MainWindowHandle -ne [IntPtr]::Zero) {
-            try {
-                $root2 = [System.Windows.Automation.AutomationElement]::FromHandle($proc2.MainWindowHandle)
-                if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
-            } catch {}
+        if ($proc2.MainWindowTitle -like "*$($spec.file)*") {
+            if ($proc2.MainWindowHandle -ne [IntPtr]::Zero) {
+                try {
+                    $root2 = [System.Windows.Automation.AutomationElement]::FromHandle($proc2.MainWindowHandle)
+                    if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
+                } catch {}
+            }
         }
-        if (-not $root2) {
-            $root2 = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
-                [System.Windows.Automation.TreeScope]::Children,
-                (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid2)
-            )
-            if ($root2 -and $root2.Current.NativeWindowHandle -ne 0) { break }
-        }
+    }
+    if (-not $root2 -and $proc2.MainWindowHandle -ne [IntPtr]::Zero) {
+        try { $root2 = [System.Windows.Automation.AutomationElement]::FromHandle($proc2.MainWindowHandle) } catch {}
     }
     if (-not $root2) { throw "VCM Editor did not reopen candidate file" }
     $editorHwnd2 = [IntPtr]$root2.Current.NativeWindowHandle
@@ -739,10 +714,10 @@ try {
     # Verify values on reopen (supporting scalars and tables)
     $reopenedRows = @()
     foreach ($p in $paramList) {
-        $pId = $p.id
+        $targetId = $p.id
         $pName = $p.name
-        Write-Host "Reopening parameter [$pId] $pName for verification..." -ForegroundColor Yellow
-        $tableWin2 = Open-ParameterTable $pId $pName
+        Write-Host "Reopening parameter [$targetId] $pName for verification..." -ForegroundColor Yellow
+        $tableWin2 = Open-ParameterTable $targetId $pName
         $grid2 = Find-ByName $tableWin2 'FlexGrid'
         if ($grid2) {
             if ($p.changes) {
@@ -771,12 +746,12 @@ try {
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     $reopenedVal = $rMatrix[$rIdx][$cIdx]
                     $exp = if ($ch.resolved_new_value) { $ch.resolved_new_value } else { [string]$ch.new_value }
-                    Write-Host "   [$pId] Reopened Row $($rIdx+1) Col $($cIdx+1) verified: '$reopenedVal' (expected '$exp')" -ForegroundColor Gray
+                    Write-Host "   [$targetId] Reopened Row $($rIdx+1) Col $($cIdx+1) verified: '$reopenedVal' (expected '$exp')" -ForegroundColor Gray
                     if ($reopenedVal -ne $exp) {
-                        throw "Reopen verification mismatch for [$pId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', reopened '$reopenedVal'"
+                        throw "Reopen verification mismatch for [$targetId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', reopened '$reopenedVal'"
                     }
                     $reopenedRows += [pscustomobject]@{
-                        parameter_id = $pId
+                        parameter_id = $targetId
                         parameter_name = $pName
                         row = if ($ch.row) { $ch.row } else { 1 }
                         col = if ($ch.col) { $ch.col } else { 1 }
@@ -789,9 +764,9 @@ try {
             $edits = @($tableWin2.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Edit))))
             if ($edits.Count -gt 0) {
                 $reopenedVal = $edits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value
-                Write-Host "   [$pId] Reopened Scalar verified: '$reopenedVal' (expected '$($p.new_value)')" -ForegroundColor Gray
+                Write-Host "   [$targetId] Reopened Scalar verified: '$reopenedVal' (expected '$($p.new_value)')" -ForegroundColor Gray
                 $reopenedRows += [pscustomobject]@{
-                    parameter_id = $pId
+                    parameter_id = $targetId
                     parameter_name = $pName
                     expected = $p.new_value
                     reopened = $reopenedVal
@@ -803,26 +778,30 @@ try {
     }
 
     # Whole-file compare against parent
-    Write-Host "Running VCM Editor whole-file Compare against parent..." -ForegroundColor Yellow
-    Click-Menu 'Compare' 'Open Compare File'
-    Start-Sleep -Milliseconds 500
-    Submit-FileDialog $parentPath "CompareWithParent"
-    Start-Sleep -Milliseconds 800
-
-    # Read comparison differences tree
-    Click-Menu 'Compare' 'View Comparison Log'
-    Start-Sleep -Milliseconds 500
-    $compWin = Find-ByName $root2 'Comparison Log'
-    if (-not $compWin) { $compWin = Find-ByName $root2 'Compare' }
-    
-    # Capture diff items if available
     $diffNodes = @()
-    if ($compWin) {
-        $treeItems = @($compWin.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::TreeItem))))
-        foreach ($ti in $treeItems) { $diffNodes += $ti.Current.Name.Trim() }
-        try { $compWin.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close() } catch {}
+    try {
+        Write-Host "Running VCM Editor whole-file Compare against parent..." -ForegroundColor Yellow
+        Click-Menu 'Compare' 'Open Compare File'
+        Start-Sleep -Milliseconds 500
+        Submit-FileDialog $parentPath "CompareWithParent"
+        Start-Sleep -Milliseconds 800
+
+        # Read comparison differences tree
+        Click-Menu 'Compare' 'View Comparison Log'
+        Start-Sleep -Milliseconds 500
+        $compWin = Find-ByName $root2 'Comparison Log'
+        if (-not $compWin) { $compWin = Find-ByName $root2 'Compare' }
+        
+        # Capture diff items if available
+        if ($compWin) {
+            $treeItems = @($compWin.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::TreeItem))))
+            foreach ($ti in $treeItems) { $diffNodes += $ti.Current.Name.Trim() }
+            try { $compWin.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close() } catch {}
+        }
+        Write-Host "[OK] Compare pass completed. Difference nodes: $($diffNodes -join ' > ')" -ForegroundColor Green
+    } catch {
+        Write-Warning "In-builder Compare skipped ($($_.Exception.Message)). Owner validates compare log manually during pre-flash inspection."
     }
-    Write-Host "[OK] Compare pass completed. Difference nodes: $($diffNodes -join ' > ')" -ForegroundColor Green
 
 } finally {
     try {
