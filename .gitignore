@@ -14,5 +14,6 @@ tunes/*
 *.hpl
 *.bak
 *.tmp
+scratch/
 Thumbs.db
 .DS_Store

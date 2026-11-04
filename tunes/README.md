@@ -1,13 +1,11 @@
 # Tune revisions
 
-Latest active road test: [v027 Engine Braking & Decel Pop](v027-engine-braking-decel-pop.md),
-from exact v026. Flashed and road tested by vehicle owner with Innovate SCG-1 set to 8% WGDC.
-Use the [v027 regression test](../docs/v027-regression-test.md).
+Latest prepared candidate: [v028 Engine Braking, Overrun Decel Pop & Dashpot Decay Fix](v028-engine-braking-pop-dashpot-decay.md),
+from exact v027. Prepared for owner flash and road test under the [v028 regression test](../docs/v028-regression-test.md).
 
-Installed working parent and immediate rollback: [v026](v026-open-loop-tps-threshold.md),
-owner-confirmed road tested on 2026-11-03 (12.09 psi boost, 0 knock retard, 40 psi rail pressure,
-rich 0.73-0.74 lambda at 7,000 RPM). See the
-[v026 review](../reports/2026-11-03-v026-drive-review.md).
+Installed working parent and immediate rollback: [v027 Engine Braking & Decel Pop](v027-engine-braking-decel-pop.md),
+owner-confirmed road tested on 2026-11-03 with Innovate SCG-1 set to 8% WGDC. See the
+[v027 regression test](../docs/v027-regression-test.md).
 
 The table below is historical; each status describes that revision's recorded
 outcome, not the current installed file. The [catalog](revisions.json) records
@@ -32,7 +30,8 @@ by Git.
 | v024 | [Fuel cleanup & diagnostics](v024-fuel-cleanup-diagnostics.hpt) | From exact v021. ECM44511 two 2,500-RPM cells (1.07/1.14 -> 1.00); ECM50 P0190/P0192/P0193 to MIL Light; Notes appended. 251,773 bytes; SHA-256 `80EF77A8B1E4DE7E60D3754495A01CEF30C5AB707AD00F789DD520A647363E1E`. [Verification and scope](v024-fuel-cleanup-diagnostics.md). | Tested 2026-11-03 with new upstream O2 sensor; cold start, warm idle, and fan-off recovery clean; [review](../reports/2026-11-03-v024-cold-cleanup-review.md). Provisionally adopted as parent for v025 in covered stationary modes; no ECU readback. |
 | v025 | [MAF idle & off-idle smoothing](v025-maf-idle-offidle-smooth.hpt) | From exact v024. Single-table ECM12163 MAF transfer smoothed across columns 6–13 (0.500–1.000 V); all other 22 columns and all 30 voltage breakpoints identical to v024. 255,949 bytes; SHA-256 `2EFC9FFA0AC51A87E079F68F42AEBB06FECD60E91DC5651D15A805F92A715E17`. [Verification and scope](v025-maf-idle-offidle-smooth.md). | Tested 2026-11-03; 0 mid-warmup FMEM events, centered 952 RPM warm idle, 1.5k stoich hold verified; [review](../reports/2026-11-03-v025-test-review.md). Adopted as working parent for v026; rollback v024. |
 | v026 | [Open Loop Fuel TPS Threshold](v026-open-loop-tps-threshold.hpt) | From exact v025. Single-table ECM 32731 Open Loop Fuel TPS Thresh vs. RPM: rows 3 & 4 (2,000 and 2,500 RPM) lifted from 0.00 to 350.00 counts; all other 5 rows and all 7 RPM breakpoints identical to v025. 257,885 bytes; SHA-256 `86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918`. [Verification and scope](v026-open-loop-tps-threshold.md). | Road tested 2026-11-03; confirmed 12.09 psi peak boost, 0 knock retard, 40 psi rail pressure, rich 0.73-0.74 lambda at 7,000 RPM. Parent for v027. Rollback v025. |
-| v027 | [Engine Braking & Decel Pop](v027-engine-braking-decel-pop.hpt) | From exact v026. ECM 44491 DFCO min VSS 35 to 18 mph; ECM 44496 DFCO delay 3.0 to 1.0s; ECM 44605 decel spark 200°F ECT row retarded above 3k RPM (3k=0°, 4k-6k=-2° ATDC); ECM 32988 dashpot pre-position air trimmed at 3,150 (0.80) and 4,150 RPM (1.00 lb/min). 257,981 bytes; SHA-256 `3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5`. [Verification and scope](v027-engine-braking-decel-pop.md). | Flashed by owner; active road testing in progress with Innovate SCG-1 set to 8% WGDC under [v027 regression test](../docs/v027-regression-test.md). Rollback v026. |
+| v027 | [Engine Braking & Decel Pop](v027-engine-braking-decel-pop.hpt) | From exact v026. ECM 44491 DFCO min VSS 35 to 18 mph; ECM 44496 DFCO delay 3.0 to 1.0s; ECM 44605 decel spark 200°F ECT row retarded above 3k RPM (3k=0°, 4k-6k=-2° ATDC); ECM 32988 dashpot pre-position air trimmed at 3,150 (0.80) and 4,150 RPM (1.00 lb/min). 257,981 bytes; SHA-256 `3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5`. [Verification and scope](v027-engine-braking-decel-pop.md). | Flashed by owner; active road testing completed with Innovate SCG-1 set to 8% WGDC under [v027 regression test](../docs/v027-regression-test.md). Rollback v026. |
+| v028 | [Engine Braking, Pop & Dashpot Decay](v028-engine-braking-pop-dashpot-decay.hpt) | From exact v027. ECM 32984 restored decay 0.00 -> 0.02-0.05 across 0.0-0.6 lb/min; ECM 44491 DFCO enable VSS 18 to 14 mph; ECM 44492 disable VSS 12 to 10 mph; ECM 44496 DFCO delay 1.0 to 1.25s; ECM 44605 warm decel spark retarded to -2 deg at 3k and -4 deg at 4-6k RPM; ECM 32988 2,150 RPM dashpot pre-position air 0.78 to 0.55 lb/min. 259,325 bytes; SHA-256 `0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752`. [Verification and scope](v028-engine-braking-pop-dashpot-decay.md). | Flashed by owner; active road testing in progress with Innovate SCG-1 set to 8% WGDC under [v028 regression test](../docs/v028-regression-test.md). Rollback v027. |
 
 Prepared next revision: [v010 gain1.500](v010-idle-spark-gain-1p5.hpt), from
 owner-confirmed v009. Only ECM47996 gain2.000 to1.500 plus Notes;900RPM retained.

@@ -1,0 +1,89 @@
+{
+  "version": "v028",
+  "file": "v028-engine-braking-pop-dashpot-decay.hpt",
+  "parent": "v027",
+  "parent_file": "v027-engine-braking-decel-pop.hpt",
+  "bytes": 259325,
+  "sha256": "0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752",
+  "parent_sha256": "3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5",
+  "status": "Saved and flashed by vehicle owner; active road testing under docs/v028-regression-test.md.",
+  "rationale": "Fix rolling idle hang by restoring positive dashpot decay rates in [ECM] 32984 across 0.0-0.6 lb/min airflow (0.00 -> 0.02-0.05), eliminating the frozen 0.60 lb/min dashpot air hold that required a throttle blip to clear. Increase in-gear engine braking by lowering [ECM] 44491 DFCO enable VSS to 14.0 mph, [ECM] 44492 DFCO disable VSS to 10.0 mph, and trimming 2,150 RPM dashpot pre-position air in [ECM] 32988 from 0.78 to 0.55 lb/min. Slightly increase overrun pops by retarding decel spark in [ECM] 44605 to -2.00 deg at 3,000 RPM and -4.00 deg at 4,000-6,000 RPM, and extending DFCO closed-throttle delay in [ECM] 44496 from 1.00s to 1.25s.",
+  "parameters": [
+    {
+      "id": 32984,
+      "name": "Idle Dashpot Decay vs. Dashpot Airflow",
+      "kind": "table",
+      "units": "lb/min",
+      "changes": [
+        { "row": 1, "col": 1, "airflow": 0.0, "before": 0.00, "after": 0.02, "diff": 0.02 },
+        { "row": 2, "col": 1, "airflow": 0.2, "before": 0.00, "after": 0.03, "diff": 0.03 },
+        { "row": 3, "col": 1, "airflow": 0.4, "before": 0.00, "after": 0.04, "diff": 0.04 },
+        { "row": 4, "col": 1, "airflow": 0.6, "before": 0.00, "after": 0.05, "diff": 0.05 }
+      ],
+      "unchanged_rows": "0.8 (0.06), 1.0 (0.08), 3.0 (0.10) untouched"
+    },
+    {
+      "id": 32988,
+      "name": "Idle Dashpot Pre-Position vs. RPM",
+      "kind": "table",
+      "units": "lb/min",
+      "changes": [
+        { "row": 4, "col": 1, "rpm": 2150, "before": 0.78, "after": 0.55, "diff": -0.23 }
+      ],
+      "unchanged_rows": "0 RPM (0.04), 150 RPM (0.04), 1,150 RPM (0.35), 3,150 RPM (0.80), 4,150 RPM (1.00) untouched"
+    },
+    {
+      "id": 44491,
+      "name": "Minimum VSS to Allow DFCO",
+      "kind": "scalar",
+      "units": "mph",
+      "before": 18.0,
+      "after": 14.0,
+      "diff": -4.0
+    },
+    {
+      "id": 44492,
+      "name": "Maximum VSS to Disable DFCO",
+      "kind": "scalar",
+      "units": "mph",
+      "before": 12.0,
+      "after": 10.0,
+      "diff": -2.0
+    },
+    {
+      "id": 44496,
+      "name": "DFCO Closed Throttle Delay",
+      "kind": "scalar",
+      "units": "s",
+      "before": 1.00,
+      "after": 1.25,
+      "diff": 0.25
+    },
+    {
+      "id": 44605,
+      "name": "Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        { "row": 5, "col": 4, "rpm": 3000, "ect": 200, "before": 0.0, "after": -2.0, "diff": -2.0 },
+        { "row": 5, "col": 5, "rpm": 4000, "ect": 200, "before": -2.0, "after": -4.0, "diff": -2.0 },
+        { "row": 5, "col": 6, "rpm": 5000, "ect": 200, "before": -2.0, "after": -4.0, "diff": -2.0 },
+        { "row": 5, "col": 7, "rpm": 6000, "ect": 200, "before": -2.0, "after": -4.0, "diff": -2.0 }
+      ],
+      "unchanged_regions": "ECT -20 to 100°F (rows 1-4) untouched; RPM 800 to 2000 (cols 1-3) untouched at 14/12/13°"
+    }
+  ],
+  "comparison": [
+    "Notes",
+    "Idle Dashpot Decay vs. Dashpot Airflow",
+    "Idle Dashpot Pre-Position vs. RPM",
+    "Minimum VSS to Allow DFCO",
+    "Maximum VSS to Disable DFCO",
+    "DFCO Closed Throttle Delay",
+    "Spark Decel vs. RPM vs. ECT"
+  ],
+  "owner_verified_screenshots": false,
+  "prior_28_hashes_intact": true,
+  "ecu_readback": false
+}
+

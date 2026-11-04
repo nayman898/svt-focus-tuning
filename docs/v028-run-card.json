@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "session": "active-v028-drive-01",
+  "purpose": "v028 rolling idle hang elimination, in-gear engine braking expansion (14/10 mph), overrun pop audition (-4 deg spark / 1.25s delay), and low-throttle cruising stutter diagnostic logging",
+  "tune": {
+    "filename": "v028-engine-braking-pop-dashpot-decay.hpt",
+    "sha256": "0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752",
+    "bytes": 259325,
+    "parent_filename": "v027-engine-braking-decel-pop.hpt",
+    "status": "Saved and flashed by owner; active road drive in progress"
+  },
+  "parent_tune": {
+    "filename": "v027-engine-braking-decel-pop.hpt",
+    "sha256": "3535FDB33BBEB369B2AB36DF22190E7B03EE9ABC9FBCFFEBF56930D41BE59AF5",
+    "bytes": 257981
+  },
+  "changes_since_previous_run": "Relative to v027: restored positive decay rates in [ECM] 32984 (0.00 -> 0.02-0.05); lowered DFCO enable VSS to 14 mph ([ECM] 44491) and disable VSS to 10 mph ([ECM] 44492); trimmed 2,150 RPM dashpot pre-position air from 0.78 to 0.55 lb/min ([ECM] 32988); extended DFCO delay to 1.25s ([ECM] 44496); retarded warm decel spark to -2 deg at 3k and -4 deg at 4-6k RPM ([ECM] 44605). SCG-1 WGDC maintained at 8%.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "sha256": "683479070FEB9468239316F7F36036DEB6D40E6B6660A73EF2A0F1C3B99F7DCA",
+    "saved_from_active_scanner": true,
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "water_meth": "OFF per standing owner instruction",
+    "upstream_o2": "Active switching upstream O2 retained",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "spring_weight_psi": 7.0,
+      "duty_cycle_pct": 8.0,
+      "boost_cut_psi": 16.0,
+      "lean_cut_afr": 12.8
+    }
+  },
+  "planned_actions": [
+    "Stage A: Rolling stop idle decay test. Coast down in neutral/clutch-in to 0 mph without throttle blip; verify idle smoothly decays to 950 RPM without hanging at 1,300-1,500 RPM.",
+    "Stage B: In-gear 2nd/1st gear engine braking down to 10 mph. Verify DFCO stays active below 18 mph down to 10 mph.",
+    "Stage C: Overrun decel pop evaluation. Decel in gear above 3,500 RPM; verify audible, crisp overrun burble during the 1.25s delay window without excessive violence.",
+    "Stage D: Low-throttle cruising stutter diagnostic hold. Hold steady light-throttle cruise (35-45 mph, 2,000-2,500 RPM, 2-5% throttle) for 10-15 seconds to capture clean telemetry on MAF volts, STFT, pulse width, and spark advance."
+  ],
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.0 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Fuel rail pressure collapse (< 35 psi differential)"
+  ],
+  "comparison_session": "logs/2026-11-03-v027-drive-01",
+  "rollback": "v027-engine-braking-decel-pop.hpt",
+  "uncovered_until_tested": [
+    "Boost operation above 14.5 psi",
+    "Water/methanol injection activation"
+  ]
+}
+

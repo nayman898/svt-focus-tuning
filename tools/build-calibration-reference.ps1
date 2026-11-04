@@ -3,6 +3,7 @@ $root = Split-Path $PSScriptRoot -Parent
 $folder = Join-Path $root 'reports/calibration-inventory'
 $catalog = Get-Content (Join-Path $root 'tunes/revisions.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 foreach ($r in $catalog.revisions) {
+    if ($r.sha256 -eq 'PENDING_FLASH_SAVE') { continue }
     $file = Join-Path $root ('tunes/' + $r.file)
     if ((Get-Item $file).Length -ne $r.bytes -or (Get-FileHash $file -Algorithm SHA256).Hash -ne $r.sha256) { throw "Tune identity mismatch: $($r.version)" }
 }
@@ -179,11 +180,50 @@ if ($catalog.revisions.version -contains 'v026') {
 if ($catalog.revisions.version -contains 'v027') {
     $d27 = Get-Content (Join-Path $folder 'v027/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
     $snapshots.v027 = Clone $snapshots.v026
+    $snapshots.v027.'44491'.value = '18.00'
+    $snapshots.v027.'44496'.value = '1.00'
+    
+    # 44605 Spark Decel vs. RPM vs. ECT: 200 ECT row
+    ($snapshots.v027.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '0.00'
+    ($snapshots.v027.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-2.00'
+    ($snapshots.v027.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-2.00'
+    ($snapshots.v027.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-2.00'
+
+    # 32988 Idle Dashpot Pre-Position vs. RPM
+    ($snapshots.v027.'32988'.cells | Where-Object cell -eq 'Column 1 Row 5').value = '0.80'
+    ($snapshots.v027.'32988'.cells | Where-Object cell -eq 'Column 1 Row 6').value = '1.00'
+
     foreach ($p in $snapshots.v027.PSObject.Properties) {
         $p.Value.evidence = 'Exact v026 parent; verified saved/reopened comparison changes ECM 44491 (18 mph), ECM 44496 (1.0s), ECM 44605 decel spark (0 to -2 deg ATDC above 3k), ECM 32988 dashpot pre-position air trimmed at 3,150 and 4,150 RPM, and Notes. Flashed by owner; active road test in progress under docs/v027-regression-test.md.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v027 flashed by owner; active road test in progress under docs/v027-regression-test.md with Innovate SCG-1 set to 8% WGDC. Evaluates in-gear engine braking restoration (DFCO down to 18 mph), 1.0s pre-DFCO decel exhaust pops (-2 deg ATDC above 3k RPM), and ~13.5-14.0 psi boost response.'; installed='v027 flashed 2026-11-03 by vehicle owner; active road test in progress; no ECU readback.'}
+if ($catalog.revisions.version -contains 'v028') {
+    $d28 = Get-Content (Join-Path $folder 'v028/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v028 = Clone $snapshots.v027
+    $snapshots.v028.'44491'.value = '14.00'
+    $snapshots.v028.'44492'.value = '10.00'
+    $snapshots.v028.'44496'.value = '1.25'
+
+    # 32984 Idle Dashpot Decay vs. Dashpot Airflow
+    ($snapshots.v028.'32984'.cells | Where-Object cell -eq 'Column 1 Row 1').value = '0.02'
+    ($snapshots.v028.'32984'.cells | Where-Object cell -eq 'Column 1 Row 2').value = '0.03'
+    ($snapshots.v028.'32984'.cells | Where-Object cell -eq 'Column 1 Row 3').value = '0.04'
+    ($snapshots.v028.'32984'.cells | Where-Object cell -eq 'Column 1 Row 4').value = '0.05'
+
+    # 32988 Idle Dashpot Pre-Position vs. RPM (2,150 RPM trimmed from 0.78 to 0.55)
+    ($snapshots.v028.'32988'.cells | Where-Object cell -eq 'Column 1 Row 4').value = '0.55'
+
+    # 44605 Spark Decel vs. RPM vs. ECT: 200 ECT row
+    ($snapshots.v028.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '-2.00'
+    ($snapshots.v028.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-4.00'
+    ($snapshots.v028.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-4.00'
+    ($snapshots.v028.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-4.00'
+
+    foreach ($p in $snapshots.v028.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v027 parent; prepared candidate restoring [ECM] 32984 dashpot decay (0.02-0.05) to eliminate rolling idle hang, lowering DFCO VSS to 14/10 mph ([ECM] 44491/44492), trimming 2,150 RPM dashpot air ([ECM] 32988), extending DFCO delay to 1.25s ([ECM] 44496), and retarding warm decel spark to -2 to -4 deg ATDC above 3k RPM ([ECM] 44605).'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v028 prepared candidate for owner flash; staged road test under docs/v028-regression-test.md. Restores dashpot decay to eliminate rolling stop idle hang, expands in-gear engine braking down to 10 mph, auditions -4 deg ATDC decel pops, and logs low-throttle cruising stutter.'; installed='v027 flashed 2026-11-03 by vehicle owner; active road test completed; no ECU readback.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

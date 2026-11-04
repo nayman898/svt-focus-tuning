@@ -511,7 +511,31 @@
       "verification": "All 4 parameters and Notes visually verified via owner screenshots before flash; whole-file compare confirmed; all 27 older files preserved",
       "inventory_delta": "../reports/calibration-inventory/v027/delta.json",
       "source_report": "../reports/2026-11-03-v026-drive-review.md"
+    },
+    {
+      "version": "v028",
+      "file": "v028-engine-braking-pop-dashpot-decay.hpt",
+      "parent": "v027",
+      "bytes": 259325,
+      "sha256": "0DFDEA68506F8AF005404E29F1403B46D998123A98E5417FDEB1481EE13BF752",
+      "status": "prepared_2026-11-03; candidate prepared for owner flash; staged test under docs/v028-regression-test.md; restores positive dashpot decay in [ECM] 32984 to eliminate rolling stop idle hang; expands engine braking down to 10 mph ([ECM] 44491/44492/32988); auditions overrun decel pops (-4 deg spark / 1.25s delay in [ECM] 44605/44496); captures low-throttle cruising stutter diagnostic log; no ECU readback.",
+      "title": "Engine Braking, Overrun Decel Pop & Dashpot Decay Fix",
+      "description": "Restores positive decay rates (0.02-0.05) in [ECM] 32984 Idle Dashpot Decay vs. Dashpot Airflow to fix rolling stop idle hang; lowers DFCO enable VSS to 14 mph ([ECM] 44491) and disable VSS to 10 mph ([ECM] 44492); trims 2,150 RPM dashpot pre-position air to 0.55 lb/min ([ECM] 32988); extends DFCO delay to 1.25s ([ECM] 44496); retards warm decel spark to -2 deg at 3k and -4 deg at 4-6k RPM ([ECM] 44605).",
+      "changes": [
+        "ECM 32984 Idle Dashpot Decay vs. Dashpot Airflow: rows 1-4 (0.0-0.6 lb/min) 0.00 -> 0.02, 0.03, 0.04, 0.05 lb/min per step; rows 5-7 (0.8-3.0) untouched",
+        "ECM 32988 Idle Dashpot Pre-Position vs. RPM: 2,150 RPM 0.78 -> 0.55 lb/min; rows 1-3 and 5-6 untouched",
+        "ECM 44491 Minimum VSS to Allow DFCO: 18.00 -> 14.00 mph",
+        "ECM 44492 Maximum VSS to Disable DFCO: 12.00 -> 10.00 mph",
+        "ECM 44496 DFCO Closed Throttle Delay: 1.00 -> 1.25 s",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: 200°F ECT row, 3,000 RPM 0.00 -> -2.00 deg, 4,000-6,000 RPM -2.00 -> -4.00 deg ATDC; <= 2,000 RPM (14/12/13 deg) and cold rows 1-4 untouched",
+        "Calibration Details Notes appended with v028 rationale and staged test criteria; full v027 prefix preserved"
+      ],
+      "notes": "v028-engine-braking-pop-dashpot-decay.md",
+      "rollback": "v027-engine-braking-decel-pop.hpt",
+      "verification": "Ready for owner entry/flash; all 28 prior files preserved",
+      "inventory_delta": "../reports/calibration-inventory/v028/delta.json",
+      "source_report": "../docs/v027-regression-test.md"
     }
   ],
-  "updated_at": "2026-11-03T20:15:00.0000000Z"
+  "updated_at": "2026-11-03T20:45:00.0000000Z"
 }
