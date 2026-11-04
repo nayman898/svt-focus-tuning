@@ -82,6 +82,7 @@ Derived from `paired-20261104-160338-a0c65d0c-v034` telemetry review and owner r
 - **Datalog Finding**: At `dUt = 6%`, peak boost reliably hit **13.0–14.0 psi** across all gears, and knock retard was **0.0°**.
 - **Recommendation for v035 Drive Test**:
   1. **Test Run 1**: Leave `dUt = 6%` for the first WOT pull of `v035`. This isolates the significant power increase resulting from the fuel enleanment (~10.5 -> ~11.3 AFR) and timing advance (+0.5°).
-  2. **Test Run 2 (Optional Boost Increase)**: If the first pull is clean with 0.0° Knock Retard and Lambda settles right at ~0.76–0.77, you can bump `dUt` on the SCG-1 faceplate by **+1% (to `7%`)**.
-     - This will raise peak boost by ~0.8 to 1.2 psi (targeting ~14.0–14.5 psi).
-     - Keep overboost cut (`bSt`) firmly set at **16.0 psi**.
+  2. **Test Run 2 (Optional Boost Increase)**: If the first pull is clean with 0.0° Knock Retard and Lambda settles right at ~0.76–0.77, you can step `dUt` on the SCG-1 faceplate to **`8%`** (the SCG-1 steps in 2% increments from 6% -> 8%).
+     - A 2% duty cycle increase typically yields ~1.5 to 2.0 psi, targeting **~14.5–15.2 psi**.
+     - Keep overboost cut (`bSt`) firmly set at **16.0 psi** as the safety ceiling. Ensure boost spikes do not trip this cut during rapid spool.
+

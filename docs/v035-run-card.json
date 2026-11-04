@@ -26,9 +26,10 @@
     "boost_controller": {
       "model": "Innovate SCG-1",
       "duty_cycle_pct": 6.0,
-      "optional_duty_cycle_pct": 7.0,
+      "optional_duty_cycle_pct": 8.0,
       "boost_cut_psi": 16.0,
-      "active_press_psi": 5.0
+      "active_press_psi": 5.0,
+      "step_increment_pct": 2.0
     }
   },
   "stop_conditions": [
