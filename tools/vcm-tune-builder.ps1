@@ -559,17 +559,27 @@ try {
                 }
 
                 foreach ($ch in $p.changes) {
-                    $rIdx = [int]$ch.row - 1
+                    $rIdx = if ($ch.row) { [int]$ch.row - 1 } else { 0 }
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     if ($rIdx -lt 0 -or $rIdx -ge $matrix.Count) {
-                        throw "Row index $($ch.row) out of bounds for parameter $pId (has $($matrix.Count) rows)"
+                        throw "Row index $($rIdx+1) out of bounds for parameter $pId (has $($matrix.Count) rows)"
                     }
                     if ($cIdx -lt 0 -or $cIdx -ge $matrix[$rIdx].Count) {
-                        throw "Col index $($ch.col) out of bounds for parameter $pId (has $($matrix[$rIdx].Count) cols)"
+                        throw "Col index $($cIdx+1) out of bounds for parameter $pId (has $($matrix[$rIdx].Count) cols)"
                     }
                     $oldVal = $matrix[$rIdx][$cIdx]
-                    Write-Host "   [$pId] Updating cell (row $($ch.row), col $($cIdx+1)) from '$oldVal' to '$($ch.new_value)'" -ForegroundColor Gray
-                    $matrix[$rIdx][$cIdx] = [string]$ch.new_value
+                    $newVal = if ($ch.new_value) {
+                        [string]$ch.new_value
+                    } elseif ($ch.delta_pct) {
+                        $calc = [double]$oldVal * (1.0 + [double]$ch.delta_pct / 100.0)
+                        [string][Math]::Round($calc, 4)
+                    } else {
+                        throw "Change entry must have either 'new_value' or 'delta_pct'"
+                    }
+                    Add-Member -InputObject $ch -NotePropertyName 'resolved_new_value' -NotePropertyValue $newVal -Force
+                    Add-Member -InputObject $ch -NotePropertyName 'resolved_old_value' -NotePropertyValue $oldVal -Force
+                    Write-Host "   [$pId] Updating cell (row $($rIdx+1), col $($cIdx+1)) from '$oldVal' to '$newVal'" -ForegroundColor Gray
+                    $matrix[$rIdx][$cIdx] = $newVal
                 }
 
                 $newText = ($matrix | ForEach-Object { $_ -join "`t" }) -join "`r`n"
@@ -594,11 +604,12 @@ try {
                     $vMatrix += ,@($vr -split "`t")
                 }
                 foreach ($ch in $p.changes) {
-                    $rIdx = [int]$ch.row - 1
+                    $rIdx = if ($ch.row) { [int]$ch.row - 1 } else { 0 }
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     $actual = $vMatrix[$rIdx][$cIdx]
-                    if ($actual -ne [string]$ch.new_value) {
-                        throw "Verification mismatch for [$pId] at row $($ch.row), col $($cIdx+1): expected '$($ch.new_value)', readback '$actual'"
+                    $exp = if ($ch.resolved_new_value) { $ch.resolved_new_value } else { [string]$ch.new_value }
+                    if ($actual -ne $exp) {
+                        throw "Verification mismatch for [$pId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', readback '$actual'"
                     }
                 }
                 Write-Host "   [$pId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
@@ -756,19 +767,20 @@ try {
                     $rMatrix += ,@($rr -split "`t")
                 }
                 foreach ($ch in $p.changes) {
-                    $rIdx = [int]$ch.row - 1
+                    $rIdx = if ($ch.row) { [int]$ch.row - 1 } else { 0 }
                     $cIdx = if ($ch.col) { [int]$ch.col - 1 } else { 0 }
                     $reopenedVal = $rMatrix[$rIdx][$cIdx]
-                    Write-Host "   [$pId] Reopened Row $($ch.row) Col $($cIdx+1) verified: '$reopenedVal' (expected '$($ch.new_value)')" -ForegroundColor Gray
-                    if ($reopenedVal -ne [string]$ch.new_value) {
-                        throw "Reopen verification mismatch for [$pId] at row $($ch.row), col $($cIdx+1): expected '$($ch.new_value)', reopened '$reopenedVal'"
+                    $exp = if ($ch.resolved_new_value) { $ch.resolved_new_value } else { [string]$ch.new_value }
+                    Write-Host "   [$pId] Reopened Row $($rIdx+1) Col $($cIdx+1) verified: '$reopenedVal' (expected '$exp')" -ForegroundColor Gray
+                    if ($reopenedVal -ne $exp) {
+                        throw "Reopen verification mismatch for [$pId] at row $($rIdx+1), col $($cIdx+1): expected '$exp', reopened '$reopenedVal'"
                     }
                     $reopenedRows += [pscustomobject]@{
                         parameter_id = $pId
                         parameter_name = $pName
-                        row = $ch.row
+                        row = if ($ch.row) { $ch.row } else { 1 }
                         col = if ($ch.col) { $ch.col } else { 1 }
-                        expected = $ch.new_value
+                        expected = $exp
                         reopened = $reopenedVal
                     }
                 }
