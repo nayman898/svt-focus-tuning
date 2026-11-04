@@ -23,3 +23,4 @@ Derived from paired v032 drive logs (`paired-20261104-122527-75371a04-v032` and 
 4. Verify diff: `Compare > View Comparison Log`. Ensure ONLY `Notes`, `DFCO Closed Throttle Delay [ECM 44496]`, and `Spark Decel vs. RPM vs. ECT [ECM 44605]` changed.
 5. Once verified, flash `v033-loud-crisp-pops.hpt` to vehicle using VCM Editor (`Flash > Write Vehicle` - Calibration Only).
 6. Record paired datalog using 18-channel VCM Scanner + SCG-1 Logger.
+

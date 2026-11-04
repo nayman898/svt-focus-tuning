@@ -69,3 +69,4 @@ Derived from `paired-20261104-122527-75371a04-v032` and `paired-20261104-123109-
 - Test 2: Cruising check at 2,800–3,200 RPM part-throttle (confirm spark stays steady and bucking remains zero).
 - Test 3: Observe idle return after decel (verify smooth settling to 900 RPM without undershoot).
 - Return log session for automated review.
+

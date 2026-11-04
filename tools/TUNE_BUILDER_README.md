@@ -1,4 +1,4 @@
-# Reusable VCM Editor Tune Builder Tools
+# Streamlined VCM Editor Tune Builder Tools
 
 This directory contains reusable tools for automating HP Tuners VCM Editor calibrations for the SVT Focus repository.
 
@@ -6,44 +6,63 @@ This directory contains reusable tools for automating HP Tuners VCM Editor calib
 
 ## 1. Components
 
-1. **`vcm-tune-builder.ps1`**:
-   - Parameterized PowerShell UI Automation (UIA) script.
-   - Launches VCM Editor, loads parent `.hpt`, executes `File > Save As` (with physical Win32 character typing), navigates to target parameter tables via Parameter Navigator (`[ECM] XXXXX`), updates cells, appends `Calibration Details > Notes`, and saves to disk.
-   - Executes fresh reopen verification (`Copy with Axis`) and whole-file VCM Editor `Compare` against parent.
-   - Driven entirely by a JSON specification file.
+1. **`build_tune.py`** (Primary Entrypoint):
+   - High-level Python orchestrator.
+   - Validates the tune JSON specification and runs strict privacy checks (zero VINs or serials).
+   - Calls `vcm-tune-builder.ps1` to execute the live calibration edits.
+   - Automatically generates the candidate markdown guide (`tunes/<candidate>.md`), regression test documentation (`docs/<ver>-regression-test.md`), and run card (`docs/<ver>-run-card.json`).
+   - Automatically writes the delta JSON (`reports/calibration-inventory/<ver>/delta.json`).
+   - Updates `tunes/revisions.json` and `vehicle.json`.
+   - Rebuilds `reports/calibration-inventory/index.html` and `revision-reference.json`.
+   - Executes `tools/verify-privacy.py` to ensure 100% compliance.
 
-2. **`build_tune.py`**:
-   - Python orchestrator.
-   - Validates JSON spec, enforces privacy scrub rules (zero VINs or serials), calls `vcm-tune-builder.ps1`, generates delta JSON, runs `build-calibration-reference.ps1`, and updates catalog tracking.
+2. **`vcm-tune-builder.ps1`**:
+   - Parameterized PowerShell UI Automation (UIA) engine.
+   - **Non-Destructive Process Handling**: Automatically discovers and attaches to any running VCM Editor instance. **Never terminates or restarts VCM Editor**, ensuring hardware/license authorization is preserved when the owner is away from the vehicle/MPVI4.
+   - Connects to the interactive user desktop (`WinSta0\default`) via dedicated STA thread helper.
+   - Handles `#32770` file dialogs (`File > Save As`, `File > Open`, `Compare > Open Compare File`) with reliable Win32 `WM_CHAR` character-by-character typing.
+   - Updates `C1FlexGrid` tables (with full clipboard read/parse/paste/readback verification) and scalar parameters (via Parameter Navigator preview pane).
+   - Appends revision history to `Calibration Details > Notes` (`Ctrl+D`).
+   - Executes fresh reload verification and whole-file compare against parent, checking difference nodes in the Comparison Log.
+   - Leaves VCM Editor open with candidate vs. parent comparison ready for pre-flash inspection.
 
 ---
 
 ## 2. Specification File Format
 
-Create a JSON spec file (e.g., `scratch/v027_spec.json`):
+Create a JSON spec file (e.g., `scratch/v034_spec.json`):
 
 ```json
 {
-  "version": "v027",
-  "name": "v027-description",
-  "file": "v027-description.hpt",
-  "parent_version": "v026",
-  "parent_file": "v026-open-loop-tps-threshold.hpt",
-  "parent_sha256": "86B10615EB5E032CF4343120A23C6B93DB30FD6CFC558CE863143C32629B1918",
-  "parent_bytes": 257885,
-  "parameter_id": 32731,
-  "parameter_name": "Open Loop Fuel TPS Thresh vs. RPM",
-  "rationale": "Description of why this calibration change is being made.",
-  "changes": [
+  "version": "v034",
+  "name": "v034-sample-refinement",
+  "file": "v034-sample-refinement.hpt",
+  "parent_version": "v033",
+  "parent_file": "v033-loud-crisp-pops.hpt",
+  "parent_sha256": "41B8D374770A0F15231EF0D3C8E5DF26C132F3A198B439CEC3E479E821397C23",
+  "parent_bytes": 262381,
+  "title": "Sample Title for Tune",
+  "rationale": "Detailed explanation derived from telemetry...",
+  "parameters": [
     {
-      "row": 3,
-      "col": 1,
-      "old_value": "350.00",
-      "new_value": "400.00"
+      "id": 44496,
+      "name": "DFCO Closed Throttle Delay",
+      "kind": "scalar",
+      "old_value": "1.40",
+      "new_value": "1.45",
+      "units": "s"
+    },
+    {
+      "id": 44605,
+      "name": "Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "changes": [
+        { "row": 4, "col": 4, "new_value": "-9.00", "note": "3k decel retard" },
+        { "row": 5, "col": 4, "new_value": "-9.00", "note": "3k decel retard" }
+      ]
     }
   ],
-  "notes_append": "=== V027 (YYYY-MM-DD) ===\r\nSummary of change...",
-  "output_result_json": "scratch/v027_verify_result.json"
+  "notes_append": "=== V034 (YYYY-MM-DD) ===\r\nSummary of changes..."
 }
 ```
 
@@ -54,13 +73,13 @@ Create a JSON spec file (e.g., `scratch/v027_spec.json`):
 From the repository root:
 
 ```powershell
-python tools/build_tune.py --spec scratch/v027_spec.json
+python tools/build_tune.py --spec scratch/v034_spec.json
 ```
 
 Or invoke the PowerShell builder directly:
 
 ```powershell
-powershell -STA -NoProfile -ExecutionPolicy Bypass -File tools/vcm-tune-builder.ps1 -SpecPath "scratch/v027_spec.json"
+powershell -STA -NoProfile -ExecutionPolicy Bypass -File tools/vcm-tune-builder.ps1 -SpecPath "scratch/v034_spec.json"
 ```
 
 ---
@@ -68,4 +87,4 @@ powershell -STA -NoProfile -ExecutionPolicy Bypass -File tools/vcm-tune-builder.
 ## 4. Strict Safety Guardrails
 - **Zero ECU Actions**: The tool NEVER touches `Flash > Write Vehicle`, readback, DTC clear, or adaptation reset. The owner performs all flashes.
 - **Privacy Protection**: Zero 17-character VINs or 10-digit MPVI serials allowed.
-- **Port Checking**: Confirms `COM7` is completely free before opening VCM Editor.
+- **Process Preservation**: VCM Editor is kept alive and running; never terminated without explicit `-KillOnExit`.

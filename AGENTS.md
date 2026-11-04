@@ -267,6 +267,12 @@ does not establish the current desktop state or constitute a new Editor test.
    SHA-256, byte length, rollback, and test scope in the revision note/catalog.
    Keep prepared, installed, tested, and accepted status distinct.
 
+#### Streamlined Automated Tooling
+
+- Use `python tools/build_tune.py --spec scratch/v0XX_spec.json` as the unified entrypoint.
+- It attaches non-destructively to the open VCM Editor instance (preserving MPVI4 license authorization), applies table and scalar changes, updates notes, saves, reopens, compares against parent, and generates all documentation, deltas, and catalog updates in one pass.
+- Full usage and specification format are documented in [`tools/TUNE_BUILDER_README.md`](tools/TUNE_BUILDER_README.md).
+
 File preparation, comparison, and documentation do not authorize an ECU flash,
 engine operation, code clearing, or adaptation reset. The owner currently
 performs writes. Follow the flash-readiness handoff above if a write is
