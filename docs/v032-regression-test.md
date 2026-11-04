@@ -18,3 +18,4 @@ Derived from paired-20261104-095419-1f8e78f4-v031-drive log analysis: (1) Perman
 4. Verify diff: `Compare > View Comparison Log`. Ensure ONLY expected parameters changed.
 5. Once verified, flash `v032-kill-oscillation-crisp-pops.hpt` to vehicle using VCM Editor (`Flash > Write Vehicle` - Calibration Only).
 6. Record paired datalog using 18-channel VCM Scanner + SCG-1 Logger.
+

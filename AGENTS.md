@@ -189,9 +189,85 @@ These instructions follow OpenAI's
 1. **Role separation**:
    - The primary agent (Argon / Pro model) is strictly reserved for datalog analysis, calibration engineering/math, hypothesis validation, and tune decisions.
    - Autonomous subagents (Model: "flash") handle all HP Tuners VCM Editor UI Automation (UIA), bulk table extractions, log copying/hashing, and mechanical catalog/inventory/reference builds.
-2. **VCM Editor #32770 file dialog automation**:
-   - In VCM Editor #32770 file dialogs (File > Save As, Compare > Open Compare File, and File > Open), pasting (Ctrl+V) into the filename edit box (id=1148 or 1001) does not work -- common item dialogs ignore or fail clipboard paste without native notifications.
-   - Always locate the filename Edit control, click or set focus, select existing text (^a or WM_CHAR), and type character-by-character using Win32 WM_CHAR / TypeChars before submitting (WM_KEYDOWN VK_RETURN / IDOK).
-3. **Table & context menu hygiene**:
-   - Table context menus on C1FlexGrid must be invoked via direct WM_CONTEXTMENU messages rather than right-clicks, preserving selection states across all cells/axes.
-   - Automation scripts must avoid polluting PowerShell pipeline returns when capturing table data.
+
+### VCM Editor handoff for Gemini Flash
+
+Use Windows UI Automation (UIA) to inspect the application and targeted Win32
+messages for controls where UIA or ordinary keyboard/clipboard input is
+unreliable. These methods come from prior Editor sessions; documenting them
+does not establish the current desktop state or constitute a new Editor test.
+
+#### Discover and confirm the current state
+
+- Discover the running VCM Editor process, its current windows, and the target
+  controls before acting. Never reuse process IDs, window handles, coordinates,
+  or session paths from an earlier run without checking them again.
+- Confirm the open filename, intended parent, main-versus-comparison context,
+  and any modal dialog before entering data. Identify the intended parameter
+  by its ECM ID, name, units, and table axes rather than its screen position.
+- Inspect existing helpers before using them. Check their expected file,
+  profile, control handles, and assumptions. A helper's successful return is
+  not proof that Editor accepted the intended action; inspect the result.
+- When UIA discovery times out, rediscover the current native windows and use
+  the documented Win32 fallback. Do not repeatedly issue the same blocking
+  search or blindly repeat an edit whose outcome is unknown.
+
+#### Open, Save As, and Open Compare File dialogs
+
+- The observed native file dialogs use class `#32770`. Filename Edit controls
+  have been observed with IDs `1148` or `1001`; locate and confirm the actual
+  control in the active dialog rather than assuming either ID is universal.
+- `Ctrl+V` into the filename field proved unreliable in these dialogs. Use
+  character-by-character input through Win32 `WM_CHAR` or the existing
+  `TypeChars` helper instead.
+- Focus the filename Edit control, select its existing contents with `Ctrl+A`,
+  then type the complete intended path. Confirm the field contains that path
+  before submitting with `WM_KEYDOWN` / `VK_RETURN` or the dialog's `IDOK`
+  action. Do not send both submission methods blindly.
+- After submission, confirm the dialog closed and Editor opened or saved the
+  expected file. Inspect overwrite or other prompts explicitly; do not treat
+  a filename-entry success as a completed save.
+
+#### Calibration tables and context menus
+
+- For `C1FlexGrid` tables, invoke the context menu through `WM_CONTEXTMENU`
+  instead of a physical right-click, which can disturb the selected cells.
+  Confirm the intended selection before applying a table operation.
+- Distinguish table body values from axis/header cells. Preserve axes unless
+  the approved change explicitly includes them; record the affected cells,
+  units, original values, and intended replacements.
+- Capture full-precision clipboard values when available, and label display-
+  precision captures as such. Rounded screen values alone do not prove exact
+  equality. Confirm main-versus-comparison mode before interpreting a capture.
+
+#### PowerShell helper output
+
+- Keep incidental method return values and diagnostics out of the success
+  pipeline when a function returns captured table data or structured results.
+  Suppress unused returns with `[void]`, `$null = ...`, or `Out-Null` as
+  appropriate; use a separate diagnostic stream for progress messages.
+- Check the returned data's shape and expected cell count before consuming it.
+  Extra pipeline objects must not silently become table rows or values.
+
+#### Save and verify each candidate
+
+1. Verify the exact parent file's cataloged SHA-256 and byte length. Use VCM
+   Editor for calibration edits; never hex-edit HPT binaries or infer parameter
+   changes from raw binary differences.
+2. Apply only the specified changes and append their rationale to Notes while
+   retaining the full parent Notes history. Save As a new numbered revision;
+   preserve earlier revisions and original reads.
+3. Reopen the saved candidate. Recheck every intended scalar or table body
+   value, the relevant axes, and the retained Notes prefix. Do not rely solely
+   on the pre-save UI state.
+4. Open the exact parent as the comparison file and review the whole-file
+   comparison. Reconcile every unexpected difference, including Notes, before
+   calling the candidate verified. If comparison is incomplete, say so.
+5. Record the saved filename, parent, exact changes, verification evidence,
+   SHA-256, byte length, rollback, and test scope in the revision note/catalog.
+   Keep prepared, installed, tested, and accepted status distinct.
+
+File preparation, comparison, and documentation do not authorize an ECU flash,
+engine operation, code clearing, or adaptation reset. The owner currently
+performs writes. Follow the flash-readiness handoff above if a write is
+explicitly requested; do not infer authorization from a prepared candidate.

@@ -1,0 +1,112 @@
+{
+  "version": "v033",
+  "file": "v033-loud-crisp-pops.hpt",
+  "parent": "v032",
+  "parent_file": "v032-kill-oscillation-crisp-pops.hpt",
+  "bytes": 262381,
+  "sha256": "41B8D374770A0F15231EF0D3C8E5DF26C132F3A198B439CEC3E479E821397C23",
+  "parent_sha256": "4C9D3DF100C49265632DAF2AC6C14D5065685C3025E308376E33DB8D56781BC3",
+  "parent_bytes": 260813,
+  "status": "Prepared and verified in open VCM Editor instance; ready for owner flash and road test validation.",
+  "rationale": "Derived from paired-20261104-122527-75371a04-v032 and paired-20261104-123109-5f5905f7-v032-2 telemetry reviews: (1) In v032, cruising spark oscillation was 100% eliminated (0 torque control spark cuts vs. 881 in v031), confirming anti-shuffle neutralization. (2) Decel pops were reported quiet because [ECM] 44605 3,000 RPM cell at -3.00 deg was too shallow and 2,000 RPM at +8.00 deg pulled timing positive too early (below 2,727 RPM) during coast-down. (3) Candidate v033 deepens [ECM] 44605: 3,000 RPM retarded to -8.00 deg ATDC, 4,000-6,000 RPM deepened to -10.00 deg ATDC for sharp, explosive overrun pops, and 2,000 RPM lowered to +2.00 deg for smooth non-bogging return to idle. (4) Extends [ECM] 44496 DFCO delay from 1.35s to 1.40s (+50ms) to widen overrun fuel availability. Preserves v032 anti-shuffle fix and v031 MAF trim.",
+  "parameters": [
+    {
+      "id": 44496,
+      "name": "DFCO Closed Throttle Delay",
+      "kind": "scalar",
+      "parent_value": "1.35",
+      "new_value": "1.40",
+      "units": "s",
+      "note": "+0.05s extension for sustained overrun pop cadence"
+    },
+    {
+      "id": 44605,
+      "name": "Spark Decel vs. RPM vs. ECT",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        {
+          "row": 4,
+          "col": 3,
+          "parent_value": "8.00",
+          "new_value": "2.00",
+          "note": "Row 4 (100 ECT) 2,000 RPM cushion"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "parent_value": "-3.00",
+          "new_value": "-8.00",
+          "note": "Row 4 (100 ECT) 3,000 RPM loud pop enable"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 4 (100 ECT) 4,000 RPM sharp pop"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 4 (100 ECT) 5,000 RPM sharp pop"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 4 (100 ECT) 6,000 RPM sharp pop"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "parent_value": "8.00",
+          "new_value": "2.00",
+          "note": "Row 5 (200 ECT) 2,000 RPM cushion"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "parent_value": "-3.00",
+          "new_value": "-8.00",
+          "note": "Row 5 (200 ECT) 3,000 RPM loud pop enable"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 5 (200 ECT) 4,000 RPM sharp pop"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 5 (200 ECT) 5,000 RPM sharp pop"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "parent_value": "-8.00",
+          "new_value": "-10.00",
+          "note": "Row 5 (200 ECT) 6,000 RPM sharp pop"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "method": "VCM Editor live UIA automation, fresh disk reload readback, and whole-file compare against v032",
+    "reopened_confirmed": true,
+    "compare_confirmed": true,
+    "differences_found": [
+      "Notes",
+      "DFCO Closed Throttle Delay [ECM 44496]",
+      "Spark Decel vs. RPM vs. ECT [ECM 44605]"
+    ],
+    "unexpected_differences": []
+  }
+}

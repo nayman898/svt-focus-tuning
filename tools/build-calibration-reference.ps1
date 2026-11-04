@@ -273,7 +273,71 @@ if ($catalog.revisions.version -contains 'v030') {
         $p.Value.evidence = 'Exact v029 parent; prepared candidate eliminating low-RPM tip-in stutter by raising [ECM] 44607 Tip-In Torque Control RPM Min to 2,400 RPM and bumping [ECM] 12163 Column 11 (0.699V) by +6.0% to 6.00 lb/h (0.1000 lb/min); enhances safe decel overrun pops by deepening [ECM] 44605 Rows 4 & 5 to 2.0 deg (2k), -4.0 deg (3k), -6.0 deg (4-6k RPM) and extending [ECM] 44496 DFCO delay to 1.75s; preserves v029 cruising MAF, dashpot decay, and boost control.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v030 prepared candidate for owner entry and flash under docs/v030-regression-test.md. Eliminates low-RPM tip-in stutter and enhances safe decel overrun pops.'; installed='v029 flashed 2026-11-03 by vehicle owner; road tested in paired-20261103-213600-70c17f58-v029; verified cruising lean bias eliminated (STFT centered at -0.8% to -2.0%), verified decel retard (-2.0 to -3.2 deg ATDC), 6% WGDC held 11.24 psi peak boost with zero boost cuts.'}
+if ($catalog.revisions.version -contains 'v031') {
+    $d31 = Get-Content (Join-Path $folder 'v031/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v031 = Clone $snapshots.v030
+    $snapshots.v031.'44607'.value = '7,500'
+    $snapshots.v031.'44496'.value = '0.90'
+
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 3 Row 4').value = '10.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 4 Row 4').value = '2.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 5 Row 4').value = '-8.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 6 Row 4').value = '-8.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 7 Row 4').value = '-8.00'
+
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 3 Row 5').value = '10.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '2.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-8.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-8.00'
+    ($snapshots.v031.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-8.00'
+
+    foreach ($p in $snapshots.v031.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v030 parent; raised [ECM] 44607 Tip-In Torque Control RPM Min to 7,500 RPM; shortened [ECM] 44496 DFCO delay to 0.90s; cushioned [ECM] 44605 2k/3k and deepened 4k-6k to -8 deg ATDC; trimmed [ECM] 12163 MAF Cols 14-17 by -2.5%.'
+    }
+}
+if ($catalog.revisions.version -contains 'v032') {
+    $d32 = Get-Content (Join-Path $folder 'v032/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v032 = Clone $snapshots.v031
+    $snapshots.v032.'44496'.value = '1.35'
+
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 3 Row 4').value = '8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 4 Row 4').value = '-3.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 5 Row 4').value = '-8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 6 Row 4').value = '-8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 7 Row 4').value = '-8.00'
+
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 3 Row 5').value = '8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '-3.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-8.00'
+    ($snapshots.v032.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-8.00'
+
+    foreach ($p in $snapshots.v032.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v031 parent; neutralized anti-shuffle (ECM 44771 Disabled, OSCMOD 1.000); extended [ECM] 44496 DFCO delay to 1.35s; set [ECM] 44605 3k to -3 deg, 2k to +8 deg, 4k-6k to -8 deg.'
+    }
+}
+if ($catalog.revisions.version -contains 'v033') {
+    $d33 = Get-Content (Join-Path $folder 'v033/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v033 = Clone $snapshots.v032
+    $snapshots.v033.'44496'.value = '1.40'
+
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 3 Row 4').value = '2.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 4 Row 4').value = '-8.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 5 Row 4').value = '-10.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 6 Row 4').value = '-10.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 7 Row 4').value = '-10.00'
+
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 3 Row 5').value = '2.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 4 Row 5').value = '-8.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 5 Row 5').value = '-10.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 6 Row 5').value = '-10.00'
+    ($snapshots.v033.'44605'.cells | Where-Object cell -eq 'Column 7 Row 5').value = '-10.00'
+
+    foreach ($p in $snapshots.v033.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v032 parent; deepens [ECM] 44605 3k to -8 deg ATDC and 4k-6k to -10 deg ATDC for loud, sharp pops; cushions 2k at +2 deg; extends [ECM] 44496 DFCO delay to 1.40s.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v033 prepared candidate for owner entry and flash under docs/v033-regression-test.md. Loud crisp overrun pops across mid/high RPM.'; installed='v032 flashed 2026-11-04 by vehicle owner; road tested in paired-20261104-122527-75371a04-v032 and paired-20261104-123109-5f5905f7-v032-2; verified cruising bucking completely eradicated (0 torque control spark chops).'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

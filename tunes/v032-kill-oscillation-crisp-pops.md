@@ -84,3 +84,4 @@ Derived from `paired-20261104-095419-1f8e78f4-v031-drive` log analysis:
 - Test 1: Cruise at 2,800–3,200 RPM and modulate throttle across 30%–45% pedal (confirm zero spark chop / no bucking).
 - Test 2: Decelerate from 4,500 RPM down through 2,500 RPM (confirm crisp 3–5 pop cadence terminating cleanly at 1.35s).
 - Return log session for sub-2-minute automated review.
+

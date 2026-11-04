@@ -604,7 +604,7 @@
       "parent": "v031",
       "bytes": 260813,
       "sha256": "4C9D3DF100C49265632DAF2AC6C14D5065685C3025E308376E33DB8D56781BC3",
-      "status": "prepared; ready for owner inspection & staged road test",
+      "status": "tested_2026-11-04; owner confirmed flashed and road tested in paired-20261104-122527-75371a04-v032 and paired-20261104-123109-5f5905f7-v032-2; verified cruising bucking and spark oscillation 100% eliminated (0 torque control cuts vs 881 in v031); reported pops super quiet due to shallow 3k decel retard (-3 deg) and 2k positive timing (+8 deg); parent for v033.",
       "title": "Kill Cruising Spark Oscillation & Restore Crisp Overrun Pops",
       "description": "Derived from paired-20261104-095419-1f8e78f4-v031-drive log analysis: (1) Permanently disables [ECM] 44771 Torque Oscillation Module and sets [ECM] 44776 Row 14 OSCMOD / Anti-Shuffle to 1.000 to eliminate the 12-15 Hz rapid spark chop limit cycle (24 deg <-> 4 deg) observed at 5:38 (t=340s); (2) Confirms [ECM] 44607 Tip-In Torque Control RPM Min raised to 7,500 RPM; (3) Extends [ECM] 44496 DFCO delay from 0.90s to 1.35s to widen the post-lift overrun pop window from ~300ms to ~850ms; (4) Calibrates [ECM] 44605 Spark Decel 3,000 RPM cell to -3.00 deg ATDC (Row 4 & 5) to restore crisp pops across typical 2,800-3,800 RPM driving coast-downs while keeping 4k-6k at -8.00 deg for loud crackles and 2k cushioned at +8.00 deg. Preserves v031 MAF -2.5% cruising trim centering.",
       "changes": [
@@ -618,7 +618,26 @@
       "rollback": "v031-smooth-drivability-crisp-pop.hpt",
       "verification": "Created by owner in VCM Editor; owner inspection required before flashing",
       "inventory_delta": "../reports/calibration-inventory/v032/delta.json"
+    },
+    {
+      "version": "v033",
+      "file": "v033-loud-crisp-pops.hpt",
+      "parent": "v032",
+      "bytes": 262381,
+      "sha256": "41B8D374770A0F15231EF0D3C8E5DF26C132F3A198B439CEC3E479E821397C23",
+      "status": "prepared; ready for owner inspection & staged road test",
+      "title": "Loud Crisp Overrun Pops Across Mid/High RPM",
+      "description": "Derived from paired v032 drive logs: (1) Deepens [ECM] 44605 3,000 RPM cell to -8.00 deg ATDC (was -3.00 deg) and 4,000-6,000 RPM to -10.00 deg ATDC (was -8.00 deg) across Rows 4 & 5 for sharp, explosive overrun pops; (2) Lowers 2,000 RPM cell from +8.00 deg to +2.00 deg to eliminate premature positive timing pull while cushioning idle drop; (3) Extends [ECM] 44496 DFCO delay from 1.35s to 1.40s (+50ms) to widen overrun fuel duration. Preserves v032 anti-shuffle fix (ECM 44771 Disabled, OSCMOD 1.000) and v031 MAF trim.",
+      "changes": [
+        "ECM 44496 DFCO Closed Throttle Delay: 1.35 -> 1.40 s",
+        "ECM 44605 Spark Decel vs. RPM vs. ECT: Rows 4 & 5 (100 & 200 ECT) 2k lowered to 2.00 deg, 3k deepened to -8.00 deg ATDC, 4k-6k deepened to -10.00 deg ATDC",
+        "Calibration Details Notes appended with v032 and v033 summaries"
+      ],
+      "notes": "v033-loud-crisp-pops.md",
+      "rollback": "v032-kill-oscillation-crisp-pops.hpt",
+      "verification": "Live UIA automation in open VCM Editor, fresh disk reload readback, and whole-file compare against v032 verified; owner inspection required before flashing",
+      "inventory_delta": "../reports/calibration-inventory/v033/delta.json"
     }
   ],
-  "updated_at": "2026-11-04T17:12:00.000000+00:00"
+  "updated_at": "2026-11-04T18:15:00.000000+00:00"
 }

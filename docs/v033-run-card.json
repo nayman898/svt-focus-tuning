@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v033-drive-01",
+  "purpose": "Loud Crisp Overrun Pops Across Mid/High RPM & Decel Transition Validation",
+  "tune": {
+    "filename": "v033-loud-crisp-pops.hpt",
+    "sha256": "41B8D374770A0F15231EF0D3C8E5DF26C132F3A198B439CEC3E479E821397C23",
+    "bytes": 262381,
+    "parent_filename": "v032-kill-oscillation-crisp-pops.hpt",
+    "status": "Candidate prepared and verified in VCM Editor; ready for owner flash"
+  },
+  "parent_tune": {
+    "filename": "v032-kill-oscillation-crisp-pops.hpt",
+    "sha256": "4C9D3DF100C49265632DAF2AC6C14D5065685C3025E308376E33DB8D56781BC3",
+    "bytes": 260813
+  },
+  "changes_since_previous_run": "Derived from paired v032 drive logs: (1) Deepens [ECM] 44605 3,000 RPM cell to -8.00 deg ATDC (was -3.00 deg) and 4,000-6,000 RPM to -10.00 deg ATDC (was -8.00 deg) for sharp, loud, acoustic crackles; (2) Lowers 2,000 RPM cell from +8.00 deg to +2.00 deg to prevent premature positive timing pull during coast-down; (3) Extends [ECM] 44496 DFCO delay from 1.35s to 1.40s (+50ms) to widen overrun fuel duration. Preserves v032 anti-shuffle fix (ECM 44771 Disabled, OSCMOD 1.000) and v031 MAF trim.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "duty_cycle_pct": 6.0,
+      "boost_cut_psi": 16.0,
+      "active_press_psi": 5.0
+    }
+  },
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.80 (> 11.7 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in"
+  ]
+}
