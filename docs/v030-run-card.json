@@ -4,8 +4,8 @@
   "purpose": "v030 smooth low-RPM tip-in (ECM 44607 to 2400 RPM & ECM 12163 0.699V to 6.00 lb/h) and enhanced safe decel pops (ECM 44605 to -4/-6 deg ATDC & ECM 44496 DFCO delay to 1.75s)",
   "tune": {
     "filename": "v030-smooth-tipin-enhanced-pop.hpt",
-    "sha256": "PENDING_OWNER_FLASH_SAVE",
-    "bytes": 259421,
+    "sha256": "8607FCBF188FA6C9D5D6A54817DE2893682520A3D0FC95247A57CF82DCF2E467",
+    "bytes": 259501,
     "parent_filename": "v029-decel-pop-cruise-smooth.hpt",
     "status": "Candidate prepared for owner entry and flash"
   },

@@ -88,3 +88,4 @@ Immediately discontinue road testing, transition to neutral, and pull over safel
 - Fuel rail pressure differential drops below `35 psi` (`FRP sensor voltage < 2.50 V`).
 
 **Immediate Rollback Target**: `v029-decel-pop-cruise-smooth.hpt` (`259,421` bytes, SHA-256 `E5846434088486A13F43EEE65F8F21E8DF38B972C84868AE580E5593BB966021`).
+

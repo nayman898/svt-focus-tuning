@@ -4,8 +4,8 @@
 Exact parent and immediate rollback: [v029](v029-decel-pop-cruise-smooth.md), which was road tested on 2026-11-03 in [2026-11-03-v029-drive-review.md](../reports/2026-11-03-v029-drive-review.md).
 
 - **Candidate Binary**: [v030-smooth-tipin-enhanced-pop.hpt](v030-smooth-tipin-enhanced-pop.hpt)
-  - Candidate Size: Pending save by owner
-  - Candidate SHA-256: `PENDING_OWNER_FLASH_SAVE`
+  - Candidate Size: `259,501` bytes
+  - Candidate SHA-256: `8607FCBF188FA6C9D5D6A54817DE2893682520A3D0FC95247A57CF82DCF2E467`
 - **Parent Binary**: [v029-decel-pop-cruise-smooth.hpt](v029-decel-pop-cruise-smooth.hpt)
   - Parent Size: `259,421` bytes
   - Parent SHA-256: `E5846434088486A13F43EEE65F8F21E8DF38B972C84868AE580E5593BB966021`
@@ -105,3 +105,4 @@ In `v029`, DFCO fuel cut activated after 1.25 seconds, limiting the popping wind
 - [ ] In `[ECM] 44496` (*Minimum Time to Delay DFCO*), change `1.25` to **`1.75 s`**.
 - [ ] Save file and confirm changes via **Compare > Open Compare File** against `v029`.
 - [ ] Flash to vehicle via **Flash > Write Vehicle**.
+

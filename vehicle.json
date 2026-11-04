@@ -611,8 +611,8 @@
     "version": "v030",
     "file": "v030-smooth-tipin-enhanced-pop.hpt",
     "parent": "v029",
-    "bytes": 259421,
-    "sha256": "PENDING_OWNER_FLASH_SAVE",
+    "bytes": 259501,
+    "sha256": "8607FCBF188FA6C9D5D6A54817DE2893682520A3D0FC95247A57CF82DCF2E467",
     "status": "Prepared candidate; ready for owner entry and flash; staged road testing under docs/v030-regression-test.md",
     "changes": [
       "ECM 44607 Spark Tip-In Torque Control RPM Min: 775 -> 2,400 RPM",
