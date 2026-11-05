@@ -22,3 +22,4 @@ Derived from `paired-20261104-160338-a0c65d0c-v034` telemetry review and owner f
 4. Verify diff: `Compare > View Comparison Log`. Ensure ONLY `Notes`, `Fuel Base vs. RPM vs. TPS [ECM 44511]`, and `Spark Borderline Knock vs. RPM vs. Load [ECM 44583]` changed.
 5. Once verified, flash `v035-wot-fuel-spark-power.hpt` to vehicle using VCM Editor (`Flash > Write Vehicle` - Calibration Only).
 6. Record paired datalog using 18-channel VCM Scanner + SCG-1 Logger.
+

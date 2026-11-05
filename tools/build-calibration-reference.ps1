@@ -337,7 +337,68 @@ if ($catalog.revisions.version -contains 'v033') {
         $p.Value.evidence = 'Exact v032 parent; deepens [ECM] 44605 3k to -8 deg ATDC and 4k-6k to -10 deg ATDC for loud, sharp pops; cushions 2k at +2 deg; extends [ECM] 44496 DFCO delay to 1.40s.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v033 prepared candidate for owner entry and flash under docs/v033-regression-test.md. Loud crisp overrun pops across mid/high RPM.'; installed='v032 flashed 2026-11-04 by vehicle owner; road tested in paired-20261104-122527-75371a04-v032 and paired-20261104-123109-5f5905f7-v032-2; verified cruising bucking completely eradicated (0 torque control spark chops).'}
+if ($catalog.revisions.version -contains 'v034') {
+    $d34 = Get-Content (Join-Path $folder 'v034/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v034 = Clone $snapshots.v033
+
+    # [ECM 44583] Spark Borderline Knock vs. RPM vs. Load: Row 8 (0.80 Load) & Row 9 (2.00 Load)
+    # Row 8: Col 6 (5000 RPM) -> 13.50; Cols 7-11 (5750-7200 RPM) -> 14.00
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 6 Row 8').value = '13.50'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 7 Row 8').value = '14.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 8 Row 8').value = '14.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 9 Row 8').value = '14.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 10 Row 8').value = '14.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 11 Row 8').value = '14.00'
+
+    # Row 9: Col 6 (5000 RPM) -> 12.50; Cols 7-11 (5750-7200 RPM) -> 13.00
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 6 Row 9').value = '12.50'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 7 Row 9').value = '13.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 8 Row 9').value = '13.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 9 Row 9').value = '13.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 10 Row 9').value = '13.00'
+    ($snapshots.v034.'44583'.cells | Where-Object cell -eq 'Column 11 Row 9').value = '13.00'
+
+    foreach ($p in $snapshots.v034.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v033 parent; advances [ECM] 44583 Spark Borderline Knock across 5,000-7,200 RPM in Row 8 (13.50 deg at 5k, 14.00 deg at 5.75k-7.2k) and Row 9 (12.50 deg at 5k, 13.00 deg at 5.75k-7.2k), eliminating high-RPM timing droop; retains full v033 loud overrun crackle package and v032 anti-shuffle fixes.'
+    }
+}
+if ($catalog.revisions.version -contains 'v035') {
+    $d35 = Get-Content (Join-Path $folder 'v035/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v035 = Clone $snapshots.v034
+
+    # [ECM 44583] Spark Borderline Knock vs. RPM vs. Load: Row 9 (2.00 Load / Boost)
+    # Row 9: Col 6 (5000 RPM) -> 13.00; Cols 7-11 (5750-7200 RPM) -> 13.50
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 6 Row 9').value = '13.00'
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 7 Row 9').value = '13.50'
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 8 Row 9').value = '13.50'
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 9 Row 9').value = '13.50'
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 10 Row 9').value = '13.50'
+    ($snapshots.v035.'44583'.cells | Where-Object cell -eq 'Column 11 Row 9').value = '13.50'
+
+    # [ECM 44511] Fuel Base vs. RPM vs. TPS: Row 7 (53.71% TPS) & Row 8 (68.36% WOT)
+    # Row 7 (53.71% TPS): Cols 4-5 (4000-4500 RPM) -> 0.76; Cols 6-10 (5000-7400 RPM) -> 0.77
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 4 Row 7').value = '0.76'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 5 Row 7').value = '0.76'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 6 Row 7').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 7 Row 7').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 8 Row 7').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 9 Row 7').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 10 Row 7').value = '0.77'
+
+    # Row 8 (68.36% WOT): Cols 4-5 (4000-4500 RPM) -> 0.76; Cols 6-10 (5000-7400 RPM) -> 0.77
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 4 Row 8').value = '0.76'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 5 Row 8').value = '0.76'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 6 Row 8').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 7 Row 8').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 8 Row 8').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 9 Row 8').value = '0.77'
+    ($snapshots.v035.'44511'.cells | Where-Object cell -eq 'Column 10 Row 8').value = '0.77'
+
+    foreach ($p in $snapshots.v035.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v034 parent; leans [ECM] 44511 Fuel Base Rows 6 and 7 to 0.76-0.77 lambda across 4,000-7,400 RPM (~11.2-11.4 AFR actual), accelerating flame speed; advances [ECM] 44583 Row 9 (2.00 Load / Boost) +0.50 deg to 13.00 deg at 5k and 13.50 deg at 5.75k-7.2k to reach MBT efficiency under boost.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v035 prepared candidate for owner entry and flash under docs/v035-regression-test.md. WOT fuel enleanment to 0.76-0.77 lambda and spark advance to 13.5 deg MBT.'; installed='v034 flashed 2026-11-04 by vehicle owner; road tested in paired-20261104-160338-a0c65d0c-v034; verified decel crackle activated (-8 to -10 deg spark), 0 knock retard, peak airflow reached record 33.14 lb/min at 13.0-14.0 psi boost.'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8
