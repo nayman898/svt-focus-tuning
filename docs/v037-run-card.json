@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v037-drive-01",
+  "purpose": "Spool-Advance VCT & High-RPM Thermal Lockout",
+  "tune": {
+    "filename": "v037-spool-vct.hpt",
+    "sha256": "F81325ADF88757E6AD3901BD1A479595B161B18CD13DDB2DC8C53BCAC79C9621",
+    "bytes": 268157,
+    "parent_filename": "v036-zero-boost-vct.hpt",
+    "status": "Official production tune; tested and verified on road across 8%, 10%, and 12% WGDC"
+  },
+  "parent_tune": {
+    "filename": "v036-zero-boost-vct.hpt",
+    "sha256": "81F079A1A3B9ACBA825D14D65ED171CCE97B106B5868C78FFDC5CE5C54331BCE",
+    "bytes": 265933
+  },
+  "changes_since_previous_run": "Derived from paired-20261105-150046-e5d55c90-v036-forrealsies telemetry review: (1) Restores -15.00 to -30.00 deg intake cam advance in rows 0.50-1.00 at 1,000-3,500 RPM to recover dynamic compression and eliminate the 2.0s spool delay seen in v036; (2) Preserves 0.00 deg high-RPM lockout across columns 4,500-7,200 RPM flat across ALL loads for thermal protection and shift lag elimination; (3) Retains full v035 MBT spark timing (13.5 deg flat Row 9), v035 base fuel targets (0.76-0.77 lambda), v033 decel crackle, and v032 anti-shuffle fixes.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "status": "Trimmed 17 channels; 100% complete coverage verified in v036-forrealsies"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (185-200 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "driver_tip_in_procedure": "Apply 10-20% throttle for 0.5-1.0s out of coast before committing to 100% WOT",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "duty_cycle_pct": 8.0,
+      "optional_duty_cycle_pct": 8.0,
+      "boost_cut_psi": 16.0,
+      "active_press_psi": 5.0,
+      "step_increment_pct": 2.0
+    }
+  },
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.82 (> 12.0 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Engine coolant temp > 220 F or rapid thermal spike"
+  ]
+}
+

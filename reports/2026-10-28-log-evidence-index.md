@@ -66,3 +66,7 @@ The preceding stationary pair now includes preserved phone video, manual gauge
 readings and a [pressure/video review](2026-10-29-pressure-video-review.md).
 This is added evidence for that existing session, not another engine test or
 filmed evidence of the earlier spontaneous stall.
+
+## 2026-11-05 — v035
+
+[Pull review](2026-11-05-v035-pull-review.md): preserved paired-20261105-104453-2eb3afbb-v035; pull 1 6%, pull 2 invalid, pull 3 8%. Peak boost 13.85/15.32 psi for valid pulls; modest leaner shift versus selected v034 pull. No validated knock-retard channel; insufficient evidence for further power changes.

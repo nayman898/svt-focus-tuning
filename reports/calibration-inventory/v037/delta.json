@@ -1,0 +1,202 @@
+{
+  "version": "v037",
+  "file": "v037-spool-vct.hpt",
+  "parent": "v036",
+  "parent_file": "v036-zero-boost-vct.hpt",
+  "bytes": 268157,
+  "sha256": "F81325ADF88757E6AD3901BD1A479595B161B18CD13DDB2DC8C53BCAC79C9621",
+  "parent_bytes": 265933,
+  "parent_sha256": "81F079A1A3B9ACBA825D14D65ED171CCE97B106B5868C78FFDC5CE5C54331BCE",
+  "status": "Official production tune; tested and verified on road across 8%, 10%, and 12% WGDC (17.31 psi peak, 16.2 psi sustained, all-time record 35.63 lb/min airflow, 11.07 AFR, 0.0 knock retard, 190-192F flat ECT).",
+  "rationale": "Derived from paired-20261105-150046-e5d55c90-v036-forrealsies telemetry review: Zeroing out all boost rows in v036 caused an unacceptable 2.01s spool delay and 25-30% loss in low-RPM airflow (2800-4500 RPM pull took 6.17s in v036 vs 4.16s in v035) due to delayed Intake Valve Closing (IVC). In v037: (1) Moderate intake cam advance (-15 to -30 deg) is restored across 1,000-3,500 RPM in boost/spool rows (0.50-1.00) to advance IVC, increase effective dynamic compression, and restore instant exhaust pulse energy for rapid spool. (2) Advance tapers smoothly to 0.00 deg by 4,500 RPM. (3) Columns 4,500 through 7,200 RPM remain strictly locked at 0.00 deg across ALL loads (0.10 to 1.00) to preserve the verified thermal protection (0.0 deg F net ECT rise during full WOT pull in v036) and eliminate shift lag.",
+  "parameters": [
+    {
+      "id": 44412,
+      "name": "VCT Angle vs. RPM vs. Load",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        {
+          "row": 5,
+          "col": 5,
+          "load": 0.5,
+          "rpm": 3500,
+          "parent_value": "-20.00",
+          "new_value": "-25.00",
+          "note": "Spool advance taper"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "load": 0.6,
+          "rpm": 1500,
+          "parent_value": "-10.00",
+          "new_value": "-15.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "load": 0.6,
+          "rpm": 2000,
+          "parent_value": "-15.00",
+          "new_value": "-25.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "load": 0.6,
+          "rpm": 2500,
+          "parent_value": "-15.00",
+          "new_value": "-30.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "load": 0.6,
+          "rpm": 3500,
+          "parent_value": "-10.00",
+          "new_value": "-20.00",
+          "note": "Spool advance taper"
+        },
+        {
+          "row": 7,
+          "col": 1,
+          "load": 0.7,
+          "rpm": 1000,
+          "parent_value": "0.00",
+          "new_value": "-10.00",
+          "note": "Low-RPM spool"
+        },
+        {
+          "row": 7,
+          "col": 2,
+          "load": 0.7,
+          "rpm": 1500,
+          "parent_value": "0.00",
+          "new_value": "-15.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 7,
+          "col": 3,
+          "load": 0.7,
+          "rpm": 2000,
+          "parent_value": "0.00",
+          "new_value": "-25.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 7,
+          "col": 4,
+          "load": 0.7,
+          "rpm": 2500,
+          "parent_value": "0.00",
+          "new_value": "-30.00",
+          "note": "Peak spool advance"
+        },
+        {
+          "row": 7,
+          "col": 5,
+          "load": 0.7,
+          "rpm": 3500,
+          "parent_value": "0.00",
+          "new_value": "-20.00",
+          "note": "Spool advance taper"
+        },
+        {
+          "row": 8,
+          "col": 1,
+          "load": 0.8,
+          "rpm": 1000,
+          "parent_value": "0.00",
+          "new_value": "-10.00",
+          "note": "Low-RPM spool"
+        },
+        {
+          "row": 8,
+          "col": 2,
+          "load": 0.8,
+          "rpm": 1500,
+          "parent_value": "0.00",
+          "new_value": "-15.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 8,
+          "col": 3,
+          "load": 0.8,
+          "rpm": 2000,
+          "parent_value": "0.00",
+          "new_value": "-25.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 8,
+          "col": 4,
+          "load": 0.8,
+          "rpm": 2500,
+          "parent_value": "0.00",
+          "new_value": "-28.00",
+          "note": "Peak spool advance"
+        },
+        {
+          "row": 8,
+          "col": 5,
+          "load": 0.8,
+          "rpm": 3500,
+          "parent_value": "0.00",
+          "new_value": "-18.00",
+          "note": "Spool advance taper"
+        },
+        {
+          "row": 9,
+          "col": 1,
+          "load": 1.0,
+          "rpm": 1000,
+          "parent_value": "0.00",
+          "new_value": "-10.00",
+          "note": "Low-RPM spool"
+        },
+        {
+          "row": 9,
+          "col": 2,
+          "load": 1.0,
+          "rpm": 1500,
+          "parent_value": "0.00",
+          "new_value": "-15.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 9,
+          "col": 3,
+          "load": 1.0,
+          "rpm": 2000,
+          "parent_value": "0.00",
+          "new_value": "-20.00",
+          "note": "Spool advance"
+        },
+        {
+          "row": 9,
+          "col": 4,
+          "load": 1.0,
+          "rpm": 2500,
+          "parent_value": "0.00",
+          "new_value": "-25.00",
+          "note": "Peak spool advance"
+        },
+        {
+          "row": 9,
+          "col": 5,
+          "load": 1.0,
+          "rpm": 3500,
+          "parent_value": "0.00",
+          "new_value": "-15.00",
+          "note": "Spool advance taper"
+        }
+      ]
+    }
+  ]
+}

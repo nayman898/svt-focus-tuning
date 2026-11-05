@@ -157,3 +157,7 @@ See ../docs/stage-2a-air-spark-test.md for admission and branching criteria.
 SHA25621BC63D6629A30C7D033E97D3E3FAC774B4BD59EF63161634014D36D3A5EAC25.
 
 Stage2A v018181640 completed: all20fields populated, noVCMexportgaps; rawMAF andIdleMode available. Requested100msSTIT/STFT is not independently verified ECUdelivery. Savedactualprofile beside logs/2026-10-30-v018-stage2a-01. See reports/2026-10-30-v018-stage2a-review.md. No active recording.
+
+## v035 capture — 2026-11-05
+
+19 of 20 requested VCM channels populated; LTIT PN/ACoff entirely blank. Borderline Knock 19074 is not validated knock retard. Fuel Pressure Sensor remains raw volts; exported injector pulse-width units require verification. SCG pull 2 is warmup with no lambda and zero duty; exclude it. See [review](../reports/2026-11-05-v035-pull-review.md) for clocks, gaps and comparison limits.

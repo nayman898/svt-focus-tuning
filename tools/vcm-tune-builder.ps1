@@ -77,6 +77,26 @@ public static class VcmNative {
     [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
     [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
     [DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+    [DllImport("user32.dll")] public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+    [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
+
+    public static void ForceForeground(IntPtr hWnd) {
+        ShowWindow(hWnd, 9); // SW_RESTORE
+        uint dummy;
+        uint foreThread = GetWindowThreadProcessId(GetForegroundWindow(), out dummy);
+        uint appThread = GetCurrentThreadId();
+        if (foreThread != appThread && foreThread != 0) {
+            AttachThreadInput(foreThread, appThread, true);
+            SetForegroundWindow(hWnd);
+            AttachThreadInput(foreThread, appThread, false);
+        } else {
+            SetForegroundWindow(hWnd);
+        }
+        SwitchToThisWindow(hWnd, true);
+        Thread.Sleep(150);
+    }
 
     public const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
     public const uint MOUSEEVENTF_LEFTUP   = 0x0004;
@@ -100,7 +120,7 @@ public static class VcmNative {
         Thread.Sleep(40);
         keybd_event(vk, 0, 2, UIntPtr.Zero);
         Thread.Sleep(40);
-        keybd_event(0x11, 2, 0, UIntPtr.Zero);
+        keybd_event(0x11, 0, 2, UIntPtr.Zero);
         Thread.Sleep(50);
     }
 
@@ -111,7 +131,7 @@ public static class VcmNative {
         Thread.Sleep(50);
         keybd_event(vk, 0, 2, UIntPtr.Zero);
         Thread.Sleep(50);
-        keybd_event(0x12, 2, 0, UIntPtr.Zero);
+        keybd_event(0x12, 0, 2, UIntPtr.Zero);
         Thread.Sleep(100);
     }
 
@@ -292,8 +312,7 @@ $foundHwnd = [IntPtr]::Zero
 if ($foundHwnd -eq [IntPtr]::Zero) { throw "Could not find main VCM Editor window for PID $editorPid" }
 
 try {
-    [VcmNative]::ShowWindow($foundHwnd, 9) | Out-Null # SW_RESTORE
-        [VcmNative]::SetForegroundWindow($foundHwnd) | Out-Null
+    [VcmNative]::ForceForeground($foundHwnd)
         [System.Threading.Thread]::Sleep(200)
 
         $root = [System.Windows.Automation.AutomationElement]::FromHandle($foundHwnd)
@@ -363,32 +382,53 @@ try {
         }
 
         foreach ($p in $paramList) {
-            $pId = $p.id
+            $paramId = $p.id
             $pName = $p.name
-            Write-Host "Updating parameter [$pId] $pName..." -ForegroundColor Yellow
+            Write-Host "Updating parameter [$paramId] $pName..." -ForegroundColor Yellow
 
-            # Open Navigator
-            [VcmNative]::SendCtrlKey(0x4E) # Ctrl+N
-            [System.Threading.Thread]::Sleep(500)
+            # Open Navigator if not already present
+            [VcmNative]::ForceForeground($foundHwnd)
+            [System.Threading.Thread]::Sleep(150)
 
-            $nav = $root.FindFirst(
-                [System.Windows.Automation.TreeScope]::Descendants,
-                (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), "Parameter Navigator")
-            )
+            $condNav = New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), "Parameter Navigator"
+            $nav = $root.FindFirst([System.Windows.Automation.TreeScope]::Descendants, $condNav)
+            if (-not $nav) {
+                $nav = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
+                    [System.Windows.Automation.TreeScope]::Descendants,
+                    (New-Object System.Windows.Automation.AndCondition(
+                        $condNav,
+                        (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid)
+                    ))
+                )
+            }
+            if (-not $nav) {
+                [VcmNative]::SendCtrlKey(0x4E) # Ctrl+N
+                [System.Threading.Thread]::Sleep(700)
+                $nav = $root.FindFirst([System.Windows.Automation.TreeScope]::Descendants, $condNav)
+                if (-not $nav) {
+                    $nav = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst(
+                        [System.Windows.Automation.TreeScope]::Descendants,
+                        (New-Object System.Windows.Automation.AndCondition(
+                            $condNav,
+                            (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ProcessIdProperty), $editorPid)
+                        ))
+                    )
+                }
+            }
             if (-not $nav) { throw "Parameter Navigator did not open" }
 
             # Filter edit
             $navEdits = @($nav.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Edit))))
             if ($navEdits.Count -gt 0) {
-                $navEdits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue([string]$pId)
+                $navEdits[0].GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue([string]$paramId)
                 [System.Threading.Thread]::Sleep(400)
             }
 
             # Tree item
             $items = @($nav.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::TreeItem))))
-            $targetItem = $items | Where-Object { $_.Current.Name -like "*$pId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
+            $targetItem = $items | Where-Object { $_.Current.Name -like "*$paramId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
             if (-not $targetItem -and $items.Count -gt 0) { $targetItem = $items[0] }
-            if (-not $targetItem) { throw "TreeItem for parameter $pId not found in Navigator" }
+            if (-not $targetItem) { throw "TreeItem for parameter $paramId not found in Navigator" }
 
             $targetItem.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select()
             [System.Threading.Thread]::Sleep(100)
@@ -400,22 +440,22 @@ try {
                 foreach ($ed in $paneEdits) {
                     try {
                         $vp = $ed.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
-                        if ($vp -and $vp.Current.Value -ne [string]$pId -and $vp.Current.Value.Length -gt 0) {
+                        if ($vp -and $vp.Current.Value -ne [string]$paramId -and $vp.Current.Value.Length -gt 0) {
                             $targetEdit = $ed
                             break
                         }
                     } catch {}
                 }
-                if (-not $targetEdit) { throw "Scalar edit box not found in Navigator preview pane for $pId" }
+                if (-not $targetEdit) { throw "Scalar edit box not found in Navigator preview pane for $paramId" }
 
                 $vpTarget = $targetEdit.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
-                Write-Host "   [$pId] Current: '$($vpTarget.Current.Value)' -> New: '$($p.new_value)'" -ForegroundColor Gray
+                Write-Host "   [$paramId] Current: '$($vpTarget.Current.Value)' -> New: '$($p.new_value)'" -ForegroundColor Gray
                 $vpTarget.SetValue([string]$p.new_value)
                 [System.Threading.Thread]::Sleep(100)
                 $targetEdit.SetFocus()
                 [VcmNative]::SendKey(0x09) # Tab to commit
                 [System.Threading.Thread]::Sleep(150)
-                Write-Host "   [$pId] Readback: '$($vpTarget.Current.Value)'" -ForegroundColor Green
+                Write-Host "   [$paramId] Readback: '$($vpTarget.Current.Value)'" -ForegroundColor Green
             } else {
                 # Table parameter - open table window
                 [VcmNative]::SetForegroundWindow($foundHwnd) | Out-Null
@@ -424,7 +464,7 @@ try {
                 [System.Threading.Thread]::Sleep(600)
 
                 $tableWin = @($root.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Window)))) |
-                    Where-Object { $_.Current.Name -like "*$pId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
+                    Where-Object { $_.Current.Name -like "*$paramId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
 
                 if (-not $tableWin) {
                     $rc = $targetItem.Current.BoundingRectangle
@@ -432,12 +472,12 @@ try {
                     [VcmNative]::ClickScreen([int]($rc.Left + $rc.Width / 2), [int]($rc.Top + $rc.Height / 2))
                     [System.Threading.Thread]::Sleep(500)
                     $tableWin = @($root.FindAll([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::ControlTypeProperty), ([System.Windows.Automation.ControlType]::Window)))) |
-                        Where-Object { $_.Current.Name -like "*$pId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
+                        Where-Object { $_.Current.Name -like "*$paramId*" -or $_.Current.Name -like "*$pName*" } | Select-Object -First 1
                 }
-                if (-not $tableWin) { throw "Table window for $pId did not open" }
+                if (-not $tableWin) { throw "Table window for $paramId did not open" }
 
                 $grid = $tableWin.FindFirst([System.Windows.Automation.TreeScope]::Descendants, (New-Object System.Windows.Automation.PropertyCondition ([System.Windows.Automation.AutomationElement]::NameProperty), "FlexGrid"))
-                if (-not $grid) { throw "FlexGrid not found in table window for $pId" }
+                if (-not $grid) { throw "FlexGrid not found in table window for $paramId" }
 
                 [VcmNative]::SetForegroundWindow($foundHwnd) | Out-Null
                 $grid.SetFocus()
@@ -451,7 +491,7 @@ try {
                 [System.Threading.Thread]::Sleep(200)
 
                 $copiedText = [System.Windows.Forms.Clipboard]::GetText()
-                if ([string]::IsNullOrWhiteSpace($copiedText)) { throw "Failed to copy table text from FlexGrid for $pId" }
+                if ([string]::IsNullOrWhiteSpace($copiedText)) { throw "Failed to copy table text from FlexGrid for $paramId" }
 
                 $rawRows = @($copiedText -split "`r?`n" | Where-Object { $_.Length -gt 0 })
                 $matrix = @()
@@ -468,7 +508,7 @@ try {
                         [string][Math]::Round($calc, 4)
                     } else { throw "Change entry must have new_value or delta_pct" }
 
-                    Write-Host "   [$pId] Cell [Row $($rIdx+1), Col $($cIdx+1)]: $oldVal -> $newVal" -ForegroundColor Gray
+                    Write-Host "   [$paramId] Cell [Row $($rIdx+1), Col $($cIdx+1)]: $oldVal -> $newVal" -ForegroundColor Gray
                     $matrix[$rIdx][$cIdx] = $newVal
                 }
 
@@ -503,15 +543,15 @@ try {
                     $isNum = [double]::TryParse($act, [ref]$actNum) -and [double]::TryParse($exp, [ref]$expNum)
                     if ($isNum) {
                         if ([Math]::Abs($actNum - $expNum) -gt 0.001) {
-                            throw "Verification mismatch for [$pId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
+                            throw "Verification mismatch for [$paramId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
                         }
                     } else {
                         if ($act -ne $exp) {
-                            throw "Verification mismatch for [$pId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
+                            throw "Verification mismatch for [$paramId] at Row $($rIdx+1) Col $($cIdx+1): expected '$exp', got '$act'"
                         }
                     }
                 }
-                Write-Host "   [$pId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
+                Write-Host "   [$paramId] All $($p.changes.Count) cell update(s) verified in-memory." -ForegroundColor Green
 
                 # Close table window
                 try { $tableWin.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close() } catch {}

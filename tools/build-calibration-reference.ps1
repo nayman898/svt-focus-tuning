@@ -519,7 +519,37 @@ if ($catalog.revisions.version -contains 'v035') {
         $p.Value.evidence = 'Exact v034 parent; leans [ECM] 44511 Fuel Base Rows 6 and 7 to 0.76-0.77 lambda across 4,000-7,400 RPM (~11.2-11.4 AFR actual), accelerating flame speed; advances [ECM] 44583 Row 9 (2.00 Load / Boost) +0.50 deg to 13.00 deg at 5k and 13.50 deg at 5.75k-7.2k to reach MBT efficiency under boost.'
     }
 }
-$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='v035 prepared candidate for owner entry and flash under docs/v035-regression-test.md. WOT fuel enleanment to 0.76-0.77 lambda and spark advance to 13.5 deg MBT.'; installed='v034 flashed 2026-11-04 by vehicle owner; road tested in paired-20261104-160338-a0c65d0c-v034; verified decel crackle activated (-8 to -10 deg spark), 0 knock retard, peak airflow reached record 33.14 lb/min at 13.0-14.0 psi boost.'}
+if ($catalog.revisions.version -contains 'v036') {
+    $d36 = Get-Content (Join-Path $folder 'v036/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v036 = Clone $snapshots.v035
+    foreach ($param in $d36.parameters) {
+        $paramId = [string]$param.id
+        foreach ($change in $param.changes) {
+            $cell = $snapshots.v036.$paramId.cells | Where-Object cell -eq "Column $($change.col) Row $($change.row)"
+            if (-not $cell) { throw "v036 cell missing: Column $($change.col) Row $($change.row)" }
+            $cell.value = [string]$change.new_value
+        }
+    }
+    foreach ($p in $snapshots.v036.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v035 parent; verified saved/reopened comparison changes [ECM 44412] VCT Angle vs. RPM vs. Load: zeroed boost rows 0.70-1.00 and locked out 4,500-7,200 RPM across all loads to halt exhaust reversion and shift lag. Preserves v035 MBT spark (13.5 deg), v035 fuel (0.76-0.77 lambda), v033 crackle, and v032 anti-shuffle.'
+    }
+}
+if ($catalog.revisions.version -contains 'v037') {
+    $d37 = Get-Content (Join-Path $folder 'v037/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    $snapshots.v037 = Clone $snapshots.v036
+    foreach ($param in $d37.parameters) {
+        $paramId = [string]$param.id
+        foreach ($change in $param.changes) {
+            $cell = $snapshots.v037.$paramId.cells | Where-Object cell -eq "Column $($change.col) Row $($change.row)"
+            if (-not $cell) { throw "v037 cell missing: Column $($change.col) Row $($change.row)" }
+            $cell.value = [string]$change.new_value
+        }
+    }
+    foreach ($p in $snapshots.v037.PSObject.Properties) {
+        $p.Value.evidence = 'Exact v036 parent; tested 2026-11-05 across 8%, 10%, and 12% WGDC (17.31 psi peak, 16.2 psi sustained, record 35.63 lb/min airflow, 11.07 AFR, 0.0 knock retard, 190-192 F flat ECT). Restores -15 to -30 deg spool advance in rows 0.50-1.00 at 1,000-3,500 RPM for 2.12s fast spool, while preserving 0.00 deg high-RPM lockout (4,500-7,200 RPM) for thermal protection. Marked as official production tune baseline.'
+    }
+}
+$data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='None (v037 established as active production tune baseline).'; installed='v037 (v037-spool-vct.hpt) marked as production tune; tested 2026-11-05 on road across 8%, 10%, and 12% WGDC (17.31 psi peak, 16.2 psi sustained, record 35.63 lb/min airflow, 11.07 AFR, 0.0 knock retard, 190-192 F ECT).'}
 $json=$data | ConvertTo-Json -Depth 40
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8

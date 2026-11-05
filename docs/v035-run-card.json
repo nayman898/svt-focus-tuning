@@ -37,5 +37,29 @@
     "Wideband lambda > 0.82 (> 12.0 AFR) under boost > 8 psi",
     "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
     "Engine stall or severe undershoot (< 700 RPM) on clutch-in"
-  ]
+  ],
+  "owner_test_report": {
+    "reported_date": "2026-11-05",
+    "source": "Owner message; telemetry not yet reviewed or matched to a session",
+    "status": "Owner-reported tested 2026-11-05; paired v035 capture reviewed; pull 1 6% WGDC, pull 2 invalid SCG warmup, pull 3 8%; insufficient evidence for further power/boost changes; no validated knock-retard channel. See reports/2026-11-05-v035-pull-review.md.",
+    "pulls": [
+      {
+        "pull": 1,
+        "wgdc_pct": 6,
+        "setting_source": "owner-reported"
+      },
+      {
+        "pull": 2,
+        "valid": false,
+        "reason": "Owner reports SCG-1 was not initialized after the setting change",
+        "analysis_disposition": "Preserve raw data; exclude from valid pull comparisons"
+      },
+      {
+        "pull": 3,
+        "wgdc_pct": 8,
+        "setting_source": "owner-reported"
+      }
+    ],
+    "review": "reports/2026-11-05-v035-pull-review.md"
+  }
 }

@@ -1,6 +1,8 @@
 # v035 — WOT Fuel Enleanment & Spark Power Advance Optimization
 
-**Prepared candidate for owner inspection and staged road testing.**  
+**Owner-reported tested 2026-11-05; acceptance remains limited by measurement gaps.**
+
+See the [v035 pull review](../reports/2026-11-05-v035-pull-review.md). It supersedes the historical safety/performance assertions below: zero knock, proven MBT, quantified power gains, and complete mechanical protection were not established.
 Exact parent and immediate rollback: [v034](v034-wot-power-spark.md) ([v034-wot-power-spark.hpt](v034-wot-power-spark.hpt)).
 
 - **Candidate Binary**: [v035-wot-fuel-spark-power.hpt](v035-wot-fuel-spark-power.hpt)
@@ -86,3 +88,11 @@ Derived from `paired-20261104-160338-a0c65d0c-v034` telemetry review and owner r
      - A 2% duty cycle increase typically yields ~1.5 to 2.0 psi, targeting **~14.5–15.2 psi**.
      - Keep overboost cut (`bSt`) firmly set at **16.0 psi** as the safety ceiling. Ensure boost spikes do not trip this cut during rapid spool.
 
+
+## Owner test report — 2026-11-05
+
+Owner reports completing v035 testing: pull 1 at **6% WGDC**; pull 2
+**invalid** because the SCG-1 was not initialized after the setting change;
+pull 3 at **8% WGDC**. These are owner-reported settings, not measured duty.
+Preserve pull 2 in the raw capture but exclude it from valid pull comparisons.
+Telemetry/session matching and tune acceptance remain pending log review.

@@ -682,7 +682,7 @@
       "parent": "v034",
       "bytes": 265613,
       "sha256": "037A69269671D8F487FA2269630B68351767623AB845A41BE4577ABBDF730A16",
-      "status": "prepared; ready for owner inspection & staged road test",
+      "status": "Owner-reported tested 2026-11-05; paired v035 capture reviewed; pull 1 6% WGDC, pull 2 invalid SCG warmup, pull 3 8%; insufficient evidence for further power/boost changes; no validated knock-retard channel. See reports/2026-11-05-v035-pull-review.md.",
       "title": "WOT Fuel Enleanment & Spark Power Advance Optimization",
       "description": "Derived from paired-20261104-160338-a0c65d0c-v034 telemetry review and owner feedback: leans [ECM] 44511 Fuel Base Rows 6 and 7 from 0.74 lambda to 0.76-0.77 lambda across 4,000-7,400 RPM (~11.2-11.4 AFR actual), accelerating flame speed and eliminating high-RPM rich quench; advances [ECM] 44583 Row 9 (2.00 Load / Boost) +0.50 deg to 13.00 deg at 5k and 13.50 deg at 5.75k-7.2k, matching MBT efficiency under boost with zero knock retard; retains full v033 loud decel crackle calibration and v032 anti-shuffle fixes.",
       "changes": [
@@ -696,7 +696,53 @@
       "rollback": "v034-wot-power-spark.hpt",
       "verification": "Live UIA automation in open VCM Editor, FlexGrid in-memory readback, and whole-file compare against v034 verified; owner inspection required before flashing",
       "inventory_delta": "../reports/calibration-inventory/v035/delta.json"
+    },
+    {
+      "version": "v036",
+      "file": "v036-zero-boost-vct.hpt",
+      "parent": "v035",
+      "bytes": 265933,
+      "sha256": "81F079A1A3B9ACBA825D14D65ED171CCE97B106B5868C78FFDC5CE5C54331BCE",
+      "status": "Tested on road in paired-20261105-150046-e5d55c90-v036-forrealsies; thermal protection confirmed (0.0F ECT rise), but low-RPM spool delayed by 2.0s due to retarded IVC at 2000-3500 RPM. Superseded by v037.",
+      "title": "Zero-Boost & High-RPM VCT Angle Lockout (Thermal Reversion & Shift Lag Elimination)",
+      "description": "Derived from paired-20261105-104453-2eb3afbb-v035 telemetry review, confirmed built engine specs (85.5mm forged pistons, ~2.02L displacement, 9.25:1 static CR), and owner-approved high-RPM lockout: zeros out [ECM] 44412 VCT Angle across boost rows 0.70, 0.80, and 1.00 (0.00 deg across 1,000-7,200 RPM) to eliminate superheated 1,500 deg F pre-turbine exhaust gas blowing backwards into the intake runners under boost, drastically reducing engine heat soak; locks out columns 4,500 through 7,200 RPM flat to 0.00 deg across ALL loads (0.10-1.00) to eliminate hydraulic phaser slew lag (200-300 ms) and shift reversion during gear changes; preserves smooth cruise VCT advance across rows 0.10-0.50 (1,000-3,500 RPM) for sharp off-boost throttle response and fuel economy; retains full v035 MBT spark advance (13.5 deg flat Row 9), v035 base fuel targets (0.76-0.77 lambda), v033 loud decel crackle, and v032 anti-shuffle fixes.",
+      "changes": [
+        "VCT Angle vs. RPM vs. Load [ECM 44412] Rows 7, 8, 9 (0.70, 0.80, 1.00 Load / Boost) zeroed completely to 0.00 deg across all RPMs (1,000-7,200 RPM)",
+        "VCT Angle vs. RPM vs. Load [ECM 44412] Columns 6 through 11 (4,500 to 7,200 RPM / High-RPM Powerband) locked out to 0.00 deg flat across ALL loads (0.10-1.00)",
+        "VCT Angle vs. RPM vs. Load [ECM 44412] Row 6 (0.60 Load / Transition) tapered to -10.00 to -15.00 deg max across 1,000-3,500 RPM, 0.00 deg at 4,500+ RPM",
+        "Eliminates intake valve overlap reversion where 22-26 psi pre-turbine backpressure exceeds 14-15 psi boost, stopping heat soak of cylinder head, valves, and coolant",
+        "Eliminates phaser hydraulic slew lag (200-300 ms) and transient shift reversion during redline gear shifts",
+        "Preserves factory VCT advance on cruise rows 0.10-0.50 below 4,000 RPM (-10.00 to -35.00 deg) for sharp off-boost throttle response, spool, and fuel economy",
+        "Retains full v035 MBT spark advance (Row 9 13.5 deg flat across 5,500-7,200 RPM) and v035 WOT base fuel enleanment (0.76-0.77 lambda)",
+        "Retains v033 loud decel overrun crackle (1.40s DFCO delay, -8 deg @ 3k, -10 deg @ 4k-6k) and v032 anti-shuffle fixes"
+      ],
+      "notes": "v036-zero-boost-vct.md",
+      "rollback": "v035-wot-fuel-spark-power.hpt",
+      "verification": "60 cell delta verified in reports/calibration-inventory/v036/delta.json; exact 9x11 matrix provided for owner entry/verification; ready for owner flash and staged road test",
+      "inventory_delta": "../reports/calibration-inventory/v036/delta.json"
+    },
+    {
+      "version": "v037",
+      "file": "v037-spool-vct.hpt",
+      "parent": "v036",
+      "bytes": 268157,
+      "sha256": "F81325ADF88757E6AD3901BD1A479595B161B18CD13DDB2DC8C53BCAC79C9621",
+      "status": "Official production tune; tested and verified on road across 8%, 10%, and 12% WGDC (17.31 psi peak, 16.2 psi sustained, all-time record 35.63 lb/min airflow, 11.07 AFR, 0.0 knock retard, 190-192F flat ECT).",
+      "title": "Spool-Advance VCT & High-RPM Thermal Lockout",
+      "description": "Derived from paired-20261105-150046-e5d55c90-v036-forrealsies telemetry review: restores -15.00 to -30.00 deg intake cam advance in columns 1,000-3,500 RPM across rows 0.50-1.00 to recover dynamic cylinder pressure and eliminate the 2.0s spool delay measured in v036; preserves the verified 0.00 deg high-RPM lockout across columns 4,500-7,200 RPM flat across ALL loads for thermal protection and shift lag elimination; retains full v035 MBT spark advance (Row 9 13.5 deg flat), v035 base fuel targets (0.76-0.77 lambda), v033 decel crackle, and v032 anti-shuffle fixes.",
+      "changes": [
+        "VCT Angle vs. RPM vs. Load [ECM 44412] Rows 0.50-1.00 restored to -15.00 to -30.00 deg advance across 1,000-3,500 RPM for fast spool and dynamic compression",
+        "VCT Angle vs. RPM vs. Load [ECM 44412] Columns 4,500 to 7,200 RPM preserved at 0.00 deg flat across ALL loads (0.10-1.00) for thermal protection and shift lag elimination",
+        "Smooth taper (-15/-20 deg -> 0.00 deg) across 3,500 to 4,500 RPM requiring only 75 ms phaser slew rate before peak boost arrives",
+        "Retains full v035 MBT spark timing (13.5 deg flat Row 9 across 5,500-7,200 RPM)",
+        "Retains v035 WOT base fuel enleanment (0.76-0.77 lambda target)",
+        "Retains v033 loud decel overrun crackle (1.40s DFCO delay, -8 deg @ 3k, -10 deg @ 4k-6k) and v032 anti-shuffle fixes"
+      ],
+      "notes": "v037-spool-vct.md",
+      "rollback": "v036-zero-boost-vct.hpt",
+      "verification": "20 cell delta verified in reports/calibration-inventory/v037/delta.json; exact 9x11 matrix provided for owner entry/verification; ready for owner flash and staged road test",
+      "inventory_delta": "../reports/calibration-inventory/v037/delta.json"
     }
   ],
-  "updated_at": "2026-11-04T21:30:51.000000+00:00"
+  "updated_at": "2026-11-05T18:02:57.641677+00:00"
 }

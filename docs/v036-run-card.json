@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "session": "candidate-v036-drive-01",
+  "purpose": "Zero-Boost & High-RPM VCT Angle Lockout (Thermal Reversion & Shift Lag Elimination)",
+  "tune": {
+    "filename": "v036-zero-boost-vct.hpt",
+    "sha256": "81F079A1A3B9ACBA825D14D65ED171CCE97B106B5868C78FFDC5CE5C54331BCE",
+    "bytes": 265933,
+    "parent_filename": "v035-wot-fuel-spark-power.hpt",
+    "status": "Tested on road in paired-20261105-150046-e5d55c90-v036-forrealsies; thermal protection confirmed, superseded by v037"
+  },
+  "parent_tune": {
+    "filename": "v035-wot-fuel-spark-power.hpt",
+    "sha256": "037A69269671D8F487FA2269630B68351767623AB845A41BE4577ABBDF730A16",
+    "bytes": 265613
+  },
+  "changes_since_previous_run": "Derived from paired-20261105-104453-2eb3afbb-v035 telemetry review, confirmed built engine specs (85.5mm forged pistons, ~2.02L displacement, 9.25:1 static CR), and owner-approved high-RPM lockout: (1) Zeros [ECM] 44412 VCT Angle across boost rows 0.70, 0.80, and 1.00 (0.00 deg across 1,000-7,200 RPM) to halt superheated exhaust gas reversion into intake runners under boost; (2) Locks out columns 4,500 through 7,200 RPM to 0.00 deg across ALL loads (0.10-1.00) to eliminate phaser hydraulic slew lag (200-300 ms) and shift reversion hesitation; (3) Preserves cruise VCT advance across rows 0.10-0.50 below 4,000 RPM; (4) Retains full v035 MBT spark advance (13.5 deg flat Row 9), v035 base fuel targets (0.76-0.77 lambda), v033 loud decel crackle, and v032 anti-shuffle fixes.",
+  "profile": {
+    "filename": "profiles/2004 Focus SVT - V023 Idle Spark Trial.Channels.xml",
+    "status": "All 18 requested channels required; paired with SCG-1 wideband lambda"
+  },
+  "conditions": {
+    "start_ect_f": "Operating temperature (180-205 F)",
+    "fuel_or_refueling": "93 octane pump gas",
+    "accessories": "Standard driving; A/C OFF during pulls",
+    "driver_tip_in_procedure": "Apply 10-20% throttle for 0.5-1.0s out of DFCO before committing to 100% WOT to eliminate lean hesitation",
+    "boost_controller": {
+      "model": "Innovate SCG-1",
+      "duty_cycle_pct": 8.0,
+      "optional_duty_cycle_pct": 8.0,
+      "boost_cut_psi": 16.0,
+      "active_press_psi": 5.0,
+      "step_increment_pct": 2.0
+    }
+  },
+  "stop_conditions": [
+    "Knock retard > 2.0 deg under boost",
+    "Wideband lambda > 0.82 (> 12.0 AFR) under boost > 8 psi",
+    "Boost spike > 15.5 psi (approaching 16 psi SCG-1 cut)",
+    "Engine stall or severe undershoot (< 700 RPM) on clutch-in",
+    "Engine coolant temp > 220 F or rapid thermal spike"
+  ]
+}

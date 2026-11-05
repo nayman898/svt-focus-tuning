@@ -1,0 +1,562 @@
+{
+  "version": "v036",
+  "file": "v036-zero-boost-vct.hpt",
+  "parent": "v035",
+  "parent_file": "v035-wot-fuel-spark-power.hpt",
+  "bytes": 265933,
+  "sha256": "81F079A1A3B9ACBA825D14D65ED171CCE97B106B5868C78FFDC5CE5C54331BCE",
+  "parent_bytes": 265613,
+  "parent_sha256": "037A69269671D8F487FA2269630B68351767623AB845A41BE4577ABBDF730A16",
+  "status": "Tested on road in paired-20261105-150046-e5d55c90-v036-forrealsies; thermal protection confirmed (0.0F ECT rise), but low-RPM spool delayed by 2.0s due to retarded IVC at 2000-3500 RPM. Superseded by v037.",
+  "rationale": "Derived from paired-20261105-104453-2eb3afbb-v035 telemetry review, confirmed engine build specs (85.5mm forged pistons, ~2.02L displacement, 9.25:1 static CR), and owner-requested high-RPM lockout: (1) In [ECM] 44412 (VCT Angle vs. RPM vs. Load), rows 0.70, 0.80, and 1.00 previously commanded up to -49.50 deg advance under boost, blowing 1,500 deg F pre-turbine exhaust gas backwards into intake runners. Candidate v036 zeros out boost rows 0.70-1.00 across all columns (1,000-7,200 RPM). (2) High-RPM transition lockout: because boost onset at 4k+ RPM is instantaneous and phaser hydraulic slew rate takes 200-300 ms to retard, columns 4,500 through 7,200 RPM are set to 0.00 deg across ALL loads (0.10 to 1.00). This pre-parks the cam at base timing across the entire powerband, eliminating transient shift reversion during gear changes. (3) 1,000-2,500 RPM retains smooth cruise advance (-10 to -35 deg) for off-boost spool and highway fuel economy, with 3,500 RPM tapered smoothly (-10 to -25 deg max). (4) Retains all v035 MBT spark timing (Row 9 13.5 deg flat across 5,500-7,200 RPM), v035 WOT base fuel enleanment (0.76-0.77 lambda), v033 loud decel crackle, and v032 anti-shuffle fixes.",
+  "parameters": [
+    {
+      "id": 44412,
+      "name": "VCT Angle vs. RPM vs. Load",
+      "kind": "table",
+      "units": "deg",
+      "changes": [
+        {
+          "row": 1,
+          "col": 1,
+          "load": 0.1,
+          "rpm": 1000,
+          "parent_value": "-10.00",
+          "new_value": "0.00",
+          "note": "Row 1 (0.10 Load) Col 1 (1000 RPM) smoothed cruise"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "load": 0.1,
+          "rpm": 1500,
+          "parent_value": "-20.00",
+          "new_value": "-10.00",
+          "note": "Row 1 (0.10 Load) Col 2 (1500 RPM) smoothed cruise"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "load": 0.1,
+          "rpm": 2000,
+          "parent_value": "-20.00",
+          "new_value": "-15.00",
+          "note": "Row 1 (0.10 Load) Col 3 (2000 RPM) smoothed cruise"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "load": 0.1,
+          "rpm": 4500,
+          "parent_value": "-15.00",
+          "new_value": "0.00",
+          "note": "Row 1 (0.10 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "load": 0.2,
+          "rpm": 1000,
+          "parent_value": "-22.00",
+          "new_value": "-10.00",
+          "note": "Row 2 (0.20 Load) Col 1 (1000 RPM) smoothed cruise"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "load": 0.2,
+          "rpm": 1500,
+          "parent_value": "-30.00",
+          "new_value": "-15.00",
+          "note": "Row 2 (0.20 Load) Col 2 (1500 RPM) smoothed cruise"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "load": 0.2,
+          "rpm": 2000,
+          "parent_value": "-39.60",
+          "new_value": "-20.00",
+          "note": "Row 2 (0.20 Load) Col 3 (2000 RPM) smoothed cruise"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "load": 0.2,
+          "rpm": 2500,
+          "parent_value": "-35.00",
+          "new_value": "-25.00",
+          "note": "Row 2 (0.20 Load) Col 4 (2500 RPM) smoothed cruise"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "load": 0.2,
+          "rpm": 3500,
+          "parent_value": "-34.00",
+          "new_value": "-20.00",
+          "note": "Row 2 (0.20 Load) Col 5 (3500 RPM) smoothed cruise"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "load": 0.2,
+          "rpm": 4500,
+          "parent_value": "-29.00",
+          "new_value": "0.00",
+          "note": "Row 2 (0.20 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 2,
+          "col": 9,
+          "load": 0.2,
+          "rpm": 6750,
+          "parent_value": "5.00",
+          "new_value": "0.00",
+          "note": "Row 2 (0.20 Load) Col 9 (6750 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "load": 0.3,
+          "rpm": 1000,
+          "parent_value": "-25.00",
+          "new_value": "-10.00",
+          "note": "Row 3 (0.30 Load) Col 1 (1000 RPM) smoothed cruise"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "load": 0.3,
+          "rpm": 1500,
+          "parent_value": "-34.80",
+          "new_value": "-20.00",
+          "note": "Row 3 (0.30 Load) Col 2 (1500 RPM) smoothed cruise"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "load": 0.3,
+          "rpm": 2000,
+          "parent_value": "-42.00",
+          "new_value": "-25.00",
+          "note": "Row 3 (0.30 Load) Col 3 (2000 RPM) smoothed cruise"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "load": 0.3,
+          "rpm": 2500,
+          "parent_value": "-42.00",
+          "new_value": "-30.00",
+          "note": "Row 3 (0.30 Load) Col 4 (2500 RPM) smoothed cruise"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "load": 0.3,
+          "rpm": 3500,
+          "parent_value": "-31.60",
+          "new_value": "-25.00",
+          "note": "Row 3 (0.30 Load) Col 5 (3500 RPM) smoothed cruise"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "load": 0.3,
+          "rpm": 4500,
+          "parent_value": "-27.50",
+          "new_value": "0.00",
+          "note": "Row 3 (0.30 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "load": 0.3,
+          "rpm": 6000,
+          "parent_value": "-5.00",
+          "new_value": "0.00",
+          "note": "Row 3 (0.30 Load) Col 7 (6000 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "load": 0.4,
+          "rpm": 1000,
+          "parent_value": "-26.00",
+          "new_value": "-10.00",
+          "note": "Row 4 (0.40 Load) Col 1 (1000 RPM) smoothed cruise"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "load": 0.4,
+          "rpm": 1500,
+          "parent_value": "-35.10",
+          "new_value": "-20.00",
+          "note": "Row 4 (0.40 Load) Col 2 (1500 RPM) smoothed cruise"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "load": 0.4,
+          "rpm": 2000,
+          "parent_value": "-45.00",
+          "new_value": "-30.00",
+          "note": "Row 4 (0.40 Load) Col 3 (2000 RPM) smoothed cruise"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "load": 0.4,
+          "rpm": 2500,
+          "parent_value": "-49.50",
+          "new_value": "-35.00",
+          "note": "Row 4 (0.40 Load) Col 4 (2500 RPM) smoothed cruise"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "load": 0.4,
+          "rpm": 3500,
+          "parent_value": "-49.50",
+          "new_value": "-25.00",
+          "note": "Row 4 (0.40 Load) Col 5 (3500 RPM) smoothed cruise"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "load": 0.4,
+          "rpm": 4500,
+          "parent_value": "-25.50",
+          "new_value": "0.00",
+          "note": "Row 4 (0.40 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "load": 0.4,
+          "rpm": 6000,
+          "parent_value": "-10.00",
+          "new_value": "0.00",
+          "note": "Row 4 (0.40 Load) Col 7 (6000 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "load": 0.5,
+          "rpm": 1000,
+          "parent_value": "-28.00",
+          "new_value": "-10.00",
+          "note": "Row 5 (0.50 Load) Col 1 (1000 RPM) smoothed cruise"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "load": 0.5,
+          "rpm": 1500,
+          "parent_value": "-33.50",
+          "new_value": "-20.00",
+          "note": "Row 5 (0.50 Load) Col 2 (1500 RPM) smoothed cruise"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "load": 0.5,
+          "rpm": 2000,
+          "parent_value": "-45.00",
+          "new_value": "-30.00",
+          "note": "Row 5 (0.50 Load) Col 3 (2000 RPM) smoothed cruise"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "load": 0.5,
+          "rpm": 2500,
+          "parent_value": "-49.50",
+          "new_value": "-35.00",
+          "note": "Row 5 (0.50 Load) Col 4 (2500 RPM) smoothed cruise"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "load": 0.5,
+          "rpm": 3500,
+          "parent_value": "-49.50",
+          "new_value": "-20.00",
+          "note": "Row 5 (0.50 Load) Col 5 (3500 RPM) smoothed cruise"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "load": 0.5,
+          "rpm": 4500,
+          "parent_value": "-24.50",
+          "new_value": "0.00",
+          "note": "Row 5 (0.50 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "load": 0.5,
+          "rpm": 6000,
+          "parent_value": "-15.00",
+          "new_value": "0.00",
+          "note": "Row 5 (0.50 Load) Col 7 (6000 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 5,
+          "col": 8,
+          "load": 0.5,
+          "rpm": 6250,
+          "parent_value": "-5.00",
+          "new_value": "0.00",
+          "note": "Row 5 (0.50 Load) Col 8 (6250 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "load": 0.6,
+          "rpm": 1000,
+          "parent_value": "-26.50",
+          "new_value": "-10.00",
+          "note": "Row 6 (0.60 Load) Col 1 (1000 RPM) tapered transition"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "load": 0.6,
+          "rpm": 1500,
+          "parent_value": "-28.50",
+          "new_value": "-10.00",
+          "note": "Row 6 (0.60 Load) Col 2 (1500 RPM) tapered transition"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "load": 0.6,
+          "rpm": 2000,
+          "parent_value": "-45.00",
+          "new_value": "-15.00",
+          "note": "Row 6 (0.60 Load) Col 3 (2000 RPM) tapered transition"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "load": 0.6,
+          "rpm": 2500,
+          "parent_value": "-49.50",
+          "new_value": "-15.00",
+          "note": "Row 6 (0.60 Load) Col 4 (2500 RPM) tapered transition"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "load": 0.6,
+          "rpm": 3500,
+          "parent_value": "-49.50",
+          "new_value": "-10.00",
+          "note": "Row 6 (0.60 Load) Col 5 (3500 RPM) tapered transition"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "load": 0.6,
+          "rpm": 4500,
+          "parent_value": "-22.50",
+          "new_value": "0.00",
+          "note": "Row 6 (0.60 Load) Col 6 (4500 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 6,
+          "col": 7,
+          "load": 0.6,
+          "rpm": 6000,
+          "parent_value": "-15.00",
+          "new_value": "0.00",
+          "note": "Row 6 (0.60 Load) Col 7 (6000 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 6,
+          "col": 8,
+          "load": 0.6,
+          "rpm": 6250,
+          "parent_value": "-5.00",
+          "new_value": "0.00",
+          "note": "Row 6 (0.60 Load) Col 8 (6250 RPM) zeroed for high-RPM powerband lockout"
+        },
+        {
+          "row": 7,
+          "col": 1,
+          "load": 0.7,
+          "rpm": 1000,
+          "parent_value": "-21.00",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 1 (1000 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 2,
+          "load": 0.7,
+          "rpm": 1500,
+          "parent_value": "-23.00",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 2 (1500 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 3,
+          "load": 0.7,
+          "rpm": 2000,
+          "parent_value": "-24.00",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 3 (2000 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 4,
+          "load": 0.7,
+          "rpm": 2500,
+          "parent_value": "-49.50",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 4 (2500 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 5,
+          "load": 0.7,
+          "rpm": 3500,
+          "parent_value": "-49.50",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 5 (3500 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 6,
+          "load": 0.7,
+          "rpm": 4500,
+          "parent_value": "-18.00",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 6 (4500 RPM) zeroed for boost"
+        },
+        {
+          "row": 7,
+          "col": 7,
+          "load": 0.7,
+          "rpm": 6000,
+          "parent_value": "-10.00",
+          "new_value": "0.00",
+          "note": "Row 7 (0.70 Load) Col 7 (6000 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 1,
+          "load": 0.8,
+          "rpm": 1000,
+          "parent_value": "-17.00",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 1 (1000 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 2,
+          "load": 0.8,
+          "rpm": 1500,
+          "parent_value": "-19.00",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 2 (1500 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 3,
+          "load": 0.8,
+          "rpm": 2000,
+          "parent_value": "-19.00",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 3 (2000 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 4,
+          "load": 0.8,
+          "rpm": 2500,
+          "parent_value": "-49.50",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 4 (2500 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 5,
+          "load": 0.8,
+          "rpm": 3500,
+          "parent_value": "-49.50",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 5 (3500 RPM) zeroed for boost"
+        },
+        {
+          "row": 8,
+          "col": 6,
+          "load": 0.8,
+          "rpm": 4500,
+          "parent_value": "-15.00",
+          "new_value": "0.00",
+          "note": "Row 8 (0.80 Load) Col 6 (4500 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 1,
+          "load": 1.0,
+          "rpm": 1000,
+          "parent_value": "-12.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 1 (1000 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 2,
+          "load": 1.0,
+          "rpm": 1500,
+          "parent_value": "-13.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 2 (1500 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 3,
+          "load": 1.0,
+          "rpm": 2000,
+          "parent_value": "-13.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 3 (2000 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 4,
+          "load": 1.0,
+          "rpm": 2500,
+          "parent_value": "-13.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 4 (2500 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 5,
+          "load": 1.0,
+          "rpm": 3500,
+          "parent_value": "-12.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 5 (3500 RPM) zeroed for boost"
+        },
+        {
+          "row": 9,
+          "col": 6,
+          "load": 1.0,
+          "rpm": 4500,
+          "parent_value": "-12.00",
+          "new_value": "0.00",
+          "note": "Row 9 (1.00 Load) Col 6 (4500 RPM) zeroed for boost"
+        }
+      ]
+    }
+  ]
+}
