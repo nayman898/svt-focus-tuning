@@ -1,0 +1,29 @@
+{
+  "version": "v008",
+  "file": "v008-idle-950.hpt",
+  "parent": "v007",
+  "parent_file": "v007-idle-1000.hpt",
+  "bytes": 224141,
+  "sha256": "255A4FF56EF40B9E84D0A032C77B22D7FF50256151D3A6A54F8037144E8DC278",
+  "parent_bytes": 222397,
+  "parent_sha256": "AB9BA83EDB08E09E10042087152631C5D70360A1B28128E85D0E08B9279BDE55",
+  "status": "Owner-confirmed installed 2026-10-27; target idle lowered to 950 RPM",
+  "rationale": "Step down in target idle progression: 1,000 RPM -> 950 RPM across Park/Neutral and Drive.",
+  "parameters": [
+    {
+      "id": 44218,
+      "name": "Target Idle Speed Park/Neutral",
+      "before": "1,000",
+      "after": "950",
+      "units": "RPM"
+    },
+    {
+      "id": 44217,
+      "name": "Target Idle Speed Drive",
+      "before": "1,000",
+      "after": "950",
+      "units": "RPM"
+    }
+  ],
+  "verification": "Reopened 950/950 controls; reopened comparison lists only Notes, P/N and Drive targets; all eight earlier files unchanged."
+}

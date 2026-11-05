@@ -1,0 +1,29 @@
+{
+  "version": "v002",
+  "file": "v002-idle-1100.hpt",
+  "parent": "v001",
+  "parent_file": "v001-baseline-with-mil.hpt",
+  "bytes": 215069,
+  "sha256": "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
+  "parent_bytes": 215037,
+  "parent_sha256": "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+  "status": "Owner reports write completed; warm mean RPM 1103.5",
+  "rationale": "Initial step in idle speed reduction trial from 1,200 RPM down to 1,100 RPM.",
+  "parameters": [
+    {
+      "id": 44218,
+      "name": "Target Idle Speed Park/Neutral",
+      "before": "1,200",
+      "after": "1,100",
+      "units": "RPM"
+    },
+    {
+      "id": 44217,
+      "name": "Target Idle Speed Drive",
+      "before": "1,200",
+      "after": "1,100",
+      "units": "RPM"
+    }
+  ],
+  "verification": "Reopened file: only P/N and Drive idle targets and Notes differ from v001."
+}

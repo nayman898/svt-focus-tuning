@@ -1,0 +1,29 @@
+{
+  "version": "v016",
+  "file": "v016-idle-margin-950.hpt",
+  "parent": "v015",
+  "parent_file": "v015-restore-closed-loop.hpt",
+  "bytes": 239085,
+  "sha256": "7F069587C62FACC4A2E79556A48131A2DF7D527BFE0B9ECA5E388291BF410D14",
+  "parent_bytes": 236525,
+  "parent_sha256": "9D3C4FF9CD68D24665957CC6FDB310C51B246E8DD3D0F439A0E33D2EFA936EFD",
+  "status": "Owner-confirmed installed; warm 950 RPM margin verified",
+  "rationale": "Owner-approved 950 RPM margin trial after repeated 900 RPM dips, including 684.5 RPM load pickup.",
+  "parameters": [
+    {
+      "id": 44218,
+      "name": "Target Idle Speed Park/Neutral",
+      "before": "900",
+      "after": "950",
+      "units": "RPM"
+    },
+    {
+      "id": 44217,
+      "name": "Target Idle Speed Drive",
+      "before": "900",
+      "after": "950",
+      "units": "RPM"
+    }
+  ],
+  "verification": "Reopened 950/950; saved parent Notes prefix verified; Editor comparison only two target settings and Notes; all 16 prior tune hashes unchanged."
+}

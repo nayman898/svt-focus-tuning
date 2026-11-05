@@ -1,0 +1,35 @@
+{
+  "version": "v005",
+  "file": "v005-idle-absolute-tps-entry-test.hpt",
+  "parent": "v004",
+  "parent_file": "v004-idle-closed-loop-entry-test.hpt",
+  "bytes": 218621,
+  "sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
+  "parent_bytes": 217053,
+  "parent_sha256": "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
+  "status": "Tested 2026-10-26; closed-loop entry test lifting thresholds above absolute TPS floor",
+  "rationale": "Telemetry showed closed-throttle absolute TPS is ~182-183 counts; raised 0 and 1,500 RPM threshold cells to 200.00 counts, successfully enabling closed-loop fuel control.",
+  "parameters": [
+    {
+      "id": 32731,
+      "name": "Open Loop Fuel TPS Thresh vs. RPM",
+      "kind": "table",
+      "units": "AD counts",
+      "changes": [
+        {
+          "row": 1,
+          "rpm": 0,
+          "before": "8.00",
+          "after": "200.00"
+        },
+        {
+          "row": 2,
+          "rpm": 1500,
+          "before": "8.00",
+          "after": "200.00"
+        }
+      ]
+    }
+  ],
+  "verification": "Reopened comparison: only ECM 32731 table (rows 1 & 2 set to 200.00) and Notes differ from v004."
+}

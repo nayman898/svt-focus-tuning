@@ -141,6 +141,127 @@ if ($catalog.revisions.version -contains 'v024') {
     }
     foreach($p in $snapshots.v024.PSObject.Properties) {$p.Value.evidence='Exact v021 parent; verified saved/reopened comparison changes only 44511 two fuel cells, 50 three DTC modes, Notes. Tested 2026-11-03 with new upstream O2 sensor; provisionally adopted as parent for v025 in covered stationary modes.'}
 }
+
+# Propagate snapshots backward from v016 down to v000 based on verified delta comparisons
+# v015: identical calibration to v013; target idle 900 RPM in P/N and Drive; closed loop eligible
+$snapshots.v015 = Clone $snapshots.v016
+$snapshots.v015.'44218'.value = '900'
+$snapshots.v015.'44217'.value = '900'
+foreach ($p in $snapshots.v015.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v015/v016 comparison; target idle 900 RPM in P/N and Drive; closed loop eligible'
+}
+
+# v014: open loop diagnostic isolation test (0/1500 RPM TPS thresholds set to 0.00 AD counts)
+$snapshots.v014 = Clone $snapshots.v015
+($snapshots.v014.'32731'.cells | Where-Object cell -eq 'Column 1 Row 1').value = '0.00'
+($snapshots.v014.'32731'.cells | Where-Object cell -eq 'Column 1 Row 2').value = '0.00'
+foreach ($p in $snapshots.v014.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v013/v014 comparison; open loop isolation test with 0/1500 RPM TPS thresholds set to 0.00 counts'
+}
+
+# v013: manifold vacuum multiplier zeroed for 1:1 referenced return fuel pressure regulator
+$snapshots.v013 = Clone $snapshots.v015
+foreach ($p in $snapshots.v013.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v012/v013 comparison; manifold vacuum multiplier 6950 zeroed for return-style fuel system; identical calibration to v015'
+}
+
+# v012: idle spark proportional gain reduced to 1.000; factory 0.484 manifold vacuum multiplier
+$snapshots.v012 = Clone $snapshots.v013
+$snapshots.v012.'6950'.value = '0.484'
+foreach ($p in $snapshots.v012.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v010/v012 comparison; idle spark proportional gain 47996 reduced to 1.000; factory 0.484 manifold vacuum multiplier'
+}
+
+# v011: idle spark proportional gain set to 1.250 (branched diagnostic test from v010)
+$snapshots.v011 = Clone $snapshots.v012
+$snapshots.v011.'47996'.value = '1.250'
+foreach ($p in $snapshots.v011.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v010/v011 comparison; idle spark proportional gain 47996 set to 1.250 (branched diagnostic test from v010)'
+}
+
+# v010: idle spark proportional gain reduced 25% from stock 2.000 to 1.500
+$snapshots.v010 = Clone $snapshots.v012
+$snapshots.v010.'47996'.value = '1.500'
+foreach ($p in $snapshots.v010.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v009/v010 comparison; idle spark proportional gain 47996 reduced from stock 2.000 to 1.500'
+}
+
+# v009: target idle speed lowered to 900 RPM; stock 2.000 idle spark gain
+$snapshots.v009 = Clone $snapshots.v010
+$snapshots.v009.'47996'.value = '2.000'
+foreach ($p in $snapshots.v009.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v008/v009 comparison; target idle speed lowered to 900 RPM in P/N and Drive; stock 2.000 idle spark gain'
+}
+
+# v008: target idle speed lowered to 950 RPM
+$snapshots.v008 = Clone $snapshots.v009
+$snapshots.v008.'44218'.value = '950'
+$snapshots.v008.'44217'.value = '950'
+foreach ($p in $snapshots.v008.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v007/v008 comparison; target idle speed lowered to 950 RPM in P/N and Drive'
+}
+
+# v007: target idle speed lowered to 1,000 RPM
+$snapshots.v007 = Clone $snapshots.v008
+$snapshots.v007.'44218'.value = '1,000'
+$snapshots.v007.'44217'.value = '1,000'
+foreach ($p in $snapshots.v007.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v006/v007 comparison; target idle speed lowered to 1,000 RPM in P/N and Drive'
+}
+
+# v006: high-speed fan thresholds restored to 225/215 F post-resistor repair; target idle 1,100 RPM
+$snapshots.v006 = Clone $snapshots.v007
+$snapshots.v006.'44218'.value = '1,100'
+$snapshots.v006.'44217'.value = '1,100'
+foreach ($p in $snapshots.v006.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v005/v006 comparison; high-speed fan thresholds restored to 225/215 F post-resistor repair; target idle 1,100 RPM'
+}
+
+# v005: closed-loop absolute TPS entry test lifting 0/1500 RPM thresholds to 200.00 counts; temporary fan bypass 195/190 F
+$snapshots.v005 = Clone $snapshots.v006
+$snapshots.v005.'24030'.value = '195.0'
+$snapshots.v005.'24031'.value = '190.0'
+foreach ($p in $snapshots.v005.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v004/v005 comparison; closed-loop absolute TPS entry test lifting 0/1500 RPM thresholds to 200.00 counts; temporary fan bypass 195/190 F'
+}
+
+# v004: closed-loop relative TPS entry test with 0/1500 RPM thresholds set to 8.00 counts; temporary fan bypass 195/190 F
+$snapshots.v004 = Clone $snapshots.v005
+($snapshots.v004.'32731'.cells | Where-Object cell -eq 'Column 1 Row 1').value = '8.00'
+($snapshots.v004.'32731'.cells | Where-Object cell -eq 'Column 1 Row 2').value = '8.00'
+foreach ($p in $snapshots.v004.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v003/v004 comparison; closed-loop relative TPS entry test with 0/1500 RPM thresholds set to 8.00 counts; temporary fan bypass 195/190 F'
+}
+
+# v003: temporary stage-match for bypassed fan series resistor (high speed enable 195.0 F, disable 190.0 F); target idle 1,100 RPM
+$snapshots.v003 = Clone $snapshots.v004
+($snapshots.v003.'32731'.cells | Where-Object cell -eq 'Column 1 Row 1').value = '0.00'
+($snapshots.v003.'32731'.cells | Where-Object cell -eq 'Column 1 Row 2').value = '0.00'
+foreach ($p in $snapshots.v003.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v002/v003 comparison; temporary stage-match for bypassed fan series resistor (high speed enable 195.0 F, disable 190.0 F); target idle 1,100 RPM'
+}
+
+# v002: target idle speed lowered from 1,200 to 1,100 RPM in P/N and Drive; factory fan thresholds 225/215 F
+$snapshots.v002 = Clone $snapshots.v003
+$snapshots.v002.'24030'.value = '225.0'
+$snapshots.v002.'24031'.value = '215.0'
+foreach ($p in $snapshots.v002.PSObject.Properties) {
+    $p.Value.evidence = 'Inherited via verified v001/v002 comparison; target idle speed lowered from 1,200 to 1,100 RPM in P/N and Drive; factory fan thresholds 225/215 F'
+}
+
+# v001: owner baseline with MIL modifications; target idle 1,200 RPM; factory fans 225/215 F; factory idle spark gain 2.000; factory 0.484 manifold vacuum multiplier
+$snapshots.v001 = Clone $snapshots.v002
+$snapshots.v001.'44218'.value = '1,200'
+$snapshots.v001.'44217'.value = '1,200'
+foreach ($p in $snapshots.v001.PSObject.Properties) {
+    $p.Value.evidence = 'Owner-confirmed fresh-read baseline with MIL modifications; target idle 1,200 RPM; factory fans 225/215 F; factory idle spark gain 2.000; factory 0.484 manifold vacuum multiplier'
+}
+
+# v000: initial raw ECU read (v000-ecu-read-20261026-102710.hpt); identical baseline parameter calibration to v001
+$snapshots.v000 = Clone $snapshots.v001
+foreach ($p in $snapshots.v000.PSObject.Properties) {
+    $p.Value.evidence = 'Initial raw ECU read (v000-ecu-read-20261026-102710.hpt); identical baseline parameter calibration to v001'
+}
 if ($catalog.revisions.version -contains 'v025') {
     $d25 = Get-Content (Join-Path $folder 'v025/delta.json') -Raw -Encoding UTF8 | ConvertFrom-Json
     $snapshots.v025 = Clone $snapshots.v024

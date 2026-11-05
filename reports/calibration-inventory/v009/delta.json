@@ -1,0 +1,29 @@
+{
+  "version": "v009",
+  "file": "v009-idle-900.hpt",
+  "parent": "v008",
+  "parent_file": "v008-idle-950.hpt",
+  "bytes": 226397,
+  "sha256": "20B35A1C01B1C9610611D588F87E4688A2613C2471B5C44E20710251D1380EC9",
+  "parent_bytes": 224141,
+  "parent_sha256": "255A4FF56EF40B9E84D0A032C77B22D7FF50256151D3A6A54F8037144E8DC278",
+  "status": "Owner-confirmed installed 2026-10-27; target idle lowered to 900 RPM",
+  "rationale": "Final step down to target 900 RPM idle speed.",
+  "parameters": [
+    {
+      "id": 44218,
+      "name": "Target Idle Speed Park/Neutral",
+      "before": "950",
+      "after": "900",
+      "units": "RPM"
+    },
+    {
+      "id": 44217,
+      "name": "Target Idle Speed Drive",
+      "before": "950",
+      "after": "900",
+      "units": "RPM"
+    }
+  ],
+  "verification": "Reopened 900/900 controls and Notes verified; comparison against v008 contains only Notes and the two target scalars; all nine prior files unchanged."
+}

@@ -1,0 +1,22 @@
+{
+  "version": "v013",
+  "file": "v013-return-vacuum-comp-zero.hpt",
+  "parent": "v012",
+  "parent_file": "v012-idle-spark-gain-1p0.hpt",
+  "bytes": 233629,
+  "sha256": "78AAD3DC86BE89835C333BC95EF5CE1359DD5B4CAAD2645032C1A64F49505B70",
+  "parent_bytes": 230685,
+  "parent_sha256": "77EDEBF355AB432BEB56C08BF3041E97C155FDAF2FC446BB3A30CA461F341082",
+  "status": "Tested 2026-10-29; zero manifold vacuum multiplier for 1:1 referenced return fuel pressure regulator",
+  "rationale": "Vehicle has a return-style fuel system with a 1:1 manifold-referenced fuel pressure regulator; HP Tuners guidance specifies 0.000 for return-style fuel conversions.",
+  "parameters": [
+    {
+      "id": 6950,
+      "name": "Manifold Vacuum Multiplier",
+      "before": "0.484",
+      "after": "0.000",
+      "units": "multiplier"
+    }
+  ],
+  "verification": "Saved file reopened: multiplier 0.000; targets 900/900, gain 1.000; comparison against exact v012 lists only Manifold Vacuum Multiplier and Notes."
+}

@@ -1,0 +1,22 @@
+{
+  "version": "v011",
+  "file": "v011-idle-spark-gain-1p25.hpt",
+  "parent": "v010",
+  "parent_file": "v010-idle-spark-gain-1p5.hpt",
+  "bytes": 230397,
+  "sha256": "703A5B9E7061BE733B43665DF1F30F44E2E4CA29F51BD3B07D9272A5BA20A9C3",
+  "parent_bytes": 228029,
+  "parent_sha256": "E2A2650F93CD9084BC41353ADAEBE5D69E23AB238F0F9B9A48A382786331BC47",
+  "status": "Prepared diagnostic step to 1.250 gain; not flashed",
+  "rationale": "Alternative intermediate step in proportional gain reduction (1.500 -> 1.250).",
+  "parameters": [
+    {
+      "id": 47996,
+      "name": "Idle Spark Proportional Gain",
+      "before": "1.500",
+      "after": "1.250",
+      "units": "gain"
+    }
+  ],
+  "verification": "Reopened gain 1.250; exact-v010 comparison contains only gain and Notes; all 11 prior hashes/sizes unchanged."
+}

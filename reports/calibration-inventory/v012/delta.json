@@ -1,0 +1,22 @@
+{
+  "version": "v012",
+  "file": "v012-idle-spark-gain-1p0.hpt",
+  "parent": "v010",
+  "parent_file": "v010-idle-spark-gain-1p5.hpt",
+  "bytes": 230685,
+  "sha256": "77EDEBF355AB432BEB56C08BF3041E97C155FDAF2FC446BB3A30CA461F341082",
+  "parent_bytes": 228029,
+  "parent_sha256": "E2A2650F93CD9084BC41353ADAEBE5D69E23AB238F0F9B9A48A382786331BC47",
+  "status": "Owner-confirmed installed 2026-10-28; reduced idle spark proportional gain to 1.000",
+  "rationale": "Larger diagnostic step: reduced idle spark gain 33.3% below v010 (50% below stock 2.000) to 1.000 to stabilize idle.",
+  "parameters": [
+    {
+      "id": 47996,
+      "name": "Idle Spark Proportional Gain",
+      "before": "1.500",
+      "after": "1.000",
+      "units": "gain"
+    }
+  ],
+  "verification": "Reopened gain 1.000; comparison against exact v010 lists only gain and Notes; all 12 earlier hashes and sizes preserved."
+}

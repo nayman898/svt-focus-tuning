@@ -1,0 +1,29 @@
+{
+  "version": "v007",
+  "file": "v007-idle-1000.hpt",
+  "parent": "v006",
+  "parent_file": "v006-post-repair-fan-baseline.hpt",
+  "bytes": 222397,
+  "sha256": "AB9BA83EDB08E09E10042087152631C5D70360A1B28128E85D0E08B9279BDE55",
+  "parent_bytes": 220541,
+  "parent_sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
+  "status": "Owner-confirmed installed 2026-10-27; target idle lowered to 1000 RPM",
+  "rationale": "Step down in target idle progression: 1,100 RPM -> 1,000 RPM across Park/Neutral and Drive.",
+  "parameters": [
+    {
+      "id": 44218,
+      "name": "Target Idle Speed Park/Neutral",
+      "before": "1,100",
+      "after": "1,000",
+      "units": "RPM"
+    },
+    {
+      "id": 44217,
+      "name": "Target Idle Speed Drive",
+      "before": "1,100",
+      "after": "1,000",
+      "units": "RPM"
+    }
+  ],
+  "verification": "Reopened main-file controls both 1,000 RPM; Editor comparison versus exact v006 lists only Notes and the two target scalars."
+}

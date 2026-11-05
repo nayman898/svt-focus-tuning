@@ -1,0 +1,12 @@
+{
+  "version": "v000",
+  "file": "v000-ecu-read-20261026-102710.hpt",
+  "parent": null,
+  "bytes": 214941,
+  "sha256": "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
+  "status": "Archived initial ECU-read cache; baseline calibration parameters identical to v001",
+  "rationale": "Pre-tuning baseline read directly from vehicle ECU.",
+  "parameters": [],
+  "full_inventory_reference": "../v017/inventory.json",
+  "notes": "Initial ECU binary capture prior to vehicle modifications or tuning."
+}

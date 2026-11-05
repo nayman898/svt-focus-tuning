@@ -1,0 +1,22 @@
+{
+  "version": "v010",
+  "file": "v010-idle-spark-gain-1p5.hpt",
+  "parent": "v009",
+  "parent_file": "v009-idle-900.hpt",
+  "bytes": 228029,
+  "sha256": "E2A2650F93CD9084BC41353ADAEBE5D69E23AB238F0F9B9A48A382786331BC47",
+  "parent_bytes": 226397,
+  "parent_sha256": "20B35A1C01B1C9610611D588F87E4688A2613C2471B5C44E20710251D1380EC9",
+  "status": "Owner installed 2026-10-27; idle spark proportional gain reduced 25% from stock 2.000 to 1.500",
+  "rationale": "Diagnostic reduction in proportional gain to mitigate aggressive spark correction oscillations and overshoot at 900 RPM idle.",
+  "parameters": [
+    {
+      "id": 47996,
+      "name": "Idle Spark Proportional Gain",
+      "before": "2.000",
+      "after": "1.500",
+      "units": "gain"
+    }
+  ],
+  "verification": "Saved file reopened: gain 1.500, spark minimum -6.00, targets 900/900; comparison against v009 contains only Notes and Idle Spark Proportional Gain."
+}

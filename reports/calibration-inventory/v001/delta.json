@@ -1,0 +1,12 @@
+{
+  "version": "v001",
+  "file": "v001-baseline-with-mil.hpt",
+  "parent": null,
+  "bytes": 215037,
+  "sha256": "2F3E26C6C5E2C2266F302B4A64174665D1C87F343BCA222209A4692576E44B14",
+  "status": "Owner-confirmed fresh-read baseline with MIL changes",
+  "rationale": "Working baseline containing existing owner modifications (MIL changes, 1,200 RPM target idle, factory fans, factory spark and fuel).",
+  "parameters": [],
+  "full_inventory_reference": "../v017/inventory.json",
+  "notes": "Owner baseline with MIL modifications retained without further edits."
+}

@@ -1,0 +1,35 @@
+{
+  "version": "v004",
+  "file": "v004-idle-closed-loop-entry-test.hpt",
+  "parent": "v003",
+  "parent_file": "v003-temp-fan-stage-match.hpt",
+  "bytes": 217053,
+  "sha256": "0AAB020810888ABDE0A029E60199AB4D2A1DFD97B24A19E1BE566EB115517B18",
+  "parent_bytes": 215709,
+  "parent_sha256": "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
+  "status": "Tested 2026-10-26; stationary warm idle closed-loop entry test",
+  "rationale": "Diagnostic test assuming relative TPS counts to trigger closed loop at idle (set 0 and 1,500 RPM cells to 8.00 counts).",
+  "parameters": [
+    {
+      "id": 32731,
+      "name": "Open Loop Fuel TPS Thresh vs. RPM",
+      "kind": "table",
+      "units": "AD counts",
+      "changes": [
+        {
+          "row": 1,
+          "rpm": 0,
+          "before": "0.00",
+          "after": "8.00"
+        },
+        {
+          "row": 2,
+          "rpm": 1500,
+          "before": "0.00",
+          "after": "8.00"
+        }
+      ]
+    }
+  ],
+  "verification": "Reopened comparison: only Notes and ECM 32731 table differ from v003; all seven rows verified."
+}

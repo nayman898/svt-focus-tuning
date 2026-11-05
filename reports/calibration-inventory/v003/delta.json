@@ -1,0 +1,29 @@
+{
+  "version": "v003",
+  "file": "v003-temp-fan-stage-match.hpt",
+  "parent": "v002",
+  "parent_file": "v002-idle-1100.hpt",
+  "bytes": 215709,
+  "sha256": "24981C496E5B7C8681EAA6A1CFC004EFEF31B96720D6CFC3562D336FECE275F7",
+  "parent_bytes": 215069,
+  "parent_sha256": "64C0790DBCD9B8239E0893A8B33A172AF25D2B8D517C0C547A3CC3E098CCA2F9",
+  "status": "Reviewed 2026-10-26; temporary stage match for bypassed fan series resistor",
+  "rationale": "Temporary calibration matching high-speed fan trigger to low-speed ECT threshold while series resistor was bypassed.",
+  "parameters": [
+    {
+      "id": 24030,
+      "name": "Fan High Speed Enable ECT",
+      "before": "225.0",
+      "after": "195.0",
+      "units": "F"
+    },
+    {
+      "id": 24031,
+      "name": "Fan High Speed Disable ECT",
+      "before": "215.0",
+      "after": "190.0",
+      "units": "F"
+    }
+  ],
+  "verification": "Reopened file: only two fan-threshold parameters and Notes differ from v002; high and low thresholds read 195/190 F."
+}

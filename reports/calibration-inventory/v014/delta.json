@@ -1,0 +1,35 @@
+{
+  "version": "v014",
+  "file": "v014-warm-idle-open-loop-isolation.hpt",
+  "parent": "v013",
+  "parent_file": "v013-return-vacuum-comp-zero.hpt",
+  "bytes": 236733,
+  "sha256": "ACA288B1BA25A87A6C92824D00E2028468DBEDE6279ED00420C3271BB3521790",
+  "parent_bytes": 233629,
+  "parent_sha256": "78AAD3DC86BE89835C333BC95EF5CE1359DD5B4CAAD2645032C1A64F49505B70",
+  "status": "Rejected after trip: severe power loss on pull-away; open loop isolation did not cure dips",
+  "rationale": "Diagnostic isolation test forcing open-loop fueling at warm idle by zeroing 0 and 1,500 RPM cells in [ECM 32731]. Caused severe driveability loss on trip.",
+  "parameters": [
+    {
+      "id": 32731,
+      "name": "Open Loop Fuel TPS Thresh vs. RPM",
+      "kind": "table",
+      "units": "AD counts",
+      "changes": [
+        {
+          "row": 1,
+          "rpm": 0,
+          "before": "200.00",
+          "after": "0.00"
+        },
+        {
+          "row": 2,
+          "rpm": 1500,
+          "before": "200.00",
+          "after": "0.00"
+        }
+      ]
+    }
+  ],
+  "verification": "Saved all 7 TPS values zero; full v013 comparison only Notes and Open Loop Fuel TPS Thresh; all 14 prior binaries unchanged."
+}

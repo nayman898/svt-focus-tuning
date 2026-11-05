@@ -1,0 +1,29 @@
+{
+  "version": "v006",
+  "file": "v006-post-repair-fan-baseline.hpt",
+  "parent": "v005",
+  "parent_file": "v005-idle-absolute-tps-entry-test.hpt",
+  "bytes": 220541,
+  "sha256": "E2640CBE5DEA20C644479699BF64A2F8CE53916FD4B05FBE17D26261C12EE988",
+  "parent_bytes": 218621,
+  "parent_sha256": "D79A559CC0DC9A9DE8756FC7CA5F7AB89584627071A6A6E615E51AAE42FF6ED6",
+  "status": "Owner confirms fan resistor repaired; restored high-speed fan thresholds to factory 225/215 F",
+  "rationale": "Following physical repair of cooling fan series resistor, retired temporary v003 stage match by restoring factory 225.0 F / 215.0 F thresholds.",
+  "parameters": [
+    {
+      "id": 24030,
+      "name": "Fan High Speed Enable ECT",
+      "before": "195.0",
+      "after": "225.0",
+      "units": "F"
+    },
+    {
+      "id": 24031,
+      "name": "Fan High Speed Disable ECT",
+      "before": "190.0",
+      "after": "215.0",
+      "units": "F"
+    }
+  ],
+  "verification": "Final saved/reopened Editor comparison lists only Notes and the two named high-speed thresholds; low-speed fans 195/190 F and high-speed fans 225/215 F."
+}

@@ -1,0 +1,38 @@
+{
+  "version": "v015",
+  "file": "v015-restore-closed-loop.hpt",
+  "parent": "v013",
+  "replaces": "v014",
+  "parent_file": "v013-return-vacuum-comp-zero.hpt",
+  "bytes": 236525,
+  "sha256": "9D3C4FF9CD68D24665957CC6FDB310C51B246E8DD3D0F439A0E33D2EFA936EFD",
+  "parent_bytes": 233629,
+  "parent_sha256": "78AAD3DC86BE89835C333BC95EF5CE1359DD5B4CAAD2645032C1A64F49505B70",
+  "status": "Owner-confirmed write complete 2026-10-30; closed-loop eligibility restored",
+  "rationale": "Reverses failed v014 open loop isolation test. Calibration is exactly equivalent to v013, restoring [ECM 32731] rows 1 & 2 to 200.00 counts.",
+  "parameters": [
+    {
+      "id": 32731,
+      "name": "Open Loop Fuel TPS Thresh vs. RPM",
+      "kind": "table",
+      "units": "AD counts",
+      "changes": [
+        {
+          "row": 1,
+          "rpm": 0,
+          "before_v014": "0.00",
+          "after": "200.00",
+          "v013_baseline": "200.00"
+        },
+        {
+          "row": 2,
+          "rpm": 1500,
+          "before_v014": "0.00",
+          "after": "200.00",
+          "v013_baseline": "200.00"
+        }
+      ]
+    }
+  ],
+  "verification": "Saved comparison vs exact v013 only Notes; full v013 Notes prefix verified; all 15 earlier hashes unchanged."
+}

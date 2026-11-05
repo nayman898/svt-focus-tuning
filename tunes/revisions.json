@@ -10,7 +10,8 @@
       "bytes": 214941,
       "sha256": "47193DEBB186F73F1908717350F0D17E3CECE3412CEC9857118D886F3B451541",
       "status": "Archived earlier ECU-read cache; differences from v001 not cataloged",
-      "changes": []
+      "changes": [],
+      "inventory_delta": "../reports/calibration-inventory/v000/delta.json"
     },
     {
       "version": "v001",
@@ -21,7 +22,8 @@
       "status": "Owner-confirmed fresh-read baseline with MIL changes",
       "changes": [
         "Existing owner calibration; retained without parameter edits"
-      ]
+      ],
+      "inventory_delta": "../reports/calibration-inventory/v001/delta.json"
     },
     {
       "version": "v002",
@@ -33,7 +35,8 @@
       "changes": [
         "Target Idle Speed Park/Neutral: 1200 -> 1100 rpm",
         "Target Idle Speed Drive: 1200 -> 1100 rpm"
-      ]
+      ],
+      "inventory_delta": "../reports/calibration-inventory/v002/delta.json"
     },
     {
       "version": "v003",
@@ -51,7 +54,8 @@
       ],
       "verification": "Reopened file: only two fan-threshold parameters and Notes differ from v002; high and low thresholds read 195/190 F; embedded note verified",
       "retirement": "After resistor circuit repair, restore high-speed 225/215 F while preserving later unrelated changes",
-      "hardware_assumption": "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact"
+      "hardware_assumption": "Owner confirms only resistor pigtail removed and wires joined; stock relays and fuses intact",
+      "inventory_delta": "../reports/calibration-inventory/v003/delta.json"
     },
     {
       "version": "v004",
@@ -69,7 +73,8 @@
       "verification": "Reopened comparison: only Notes and ECM 32731 table differ from v003; all seven rows verified; pressure-compensation toggle removed and Enabled retained",
       "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
       "test_scope": "Stationary warm idle, beyond retained 254-second startup gates; driving/boost not validated",
-      "rollback": "v003-temp-fan-stage-match.hpt"
+      "rollback": "v003-temp-fan-stage-match.hpt",
+      "inventory_delta": "../reports/calibration-inventory/v004/delta.json"
     },
     {
       "version": "v005",
@@ -92,7 +97,8 @@
       "inherited_temporary_pathway": "TEMP_FAN_RESISTOR_BYPASS_STAGE_MATCH",
       "test_scope": "Stationary warm idle, throttle untouched; 1500-2000 RPM interpolation changes and may postpone off-idle enrichment. No driving or boost validation.",
       "rollback": "v004-idle-closed-loop-entry-test.hpt",
-      "notes": "v005-idle-absolute-tps-entry-test.md"
+      "notes": "v005-idle-absolute-tps-entry-test.md",
+      "inventory_delta": "../reports/calibration-inventory/v005/delta.json"
     },
     {
       "version": "v006",
@@ -114,7 +120,8 @@
       "test_scope": "Stationary warm idle after circuit restoration; no throttle/road/boost validation. Do not provoke overheating to force fan thresholds.",
       "rollback": "v005-idle-absolute-tps-entry-test.hpt",
       "rollback_caveat": "Parent intentionally requests high speed at195 F and reinstates temporary stage-match calibration",
-      "notes": "v006-post-repair-fan-baseline.md"
+      "notes": "v006-post-repair-fan-baseline.md",
+      "inventory_delta": "../reports/calibration-inventory/v006/delta.json"
     },
     {
       "version": "v007",
@@ -133,7 +140,8 @@
       "source_report": "../reports/2026-10-27-v006-startup-blower-review.md",
       "test_scope": "Stationary warm idle/no throttle; paired startup/warm/fan/blower recovery comparison. Retained adders mean target change can affect startup demand; not a startup fueling fix. No road/boost acceptance.",
       "rollback": "v006-post-repair-fan-baseline.hpt",
-      "notes": "v007-idle-1000.md"
+      "notes": "v007-idle-1000.md",
+      "inventory_delta": "../reports/calibration-inventory/v007/delta.json"
     },
     {
       "version": "v008",
@@ -153,7 +161,8 @@
       "test_scope": "Stationary warm idle; capture normal fan/blower recovery, not yet validated at1000 in the short parent clip. No road/boost acceptance; existing feedback and startup controls retained.",
       "rollback": "v007-idle-1000.hpt",
       "earlier_load_tested_fallback": "v006-post-repair-fan-baseline.hpt",
-      "notes": "v008-idle-950.md"
+      "notes": "v008-idle-950.md",
+      "inventory_delta": "../reports/calibration-inventory/v008/delta.json"
     },
     {
       "version": "v009",
@@ -173,7 +182,8 @@
       "test_scope": "Stationary startup and fully warm idle, normal fan on/off plus60s recovery, separately marked blower30s on/off and hot restart. Inherited TPS experiment remains; no road/boost acceptance.",
       "rollback": "v008-idle-950.hpt",
       "earlier_load_tested_fallback": "v006-post-repair-fan-baseline.hpt",
-      "notes": "v009-idle-900.md"
+      "notes": "v009-idle-900.md",
+      "inventory_delta": "../reports/calibration-inventory/v009/delta.json"
     },
     {
       "version": "v010",
@@ -193,7 +203,8 @@
       "test_scope": "Stationary hot restart and matched warm idle/fan recovery; stop if near-stalling or recovery worsens. No road/boost acceptance.",
       "rollback": "v009-idle-900.hpt (reverses this experiment, retains known near-stall behavior)",
       "earlier_stationary_fallback": "v008-idle-950.hpt",
-      "notes": "v010-idle-spark-gain-1p5.md"
+      "notes": "v010-idle-spark-gain-1p5.md",
+      "inventory_delta": "../reports/calibration-inventory/v010/delta.json"
     },
     {
       "version": "v011",
@@ -212,7 +223,8 @@
       "source_report": "../reports/2026-10-27-v010-drive-review.md",
       "rollback": "v010-idle-spark-gain-1p5.hpt",
       "test_scope": "Stationary hot restart and warm idle/fan recovery first; stop/revert if dips deepen, near-stall, slower recovery or sustained hunting.",
-      "notes": "v011-idle-spark-gain-1p25.md"
+      "notes": "v011-idle-spark-gain-1p25.md",
+      "inventory_delta": "../reports/calibration-inventory/v011/delta.json"
     },
     {
       "version": "v012",
@@ -231,7 +243,8 @@
       "rollback": "v010-idle-spark-gain-1p5.hpt",
       "untested_alternative": "v011-idle-spark-gain-1p25.hpt",
       "test_scope": "Stationary hot restart and warm idle/fan recovery first. Stop/revert for near-stall, deeper dips, slower recovery or increased hunting. Not driving or boost acceptance.",
-      "notes": "v012-idle-spark-gain-1p0.md"
+      "notes": "v012-idle-spark-gain-1p0.md",
+      "inventory_delta": "../reports/calibration-inventory/v012/delta.json"
     },
     {
       "version": "v013",
@@ -251,7 +264,8 @@
       "rollback": "v012-idle-spark-gain-1p0.hpt; retains known unresolved stalling",
       "notes": "v013-return-vacuum-comp-zero.md",
       "source_report": "../reports/2026-10-29-v012-calibration-audit.md",
-      "test_report": "../reports/2026-10-29-v013-first-review.md"
+      "test_report": "../reports/2026-10-29-v013-first-review.md",
+      "inventory_delta": "../reports/calibration-inventory/v013/delta.json"
     },
     {
       "version": "v014",
@@ -271,7 +285,8 @@
       "rollback": "v013-return-vacuum-comp-zero.hpt; parent remains unaccepted with unresolved stalling",
       "notes": "v014-warm-idle-open-loop-isolation.md",
       "source_report": "../reports/2026-10-29-v013-deep-review.md",
-      "test": "../docs/v014-open-loop-isolation-test.md"
+      "test": "../docs/v014-open-loop-isolation-test.md",
+      "inventory_delta": "../reports/calibration-inventory/v014/delta.json"
     },
     {
       "version": "v015",
@@ -289,7 +304,8 @@
       "rationale": "Reverse failed v014 isolation; Astra review supports restoration without extra numerical changes",
       "notes": "v015-restore-closed-loop.md",
       "source_report": "../reports/2026-10-29-v014-drive-review.md",
-      "rollback": "v013-return-vacuum-comp-zero.hpt is calibration-equivalent; v014 return not recommended"
+      "rollback": "v013-return-vacuum-comp-zero.hpt is calibration-equivalent; v014 return not recommended",
+      "inventory_delta": "../reports/calibration-inventory/v015/delta.json"
     },
     {
       "version": "v016",
@@ -307,7 +323,8 @@
       "rationale": "Owner-approved950RPM margin trial after repeated900RPM dips, including684.5RPM load pickup; not a diagnosed fault repair",
       "notes": "v016-idle-margin-950.md",
       "source_report": "../reports/2026-10-30-v015-load-step-review.md",
-      "rollback": "v015-restore-closed-loop.hpt"
+      "rollback": "v015-restore-closed-loop.hpt",
+      "inventory_delta": "../reports/calibration-inventory/v016/delta.json"
     },
     {
       "version": "v017",
