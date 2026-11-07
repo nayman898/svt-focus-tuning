@@ -70,3 +70,7 @@ filmed evidence of the earlier spontaneous stall.
 ## 2026-11-05 — v035
 
 [Pull review](2026-11-05-v035-pull-review.md): preserved paired-20261105-104453-2eb3afbb-v035; pull 1 6%, pull 2 invalid, pull 3 8%. Peak boost 13.85/15.32 psi for valid pulls; modest leaner shift versus selected v034 pull. No validated knock-retard channel; insufficient evidence for further power changes.
+
+## 2026-11-06 — v037 (IAT & High-Power Logging)
+
+[IAT & Power Review](2026-11-06-v037-iat-thermal-and-power-review.md): preserved `paired-20261106-190723-2cf56851-v037-iat`. 6 WOT pulls across 22.5 min drive; live Intake Air Temp & Cam Angle tracked. Peak boost 18.04–18.67 psi; peak airflow set all-time record at 37.85 lb/min (~410 bhp). IAT rose +12°F to +14°F under 18 psi boost (peaking at 72°–76°F) and recovered in < 55s. ECT held flat at 188°–192°F; 0.0° knock retard; 10.9–11.1 AFR. Production baseline validated.
