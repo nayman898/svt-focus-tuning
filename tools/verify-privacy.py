@@ -16,7 +16,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 VIN_PATTERN = re.compile(r'\b1FAFP3[0-9A-Za-z]{11}\b', re.IGNORECASE)
 SERIAL_PATTERN = re.compile(r'\b\d{10}\b')
 
-SKIP_EXTS = {'.hpt', '.hpl', '.sqlite', '.sqlite-shm', '.sqlite-wal', '.png', '.jpg', '.ico', '.pdf', '.exe', '.dll'}
+SKIP_EXTS = {'.hpt', '.hpl', '.sqlite', '.sqlite-shm', '.sqlite-wal', '.png', '.jpg', '.ico', '.pdf', '.exe', '.dll', '.msi'}
 
 def get_target_files(scan_all=False):
     files_to_scan = []
