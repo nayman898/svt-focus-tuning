@@ -26,6 +26,8 @@ there is no new ECU readback implied by this repository update.
 
 ## Working references
 
+- **Online calibration viewer:** [Focus SVT calibration reference](https://nayman898.github.io/svt-focus-tuning/)
+  (deployed via GitHub Pages from `reports/calibration-inventory/index.html`).
 - [Tune revision history](tunes/README.md) and [calibration reference](docs/calibration-reference.md).
 - [Datalog workflow](docs/datalog-workflow.md), [operating profiles](profiles/operating-profiles.md),
   and [channel coverage](profiles/channel-coverage.md).

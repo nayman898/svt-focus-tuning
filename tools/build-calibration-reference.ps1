@@ -19,7 +19,7 @@ foreach ($record in $records) {
         evidence = 'Captured in v017 at Editor display precision'
     }
 }
-function Clone($obj) { $obj | ConvertTo-Json -Depth 30 | ConvertFrom-Json }
+function Clone($obj) { $obj | ConvertTo-Json -Depth 30 -Compress | ConvertFrom-Json }
 $snapshots = @{}
 $snapshots.v017 = Clone $snap
 $snapshots.v016 = Clone $snap
@@ -550,7 +550,7 @@ if ($catalog.revisions.version -contains 'v037') {
     }
 }
 $data = [ordered]@{generated_utc=[DateTime]::UtcNow.ToString('o'); revisions=$catalog.revisions; snapshots=$snapshots; pending='None (v037 established as active production tune baseline).'; installed='v037 (v037-spool-vct.hpt) marked as production tune; tested 2026-11-05 on road across 8%, 10%, and 12% WGDC (17.31 psi peak, 16.2 psi sustained, record 35.63 lb/min airflow, 11.07 AFR, 0.0 knock retard, 190-192 F ECT).'}
-$json=$data | ConvertTo-Json -Depth 40
+$json=$data | ConvertTo-Json -Depth 40 -Compress
 $json | Set-Content (Join-Path $folder 'revision-reference.json') -Encoding UTF8
 $template=Get-Content (Join-Path $PSScriptRoot 'calibration-reference.template.html') -Raw -Encoding UTF8
 $tmpHtml = Join-Path $folder 'index.html.tmp'
