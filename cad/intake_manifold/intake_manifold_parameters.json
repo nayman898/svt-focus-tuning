@@ -36,9 +36,10 @@
       "profile_segments": 64
     },
     "bellmouth": {
+      "wall_flush_bellmouth": true,
       "protrusion_into_plenum_mm": 14.0,
-      "flare_radial_mm": 6.0,
-      "wall_thickness_mm": 4.5,
+      "flare_radial_mm": 6.5,
+      "wall_thickness_mm": 6.0,
       "lip_outer_radius_mm": 2.25
     },
     "tie_webs": {
@@ -54,7 +55,7 @@
     "inner_height_z_mm": 84.0,
     "inner_corner_radius_mm": 38.0,
     "wall_thickness_mm": 6.0,
-    "taper_cyl1_area_ratio": 0.78,
+    "taper_cyl1_area_ratio": 0.64,
     "cyl1_end_x_mm": -166.0,
     "cyl1_dome_length_mm": 30.0,
     "cyl4_end_x_mm": 170.0,
@@ -68,7 +69,7 @@
     },
     "vacuum_boss_pad": {
       "enabled": true,
-      "x_center_mm": 54.0,
+      "x_center_mm": 52.0,
       "y_center_mm": 8.0,
       "length_x_mm": 70.0,
       "width_y_mm": 28.0,
@@ -76,17 +77,34 @@
       "port_count": 3,
       "port_spacing_x_mm": 21.0,
       "port_pilot_diameter_mm": 8.5,
+      "port_pilot_diameters_mm": [8.5, 8.5, 8.5],
       "port_names": [
-        "1:1 Fuel Pressure Regulator / FRPS",
-        "Blow-Off Valve (BOV) / Wastegate Ref",
-        "SCG-1 MAP / Boost Gauge"
+        "Dedicated Blow-Off Valve (BOV) Direct (1/8-27 NPT)",
+        "1:1 Aeromotive FPR / OEM FRPS (1/8-27 NPT)",
+        "SCG-1 MAP / Boost Gauge (1/8-27 NPT)"
+      ]
+    },
+    "vacuum_only_boss_pad": {
+      "enabled": true,
+      "x_center_mm": -52.0,
+      "y_center_mm": 8.0,
+      "length_x_mm": 52.0,
+      "width_y_mm": 28.0,
+      "pad_height_z_mm": 12.0,
+      "port_count": 2,
+      "port_spacing_x_mm": 22.0,
+      "port_pilot_diameter_mm": 8.5,
+      "port_pilot_diameters_mm": [11.1, 8.5],
+      "port_names": [
+        "Brake Booster + Check Valve (1/4-18 NPT)",
+        "EVAP Canister Purge + Check Valve (1/8-27 NPT)"
       ]
     }
   },
   "throttle_body": {
     "bore_diameter_mm": 65.0,
     "neck_length_mm": 42.0,
-    "forward_cant_deg": 10.0,
+    "forward_cant_deg": 8.0,
     "neck_wall_thickness_mm": 6.0,
     "flange_width_mm": 96.0,
     "flange_height_mm": 96.0,
@@ -100,6 +118,24 @@
       "inner_diameter_mm": 73.0,
       "width_mm": 3.2,
       "depth_mm": 2.2
+    },
+    "iacv_mount": {
+      "enabled": true,
+      "x_center_mm": 174.0,
+      "y_center_mm": 2.0,
+      "pad_length_x_mm": 48.0,
+      "pad_width_y_mm": 68.0,
+      "pad_corner_radius_mm": 8.0,
+      "top_z_mm": 61.0,
+      "base_z_mm": 28.0,
+      "bolt_spacing_y_mm": 46.0,
+      "bolt_pilot_diameter_mm": 5.2,
+      "bolt_depth_mm": 14.0,
+      "port_spacing_x_mm": 22.0,
+      "port_diameter_mm": 13.0,
+      "supply_pocket_bottom_z_mm": 44.0,
+      "side_supply_tap_diameter_mm": 11.1,
+      "side_supply_tap_z_mm": 50.5
     }
   },
   "center_split": {
@@ -123,7 +159,8 @@
   },
   "gauges": {
     "boot_fit_gauge_length_mm": 44.0,
-    "tb_fit_gauge_thickness_mm": 4.0
+    "tb_fit_gauge_thickness_mm": 4.0,
+    "iacv_fit_gauge_thickness_mm": 4.0
   },
   "printers": {
     "centauri_carbon_2": {

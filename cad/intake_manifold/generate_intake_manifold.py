@@ -324,14 +324,19 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
     sweep_end_y = tip_y + land_len
     sp_z = sp["center_z_mm"]
 
-    # Curve points in (X, Y, Z) starting inside plenum wall (overlapping cleanly) -> sweep_end
-    # Plenum rear inner wall is around Y = -42.4 (Cyl 1) to -48.0 (Cyl 4).
-    # Place bellmouth entry tip at Y = -24.0, Z = -10.0 so top & bottom lips clear plenum walls generously
-    p_bm_tip = np.array([x_center, -24.0, -10.0])
-    # Direction into sweep: tilted ~18 deg downward from plenum toward rear
+    wall_flush = bool(bm.get("wall_flush_bellmouth", False))
     inlet_dir = np.array([0.0, -math.cos(math.radians(18.0)), -math.sin(math.radians(18.0))])
-    # Wall anchor inside plenum wall where sweep begins (overlapping plenum outer shell)
-    p0 = p_bm_tip + inlet_dir * 16.0  # Starts at Y = -39.2, Z = -14.9 inside plenum wall
+    if wall_flush:
+        # Contour the velocity-stack trumpet flush into the tapered plenum inner rear wall
+        # so zero protruding sleeve obstructs axial cross-flow feeding Cylinders 1-3.
+        s_x = math.sqrt(plenum_area_scale(x_center, params))
+        y_plenum_rear_in = -0.5 * params["plenum"]["inner_width_y_mm"] * s_x
+        p_bm_tip = np.array([x_center, y_plenum_rear_in + 8.5, -5.0])
+        p0 = p_bm_tip + inlet_dir * 18.0
+    else:
+        # Legacy protruding sleeve (kept toggleable for baseline CFD comparison)
+        p_bm_tip = np.array([x_center, -24.0, -10.0])
+        p0 = p_bm_tip + inlet_dir * 16.0  # Starts at Y = -39.2, Z = -14.9 inside plenum wall
     p3 = np.array([x_center, sweep_end_y, sp_z])
     p1 = p0 + inlet_dir * 26.0
     p2 = p3 + np.array([0.0, 32.0, 0.0])  # enters spigot tangentially along -Y
@@ -382,34 +387,28 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
     outer_solid = trimesh_to_manifold(loft_closed_solid(outer_rings))
 
     # 2) Internal velocity-stack bellmouth outer solid
-    # Starts 10 mm past p0 into the runner wall (so solid union is deep) and extends to p_bm_tip
-    # Wait: let's sweep from p_bm_tip (inside plenum) -> p0 + 10*inlet_dir (inside plenum wall/runner)
     bm_len = bm["protrusion_into_plenum_mm"]
     bm_flare = bm["flare_radial_mm"]
     bm_wall = bm["wall_thickness_mm"]
     bm_rings: list[np.ndarray] = []
 
     p_bm_anchor = p0 + inlet_dir * 10.0  # inside runner stub
-    # Flare curve from tip (p_bm_tip) back into wall (p_bm_anchor)
-    # Use rounded lip profile at tip so the bellmouth edge is thick & printable
     bm_total_len = float(np.linalg.norm(p_bm_anchor - p_bm_tip))
-    # Parametric stations from 0 (tip) to bm_total_len (anchor)
-    # Flare mostly in the front 14 mm (`bm_len`)
-    n_bm = 18
+    n_bm = 20
+    s_start_bm = -2.2 if wall_flush else 0.0
     for k in range(n_bm + 1):
-        s_dist = (k / n_bm) * bm_total_len
-        pos = p_bm_tip + inlet_dir * s_dist
-        # Bellmouth flare decay: 1 at s_dist=0, 0 by s_dist >= bm_len
-        u = np.clip(s_dist / bm_len, 0.0, 1.0)
-        flare_factor = (1.0 - u) ** 2
-        # Add smooth lip roll right at s_dist in [0, 2.5 mm]
-        inner_flare = bm_flare * flare_factor
-        # Outer profile tracks inner bore + wall + flare, tapering cleanly at tip
+        s_dist = s_start_bm + (k / n_bm) * (bm_total_len - s_start_bm)
+        pos = p_bm_tip + inlet_dir * float(s_dist)
+        if s_dist < 0.0:
+            inner_flare = bm_flare + (-s_dist) * 0.40
+        else:
+            u = np.clip(s_dist / bm_len, 0.0, 1.0)
+            inner_flare = bm_flare * ((1.0 - u) ** 2)
         w_out = entry_w_in + 2.0 * inner_flare + 2.0 * bm_wall
         h_out = entry_h_in + 2.0 * inner_flare + 2.0 * bm_wall
         r_out = entry_r_in + inner_flare + bm_wall
-        if k == 0:
-            # Slightly rounded front rim bevel (1.5 mm inward inset on face)
+        if (not wall_flush) and k == 0:
+            # Slightly rounded front rim bevel (1.5 mm inward inset on protruding sleeve face)
             w_out -= 2.2
             h_out -= 2.2
             r_out -= 1.1
@@ -418,16 +417,17 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
 
     bellmouth_outer = trimesh_to_manifold(loft_closed_solid(bm_rings))
 
-    # 3) Continuous inner air bore (starts 3 mm in front of p_bm_tip -> passes smoothly through bellmouth -> sweeps to 6 mm past tip_y)
+    # 3) Continuous inner air bore (starts ahead of p_bm_tip -> passes smoothly through bellmouth -> sweeps to 6 mm past tip_y)
     # Avoid placing a ring coplanar with p_bm_tip (s=0) or p0 so booleans have zero coplanar sliver triangles
     bore_rings: list[np.ndarray] = []
     throat_len = float(np.linalg.norm(p0 - p_bm_tip))
-    s_samples = np.linspace(-3.5, throat_len - 0.8, 15)
+    s_lead = -3.0 if wall_flush else -3.5
+    s_samples = np.linspace(s_lead, throat_len - 0.8, 17)
     for s_dist in s_samples:
         pos = p_bm_tip + inlet_dir * float(s_dist)
         if s_dist < 0.0:
             # Smooth trumpet lead-in ahead of bellmouth rim
-            flare_r = bm_flare + (-s_dist) * 0.85
+            flare_r = bm_flare + (-s_dist) * (0.45 if wall_flush else 0.85)
         else:
             u = np.clip(s_dist / bm_len, 0.0, 1.0)
             flare_r = bm_flare * ((1.0 - u) ** 2)
@@ -671,6 +671,130 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
     }
 
 
+def build_boss_pad_components(pad_cfg: dict, params: dict) -> tuple[md.Manifold, list[md.Manifold]]:
+    """Build a top plenum NPT vacuum/boost boss pad and its through pilot bores."""
+    s_bp = math.sqrt(plenum_area_scale(pad_cfg["x_center_mm"], params))
+    z_roof_in = params["plenum"]["inner_height_z_mm"] * 0.5 * s_bp
+    z_top = z_roof_in + params["plenum"]["wall_thickness_mm"] + pad_cfg["pad_height_z_mm"] - 2.0
+    z_bot = z_roof_in - 4.0  # overlaps into plenum wall; plenum_cavity trims cleanly underneath
+    pad = make_rounded_prism(
+        pad_cfg["length_x_mm"], pad_cfg["width_y_mm"], 6.0, z_top - z_bot,
+        segments=48, center=(pad_cfg["x_center_mm"], pad_cfg["y_center_mm"], 0.5 * (z_top + z_bot)), axis="z"
+    )
+    diameters = pad_cfg.get("port_pilot_diameters_mm") or [pad_cfg["port_pilot_diameter_mm"]] * pad_cfg["port_count"]
+    assert len(diameters) == pad_cfg["port_count"]
+    start_x = pad_cfg["x_center_mm"] - pad_cfg["port_spacing_x_mm"] * (pad_cfg["port_count"] - 1) * 0.5
+    bores: list[md.Manifold] = []
+    for idx in range(pad_cfg["port_count"]):
+        px = start_x + idx * pad_cfg["port_spacing_x_mm"]
+        p_rad = float(diameters[idx]) * 0.5
+        bores.append(
+            make_cylinder_along(
+                np.array([px, pad_cfg["y_center_mm"], z_roof_in - 12.0]),
+                np.array([px, pad_cfg["y_center_mm"], z_top + 4.0]),
+                p_rad,
+                segments=32,
+            )
+        )
+    return pad, bores
+
+
+def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
+    """
+    Build the 2-bolt Ford IACV mounting pad on top of the TB neck / Cyl 4 plenum junction:
+      - Downstream port (-X side): punches cleanly into the plenum chamber.
+      - Upstream metered supply port (+X side): blind pocket >= 4.5 mm above the TB bore,
+        intersected by a horizontal rear-facing 1/4"-18 NPT (Ø11.1 mm) side tap.
+      - 2x M6 blind bolt pilot holes (Ø5.2 mm) along Y.
+    """
+    iac = params["throttle_body"]["iacv_mount"]
+    pl = params["plenum"]
+    tb = params["throttle_body"]
+
+    xc = iac["x_center_mm"]
+    yc = iac["y_center_mm"]
+    top_z = iac["top_z_mm"]
+    base_z = iac["base_z_mm"]
+    port_half = iac["port_spacing_x_mm"] * 0.5
+    x_plenum_port = xc - port_half
+    x_supply_port = xc + port_half
+
+    # Verify solid floor between isolated IAC supply pocket and TB inner bore (>= 4.5 mm)
+    cant_rad = math.radians(tb["forward_cant_deg"])
+    x_neck_start = pl["cyl4_end_x_mm"] - 4.0
+    x_neck_end = pl["cyl4_end_x_mm"] + (tb["neck_length_mm"] + 4.0) * math.cos(cant_rad)
+    t_supply = np.clip((x_supply_port - x_neck_start) / (x_neck_end - x_neck_start), 0.0, 1.0)
+    s_t = 0.5 - 0.5 * math.cos(math.pi * float(t_supply))
+    h_in_at_supply = pl["inner_height_z_mm"] + (tb["bore_diameter_mm"] - pl["inner_height_z_mm"]) * s_t
+    tb_inner_roof_z = 0.5 * h_in_at_supply
+    floor_thickness = iac["supply_pocket_bottom_z_mm"] - tb_inner_roof_z
+    assert floor_thickness >= 4.5, (
+        f"IACV supply floor {floor_thickness:.2f} mm < 4.5 mm at X={x_supply_port}"
+    )
+
+    pad_outer = make_rounded_prism(
+        iac["pad_length_x_mm"],
+        iac["pad_width_y_mm"],
+        iac["pad_corner_radius_mm"],
+        top_z - base_z,
+        segments=48,
+        center=(xc, yc, 0.5 * (top_z + base_z)),
+        axis="z",
+    )
+
+    cutters: list[md.Manifold] = []
+    # 2x M6 blind bolt pilot holes
+    b_rad = iac["bolt_pilot_diameter_mm"] * 0.5
+    b_half = iac["bolt_spacing_y_mm"] * 0.5
+    b_bot = top_z - iac["bolt_depth_mm"]
+    for sy in (-1.0, 1.0):
+        cutters.append(
+            make_cylinder_along(
+                np.array([xc, yc + sy * b_half, b_bot]),
+                np.array([xc, yc + sy * b_half, top_z + 4.0]),
+                b_rad,
+                segments=32,
+            )
+        )
+
+    p_rad = iac["port_diameter_mm"] * 0.5
+    # Downstream IAC discharge port -> punches straight into plenum
+    cutters.append(
+        make_cylinder_along(
+            np.array([x_plenum_port, yc, 20.0]),
+            np.array([x_plenum_port, yc, top_z + 4.0]),
+            p_rad,
+            segments=36,
+        )
+    )
+    # Upstream metered IAC supply pocket -> stops cleanly above TB neck bore
+    cutters.append(
+        make_cylinder_along(
+            np.array([x_supply_port, yc, iac["supply_pocket_bottom_z_mm"]]),
+            np.array([x_supply_port, yc, top_z + 4.0]),
+            p_rad,
+            segments=36,
+        )
+    )
+    # Horizontal rear-facing 1/4"-18 NPT (Ø11.1 mm) side supply tap into supply pocket
+    tap_rad = iac["side_supply_tap_diameter_mm"] * 0.5
+    y_rear_face = yc - iac["pad_width_y_mm"] * 0.5
+    cutters.append(
+        make_cylinder_along(
+            np.array([x_supply_port, y_rear_face - 4.0, iac["side_supply_tap_z_mm"]]),
+            np.array([x_supply_port, yc + 3.0, iac["side_supply_tap_z_mm"]]),
+            tap_rad,
+            segments=36,
+        )
+    )
+
+    return {
+        "outer": pad_outer,
+        "cutters": m_union(cutters),
+        "floor_thickness_mm": floor_thickness,
+    }
+
+
 def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
     """Build quick-print runner boot spigot gauge and TB flange pattern gauge."""
     sp = params["runners"]["spigot"]
@@ -734,9 +858,33 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
             )
     tb_gauge = m_diff(tb_plate, tb_cutters)
 
+    # 2-bolt Ford IACV flange fit gauge (46 mm bolt centers, dual Ø13 mm ports at 22 mm centers)
+    iac = params["throttle_body"]["iacv_mount"]
+    t_iac = g["iacv_fit_gauge_thickness_mm"]
+    iac_plate = make_rounded_prism(
+        iac["pad_length_x_mm"], iac["pad_width_y_mm"], iac["pad_corner_radius_mm"], t_iac,
+        segments=48, center=(0.0, 0.0, t_iac * 0.5), axis="z"
+    )
+    iac_cutters: list[md.Manifold] = []
+    for sx in (-1.0, 1.0):
+        iac_cutters.append(
+            md.Manifold.cylinder(
+                t_iac + 4.0, iac["port_diameter_mm"] * 0.5, iac["port_diameter_mm"] * 0.5,
+                circular_segments=36, center=True
+            ).translate([sx * iac["port_spacing_x_mm"] * 0.5, 0.0, t_iac * 0.5])
+        )
+    for sy in (-1.0, 1.0):
+        iac_cutters.append(
+            md.Manifold.cylinder(
+                t_iac + 4.0, 3.2, 3.2, circular_segments=32, center=True
+            ).translate([0.0, sy * iac["bolt_spacing_y_mm"] * 0.5, t_iac * 0.5])
+        )
+    iacv_gauge = m_diff(iac_plate, iac_cutters)
+
     return {
         "boot_fit_gauge": boot_gauge,
         "tb_flange_fit_gauge": tb_gauge,
+        "iacv_flange_fit_gauge": iacv_gauge,
     }
 
 
@@ -782,35 +930,19 @@ def assemble_all(params: dict):
             r_rib = pl["inner_corner_radius_mm"] * s + wall + hr["radial_height_mm"]
             ribs.append(make_rounded_prism(w_rib, h_rib, r_rib, hr["width_mm"], segments=64, center=(xr, 0.0, 0.0), axis="x"))
 
-    # Vacuum/Boost NPT boss pad on top of plenum
-    bp = params["plenum"]["vacuum_boss_pad"]
+    # Vacuum & Boost NPT boss pads on top of plenum (Right = direct boost/vac, Left = check-valved vacuum-only)
     boss_solids: list[md.Manifold] = []
     boss_bores: list[md.Manifold] = []
-    if bp["enabled"]:
-        s_bp = math.sqrt(plenum_area_scale(bp["x_center_mm"], params))
-        z_roof_in = params["plenum"]["inner_height_z_mm"] * 0.5 * s_bp
-        z_top = z_roof_in + params["plenum"]["wall_thickness_mm"] + bp["pad_height_z_mm"] - 2.0
-        z_bot = z_roof_in - 4.0  # overlaps into plenum wall; plenum_cavity trims cleanly underneath
-        pad = make_rounded_prism(
-            bp["length_x_mm"], bp["width_y_mm"], 6.0, z_top - z_bot,
-            segments=48, center=(bp["x_center_mm"], bp["y_center_mm"], 0.5 * (z_top + z_bot)), axis="z"
-        )
-        boss_solids.append(pad)
-        p_rad = bp["port_pilot_diameter_mm"] * 0.5
-        start_x = bp["x_center_mm"] - bp["port_spacing_x_mm"] * (bp["port_count"] - 1) * 0.5
-        for idx in range(bp["port_count"]):
-            px = start_x + idx * bp["port_spacing_x_mm"]
-            boss_bores.append(
-                make_cylinder_along(
-                    np.array([px, bp["y_center_mm"], z_roof_in - 12.0]),
-                    np.array([px, bp["y_center_mm"], z_top + 4.0]),
-                    p_rad,
-                    segments=32,
-                )
-            )
+    for key in ("vacuum_boss_pad", "vacuum_only_boss_pad"):
+        pad_cfg = params["plenum"].get(key)
+        if pad_cfg and pad_cfg.get("enabled"):
+            pad_solid, pad_bores = build_boss_pad_components(pad_cfg, params)
+            boss_solids.append(pad_solid)
+            boss_bores.extend(pad_bores)
 
-    # Throttle body neck + flange
+    # Throttle body neck + flange + 2-bolt Ford IACV mounting pad
     tb_parts = build_throttle_body_components(params)
+    iacv_parts = build_iacv_components(params) if params["throttle_body"]["iacv_mount"]["enabled"] else None
 
     # --- 3-Stage Watertight Boolean Assembly ---
     # 1. Outer monolithic body (with center rib at X=0 for 1-piece stiffness)
@@ -820,20 +952,38 @@ def assemble_all(params: dict):
     pl_r0 = params["plenum"]["inner_corner_radius_mm"] * s_0 + params["plenum"]["wall_thickness_mm"] + hr["radial_height_mm"]
     center_rib = make_rounded_prism(pl_w0, pl_h0, pl_r0, hr["width_mm"], segments=64, center=(0.0, 0.0, 0.0), axis="x")
 
-    outer_1pc = m_union([pl_outer, *runner_outers, *webs, *ribs, center_rib, *boss_solids, tb_parts["outer"]])
+    wall_flush = bool(params["runners"]["bellmouth"].get("wall_flush_bellmouth", False))
+    outer_parts_1pc = [pl_outer, *runner_outers, *webs, *ribs, center_rib, *boss_solids, tb_parts["outer"]]
+    if wall_flush:
+        outer_parts_1pc.extend(bellmouth_outers)
+    if iacv_parts is not None:
+        outer_parts_1pc.append(iacv_parts["outer"])
+    outer_1pc = m_union(outer_parts_1pc)
     # 2. Hollow plenum & TB bore
     hollow_1pc = outer_1pc - m_union([pl_inner, tb_parts["cutters"]])
-    # 3. Union internal velocity-stack bellmouths inside plenum
-    with_bm_1pc = m_union([hollow_1pc, *bellmouth_outers])
-    # 4. Subtract runner bores (with bellmouth flare) and vacuum pilot bores
-    final_1pc = m_diff(with_bm_1pc, [*runner_bores, *boss_bores])
+    # 3. Union internal velocity-stack bellmouths (when protruding inside plenum)
+    with_bm_1pc = hollow_1pc if wall_flush else m_union([hollow_1pc, *bellmouth_outers])
+    # 4. Subtract runner bores (with bellmouth flare), vacuum pilot bores, and IACV passages
+    sub_parts_1pc = [*runner_bores, *boss_bores]
+    if iacv_parts is not None:
+        sub_parts_1pc.append(iacv_parts["cutters"])
+    final_1pc = m_diff(with_bm_1pc, sub_parts_1pc)
 
     # --- 2-Piece Split Version (add center split flange at X=0, omit simple center rib) ---
     split_parts = build_center_split_flange_and_cutters(params)
-    outer_split_base = m_union([pl_outer, *runner_outers, *webs, *ribs, *boss_solids, tb_parts["outer"]])
+    outer_parts_split = [pl_outer, *runner_outers, *webs, *ribs, *boss_solids, tb_parts["outer"]]
+    if wall_flush:
+        outer_parts_split.extend(bellmouth_outers)
+    if iacv_parts is not None:
+        outer_parts_split.append(iacv_parts["outer"])
+    outer_split_base = m_union(outer_parts_split)
     hollow_split = outer_split_base - m_union([pl_inner, tb_parts["cutters"]])
-    with_bm_split = m_union([hollow_split, *bellmouth_outers, split_parts["flange_ring"]])
-    full_for_split = m_diff(with_bm_split, [*runner_bores, *boss_bores, split_parts["hole_cutters"]])
+    split_add_parts = [split_parts["flange_ring"]] if wall_flush else [*bellmouth_outers, split_parts["flange_ring"]]
+    with_bm_split = m_union([hollow_split, *split_add_parts])
+    sub_parts_split = [*runner_bores, *boss_bores, split_parts["hole_cutters"]]
+    if iacv_parts is not None:
+        sub_parts_split.append(iacv_parts["cutters"])
+    full_for_split = m_diff(with_bm_split, sub_parts_split)
 
     x_split = params["center_split"]["split_x_mm"]
     big = 1000.0
@@ -871,7 +1021,9 @@ def assemble_all(params: dict):
         "svt_intake_manifold_split_right_print_oriented": split_right_print,
         "svt_runner_boot_fit_gauge": gauges["boot_fit_gauge"],
         "svt_tb_flange_fit_gauge": gauges["tb_flange_fit_gauge"],
+        "svt_iacv_flange_fit_gauge": gauges["iacv_flange_fit_gauge"],
         "_plenum_inner_cavity": pl_inner,
+        "_iacv_floor_thickness_mm": iacv_parts["floor_thickness_mm"] if iacv_parts else None,
     }
 
 
@@ -1013,19 +1165,22 @@ def render_1to1_svg(solids: dict[str, md.Manifold], params: dict, out_path: Path
     split_sec = solids["svt_intake_manifold_split_left_cyl1_2"].rotate([0.0, -90.0, 0.0]).slice(-1.0).to_polygons()
     # 3) TB flange face (from tb_flange_fit_gauge at Z=2 mm)
     tb_sec = solids["svt_tb_flange_fit_gauge"].slice(2.0).to_polygons()
+    # 4) 2-bolt Ford IACV flange face (from iacv_flange_fit_gauge at Z=2 mm)
+    iacv_sec = solids["svt_iacv_flange_fit_gauge"].slice(2.0).to_polygons()
 
-    # Arrange horizontally across a 420 x 180 mm SVG canvas
-    width_mm, height_mm = 420.0, 175.0
+    # Arrange horizontally across a 530 x 175 mm SVG canvas
+    width_mm, height_mm = 530.0, 175.0
     centers = [
         ("Silicone Boot Spigot\n(48x36 outer / 38x26 inner)", spigot_sec, (55.0, 88.0), lambda p: (p[0], -p[1])),
         ("Center Split Flange\n(6x M6 + 2x 6mm Dowel + O-Ring)", split_sec, (195.0, 88.0), lambda p: (p[1], p[0])),
         ("65mm Throttle Body Flange\n(70x70 mm 4-Bolt Pattern)", tb_sec, (345.0, 88.0), lambda p: (p[0], -p[1])),
+        ("2-Bolt Ford IACV Flange\n(46mm Bolts / Dual 13mm Ports)", iacv_sec, (465.0, 88.0), lambda p: (p[0], -p[1])),
     ]
 
     lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width_mm}mm" height="{height_mm}mm" viewBox="0 0 {width_mm} {height_mm}">',
         '<rect width="100%" height="100%" fill="#ffffff"/>',
-        '<text x="210" y="12" text-anchor="middle" font-family="sans-serif" font-size="6" font-weight="bold" fill="#111">2004 Focus SVT Intake Manifold — 1:1 Interface Templates (mm)</text>',
+        f'<text x="{width_mm * 0.5:.1f}" y="12" text-anchor="middle" font-family="sans-serif" font-size="6" font-weight="bold" fill="#111">2004 Focus SVT Intake Manifold — 1:1 Interface Templates (mm)</text>',
     ]
     for label, polys, (cx, cy), map_fn in centers:
         for poly in polys:
@@ -1105,6 +1260,9 @@ def main():
             params["runners"]["spigot"]["outer_height_mm"] - 2.0 * params["runners"]["spigot"]["wall_thickness_mm"],
         ],
         "throttle_body_bore_mm": params["throttle_body"]["bore_diameter_mm"],
+        "iacv_supply_floor_thickness_mm": round(float(solids["_iacv_floor_thickness_mm"]), 2)
+        if solids.get("_iacv_floor_thickness_mm") is not None
+        else None,
         "parts": manifest_parts,
     }
     (STL_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

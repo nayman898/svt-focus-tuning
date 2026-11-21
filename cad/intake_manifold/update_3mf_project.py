@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Update the ElegooSlicer .3mf project in cad/intake_manifold to use the
-PLA Pro demo process and filament presets (and build-plate-only tree supports
-for the manifold halves while keeping fitment gauges support-free).
+Update the ElegooSlicer .3mf project in cad/intake_manifold to:
+  1. Refresh embedded STL meshes (split halves + fit gauges, including IACV gauge).
+  2. Configure PLA Pro demo process and filament presets across all 4 AMS slots.
+  3. Apply build-plate-only tree supports to the split manifold halves while
+     keeping the 3 fitment gauges support-free at 0.20 mm layer height.
 """
 
 from __future__ import annotations
@@ -14,10 +16,51 @@ import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
 
+import trimesh
+
 ROOT = Path(__file__).resolve().parent
+STL_DIR = ROOT / "stl"
 TARGET_3MF = ROOT / "svt_intake_manifold_PLAPro_Demo_CC2.3mf"
 PROCESS_JSON = ROOT / "profiles" / "process" / "PLAPro_0.4_0.24_SVTManifold_Demo_TreeSupport_CC2.json"
 FILAMENT_JSON = ROOT / "profiles" / "filament" / "PLAPro_SVTManifold_Demo_CC2.json"
+
+
+def build_object_model_xml(obj_id: int, uuid_str: str, stl_path: Path) -> bytes:
+    """Create a 3MF sub-object .model XML centered at (0, 0, 0) matching ElegooSlicer layout."""
+    mesh = trimesh.load(stl_path, process=False)
+    # Center mesh about its bounding-box midpoint so build transform z = height/2 sits at Z=0
+    center = 0.5 * (mesh.bounds[0] + mesh.bounds[1])
+    mesh.apply_translation(-center)
+
+    verts_xml = "\n".join(
+        f'     <vertex x="{v[0]:.7f}" y="{v[1]:.7f}" z="{v[2]:.7f}"/>' for v in mesh.vertices
+    )
+    tris_xml = "\n".join(
+        f'     <triangle v1="{f[0]}" v2="{f[1]}" v3="{f[2]}"/>' for f in mesh.faces
+    )
+    xml_text = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<model unit="millimeter" xml:lang="en-US" '
+        'xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" '
+        'xmlns:BambuStudio="http://schemas.bambulab.com/package/2021" '
+        'xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" '
+        'requiredextensions="p">\n'
+        ' <metadata name="BambuStudio:3mfVersion">1</metadata>\n'
+        ' <resources>\n'
+        f'  <object id="{obj_id}" p:UUID="{uuid_str}" type="model">\n'
+        '   <mesh>\n'
+        '    <vertices>\n'
+        f'{verts_xml}\n'
+        '    </vertices>\n'
+        '    <triangles>\n'
+        f'{tris_xml}\n'
+        '    </triangles>\n'
+        '   </mesh>\n'
+        '  </object>\n'
+        ' </resources>\n'
+        '</model>\n'
+    )
+    return xml_text.encode("utf-8")
 
 
 def update_3mf() -> None:
@@ -27,10 +70,69 @@ def update_3mf() -> None:
     with zipfile.ZipFile(TARGET_3MF, "r") as zin:
         entries = {name: zin.read(name) for name in zin.namelist()}
 
-    # 1) Update Metadata/project_settings.config
-    ps = json.loads(entries["Metadata/project_settings.config"].decode("utf-8"))
+    # 1) Refresh split manifold STL meshes inside 3D/Objects/
+    entries["3D/Objects/svt_intake_manifold_split_left_print_oriented.stl_8.model"] = build_object_model_xml(
+        3, "00080000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_left_print_oriented.stl"
+    )
+    entries["3D/Objects/svt_intake_manifold_split_right_print_oriented.stl_9.model"] = build_object_model_xml(
+        1, "00090000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_right_print_oriented.stl"
+    )
+    entries["3D/Objects/svt_runner_boot_fit_gauge.stl_10.model"] = build_object_model_xml(
+        7, "000a0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_runner_boot_fit_gauge.stl"
+    )
+    entries["3D/Objects/svt_tb_flange_fit_gauge.stl_11.model"] = build_object_model_xml(
+        5, "000b0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_tb_flange_fit_gauge.stl"
+    )
 
-    # Clone slot 2 (clean PLA base) across all 4 filament slots so slot 1 has zero leftover ASA settings
+    # Add IACV fit gauge as object 10 / sub-object 9 if not yet present
+    iacv_model_path = "3D/Objects/svt_iacv_flange_fit_gauge.stl_12.model"
+    entries[iacv_model_path] = build_object_model_xml(
+        9, "000c0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_iacv_flange_fit_gauge.stl"
+    )
+
+    # Ensure 3D/3dmodel.model includes object 10 on Plate 3 beside TB gauge (X=215, Y=-179.2, Z=2)
+    ns_core = "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"
+    ns_p = "http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+    ns_b = "http://schemas.bambulab.com/package/2021"
+    ET.register_namespace("", ns_core)
+    ET.register_namespace("p", ns_p)
+    ET.register_namespace("BambuStudio", ns_b)
+    model_root = ET.fromstring(entries["3D/3dmodel.model"])
+    res_el = model_root.find(f"{{{ns_core}}}resources")
+    build_el = model_root.find(f"{{{ns_core}}}build")
+    existing_obj_ids = {el.attrib.get("id") for el in res_el.findall(f"{{{ns_core}}}object")}
+    if "10" not in existing_obj_ids:
+        obj10 = ET.SubElement(
+            res_el,
+            f"{{{ns_core}}}object",
+            {"id": "10", f"{{{ns_p}}}UUID": "0000000c-61cb-4c03-9d28-80fed5dfa1dc", "type": "model"},
+        )
+        comps = ET.SubElement(obj10, f"{{{ns_core}}}components")
+        ET.SubElement(
+            comps,
+            f"{{{ns_core}}}component",
+            {
+                f"{{{ns_p}}}path": f"/{iacv_model_path}",
+                "objectid": "9",
+                f"{{{ns_p}}}UUID": "000c0000-b206-40ff-9872-83e8017abed1",
+                "transform": "1 0 0 0 1 0 0 0 1 0 0 0",
+            },
+        )
+        ET.SubElement(
+            build_el,
+            f"{{{ns_core}}}item",
+            {
+                "objectid": "10",
+                f"{{{ns_p}}}UUID": "00000010-b1ec-4553-aec9-835e5b724bb4",
+                "transform": "1 0 0 0 1 0 0 0 1 215 -179.2 2",
+                "printable": "1",
+                "auto_drop": "1",
+            },
+        )
+        entries["3D/3dmodel.model"] = ET.tostring(model_root, encoding="utf-8", xml_declaration=True)
+
+    # 2) Update Metadata/project_settings.config
+    ps = json.loads(entries["Metadata/project_settings.config"].decode("utf-8"))
     non_filament_4lists = {
         "bed_exclude_area",
         "bed_texture_area",
@@ -94,13 +196,16 @@ def update_3mf() -> None:
         fil_diff_str,
         mach_diff_str,
     ]
-
     entries["Metadata/project_settings.config"] = (json.dumps(ps, indent=4) + "\n").encode("utf-8")
 
-    # 2) Update Metadata/model_settings.config: unify all parts onto extruder 2 (PLA Pro)
-    #    and disable supports/brim + set 0.20mm layer height on fitment gauges.
+    # 3) Update Metadata/model_settings.config: unify all parts onto extruder 2 (PLA Pro),
+    #    ensure IACV fit gauge is on Plate 3, and apply support-free 0.20 mm overrides on gauges.
     cfg = ET.fromstring(entries["Metadata/model_settings.config"])
-    gauge_names = {"svt_runner_boot_fit_gauge.stl", "svt_tb_flange_fit_gauge.stl"}
+    gauge_names = {
+        "svt_runner_boot_fit_gauge.stl",
+        "svt_tb_flange_fit_gauge.stl",
+        "svt_iacv_flange_fit_gauge.stl",
+    }
 
     def set_meta(elem: ET.Element, key: str, value: str) -> None:
         for m in elem.findall("metadata"):
@@ -108,6 +213,37 @@ def update_3mf() -> None:
                 m.attrib["value"] = str(value)
                 return
         ET.SubElement(elem, "metadata", key=key, value=str(value))
+
+    existing_cfg_ids = {o.attrib.get("id") for o in cfg.findall("object")}
+    if "10" not in existing_cfg_ids:
+        obj10_cfg = ET.SubElement(cfg, "object", id="10")
+        set_meta(obj10_cfg, "name", "svt_iacv_flange_fit_gauge.stl")
+        set_meta(obj10_cfg, "extruder", "2")
+        part9 = ET.SubElement(obj10_cfg, "part", id="9", subtype="normal_part")
+        set_meta(part9, "name", "svt_iacv_flange_fit_gauge.stl")
+        set_meta(part9, "matrix", "1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1")
+        set_meta(part9, "source_file", "svt_iacv_flange_fit_gauge.stl")
+        set_meta(part9, "source_object_id", "0")
+        set_meta(part9, "source_volume_id", "0")
+        set_meta(part9, "source_offset_x", "0")
+        set_meta(part9, "source_offset_y", "0")
+        set_meta(part9, "source_offset_z", "2")
+
+        for plate in cfg.findall("plate"):
+            pid = next((m.attrib.get("value") for m in plate.findall("metadata") if m.attrib.get("key") == "plater_id"), None)
+            if pid == "3":
+                mi = ET.SubElement(plate, "model_instance")
+                set_meta(mi, "object_id", "10")
+                set_meta(mi, "instance_id", "0")
+                set_meta(mi, "identify_id", "560")
+
+        asm = cfg.find("assemble")
+        if asm is not None:
+            ET.SubElement(
+                asm,
+                "assemble_item",
+                {"object_id": "10", "instance_id": "0", "transform": "1 0 0 0 1 0 0 0 1 0 0 2", "offset": "0 0 0"},
+            )
 
     for obj in cfg.findall("object"):
         obj_name = ""
@@ -127,14 +263,13 @@ def update_3mf() -> None:
         cfg, encoding="utf-8", xml_declaration=True
     )
 
-    # Write updated copy back in-place to the canonical PLA Pro demo .3mf
     tmp_3mf = ROOT / "_tmp_updated.3mf"
     with zipfile.ZipFile(tmp_3mf, "w", zipfile.ZIP_DEFLATED) as zout:
         for name, data in entries.items():
             zout.writestr(name, data)
 
     shutil.move(str(tmp_3mf), str(TARGET_3MF))
-    print(f"Updated {TARGET_3MF.name}")
+    print(f"Updated {TARGET_3MF.name} with latest STLs and PLA Pro presets")
 
 
 if __name__ == "__main__":
