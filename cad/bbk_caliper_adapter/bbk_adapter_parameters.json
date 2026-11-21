@@ -1,0 +1,101 @@
+{
+  "application": "Focus SVT front knuckle to Mustang Big Brake Kit (BBK) caliper adapter bracket",
+  "vehicle": "2002-2004 Ford Focus SVT (MK1 Focus)",
+  "caliper_spec": "2010 Ford Mustang GT Front Brake Caliper, Rotor (316x30 mm), and Carrier (Dual 43 mm Piston)",
+  "verification_status": {
+    "v1_physical_test_fit": "PASSED (Earlier V1 flat plate + 4.00 mm spacers confirmed hole centers and rotor centering)",
+    "v2_1_physical_test_fit": "PENDING_V2_1_FIT_CHECK (Enlarged V2.1 G1-tangent outline, Ø35.0 mm SVT bosses, upper bridge, and inner nut/washer/socket clearance must be verified on vehicle with full-thickness 9.525 mm V2.1 test print; 4 mm gauge only checks 2D outline/hole centers)",
+    "structural_disposition": "CANDIDATE_REQUIRING_FIT_AND_ASSEMBLY_VALIDATION (V2.1 STEP 6f570979... 3D FEA screening gives 0.0901 mm displacement and 242.4 MPa equal-load X bore peak, 368.8 MPa back-face peak, and 363.8-486.5 MPa under 75/25 load sharing; full release requires mill certificate, hardware/torque/preload validation, and carrier thread engagement verification)",
+    "geometry_revision": "V2.1 Exact G1-Tangent Profile (STEP SHA-256: 6f57097922f5a15efb3da27714a69521b6ecd68713ded26432cea28f97e3d3f5; 0.000000 deg tangent discontinuity at all 8 perimeter junctions; exact 11.000 mm inner and 12.000 mm outer ligaments; all 4 holes Ø13.00 mm through-clearance)",
+    "date_updated": "2026-11-07"
+  },
+  "reversibility": {
+    "is_symmetric": true,
+    "centerline_x": 0.00,
+    "side_compatibility": "Universal (Driver Side LH and Passenger Side RH by flipping bracket)"
+  },
+  "g1_contour_geometry": {
+    "step_sha256": "6f57097922f5a15efb3da27714a69521b6ecd68713ded26432cea28f97e3d3f5",
+    "overall_dimensions_mm": [187.20, 50.70, 9.525],
+    "step_volume_mm3": 67674.5905,
+    "stl_volume_mm3": 67679.0888,
+    "mass_at_7_87_g_cm3_grams": 532.6,
+    "lower_hub_arch": {
+      "center_mm": [0.0, -78.333333],
+      "radius_mm": 86.333333,
+      "peak_mm": [0.0, 8.00],
+      "svt_tangent_points_mm": [[-37.8315, -0.7303], [37.8315, -0.7303]]
+    },
+    "upper_bridge_arch": {
+      "center_mm": [0.0, 1687.676471],
+      "radius_mm": 1641.176471,
+      "mid_point_mm": [0.0, 46.50],
+      "mustang_tangent_points_mm": [[-74.2629, 48.1811], [74.2629, 48.1811]]
+    },
+    "lower_external_tangent_lines": {
+      "svt_tangent_points_mm": [[-52.8060, -0.9019], [52.8060, -0.9019]],
+      "mustang_tangent_points_mm": [[-82.8235, 12.8894], [82.8235, 12.8894]]
+    },
+    "max_junction_tangent_discontinuity_deg": 0.0
+  },
+  "hole_spacings": {
+    "svt_center_to_center_mm": 91.00,
+    "svt_clearance_diameter_mm": 13.00,
+    "svt_diameter_tolerance_mm": "+0.15 / -0.05",
+    "svt_boss_outer_diameter_mm": 35.00,
+    "svt_minimum_ligament_mm": 11.00,
+    "svt_washer_24mm_radial_margin_mm": 5.50,
+    "svt_coordinates": {
+      "left": [-45.50, 15.00],
+      "right": [45.50, 15.00]
+    },
+    "mustang_center_to_center_mm": 150.20,
+    "mustang_clearance_diameter_mm": 13.00,
+    "mustang_diameter_tolerance_mm": "+0.15 / -0.05",
+    "mustang_boss_outer_diameter_mm": 37.00,
+    "mustang_minimum_ligament_mm": 12.00,
+    "mustang_coordinates": {
+      "left": [-75.10, 29.70],
+      "right": [75.10, 29.70]
+    },
+    "vertical_delta_between_pairs_mm": 14.70
+  },
+  "spacer_specifications": {
+    "thickness_mm": 4.00,
+    "inner_diameter_mm": 13.00,
+    "outer_diameter_mm": 26.00,
+    "location": "Between adapter plate and Mustang GT caliper carrier",
+    "fastener_compatibility": "M12x1.75 Class 10.9 caliper bolts"
+  },
+  "material_and_structural_specs": {
+    "material": "AISI 1018 Cold-Rolled Steel (ASTM A108; screening assumptions Sy=370 MPa, Su=440 MPa, E=205 GPa pending actual mill certificate)",
+    "nominal_thickness_mm": 9.525,
+    "thickness_inch": "3/8 inch",
+    "inner_joint_hardware_m12x1_75_coarse": {
+      "bolt": "M12x1.75 Property Class 10.9 (ISO 898-1 proof stress 830 MPa, proof load 69.97 kN on As=84.3 mm2)",
+      "nut_option_1": "ISO 4032 Property Class 10 Full-Height Hex Nut (M12x1.75 coarse, m=10.8 mm; requires flat washer)",
+      "nut_option_2": "ISO 7042 Property Class 10 All-Metal Prevailing-Torque Hex High Nut (M12x1.75 coarse, m_max=12.3 mm; requires flat washer)",
+      "nut_option_3": "ISO 7044 (or DIN 6927) Property Class 10 All-Metal Prevailing-Torque Hex Flange Nut (M12x1.75 coarse)",
+      "iso_898_2_m12_class_10_proof_stress_MPa": 1050.0,
+      "iso_898_2_m12_class_10_proof_load_N": 88515.0,
+      "washer": "ISO 7089 Property Class 300 HV Hardened Flat Washer (ID=13.0 mm, OD=24.0 mm, t=2.5 mm)"
+    },
+    "v2_1_independent_3d_fea_screening_14_34kN": {
+      "step_sha256": "6f57097922f5a15efb3da27714a69521b6ecd68713ded26432cea28f97e3d3f5",
+      "equal_X_bore_3mm_peak_MPa": 231.2,
+      "equal_X_bore_3mm_web_MPa": 199.3,
+      "equal_X_bore_3mm_disp_mm": 0.0899,
+      "equal_X_bore_2mm_peak_MPa": 242.4,
+      "equal_X_bore_2mm_web_MPa": 226.0,
+      "equal_X_bore_2mm_disp_mm": 0.0901,
+      "split75_X_bore_2mm_peak_MPa": 363.8,
+      "split75_X_bore_2mm_web_MPa": 324.3,
+      "split75_X_bore_2mm_disp_mm": 0.1358,
+      "left_only_X_bore_2mm_peak_MPa": 485.1,
+      "equal_X_face_3mm_peak_MPa": 368.8,
+      "equal_X_face_3mm_web_MPa": 291.4,
+      "equal_X_face_3mm_disp_mm": 0.0895,
+      "split75_X_face_3mm_peak_MPa": 486.5
+    }
+  }
+}

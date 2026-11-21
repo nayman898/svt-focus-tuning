@@ -1,0 +1,167 @@
+[
+  {
+    "mesh_mm": 2.0,
+    "support": "bore",
+    "case": "equal_X",
+    "peak_MPa": 242.43155531301602,
+    "web_MPa": 225.9644961449094,
+    "displacement_mm": 0.09011543208335221,
+    "energy_Nmm": 190.88646285704618,
+    "yield_ratio_screening_only": 1.5262039610407718,
+    "file": "fea_d13_h2_s4_bore.json"
+  },
+  {
+    "mesh_mm": 2.0,
+    "support": "bore",
+    "case": "left_only_X",
+    "peak_MPa": 485.1327781719431,
+    "web_MPa": 432.6590025270027,
+    "displacement_mm": 0.18158128552656894,
+    "energy_Nmm": 382.6197358292128,
+    "yield_ratio_screening_only": 0.7626778000740714,
+    "file": "fea_d13_h2_s4_bore.json"
+  },
+  {
+    "mesh_mm": 2.0,
+    "support": "bore",
+    "case": "split75_X",
+    "peak_MPa": 363.7821149878033,
+    "web_MPa": 324.2963604328876,
+    "displacement_mm": 0.13584824881532623,
+    "energy_Nmm": 238.82367669920666,
+    "yield_ratio_screening_only": 1.0170923328993378,
+    "file": "fea_d13_h2_s4_bore.json"
+  },
+  {
+    "mesh_mm": 2.0,
+    "support": "bore",
+    "case": "equal_Y",
+    "peak_MPa": 264.08320444475214,
+    "web_MPa": 222.38851884316838,
+    "displacement_mm": 0.06138260540071582,
+    "energy_Nmm": 229.0142897332376,
+    "yield_ratio_screening_only": 1.4010735774656442,
+    "file": "fea_d13_h2_s4_bore.json"
+  },
+  {
+    "mesh_mm": 2.0,
+    "support": "bore",
+    "case": "left_only_Y",
+    "peak_MPa": 527.8789316298826,
+    "web_MPa": 415.31869517923565,
+    "displacement_mm": 0.12249764394104974,
+    "energy_Nmm": 456.87983886117473,
+    "yield_ratio_screening_only": 0.700918293627642,
+    "file": "fea_d13_h2_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "bore",
+    "case": "equal_X",
+    "peak_MPa": 231.2295018598135,
+    "web_MPa": 199.336028064844,
+    "displacement_mm": 0.08989070857520833,
+    "energy_Nmm": 190.47294189161846,
+    "yield_ratio_screening_only": 1.6001418375425047,
+    "file": "fea_d13_h3_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "bore",
+    "case": "left_only_X",
+    "peak_MPa": 439.26473357715975,
+    "web_MPa": 390.21744345853347,
+    "displacement_mm": 0.1811274094429635,
+    "energy_Nmm": 381.7793117684125,
+    "yield_ratio_screening_only": 0.8423166526183397,
+    "file": "fea_d13_h3_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "bore",
+    "case": "split75_X",
+    "peak_MPa": 328.8321533681994,
+    "web_MPa": 292.49303272004397,
+    "displacement_mm": 0.13550894743920275,
+    "energy_Nmm": 238.30096536653053,
+    "yield_ratio_screening_only": 1.1251941034662272,
+    "file": "fea_d13_h3_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "bore",
+    "case": "equal_Y",
+    "peak_MPa": 252.4195610403115,
+    "web_MPa": 204.90958547644084,
+    "displacement_mm": 0.06098093335370295,
+    "energy_Nmm": 228.55475744164653,
+    "yield_ratio_screening_only": 1.465813499061235,
+    "file": "fea_d13_h3_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "bore",
+    "case": "left_only_Y",
+    "peak_MPa": 488.78950267842043,
+    "web_MPa": 408.0740949609874,
+    "displacement_mm": 0.12169963396438932,
+    "energy_Nmm": 456.00528244334134,
+    "yield_ratio_screening_only": 0.7569720666514124,
+    "file": "fea_d13_h3_s4_bore.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "face",
+    "case": "equal_X",
+    "peak_MPa": 368.8322930820205,
+    "web_MPa": 291.3601977979702,
+    "displacement_mm": 0.08951146485456071,
+    "energy_Nmm": 198.29869814389406,
+    "yield_ratio_screening_only": 1.0031659562892987,
+    "file": "fea_d13_h3_s4_face.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "face",
+    "case": "left_only_X",
+    "peak_MPa": 646.6583614712628,
+    "web_MPa": 522.0720996947019,
+    "displacement_mm": 0.17840511272669415,
+    "energy_Nmm": 395.6392133707401,
+    "yield_ratio_screening_only": 0.572172296911439,
+    "file": "fea_d13_h3_s4_face.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "face",
+    "case": "split75_X",
+    "peak_MPa": 486.525008569121,
+    "web_MPa": 393.0545026509061,
+    "displacement_mm": 0.13395773031603525,
+    "energy_Nmm": 248.5311938509244,
+    "yield_ratio_screening_only": 0.7604953362791705,
+    "file": "fea_d13_h3_s4_face.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "face",
+    "case": "equal_Y",
+    "peak_MPa": 418.088104828788,
+    "web_MPa": 293.346410123824,
+    "displacement_mm": 0.060098757768306664,
+    "energy_Nmm": 207.32253164708067,
+    "yield_ratio_screening_only": 0.884980930398676,
+    "file": "fea_d13_h3_s4_face.json"
+  },
+  {
+    "mesh_mm": 3.0,
+    "support": "face",
+    "case": "left_only_Y",
+    "peak_MPa": 853.9875520666849,
+    "web_MPa": 592.5749536629398,
+    "displacement_mm": 0.11978716918236902,
+    "energy_Nmm": 421.7057831190498,
+    "yield_ratio_screening_only": 0.4332615845565721,
+    "file": "fea_d13_h3_s4_face.json"
+  }
+]

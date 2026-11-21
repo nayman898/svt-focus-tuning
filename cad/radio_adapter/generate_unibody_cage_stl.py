@@ -2,19 +2,154 @@
 """
 generate_unibody_cage_stl.py
 Generates a watertight, manifold binary STL for a Full Unibody Radio Cage:
-  Vehicle: 2004 Ford Focus SVT
+  Vehicle: 2004 Ford Focus SVT (MK1 New Edge Center Dashboard)
   Radio:   JVC KW-V830BT Double-DIN
-  Features:
-    - Front alignment flange (196.5 x 107.6 mm) with 3mm dash overlap
-    - Rear alignment boss (189.5 x 100.8 mm)
-    - JVC cutout (181.0 x 100.0 mm) with +0.8mm clearance
-    - Dual 3.5mm thick structural side brackets extending 75mm rearward
-    - ISO M5 depth-adjustment slots (5.5mm x 16mm)
+
+Printables Model 1216108 Baseline Adaptation:
+  - Baseline Provenance:
+      * Printables Model: 1216108 (Ford Focus MK1 radio frame by kstor)
+      * Factory-matching MK1 Focus dash console outer interface & retention
+  - Front Plane:
+      * 100% flat front face (Z = 0.0) from the radio aperture to the outer perimeter (no chamfer/bevel)
+      * Seamless PEI bed adhesion with crisp OEM texture across the entire visible surface
+  - X-Y Profile (Printables MK1 Baseline):
+      * Straight Flanks: 188.50 mm width (constant across vertical sides)
+      * Height: 100.50 mm nominal / 101.50 mm peak brow arch (confirmed good fit)
+      * Corner Radii: R = 10.00 mm all four corners (deep inward curve clearance for dash fillets)
+      * Top brow crown: +1.00 mm upward arch matching console brow
+      * Lower edge contour: +0.30 mm
+      * Radio Cutout: 179.20 mm wide x 98.80 mm high (R = 2.0 mm, calibrated for JVC KW-V830BT faceplate)
+  - Rear Insertion Boss (Printables MK1 Baseline):
+      * 183.00 mm wide x 94.00 mm high (drops directly into Focus MK1 dash console pocket)
+      * Steps down from the 188.50 x 100.50 mm flange by 2.75 mm per side and 3.25 mm top/bottom
+  - Z-Axis Compound Curvature:
+      * 0.80 mm horizontal Z-bow on rear seating shelf to match convex Focus dashboard:
+        z_shelf(x) = -2.50 - 0.80 * (x / 94.25)^2
+      * Flange is 2.50 mm thick at center, thickening to 3.30 mm at sides for a 100% gapless seal
+  - Structural Side Mounting Arms:
+      * Dual 3.6 mm thick structural side brackets extending 65.0 mm rearward (Z = -12.50 to -77.50 mm)
+      * Dual ISO M5 depth slots (5.5 mm x 15.0 mm, ±7.5 mm travel) for precision tilt/depth alignment
+      * 45° rear lead-in chamfers on side brackets to prevent snagging on internal sub-dash wiring
 """
 
 import math
 import struct
 import os
+
+def generate_profile_loop_tapered(
+    w_top, w_bot, height,
+    r_top_x, r_top_y, r_bot,
+    crown_top=0.0, crown_bot=0.0,
+    k_arc=12, k_edge=12
+):
+    w_top2 = w_top / 2.0
+    w_bot2 = w_bot / 2.0
+    h2 = height / 2.0
+    pts = []
+    
+    # 1. Top-Right Corner (Elliptical: rx = r_top_x, ry = r_top_y)
+    c1_x = w_top2 - r_top_x
+    c1_y = h2 - r_top_y
+    for i in range(k_arc):
+        a = 0.0 + (math.pi / 2.0) * (i / float(k_arc))
+        pts.append((c1_x + r_top_x * math.cos(a), c1_y + r_top_y * math.sin(a)))
+        
+    # 2. Top Edge with upward crown
+    x_start = c1_x
+    x_end = -c1_x
+    for i in range(k_edge):
+        frac = i / float(k_edge)
+        x = x_start + (x_end - x_start) * frac
+        t = 1.0 - 2.0 * frac
+        y = h2 + crown_top * (1.0 - t * t)
+        pts.append((x, y))
+        
+    # 3. Top-Left Corner
+    c2_x = -w_top2 + r_top_x
+    c2_y = h2 - r_top_y
+    for i in range(k_arc):
+        a = (math.pi / 2.0) + (math.pi / 2.0) * (i / float(k_arc))
+        pts.append((c2_x + r_top_x * math.cos(a), c2_y + r_top_y * math.sin(a)))
+        
+    # 4. Left Edge (Straight line tapering from top to bottom)
+    y_start = c2_y
+    y_end = -h2 + r_bot
+    for i in range(k_edge):
+        frac = i / float(k_edge)
+        y = y_start + (y_end - y_start) * frac
+        x = -(w_top2 * (1.0 - frac) + w_bot2 * frac)
+        pts.append((x, y))
+        
+    # 5. Bottom-Left Corner
+    c3_x = -w_bot2 + r_bot
+    c3_y = -h2 + r_bot
+    for i in range(k_arc):
+        a = math.pi + (math.pi / 2.0) * (i / float(k_arc))
+        pts.append((c3_x + r_bot * math.cos(a), c3_y + r_bot * math.sin(a)))
+        
+    # 6. Bottom Edge with contour
+    x_start = c3_x
+    x_end = -c3_x
+    for i in range(k_edge):
+        frac = i / float(k_edge)
+        x = x_start + (x_end - x_start) * frac
+        t = 1.0 - 2.0 * frac
+        y = -h2 - crown_bot * (1.0 - t * t)
+        pts.append((x, y))
+        
+    # 7. Bottom-Right Corner
+    c4_x = w_bot2 - r_bot
+    c4_y = -h2 + r_bot
+    for i in range(k_arc):
+        a = (3.0 * math.pi / 2.0) + (math.pi / 2.0) * (i / float(k_arc))
+        pts.append((c4_x + r_bot * math.cos(a), c4_y + r_bot * math.sin(a)))
+        
+    # 8. Right Edge (Straight line tapering from bottom to top)
+    y_start = -h2 + r_bot
+    y_end = c1_y
+    for i in range(k_edge):
+        frac = i / float(k_edge)
+        y = y_start + (y_end - y_start) * frac
+        x = w_bot2 * (1.0 - frac) + w_top2 * frac
+        pts.append((x, y))
+        
+    return pts
+
+def generate_rect_loop(width, height, radius, k_arc=12, k_edge=12):
+    w2 = width / 2.0
+    h2 = height / 2.0
+    r = min(radius, w2, h2)
+    pts = []
+    
+    corners = [
+        (w2 - r, h2 - r, 0.0, math.pi / 2.0),
+        (-w2 + r, h2 - r, math.pi / 2.0, math.pi),
+        (-w2 + r, -h2 + r, math.pi, 3.0 * math.pi / 2.0),
+        (w2 - r, -h2 + r, 3.0 * math.pi / 2.0, 2.0 * math.pi)
+    ]
+    
+    for c_idx, (cx, cy, start_a, end_a) in enumerate(corners):
+        for i in range(k_arc):
+            a = start_a + (end_a - start_a) * (i / float(k_arc))
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+        if c_idx == 0:  # Top edge
+            for i in range(k_edge):
+                pts.append(((w2 - r) - 2 * (w2 - r) * (i / float(k_edge)), h2))
+        elif c_idx == 1:  # Left edge
+            for i in range(k_edge):
+                pts.append((-w2, (h2 - r) - 2 * (h2 - r) * (i / float(k_edge))))
+        elif c_idx == 2:  # Bottom edge
+            for i in range(k_edge):
+                pts.append((-(w2 - r) + 2 * (w2 - r) * (i / float(k_edge)), -h2))
+        elif c_idx == 3:  # Right edge
+            for i in range(k_edge):
+                pts.append((w2, -(h2 - r) + 2 * (h2 - r) * (i / float(k_edge))))
+                
+    return pts
+
+def z_shelf(x, base_thick=2.50, z_bow=0.80, w2=95.10):
+    frac = min(1.0, abs(x) / w2)
+    return -base_thick - z_bow * (frac * frac)
 
 def calc_normal(p1, p2, p3):
     u = (p2[0]-p1[0], p2[1]-p1[1], p2[2]-p1[2])
@@ -27,9 +162,9 @@ def calc_normal(p1, p2, p3):
         return (nx/length, ny/length, nz/length)
     return (0.0, 0.0, 0.0)
 
-def write_binary_stl(triangles, filepath):
+def write_binary_stl(triangles, filepath, header_title=b'2004 Ford Focus SVT - JVC KW-V830BT Unibody Cage'):
     with open(filepath, 'wb') as f:
-        header = b'2004 Ford Focus SVT - JVC KW-V830BT Unibody Radio Cage'.ljust(80, b'\0')
+        header = header_title.ljust(80, b'\0')
         f.write(header)
         f.write(struct.pack('<I', len(triangles)))
         for p1, p2, p3 in triangles:
@@ -42,7 +177,6 @@ def write_binary_stl(triangles, filepath):
 
 def add_box(triangles, min_x, max_x, min_y, max_y, min_z, max_z):
     """Adds a rectangular solid (12 triangles) with outward normals."""
-    # 8 vertices
     v000 = (min_x, min_y, min_z)
     v100 = (max_x, min_y, min_z)
     v110 = (max_x, max_y, min_z)
@@ -71,171 +205,204 @@ def add_box(triangles, min_x, max_x, min_y, max_y, min_z, max_z):
     triangles.append((v000, v100, v101))
     triangles.append((v000, v101, v001))
 
+def add_rear_chamfered_box(triangles, x0, x1, y_min, y_max, z_min, z_max, ch_y=12.0, ch_z=6.5):
+    """Box with 45° lead-in chamfers at the rear corners (z_min) along top (+Y) and bottom (-Y)."""
+    ch_y = min(ch_y, (y_max - y_min) * 0.45)
+    ch_z = min(ch_z, (z_max - z_min) * 0.95)
+    
+    poly = [
+        (y_min + ch_y, z_min),         # bottom rear chamfer start
+        (y_max - ch_y, z_min),         # top rear chamfer start
+        (y_max, z_min + ch_z),         # top rear chamfer end
+        (y_max, z_max),                # top front
+        (y_min, z_max),                # bottom front
+        (y_min, z_min + ch_z)          # bottom rear chamfer end
+    ]
+    
+    # +X face (x1)
+    for i in range(1, len(poly) - 1):
+        p0 = (x1, poly[0][0], poly[0][1])
+        p1 = (x1, poly[i][0], poly[i][1])
+        p2 = (x1, poly[i+1][0], poly[i+1][1])
+        triangles.append((p0, p1, p2))
+        
+    # -X face (x0)
+    for i in range(1, len(poly) - 1):
+        p0 = (x0, poly[0][0], poly[0][1])
+        p1 = (x0, poly[i+1][0], poly[i+1][1])
+        p2 = (x0, poly[i][0], poly[i][1])
+        triangles.append((p0, p1, p2))
+        
+    # Perimeter walls:
+    for i in range(len(poly)):
+        next_i = (i + 1) % len(poly)
+        y_a, z_a = poly[i]
+        y_b, z_b = poly[next_i]
+        
+        v0_a = (x0, y_a, z_a)
+        v1_a = (x1, y_a, z_a)
+        v0_b = (x0, y_b, z_b)
+        v1_b = (x1, y_b, z_b)
+        
+        triangles.append((v1_a, v0_a, v0_b))
+        triangles.append((v1_a, v0_b, v1_b))
+
 def add_slotted_plate(triangles, x_val, x_thick, y_min, y_max, z_min, z_max, slots):
-    """
-    Constructs a vertical plate extending along Y and Z with slotted holes.
-    x_val: inner face X coordinate
-    x_thick: plate thickness in X direction (positive if extending +X, negative if -X)
-    slots: list of (center_y, center_z, width_y, len_z)
-    """
-    # For a clean, 100% watertight mesh without CSG bugs, build the plate
-    # from sub-blocks surrounding the slots.
-    # To keep it robust, if slots are present, we subdivide in Y and Z.
+    """Constructs a vertical bracket plate with slotted ISO M5 holes and lead-in chamfers."""
     x0 = min(x_val, x_val + x_thick)
     x1 = max(x_val, x_val + x_thick)
     
-    # Sort slots along Z
-    # If 2 slots at z_slot1 and z_slot2:
     if len(slots) == 2:
         s1 = slots[0]
         s2 = slots[1]
-        # slot 1 bounds
         z1_lo = s1['center_z'] - s1['len_z']/2.0
         z1_hi = s1['center_z'] + s1['len_z']/2.0
         y1_lo = s1['center_y'] - s1['width_y']/2.0
         y1_hi = s1['center_y'] + s1['width_y']/2.0
         
-        # slot 2 bounds
         z2_lo = s2['center_z'] - s2['len_z']/2.0
         z2_hi = s2['center_z'] + s2['len_z']/2.0
         y2_lo = s2['center_y'] - s2['width_y']/2.0
         y2_hi = s2['center_y'] + s2['width_y']/2.0
         
-        # Ensure z1 < z2
         if z1_lo > z2_lo:
             z1_lo, z1_hi, y1_lo, y1_hi, z2_lo, z2_hi, y2_lo, y2_hi = \
                 z2_lo, z2_hi, y2_lo, y2_hi, z1_lo, z1_hi, y1_lo, y1_hi
 
-        # Section 1: Z from z_min to z1_lo
-        add_box(triangles, x0, x1, y_min, y_max, z_min, z1_lo)
+        # Section 1: Rear lead-in section with 45° chamfers
+        add_rear_chamfered_box(triangles, x0, x1, y_min, y_max, z_min, z1_lo, ch_y=12.0, ch_z=6.5)
         
-        # Section 2: Z from z1_lo to z1_hi (has slot 1)
+        # Section 2: Z from z1_lo to z1_hi (Slot 1)
         add_box(triangles, x0, x1, y_min, y1_lo, z1_lo, z1_hi)
         add_box(triangles, x0, x1, y1_hi, y_max, z1_lo, z1_hi)
         
-        # Section 3: Z from z1_hi to z2_lo (middle bridge)
+        # Section 3: Z from z1_hi to z2_lo (Middle structural bridge)
         add_box(triangles, x0, x1, y_min, y_max, z1_hi, z2_lo)
         
-        # Section 4: Z from z2_lo to z2_hi (has slot 2)
+        # Section 4: Z from z2_lo to z2_hi (Slot 2)
         add_box(triangles, x0, x1, y_min, y2_lo, z2_lo, z2_hi)
         add_box(triangles, x0, x1, y2_hi, y_max, z2_lo, z2_hi)
         
-        # Section 5: Z from z2_hi to z_max
+        # Section 5: Z from z2_hi to z_max (Front attachment to boss)
         add_box(triangles, x0, x1, y_min, y_max, z2_hi, z_max)
     else:
         add_box(triangles, x0, x1, y_min, y_max, z_min, z_max)
 
-def rounded_rect_points(width, height, radius, num_arc_pts=8):
-    w2 = width / 2.0
-    h2 = height / 2.0
-    r = min(radius, w2, h2)
-    corners = [
-        (w2 - r, h2 - r, 0.0, math.pi / 2.0),
-        (-w2 + r, h2 - r, math.pi / 2.0, math.pi),
-        (-w2 + r, -h2 + r, math.pi, 3.0 * math.pi / 2.0),
-        (w2 - r, -h2 + r, 3.0 * math.pi / 2.0, 2.0 * math.pi)
-    ]
-    pts = []
-    for cx, cy, start_a, end_a in corners:
-        for i in range(num_arc_pts):
-            theta = start_a + (end_a - start_a) * (i / float(num_arc_pts))
-            pts.append((cx + r * math.cos(theta), cy + r * math.sin(theta)))
-    return pts
-
 def create_unibody_cage_mesh():
-    jvc_w = 179.39
-    jvc_h = 98.43
-    dash_w = 190.50
-    dash_h = 101.60
+    # Primary dimensions (mm)
+    cutout_w = 179.20  # Shrunk in width only by 1.80 mm (zero-slop fit)
+    cutout_h = 98.80   # Calibrated to JVC KW-V830BT 98.43 mm motorized faceplate
     
-    cutout_w = 181.00
-    cutout_h = 100.00
-    
-    flange_overlap = 3.00
-    flange_w = dash_w + (2.0 * flange_overlap)  # 196.50
-    flange_h = dash_h + (2.0 * flange_overlap)  # 107.60
+    # Outer Flange Geometry (Printables 1216108 Baseline)
+    flange_w_top = 188.50  # Straight flanks matching Printables baseline width
+    flange_w_bot = 188.50  # Constant 188.50 mm width across vertical flanks
+    flange_h     = 100.50  # Nominal height (101.50 mm peak brow arch)
     flange_thick = 2.50
+    z_bow        = 0.80    # 0.80 mm Z-curve matching convex dash
     
-    boss_w = dash_w - 1.00  # 189.50
-    boss_h = dash_h - 0.80  # 100.80
-    boss_depth = 9.50
+    # Corners & Crown (Printables 1216108 Baseline)
+    r_top_x = 10.00    # Printables baseline R=10 corner radius (deep corner clearance)
+    r_top_y = 10.00
+    r_bot   = 10.00    # Printables baseline R=10 lower corner radius
+    crown_top = 1.00   # Proven top brow upward arch
+    crown_bot = 0.30   # Lower edge contour
     
-    z_front = 0.0
-    z_step = -flange_thick
-    z_rear_boss = -(flange_thick + boss_depth)
+    # Rear Insertion Boss Geometry (Printables 1216108 Baseline)
+    boss_w_top = 183.00 # Exact Printables rear insert body width
+    boss_w_bot = 183.00
+    boss_h     = 94.00  # Exact Printables rear insert body height
+    boss_r_top = 4.00
+    boss_r_bot = 4.00
+    z_rear_boss = -12.50
     
-    num_pts = 10
-    loop_inner = rounded_rect_points(cutout_w, cutout_h, radius=2.0, num_arc_pts=num_pts)
-    loop_flange = rounded_rect_points(flange_w, flange_h, radius=5.0, num_arc_pts=num_pts)
-    loop_boss = rounded_rect_points(boss_w, boss_h, radius=3.5, num_arc_pts=num_pts)
+    k_arc = 12
+    k_edge = 12
+    
+    loop_inner = generate_rect_loop(cutout_w, cutout_h, radius=2.0, k_arc=k_arc, k_edge=k_edge)
+    loop_boss = generate_profile_loop_tapered(boss_w_top, boss_w_bot, boss_h, boss_r_top, boss_r_top, boss_r_bot, k_arc=k_arc, k_edge=k_edge)
+    loop_flange_outer = generate_profile_loop_tapered(flange_w_top, flange_w_bot, flange_h, r_top_x, r_top_y, r_bot, crown_top, crown_bot, k_arc=k_arc, k_edge=k_edge)
+    
     N = len(loop_inner)
+    z_front = 0.0
+    w2 = flange_w_bot / 2.0
     
     triangles = []
     
-    # 1. Front Annular Face
+    # 1. 100% Flat Front Annular Face (Z = 0.0, zero chamfer/bevel)
     for i in range(N):
-        next_i = (i + 1) % N
-        out_cur = (loop_flange[i][0], loop_flange[i][1], z_front)
-        out_nxt = (loop_flange[next_i][0], loop_flange[next_i][1], z_front)
+        nxt = (i + 1) % N
+        out_cur = (loop_flange_outer[i][0], loop_flange_outer[i][1], z_front)
+        out_nxt = (loop_flange_outer[nxt][0], loop_flange_outer[nxt][1], z_front)
         in_cur = (loop_inner[i][0], loop_inner[i][1], z_front)
-        in_nxt = (loop_inner[next_i][0], loop_inner[next_i][1], z_front)
+        in_nxt = (loop_inner[nxt][0], loop_inner[nxt][1], z_front)
         triangles.append((out_cur, out_nxt, in_nxt))
         triangles.append((out_cur, in_nxt, in_cur))
         
-    # 2. Outer Flange Rim
+    # 2. Outer Flange Straight Rim (from flat Z = 0.0 down to z_shelf(x))
     for i in range(N):
-        next_i = (i + 1) % N
-        f_cur = (loop_flange[i][0], loop_flange[i][1], z_front)
-        f_nxt = (loop_flange[next_i][0], loop_flange[next_i][1], z_front)
-        s_cur = (loop_flange[i][0], loop_flange[i][1], z_step)
-        s_nxt = (loop_flange[next_i][0], loop_flange[next_i][1], z_step)
+        nxt = (i + 1) % N
+        zf_cur = z_shelf(loop_flange_outer[i][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        zf_nxt = z_shelf(loop_flange_outer[nxt][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        
+        f_cur = (loop_flange_outer[i][0], loop_flange_outer[i][1], z_front)
+        f_nxt = (loop_flange_outer[nxt][0], loop_flange_outer[nxt][1], z_front)
+        s_cur = (loop_flange_outer[i][0], loop_flange_outer[i][1], zf_cur)
+        s_nxt = (loop_flange_outer[nxt][0], loop_flange_outer[nxt][1], zf_nxt)
         triangles.append((f_cur, s_cur, s_nxt))
         triangles.append((f_cur, s_nxt, f_nxt))
         
-    # 3. Stepped Shelf
+    # 3. Stepped Shelf (between loop_flange_outer and loop_boss at z_shelf)
     for i in range(N):
-        next_i = (i + 1) % N
-        flg_cur = (loop_flange[i][0], loop_flange[i][1], z_step)
-        flg_nxt = (loop_flange[next_i][0], loop_flange[next_i][1], z_step)
-        bss_cur = (loop_boss[i][0], loop_boss[i][1], z_step)
-        bss_nxt = (loop_boss[next_i][0], loop_boss[next_i][1], z_step)
+        nxt = (i + 1) % N
+        zf_cur = z_shelf(loop_flange_outer[i][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        zf_nxt = z_shelf(loop_flange_outer[nxt][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        zb_cur = z_shelf(loop_boss[i][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        zb_nxt = z_shelf(loop_boss[nxt][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        
+        flg_cur = (loop_flange_outer[i][0], loop_flange_outer[i][1], zf_cur)
+        flg_nxt = (loop_flange_outer[nxt][0], loop_flange_outer[nxt][1], zf_nxt)
+        bss_cur = (loop_boss[i][0], loop_boss[i][1], zb_cur)
+        bss_nxt = (loop_boss[nxt][0], loop_boss[nxt][1], zb_nxt)
         triangles.append((flg_cur, bss_nxt, flg_nxt))
         triangles.append((flg_cur, bss_cur, bss_nxt))
         
-    # 4. Outer Boss Walls
+    # 4. Outer Boss Walls (from z_shelf down to z_rear_boss)
     for i in range(N):
-        next_i = (i + 1) % N
-        b_cur = (loop_boss[i][0], loop_boss[i][1], z_step)
-        b_nxt = (loop_boss[next_i][0], loop_boss[next_i][1], z_step)
+        nxt = (i + 1) % N
+        zb_cur = z_shelf(loop_boss[i][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        zb_nxt = z_shelf(loop_boss[nxt][0], base_thick=flange_thick, z_bow=z_bow, w2=w2)
+        
+        b_cur = (loop_boss[i][0], loop_boss[i][1], zb_cur)
+        b_nxt = (loop_boss[nxt][0], loop_boss[nxt][1], zb_nxt)
         r_cur = (loop_boss[i][0], loop_boss[i][1], z_rear_boss)
-        r_nxt = (loop_boss[next_i][0], loop_boss[next_i][1], z_rear_boss)
+        r_nxt = (loop_boss[nxt][0], loop_boss[nxt][1], z_rear_boss)
         triangles.append((b_cur, r_cur, r_nxt))
         triangles.append((b_cur, r_nxt, b_nxt))
         
-    # 5. Rear Annular Face of Boss
+    # 5. Rear Annular Face (Z = z_rear_boss)
     for i in range(N):
-        next_i = (i + 1) % N
+        nxt = (i + 1) % N
         bss_cur = (loop_boss[i][0], loop_boss[i][1], z_rear_boss)
-        bss_nxt = (loop_boss[next_i][0], loop_boss[next_i][1], z_rear_boss)
+        bss_nxt = (loop_boss[nxt][0], loop_boss[nxt][1], z_rear_boss)
         in_cur = (loop_inner[i][0], loop_inner[i][1], z_rear_boss)
-        in_nxt = (loop_inner[next_i][0], loop_inner[next_i][1], z_rear_boss)
+        in_nxt = (loop_inner[nxt][0], loop_inner[nxt][1], z_rear_boss)
         triangles.append((bss_cur, in_nxt, bss_nxt))
         triangles.append((bss_cur, in_cur, in_nxt))
         
-    # 6. Inner Tunnel Wall of Bezel
+    # 6. Inner Tunnel Wall (z_front to z_rear_boss)
     for i in range(N):
-        next_i = (i + 1) % N
+        nxt = (i + 1) % N
         f_cur = (loop_inner[i][0], loop_inner[i][1], z_front)
-        f_nxt = (loop_inner[next_i][0], loop_inner[next_i][1], z_front)
+        f_nxt = (loop_inner[nxt][0], loop_inner[nxt][1], z_front)
         r_cur = (loop_inner[i][0], loop_inner[i][1], z_rear_boss)
-        r_nxt = (loop_inner[next_i][0], loop_inner[next_i][1], z_rear_boss)
+        r_nxt = (loop_inner[nxt][0], loop_inner[nxt][1], z_rear_boss)
         triangles.append((f_cur, f_nxt, r_nxt))
         triangles.append((f_cur, r_nxt, r_cur))
 
-    # --- Now add Left and Right Structural Bracket Arms ---
-    bracket_depth = 65.0  # mm extending back from z_rear_boss
-    bracket_thick = 3.6   # mm thickness
-    bracket_height = 70.0 # mm height along Y (centered)
+    # --- Structural Side Mounting Arms ---
+    bracket_depth = 65.0
+    bracket_thick = 3.6
+    bracket_height = 70.0
     
     z_bracket_start = z_rear_boss
     z_bracket_end = z_bracket_start - bracket_depth
@@ -243,33 +410,17 @@ def create_unibody_cage_mesh():
     y_b_min = -bracket_height / 2.0
     y_b_max = bracket_height / 2.0
     
-    # ISO M5 Slotted Hole Specs
-    # Two slots per bracket, separated by 34mm along Z
     slots = [
         {'center_y': 0.0, 'center_z': z_bracket_start - 25.0, 'width_y': 5.5, 'len_z': 15.0},
         {'center_y': 0.0, 'center_z': z_bracket_start - 50.0, 'width_y': 5.5, 'len_z': 15.0}
     ]
     
-    # Left Arm: inner face at X = -cutout_w/2, extends to X = -cutout_w/2 - bracket_thick
-    x_left_inner = -cutout_w / 2.0
-    add_slotted_plate(triangles, x_left_inner, -bracket_thick, y_b_min, y_b_max, z_bracket_end, z_bracket_start, slots)
+    # Left Bracket (-X)
+    add_slotted_plate(triangles, -cutout_w/2.0, -bracket_thick, y_b_min, y_b_max, z_bracket_end, z_bracket_start, slots)
     
-    # Right Arm: inner face at X = cutout_w/2, extends to X = cutout_w/2 + bracket_thick
-    x_right_inner = cutout_w / 2.0
-    add_slotted_plate(triangles, x_right_inner, bracket_thick, y_b_min, y_b_max, z_bracket_end, z_bracket_start, slots)
+    # Right Bracket (+X)
+    add_slotted_plate(triangles, cutout_w/2.0, bracket_thick, y_b_min, y_b_max, z_bracket_end, z_bracket_start, slots)
     
-    # Structural Triangular Gussets on top and bottom of each bracket
-    # Reinforces the bracket-to-bezel joint against deflection
-    gusset_size = 12.0
-    # Left top gusset
-    add_box(triangles, x_left_inner - bracket_thick, x_left_inner, y_b_max - gusset_size, y_b_max, z_bracket_start - gusset_size, z_bracket_start)
-    # Left bottom gusset
-    add_box(triangles, x_left_inner - bracket_thick, x_left_inner, y_b_min, y_b_min + gusset_size, z_bracket_start - gusset_size, z_bracket_start)
-    # Right top gusset
-    add_box(triangles, x_right_inner, x_right_inner + bracket_thick, y_b_max - gusset_size, y_b_max, z_bracket_start - gusset_size, z_bracket_start)
-    # Right bottom gusset
-    add_box(triangles, x_right_inner, x_right_inner + bracket_thick, y_b_min, y_b_min + gusset_size, z_bracket_start - gusset_size, z_bracket_start)
-
     return triangles
 
 if __name__ == '__main__':
@@ -277,7 +428,6 @@ if __name__ == '__main__':
     out_stl = os.path.join(out_dir, "focus_svt_jvc_kw_v830bt_unibody_cage.stl")
     
     triangles = create_unibody_cage_mesh()
-    write_binary_stl(triangles, out_stl)
-    print(f"Generated Unibody Cage binary STL with {len(triangles)} triangles at: {out_stl}")
+    write_binary_stl(triangles, out_stl, b'2004 Focus SVT - JVC KW-V830BT Unibody Cage (Printables 1216108 Baseline)')
+    print(f"Generated Calibrated Unibody Cage binary STL ({len(triangles)} triangles) at: {out_stl}")
     print(f"File size: {os.path.getsize(out_stl)} bytes")
-
