@@ -70,27 +70,53 @@ def update_3mf() -> None:
     with zipfile.ZipFile(TARGET_3MF, "r") as zin:
         entries = {name: zin.read(name) for name in zin.namelist()}
 
-    # 1) Refresh split manifold STL meshes inside 3D/Objects/
+    # 1) Refresh split manifold STL meshes inside 3D/Objects/ (sub-object IDs match 3dmodel.model components)
     entries["3D/Objects/svt_intake_manifold_split_left_print_oriented.stl_8.model"] = build_object_model_xml(
-        3, "00080000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_left_print_oriented.stl"
+        1, "00080000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_left_print_oriented.stl"
     )
     entries["3D/Objects/svt_intake_manifold_split_right_print_oriented.stl_9.model"] = build_object_model_xml(
-        1, "00090000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_right_print_oriented.stl"
+        5, "00090000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_intake_manifold_split_right_print_oriented.stl"
     )
     entries["3D/Objects/svt_runner_boot_fit_gauge.stl_10.model"] = build_object_model_xml(
-        7, "000a0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_runner_boot_fit_gauge.stl"
+        9, "000a0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_runner_boot_fit_gauge.stl"
     )
     entries["3D/Objects/svt_tb_flange_fit_gauge.stl_11.model"] = build_object_model_xml(
-        5, "000b0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_tb_flange_fit_gauge.stl"
+        7, "000b0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_tb_flange_fit_gauge.stl"
     )
 
-    # Add IACV fit gauge as object 10 / sub-object 9 if not yet present
-    iacv_model_path = "3D/Objects/svt_iacv_flange_fit_gauge.stl_12.model"
-    entries[iacv_model_path] = build_object_model_xml(
-        9, "000c0000-81cb-4c03-9d28-80fed5dfa1dc", STL_DIR / "svt_iacv_flange_fit_gauge.stl"
-    )
+    # Add IACV fit gauge (obj 18 / sub 17) and alignment dowel pins (obj 20 / sub 19) to Plate 3
+    extra_plate3_parts = [
+        {
+            "obj_id": "18",
+            "sub_id": "17",
+            "stl_name": "svt_iacv_flange_fit_gauge.stl",
+            "model_path": "3D/Objects/svt_iacv_flange_fit_gauge.stl_12.model",
+            "uuid_base": "0018",
+            "x": "824",
+            "y": "128",
+            "z": "2",
+            "identify_id": "560",
+        },
+        {
+            "obj_id": "20",
+            "sub_id": "19",
+            "stl_name": "svt_alignment_dowel_pins.stl",
+            "model_path": "3D/Objects/svt_alignment_dowel_pins.stl_14.model",
+            "uuid_base": "0020",
+            "x": "660",
+            "y": "128",
+            "z": "2.75",
+            "identify_id": "561",
+        },
+    ]
 
-    # Ensure 3D/3dmodel.model includes object 10 on Plate 3 beside TB gauge (X=215, Y=-179.2, Z=2)
+    for part_spec in extra_plate3_parts:
+        entries[part_spec["model_path"]] = build_object_model_xml(
+            int(part_spec["sub_id"]),
+            f"{part_spec['uuid_base']}0000-81cb-4c03-9d28-80fed5dfa1dc",
+            STL_DIR / part_spec["stl_name"],
+        )
+
     ns_core = "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"
     ns_p = "http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
     ns_b = "http://schemas.bambulab.com/package/2021"
@@ -100,21 +126,29 @@ def update_3mf() -> None:
     model_root = ET.fromstring(entries["3D/3dmodel.model"])
     res_el = model_root.find(f"{{{ns_core}}}resources")
     build_el = model_root.find(f"{{{ns_core}}}build")
-    existing_obj_ids = {el.attrib.get("id") for el in res_el.findall(f"{{{ns_core}}}object")}
-    if "10" not in existing_obj_ids:
-        obj10 = ET.SubElement(
+    extra_ids = {p["obj_id"] for p in extra_plate3_parts}
+    for el in list(res_el.findall(f"{{{ns_core}}}object")):
+        if el.attrib.get("id") in extra_ids:
+            res_el.remove(el)
+    for el in list(build_el.findall(f"{{{ns_core}}}item")):
+        if el.attrib.get("objectid") in extra_ids:
+            build_el.remove(el)
+    for part_spec in extra_plate3_parts:
+        oid = part_spec["obj_id"]
+        ub = part_spec["uuid_base"]
+        obj_el = ET.SubElement(
             res_el,
             f"{{{ns_core}}}object",
-            {"id": "10", f"{{{ns_p}}}UUID": "0000000c-61cb-4c03-9d28-80fed5dfa1dc", "type": "model"},
+            {"id": oid, f"{{{ns_p}}}UUID": f"0000{ub}-61cb-4c03-9d28-80fed5dfa1dc", "type": "model"},
         )
-        comps = ET.SubElement(obj10, f"{{{ns_core}}}components")
+        comps = ET.SubElement(obj_el, f"{{{ns_core}}}components")
         ET.SubElement(
             comps,
             f"{{{ns_core}}}component",
             {
-                f"{{{ns_p}}}path": f"/{iacv_model_path}",
-                "objectid": "9",
-                f"{{{ns_p}}}UUID": "000c0000-b206-40ff-9872-83e8017abed1",
+                f"{{{ns_p}}}path": f"/{part_spec['model_path']}",
+                "objectid": part_spec["sub_id"],
+                f"{{{ns_p}}}UUID": f"{ub}0000-b206-40ff-9872-83e8017abed1",
                 "transform": "1 0 0 0 1 0 0 0 1 0 0 0",
             },
         )
@@ -122,14 +156,35 @@ def update_3mf() -> None:
             build_el,
             f"{{{ns_core}}}item",
             {
-                "objectid": "10",
-                f"{{{ns_p}}}UUID": "00000010-b1ec-4553-aec9-835e5b724bb4",
-                "transform": "1 0 0 0 1 0 0 0 1 215 -179.2 2",
+                "objectid": oid,
+                f"{{{ns_p}}}UUID": f"0000{ub}-b1ec-4553-aec9-835e5b724bb4",
+                "transform": f"1 0 0 0 1 0 0 0 1 {part_spec['x']} {part_spec['y']} {part_spec['z']}",
                 "printable": "1",
                 "auto_drop": "1",
             },
         )
-        entries["3D/3dmodel.model"] = ET.tostring(model_root, encoding="utf-8", xml_declaration=True)
+    entries["3D/3dmodel.model"] = ET.tostring(model_root, encoding="utf-8", xml_declaration=True)
+
+    # Register added external .model files in 3D/_rels/3dmodel.model.rels (required by 3MF Production spec)
+    ns_rel = "http://schemas.openxmlformats.org/package/2006/relationships"
+    ET.register_namespace("", ns_rel)
+    rels_root = ET.fromstring(entries["3D/_rels/3dmodel.model.rels"])
+    existing_targets = {r.attrib.get("Target") for r in rels_root.findall(f"{{{ns_rel}}}Relationship")}
+    rel_idx = len(list(rels_root)) + 1
+    for part_spec in extra_plate3_parts:
+        target_path = f"/{part_spec['model_path']}"
+        if target_path not in existing_targets:
+            ET.SubElement(
+                rels_root,
+                f"{{{ns_rel}}}Relationship",
+                {
+                    "Target": target_path,
+                    "Id": f"rel-{rel_idx}",
+                    "Type": "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel",
+                },
+            )
+            rel_idx += 1
+    entries["3D/_rels/3dmodel.model.rels"] = ET.tostring(rels_root, encoding="utf-8", xml_declaration=True)
 
     # 2) Update Metadata/project_settings.config
     ps = json.loads(entries["Metadata/project_settings.config"].decode("utf-8"))
@@ -205,6 +260,7 @@ def update_3mf() -> None:
         "svt_runner_boot_fit_gauge.stl",
         "svt_tb_flange_fit_gauge.stl",
         "svt_iacv_flange_fit_gauge.stl",
+        "svt_alignment_dowel_pins.stl",
     }
 
     def set_meta(elem: ET.Element, key: str, value: str) -> None:
@@ -214,35 +270,48 @@ def update_3mf() -> None:
                 return
         ET.SubElement(elem, "metadata", key=key, value=str(value))
 
-    existing_cfg_ids = {o.attrib.get("id") for o in cfg.findall("object")}
-    if "10" not in existing_cfg_ids:
-        obj10_cfg = ET.SubElement(cfg, "object", id="10")
-        set_meta(obj10_cfg, "name", "svt_iacv_flange_fit_gauge.stl")
-        set_meta(obj10_cfg, "extruder", "2")
-        part9 = ET.SubElement(obj10_cfg, "part", id="9", subtype="normal_part")
-        set_meta(part9, "name", "svt_iacv_flange_fit_gauge.stl")
-        set_meta(part9, "matrix", "1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1")
-        set_meta(part9, "source_file", "svt_iacv_flange_fit_gauge.stl")
-        set_meta(part9, "source_object_id", "0")
-        set_meta(part9, "source_volume_id", "0")
-        set_meta(part9, "source_offset_x", "0")
-        set_meta(part9, "source_offset_y", "0")
-        set_meta(part9, "source_offset_z", "2")
+    for o in list(cfg.findall("object")):
+        if o.attrib.get("id") in extra_ids:
+            cfg.remove(o)
+    for plate in cfg.findall("plate"):
+        for mi in list(plate.findall("model_instance")):
+            if any(m.attrib.get("key") == "object_id" and m.attrib.get("value") in extra_ids for m in mi.findall("metadata")):
+                plate.remove(mi)
+    asm = cfg.find("assemble")
+    if asm is not None:
+        for ai in list(asm.findall("assemble_item")):
+            if ai.attrib.get("object_id") in extra_ids:
+                asm.remove(ai)
+
+    for part_spec in extra_plate3_parts:
+        oid = part_spec["obj_id"]
+        obj_cfg = ET.SubElement(cfg, "object", id=oid)
+        set_meta(obj_cfg, "name", part_spec["stl_name"])
+        set_meta(obj_cfg, "extruder", "2")
+        sub_part = ET.SubElement(obj_cfg, "part", id=part_spec["sub_id"], subtype="normal_part")
+        set_meta(sub_part, "name", part_spec["stl_name"])
+        set_meta(sub_part, "matrix", "1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1")
+        set_meta(sub_part, "source_file", part_spec["stl_name"])
+        set_meta(sub_part, "source_object_id", "0")
+        set_meta(sub_part, "source_volume_id", "0")
+        set_meta(sub_part, "source_offset_x", "0")
+        set_meta(sub_part, "source_offset_y", "0")
+        set_meta(sub_part, "source_offset_z", part_spec["z"])
 
         for plate in cfg.findall("plate"):
             pid = next((m.attrib.get("value") for m in plate.findall("metadata") if m.attrib.get("key") == "plater_id"), None)
             if pid == "3":
                 mi = ET.SubElement(plate, "model_instance")
-                set_meta(mi, "object_id", "10")
+                set_meta(mi, "object_id", oid)
                 set_meta(mi, "instance_id", "0")
-                set_meta(mi, "identify_id", "560")
+                set_meta(mi, "identify_id", part_spec["identify_id"])
 
         asm = cfg.find("assemble")
         if asm is not None:
             ET.SubElement(
                 asm,
                 "assemble_item",
-                {"object_id": "10", "instance_id": "0", "transform": "1 0 0 0 1 0 0 0 1 0 0 2", "offset": "0 0 0"},
+                {"object_id": oid, "instance_id": "0", "transform": f"1 0 0 0 1 0 0 0 1 0 0 {part_spec['z']}", "offset": "0 0 0"},
             )
 
     for obj in cfg.findall("object"):

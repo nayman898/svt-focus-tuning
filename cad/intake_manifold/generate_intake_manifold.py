@@ -34,7 +34,6 @@ matplotlib.use("Agg")
 from matplotlib.path import Path as MplPath
 from matplotlib.patches import PathPatch
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 from shapely.geometry import Polygon as ShapelyPolygon
 import trimesh
@@ -232,10 +231,20 @@ def make_cylinder_along(
 
 def plenum_area_scale(x: float, params: dict) -> float:
     p = params["plenum"]
-    x0 = p["cyl1_end_x_mm"]
-    x1 = p["cyl4_end_x_mm"]
-    t = np.clip((x - x0) / (x1 - x0), 0.0, 1.0)
-    return float(p["taper_cyl1_area_ratio"] + (1.0 - p["taper_cyl1_area_ratio"]) * t)
+    x0 = float(p["cyl1_end_x_mm"])
+    x1 = float(p["cyl4_end_x_mm"])
+    r_cyl1 = float(p["taper_cyl1_area_ratio"])
+    r_split = p.get("split_x_area_ratio")
+    if r_split is None:
+        t = np.clip((x - x0) / (x1 - x0), 0.0, 1.0)
+        return float(r_cyl1 + (1.0 - r_cyl1) * t)
+    r_split = float(r_split)
+    x_split = float(params.get("center_split", {}).get("split_x_mm", 0.0))
+    if x <= x_split:
+        t = np.clip((x - x0) / (x_split - x0), 0.0, 1.0)
+        return float(r_cyl1 + (r_split - r_cyl1) * t)
+    t = np.clip((x - x_split) / (x1 - x_split), 0.0, 1.0)
+    return float(r_split + (1.0 - r_split) * t)
 
 
 def build_plenum_loft(params: dict, is_inner: bool) -> md.Manifold:
@@ -270,8 +279,12 @@ def build_plenum_loft(params: dict, is_inner: bool) -> md.Manifold:
         ring = np.column_stack([np.full(n_pts, x), uv[:, 0], uv[:, 1]])
         rings.append(ring)
 
-    # 2) Linearly tapered plenum barrel from x_cyl1 to x_cyl4
+    # 2) Linearly/piecewise tapered plenum barrel from x_cyl1 to x_cyl4
     xs = np.linspace(x_cyl1, x_cyl4, p["axial_segments"])
+    x_split = float(params.get("center_split", {}).get("split_x_mm", 0.0))
+    if p.get("split_x_area_ratio") is not None and x_cyl1 < x_split < x_cyl4:
+        if not np.any(np.isclose(xs, x_split, atol=1e-4)):
+            xs = np.sort(np.append(xs, x_split))
     for x in xs:
         s = math.sqrt(plenum_area_scale(float(x), params))
         uv = rounded_rect_points(w_base * s, h_base * s, r_base * s, n_pts)
@@ -313,11 +326,12 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
 
     entry_d = sw["plenum_entry_diameter_mm"]
     entry_w_in = entry_d
-    entry_h_in = entry_d - 6.0  # slightly oval (44 x 38 mm) for vertical plenum breathing margin
+    entry_h_in = entry_d - 6.0  # slightly oval (e.g. 46 x 40 mm) for vertical plenum breathing margin
     entry_r_in = entry_h_in * 0.48
-    entry_w_out = entry_w_in + 2.0 * wall
-    entry_h_out = entry_h_in + 2.0 * wall
-    entry_r_out = entry_r_in + wall
+    entry_wall = max(wall, 5.0)
+    entry_w_out = entry_w_in + 2.0 * entry_wall
+    entry_h_out = entry_h_in + 2.0 * entry_wall
+    entry_r_out = entry_r_in + entry_wall
 
     tip_y = sp["tip_y_mm"]
     land_len = sp["land_length_mm"]
@@ -325,13 +339,22 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
     sp_z = sp["center_z_mm"]
 
     wall_flush = bool(bm.get("wall_flush_bellmouth", False))
-    inlet_dir = np.array([0.0, -math.cos(math.radians(18.0)), -math.sin(math.radians(18.0))])
+    cyl_idx = min(range(len(r_cfg["center_x_mm"])), key=lambda idx: abs(r_cfg["center_x_mm"][idx] - x_center))
+    scoop_angles = bm.get("axial_entry_angles_deg", [0.0, 0.0, 0.0, 0.0])
+    alpha_x_deg = float(scoop_angles[cyl_idx]) if (wall_flush and cyl_idx < len(scoop_angles)) else 0.0
+    ax_rad = math.radians(alpha_x_deg)
+    el_rad = math.radians(18.0)
+    inlet_dir = np.array([
+        -math.sin(ax_rad),
+        -math.cos(el_rad) * math.cos(ax_rad),
+        -math.sin(el_rad) * math.cos(ax_rad),
+    ])
     if wall_flush:
         # Contour the velocity-stack trumpet flush into the tapered plenum inner rear wall
         # so zero protruding sleeve obstructs axial cross-flow feeding Cylinders 1-3.
         s_x = math.sqrt(plenum_area_scale(x_center, params))
         y_plenum_rear_in = -0.5 * params["plenum"]["inner_width_y_mm"] * s_x
-        p_bm_tip = np.array([x_center, y_plenum_rear_in + 8.5, -5.0])
+        p_bm_tip = np.array([x_center + 14.0 * math.sin(ax_rad), y_plenum_rear_in + 8.5, -5.0])
         p0 = p_bm_tip + inlet_dir * 18.0
     else:
         # Legacy protruding sleeve (kept toggleable for baseline CFD comparison)
@@ -582,7 +605,6 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
     r_in = pl["inner_corner_radius_mm"] * s
     w_out = w_in + 2.0 * wall
     h_out = h_in + 2.0 * wall
-    r_out = r_in + wall
 
     ext = cs["flange_radial_extension_mm"]
     w_fl = w_out + 2.0 * ext
@@ -881,10 +903,35 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
         )
     iacv_gauge = m_diff(iac_plate, iac_cutters)
 
+    # Printable horizontal flat-bottom alignment dowel pins (4x pins connected by breakaway tab)
+    pin_len = float(g.get("dowel_pin_length_mm", 20.0))
+    pin_diams = g.get("dowel_pin_diameters_mm", [5.85, 5.75])
+    # Build 2 pins of each diameter along Y = [-18, -6, +6, +18], laid horizontally along X
+    pin_list_diams = [float(pin_diams[0]), float(pin_diams[0]), float(pin_diams[-1]), float(pin_diams[-1])]
+    y_offsets = [-18.0, -6.0, 6.0, 18.0]
+    pin_solids: list[md.Manifold] = []
+    for d_pin, y_off in zip(pin_list_diams, y_offsets):
+        r_pin = d_pin * 0.5
+        r_ch = max(r_pin - 0.85, 0.5)
+        p_rings = []
+        for z_loc, rad in [(0.0, r_ch), (0.9, r_pin), (pin_len - 0.9, r_pin), (pin_len, r_ch)]:
+            uv = rounded_rect_points(2.0 * rad, 2.0 * rad, rad, 48)
+            p_rings.append(np.column_stack([uv[:, 0], uv[:, 1], np.full(48, z_loc)]))
+        pin_v = trimesh_to_manifold(loft_closed_solid(p_rings))
+        # Rotate +90 deg around Y (Z -> +X), center in X, and place bottom -0.35 mm below Z=0 for flat pad
+        pin_h = pin_v.rotate([0.0, 90.0, 0.0]).translate([-pin_len * 0.5, y_off, r_pin - 0.35])
+        pin_solids.append(pin_h)
+
+    runner_tab = md.Manifold.cube([1.8, 38.0, 0.85], center=True).translate([0.0, 0.0, 0.425])
+    pins_raw = m_union([*pin_solids, runner_tab])
+    flat_bed_clip = md.Manifold.cube([200.0, 200.0, 200.0], center=True).translate([0.0, 0.0, 100.0])
+    dowel_pins_set = pins_raw ^ flat_bed_clip
+
     return {
         "boot_fit_gauge": boot_gauge,
         "tb_flange_fit_gauge": tb_gauge,
         "iacv_flange_fit_gauge": iacv_gauge,
+        "alignment_dowel_pins": dowel_pins_set,
     }
 
 
@@ -1022,6 +1069,7 @@ def assemble_all(params: dict):
         "svt_runner_boot_fit_gauge": gauges["boot_fit_gauge"],
         "svt_tb_flange_fit_gauge": gauges["tb_flange_fit_gauge"],
         "svt_iacv_flange_fit_gauge": gauges["iacv_flange_fit_gauge"],
+        "svt_alignment_dowel_pins": gauges["alignment_dowel_pins"],
         "_plenum_inner_cavity": pl_inner,
         "_iacv_floor_thickness_mm": iacv_parts["floor_thickness_mm"] if iacv_parts else None,
     }
@@ -1159,8 +1207,8 @@ def render_overview_png(meshes: dict[str, trimesh.Trimesh], solids: dict[str, md
 
 def render_1to1_svg(solids: dict[str, md.Manifold], params: dict, out_path: Path):
     """Generate a true 1:1 mm-unit SVG template for physical caliper comparison of key interfaces."""
-    # 1) Boot Spigot face section (from boot_fit_gauge at Z=38mm)
-    spigot_sec = solids["svt_runner_boot_fit_gauge"].slice(38.0).to_polygons()
+    # 1) Boot Spigot face section (from boot_fit_gauge at Z=24mm clean clamping land)
+    spigot_sec = solids["svt_runner_boot_fit_gauge"].slice(24.0).to_polygons()
     # 2) Center split flange face (from split_left at X=-1 mm, rotated so X->Z)
     split_sec = solids["svt_intake_manifold_split_left_cyl1_2"].rotate([0.0, -90.0, 0.0]).slice(-1.0).to_polygons()
     # 3) TB flange face (from tb_flange_fit_gauge at Z=2 mm)
@@ -1170,8 +1218,20 @@ def render_1to1_svg(solids: dict[str, md.Manifold], params: dict, out_path: Path
 
     # Arrange horizontally across a 530 x 175 mm SVG canvas
     width_mm, height_mm = 530.0, 175.0
+    sp_cfg = params["runners"]["spigot"]
+    sp_out_w = sp_cfg["outer_width_mm"]
+    sp_out_h = sp_cfg["outer_height_mm"]
+    sp_in_w = sp_out_w - 2.0 * sp_cfg["wall_thickness_mm"]
+    sp_in_h = sp_out_h - 2.0 * sp_cfg["wall_thickness_mm"]
+    if abs(sp_out_w - sp_out_h) < 1e-3:
+        spigot_label = f'Silicone Boot Spigot\n(Ø{sp_out_w:.1f} outer / Ø{sp_in_w:.1f} inner — 2" Boot)'
+    else:
+        spigot_label = (
+            f"Silicone Boot Spigot\n"
+            f"({int(round(sp_out_w))}x{int(round(sp_out_h))} outer / {int(round(sp_in_w))}x{int(round(sp_in_h))} inner)"
+        )
     centers = [
-        ("Silicone Boot Spigot\n(48x36 outer / 38x26 inner)", spigot_sec, (55.0, 88.0), lambda p: (p[0], -p[1])),
+        (spigot_label, spigot_sec, (55.0, 88.0), lambda p: (p[0], -p[1])),
         ("Center Split Flange\n(6x M6 + 2x 6mm Dowel + O-Ring)", split_sec, (195.0, 88.0), lambda p: (p[1], p[0])),
         ("65mm Throttle Body Flange\n(70x70 mm 4-Bolt Pattern)", tb_sec, (345.0, 88.0), lambda p: (p[0], -p[1])),
         ("2-Bolt Ford IACV Flange\n(46mm Bolts / Dual 13mm Ports)", iacv_sec, (465.0, 88.0), lambda p: (p[0], -p[1])),

@@ -296,13 +296,21 @@ def audit_cad_flow_geometry(fluid_meta: dict, params: dict) -> dict:
 # 2. Conservative 3D Finite-Volume Navier-Stokes Solver (Jacobi-PCG)
 # ---------------------------------------------------------------------------
 
-def voxelize_fluid_solid(fluid_solid: md.Manifold, dx: float = 5.5) -> dict:
-    """Classify a 3D uniform Cartesian grid against exact Z-slices of `fluid_solid`."""
+def voxelize_fluid_solid(fluid_solid: md.Manifold, dx: float = 4.0) -> dict:
+    """Classify a 3D uniform Cartesian grid against exact Z-slices of `fluid_solid`.
+    Aligns X grid nodes to exact cylinder periodicity (92 mm = 23 * 4.0 mm, centers at 4k+2)
+    so all 4 runner spigot cross-sections have identical discrete voxel resolution.
+    """
     solid_mesh = gen.manifold_to_trimesh(fluid_solid)
     bmin, bmax = solid_mesh.bounds[0], solid_mesh.bounds[1]
 
-    xs = np.arange(bmin[0] - dx * 0.5, bmax[0] + dx * 0.75, dx)
-    ys = np.arange(bmin[1] - dx * 0.5, bmax[1] + dx * 0.75, dx)
+    # Snap X grid onto dx-stepped points shifted by 2.0 mm when dx == 4.0 so x in {-138,-46,+46,+138} align identically
+    x_off = 2.0 if abs(dx - 4.0) < 1e-6 else 0.0
+    x_start = math.floor((bmin[0] - x_off) / dx) * dx + x_off - dx * 0.5
+    if abs(dx - 4.0) < 1e-6:
+        x_start = math.floor((bmin[0] - 2.0) / dx) * dx + 2.0
+    xs = np.arange(x_start, bmax[0] + dx * 0.75, dx)
+    ys = np.arange(math.floor(bmin[1] / dx) * dx, bmax[1] + dx * 0.75, dx)
     zs = np.arange(bmin[2] + dx * 0.35, bmax[2] - dx * 0.25, dx)
     nx, ny, nz = len(xs), len(ys), len(zs)
 
@@ -351,7 +359,7 @@ def solve_3d_navier_stokes_fvm(
     fluid_meta: dict,
     total_mass_flow_kgs: float,
     active_cyls: list[int] | None = None,
-    n_picard: int = 16,
+    n_picard: int = 40,
 ) -> dict:
     """
     Strictly conservative 3D steady turbulent Navier-Stokes projection solver (Oseen-SIMPLE
@@ -495,7 +503,7 @@ def solve_3d_navier_stokes_fvm(
     inv_sqrt_f = -1.8 * math.log10((EPSILON_WALL_M / (3.7 * dh_ref)) ** 1.11 + 6.9 / max(re_ref, 5000.0))
     f_darcy = 1.0 / (inv_sqrt_f**2)
     nu_eff = 0.0045  # Mixing-length turbulent eddy viscosity (~0.003-0.005 m^2/s for 40-50 m/s in 40 mm duct)
-    dt_pseudo = 0.00020
+    dt_pseudo = 0.00016
     alpha_p = 0.45
     alpha_u = 0.55
 
@@ -693,12 +701,24 @@ def solve_1d_compressible_and_pulsating(
     wall_flush = bool(bm.get("wall_flush_bellmouth", False))
     cant_deg = float(tb["forward_cant_deg"])
     flare_mm = float(bm["flare_radial_mm"])
+    scoop_angles = bm.get("axial_entry_angles_deg", [0.0, 0.0, 0.0, 0.0])
+
+    sp = rn["spigot"]
+    sp_w_in = sp["outer_width_mm"] - 2.0 * sp["wall_thickness_mm"]
+    sp_h_in = sp["outer_height_mm"] - 2.0 * sp["wall_thickness_mm"]
+    sp_r_in = sp["corner_radius_mm"] - sp["wall_thickness_mm"]
+    perim_exit_m = (2.0 * (sp_w_in - 2.0 * sp_r_in) + 2.0 * (sp_h_in - 2.0 * sp_r_in) + 2.0 * math.pi * sp_r_in) * 1e-3
+
+    en_w = rn["sweep"]["plenum_entry_diameter_mm"]
+    en_h = en_w - 6.0
+    en_r = en_h * 0.48
+    perim_throat_m = (2.0 * (en_w - 2.0 * en_r) + 2.0 * (en_h - 2.0 * en_r) + 2.0 * math.pi * en_r) * 1e-3
 
     a_tb = math.pi * 0.25 * (tb["bore_diameter_mm"] * 1e-3) ** 2
     a_exit = cad_audit["runner_exit_area_mm2"] * 1e-6
     a_throat = cad_audit["runner_throat_area_mm2"] * 1e-6
-    dh_exit = 0.0308
-    dh_throat = 0.0405
+    dh_exit = 4.0 * a_exit / perim_exit_m
+    dh_throat = 4.0 * a_throat / perim_throat_m
 
     xs_cyl = np.array(rn["center_x_mm"], dtype=float)
     w0 = pl["inner_width_y_mm"] * 1e-3
@@ -741,11 +761,14 @@ def solve_1d_compressible_and_pulsating(
     # Lower OEM Zetec runner + intake valve curtain steady-equivalent loss K_downstream (ref a_exit)
     # Calibrated from the 720-deg DOHC valve lift & 2.02L piston displacement cycle at 7,000 RPM:
     # peak runner exit velocity ~172 m/s (q_exit ~ 35.8 kPa) while mean stroke intake valve drop ~22 kPa.
-    # Referenced to mean steady branch flow across effective 25% stroke duty -> K_head_valve ~ 3.2.
-    k_head_valve = 3.2
+    # Fixed OEM cylinder-head & valve curtain impedance referenced to baseline exit area (884.1 mm^2),
+    # scaled by (a_exit / a_base)^2 so dynamic head normalization keeps downstream resistance invariant.
+    k_head_valve = 3.2 * ((a_exit / 884.1e-6) ** 2)
 
     mdot_c = np.full(4, mdot_cyl_ref, dtype=float)
     p_pl_nodes = np.full(4, P0_IN_PA - dp_tb_pa, dtype=float)
+    p_pl_eff = np.full(4, P0_IN_PA - dp_tb_pa, dtype=float)
+    dp_scoop = np.zeros(4, dtype=float)
     k_runner_tot = np.zeros(4, dtype=float)
 
     for _ in range(45):
@@ -773,24 +796,17 @@ def solve_1d_compressible_and_pulsating(
         p_pl_nodes[3] = p_04 - q_pl4  # Strictly < P0_IN_PA
 
         pitch_m = rn["pitch_mm"] * 1e-3
-        # Ram static recovery relative to Cyl 4 (capped by available dynamic head at Cyl 4)
-        # balanced against sequential pulse axial path Fanno friction + acceleration + bluff stack wake drag
         for j in (2, 1, 0):
             dh_mid = plenum_dh_at_x(0.5 * (xs_cyl[j + 1] + xs_cyl[j]))
             v_up = v_ax[j + 1]
             v_dn = v_ax[j]
-            v_mid = 0.5 * (v_up + v_dn)
             v_p_mid = 0.5 * (v_pulse_seg[j + 1] + v_pulse_seg[j])
 
-            # Background overlap deceleration ram recovery (capped so P_static < P_04)
             dp_ram = 0.5 * RHO0 * (v_up**2 - v_dn**2) * 0.72
-            # Sequential intake-pulse path friction + taper acceleration loss
             re_p = RHO0 * max(v_p_mid, 1.0) * dh_mid / MU_AIR
             f_p = 1.0 / (-1.8 * math.log10((EPSILON_WALL_M / (3.7 * dh_mid)) ** 1.11 + 6.9 / max(re_p, 5000.0))) ** 2
             dp_fric_pulse = f_p * (pitch_m / dh_mid) * 0.5 * RHO0 * (v_p_mid**2) * 1.45
-            # Narrowing taper kinetic acceleration demand (0.5*rho*(v_p_dn^2 - v_p_up^2)*K_accel)
             dp_taper_accel = 0.22 * 0.5 * RHO0 * max(v_pulse_seg[j] ** 2 - v_pulse_seg[j + 1] ** 2, 0.0)
-            # Protruding stack bluff-body wake pressure loss along X
             b_k = beta_cyl[j + 1]
             k_wake = 1.35 * ((b_k / max(1.0 - b_k, 0.25)) ** 2) if not wall_flush else 0.0
             dp_wake = k_wake * 0.5 * RHO0 * max(v_up**2, (0.65 * v_p_mid) ** 2)
@@ -803,7 +819,11 @@ def solve_1d_compressible_and_pulsating(
             v_throat_i = v_exit_i * (a_exit / a_throat)
             vr = v_ax[i] / max(v_throat_i, 1.0)
             c_turn = 0.14 if wall_flush else 0.42
-            k_turn_i = c_turn * (vr**2)
+            ax_rad = math.radians(float(scoop_angles[i])) if (wall_flush and i < len(scoop_angles)) else 0.0
+            k_turn_i = c_turn * (vr**2) * ((1.0 - math.sin(ax_rad)) ** 2)
+            # Axial dynamic-pressure scoop recovery from tilting bellmouth into oncoming plenum stream
+            dp_scoop[i] = 0.55 * math.sin(ax_rad) * 0.5 * RHO0 * (v_ax[i] ** 2)
+            p_pl_eff[i] = p_pl_nodes[i] + dp_scoop[i]
 
             k_jet_4 = 0.0
             if i == 3:
@@ -814,15 +834,14 @@ def solve_1d_compressible_and_pulsating(
         def branch_sum(p_cyl_back: float) -> np.ndarray:
             arr = np.zeros(4)
             for i in range(4):
-                dp_i = max(p_pl_nodes[i] - p_cyl_back, 10.0)
+                dp_i = max(p_pl_eff[i] - p_cyl_back, 10.0)
                 k_series = k_runner_tot[i] + k_head_valve
-                y_comp = max(1.0 - dp_i / (3.0 * GAMMA * p_pl_nodes[i]), 0.85)
+                y_comp = max(1.0 - dp_i / (3.0 * GAMMA * p_pl_eff[i]), 0.85)
                 cd_series = 1.0 / math.sqrt(k_series)
-                # Effective active intake stroke duty ~ 0.28 per cylinder (25% basic stroke + cam overlap)
                 arr[i] = cd_series * y_comp * (a_exit * 0.28) * math.sqrt(2.0 * RHO0 * dp_i)
             return arr
 
-        lo, hi = P0_IN_PA - 75000.0, float(np.min(p_pl_nodes)) - 15.0
+        lo, hi = P0_IN_PA - 75000.0, float(np.min(p_pl_eff)) - 15.0
         for _ in range(55):
             mid = 0.5 * (lo + hi)
             if np.sum(branch_sum(mid)) > mdot_total_ref:
@@ -888,6 +907,8 @@ def solve_1d_compressible_and_pulsating(
         dvol_dt = a_piston * d_x_dth * omega
         return vol, dvol_dt
 
+    # Use effective driving pressure p_pl_eff (static + axial scoop recovery) in pulsating loop too
+    p_pl_bias_ref = p_pl_eff - float(np.mean(p_pl_eff))
     p_cyl_arr = np.full(4, P0_IN_PA)
     for cyc in range(3):
         for s_idx, th_g in enumerate(ca_deg):
@@ -901,7 +922,7 @@ def solve_1d_compressible_and_pulsating(
                 vol_c, dvol_c = cyl_vol_dvol(th_loc)
                 av = valve_area(th_loc)
 
-                p_branch_bias = p_pl_nodes[c] - float(np.mean(p_pl_nodes))
+                p_branch_bias = p_pl_bias_ref[c]
                 p_pl_local = p_pl_inst + p_branch_bias
 
                 loss_pa = 0.5 * k_runner_tot[c] * m_run_inst[c] * abs(m_run_inst[c]) / (RHO0 * a_exit**2)
@@ -984,7 +1005,7 @@ def solve_1d_compressible_and_pulsating(
     }
 
 
-def evaluate_design(params: dict, label: str, dx_vox: float = 5.5, run_3d: bool = True) -> dict:
+def evaluate_design(params: dict, label: str, dx_vox: float = 4.0, run_3d: bool = True) -> dict:
     """Run complete CAD audit + 3D FVM Navier-Stokes + 1D Compressible/Pulsating verification."""
     t0 = time.perf_counter()
     fluid = extract_fluid_cavity(params)
@@ -995,7 +1016,11 @@ def evaluate_design(params: dict, label: str, dx_vox: float = 5.5, run_3d: bool 
         "label": label,
         "params_key": {
             "wall_flush_bellmouth": bool(params["runners"]["bellmouth"].get("wall_flush_bellmouth", False)),
+            "spigot_wall_mm": params["runners"]["spigot"]["wall_thickness_mm"],
+            "runner_entry_mm": params["runners"]["sweep"]["plenum_entry_diameter_mm"],
             "flare_radial_mm": params["runners"]["bellmouth"]["flare_radial_mm"],
+            "axial_entry_angles_deg": params["runners"]["bellmouth"].get("axial_entry_angles_deg", [0.0, 0.0, 0.0, 0.0]),
+            "plenum_size_mm": [params["plenum"]["inner_width_y_mm"], params["plenum"]["inner_height_z_mm"]],
             "taper_cyl1_area_ratio": params["plenum"]["taper_cyl1_area_ratio"],
             "forward_cant_deg": params["throttle_body"]["forward_cant_deg"],
         },
@@ -1007,7 +1032,7 @@ def evaluate_design(params: dict, label: str, dx_vox: float = 5.5, run_3d: bool 
     if run_3d:
         grid = voxelize_fluid_solid(fluid["fluid_solid"], dx=dx_vox)
         ns3d = solve_3d_navier_stokes_fvm(
-            grid, params, fluid, total_mass_flow_kgs=sim1d["total_mass_flow_kgs"], active_cyls=[1, 2, 3, 4], n_picard=16
+            grid, params, fluid, total_mass_flow_kgs=sim1d["total_mass_flow_kgs"], active_cyls=[1, 2, 3, 4], n_picard=40
         )
         res["cfd_3d"] = {k: v for k, v in ns3d.items() if not k.startswith("slice_")}
         res["_cfd_3d_slices"] = ns3d
@@ -1019,10 +1044,24 @@ def evaluate_design(params: dict, label: str, dx_vox: float = 5.5, run_3d: bool 
 
 def make_baseline_params(opt_params: dict) -> dict:
     base = copy.deepcopy(opt_params)
-    base["plenum"]["taper_cyl1_area_ratio"] = 0.78
+    base["runners"]["spigot"]["outer_width_mm"] = 48.0
+    base["runners"]["spigot"]["outer_height_mm"] = 36.0
+    base["runners"]["spigot"]["corner_radius_mm"] = 16.0
+    base["runners"]["spigot"]["wall_thickness_mm"] = 5.0
+    base["runners"]["spigot"]["land_length_mm"] = 28.0
+    base["runners"]["spigot"]["retention_bead_height_mm"] = 1.5
+    base["runners"]["spigot"]["retention_bead_width_mm"] = 5.5
+    base["runners"]["spigot"]["retention_bead_offset_from_tip_mm"] = 4.0
+    base["runners"]["sweep"]["plenum_entry_diameter_mm"] = 44.0
     base["runners"]["bellmouth"]["wall_flush_bellmouth"] = False
     base["runners"]["bellmouth"]["flare_radial_mm"] = 6.0
     base["runners"]["bellmouth"]["wall_thickness_mm"] = 4.5
+    base["runners"]["bellmouth"]["axial_entry_angles_deg"] = [0.0, 0.0, 0.0, 0.0]
+    base["plenum"]["inner_width_y_mm"] = 96.0
+    base["plenum"]["inner_height_z_mm"] = 84.0
+    base["plenum"]["inner_corner_radius_mm"] = 38.0
+    base["plenum"]["taper_cyl1_area_ratio"] = 0.78
+    base["plenum"].pop("split_x_area_ratio", None)
     base["throttle_body"]["forward_cant_deg"] = 10.0
     return base
 
@@ -1051,8 +1090,8 @@ def plot_verification_report(
 
     for ax_idx, (res, title_tag) in enumerate(
         [
-            (base_res, "Baseline CAD (Protruding 14mm Sleeves, 0.78 Taper, 10° TB)"),
-            (opt_res, "Boost-Optimized CAD (Wall-Flush 6.5mm Stacks, 0.64 Taper, 8° TB)"),
+            (base_res, "Baseline CAD (14mm Sleeves, 38x26mm, 96x84mm, 0.78 Taper, 10° TB)"),
+            (opt_res, 'Stage-2 Max-Boost Compatible (Flush +7mm, Ø42.8 (2" Round Boot), 0.60/0.889 Taper, Scoop, 7° TB)'),
         ],
         start=1,
     ):
@@ -1064,7 +1103,8 @@ def plot_verification_report(
         vx = sl["slice_vx"].T
         vy = sl["slice_vy"].T
         xs, ys = g["xs_mm"], g["ys_mm"]
-        extent = [xs[0] - 2.75, xs[-1] + 2.75, ys[0] - 2.75, ys[-1] + 2.75]
+        half_dx = g["dx_mm"] * 0.5
+        extent = [xs[0] - half_dx, xs[-1] + half_dx, ys[0] - half_dx, ys[-1] + half_dx]
         im = ax.imshow(spd, origin="lower", extent=extent, aspect="equal", cmap="inferno", vmin=0.0, vmax=vmax_spd)
         step = 3
         qx, qy = np.meshgrid(xs[::step], ys[::step])
@@ -1093,10 +1133,10 @@ def plot_verification_report(
     ao_bare = np.asarray(opt_res["cad_audit"]["area_bare_mm2"])
     ao_core = np.asarray(opt_res["cad_audit"]["area_plenum_core_mm2"])
     m_in = (xb >= -162) & (xb <= 162)
-    ax3.plot(xb[m_in], ab_bare[m_in], color="#b0b0b0", ls="--", lw=1.2, label="Baseline Bare Plenum Area (0.78)")
-    ax3.plot(xb[m_in], ab_core[m_in], color="#c0392b", lw=2.2, label=f"Baseline Effective Flow Area (Projected Wake Blockage {max(base_res['cad_audit']['cyl_peak_blockage_pct']):.1f}%)")
-    ax3.plot(xb[m_in], ao_bare[m_in], color="#85c1e9", ls="--", lw=1.2, label="Optimized Bare Plenum Area (0.64)")
-    ax3.plot(xb[m_in], ao_core[m_in], color="#1a5276", lw=2.3, label=f"Optimized Unobstructed Area (Blockage {max(opt_res['cad_audit']['cyl_peak_blockage_pct']):.1f}%)")
+    ax3.plot(xb[m_in], ab_bare[m_in], color="#b0b0b0", ls="--", lw=1.2, label="Baseline Bare Plenum Area (96x84, 0.78)")
+    ax3.plot(xb[m_in], ab_core[m_in], color="#c0392b", lw=2.2, label=f"Baseline Effective Flow Area (Wake Blockage {max(base_res['cad_audit']['cyl_peak_blockage_pct']):.1f}%)")
+    ax3.plot(xb[m_in], ao_bare[m_in], color="#85c1e9", ls="--", lw=1.2, label="Stage-2 Bare Plenum Area (96x84, 0.60->0.889)")
+    ax3.plot(xb[m_in], ao_core[m_in], color="#1a5276", lw=2.3, label=f"Stage-2 Unobstructed Area (Blockage {max(opt_res['cad_audit']['cyl_peak_blockage_pct']):.1f}%)")
     for idx, xc in enumerate([-138, -46, 46, 138], start=1):
         ax3.axvline(xc, color="#888888", lw=0.7, ls=":")
         ax3.text(xc, 7100, f"Cyl {idx}", ha="center", va="bottom", fontsize=8)
@@ -1113,10 +1153,10 @@ def plot_verification_report(
     tapers = [s["taper"] for s in sweep_taper]
     spread_flush = [s["spread_flush_pct"] for s in sweep_taper]
     spread_prot = [s["spread_protruding_pct"] for s in sweep_taper]
-    ax4.plot(tapers, spread_prot, "o--", color="#c0392b", lw=1.8, ms=5, label="Protruding Stacks (14 mm) — 1D Compressible")
-    ax4.plot(tapers, spread_flush, "s-", color="#117864", lw=2.3, ms=5.5, label="Wall-Flush Bellmouths (6.5 mm) — 1D Compressible")
-    ax4.scatter([0.78], [base_res["sim_1d_7000rpm"]["ve_maldistribution_spread_pct"]], color="#922b21", s=110, zorder=5, label="Baseline Design (0.78, Protruding)")
-    ax4.scatter([0.64], [opt_res["sim_1d_7000rpm"]["ve_maldistribution_spread_pct"]], color="#0e6251", marker="*", s=180, zorder=6, label="Boost-Optimized Design (0.64, Flush)")
+    ax4.plot(tapers, spread_prot, "o--", color="#c0392b", lw=1.8, ms=5, label="Baseline Geometry (96x84, Protruding)")
+    ax4.plot(tapers, spread_flush, "s-", color="#117864", lw=2.3, ms=5.5, label='Stage-2 Compatible (Flush, Ø42.8 (2" Round Boot), Scoop)')
+    ax4.scatter([0.78], [base_res["sim_1d_7000rpm"]["ve_maldistribution_spread_pct"]], color="#922b21", s=110, zorder=5, label="Baseline Design (0.78)")
+    ax4.scatter([0.60], [opt_res["sim_1d_7000rpm"]["ve_maldistribution_spread_pct"]], color="#0e6251", marker="*", s=180, zorder=6, label="Stage-2 Compatible (0.60)")
     ax4.axhspan(0, 1.5, color="#d4efdf", alpha=0.45, label="Target Boost Maldistribution (< 1.5%)")
     ax4.set_ylim(0.0, 2.25)
     ax4.grid(True, ls=":", alpha=0.5)
@@ -1183,15 +1223,15 @@ def main():
     base_params = make_baseline_params(opt_params)
 
     print("1/4 Running 3D FVM + 1D Compressible Audit on BASELINE geometry...")
-    base_res = evaluate_design(base_params, "baseline_protruding_14mm_078taper_10cant", dx_vox=5.5, run_3d=True)
+    base_res = evaluate_design(base_params, "baseline_protruding_14mm_078taper_10cant", dx_vox=4.0, run_3d=True)
     print(
         f"    Done in {base_res['elapsed_s']}s | mass_err={base_res['cfd_3d']['mass_conservation_error_pct']}% | "
         f"3D dP={base_res['cfd_3d']['tb_to_plenum_dp_kpa']} kPa | 3D spread={base_res['cfd_3d']['cyl_maldistribution_spread_pct']}% | "
         f"1D VE spread={base_res['sim_1d_7000rpm']['ve_maldistribution_spread_pct']}%"
     )
 
-    print("2/4 Running 3D FVM + 1D Compressible Audit on BOOST-OPTIMIZED geometry...")
-    opt_res = evaluate_design(opt_params, "boost_optimized_flush_65flare_064taper_8cant", dx_vox=5.5, run_3d=True)
+    print("2/4 Running 3D FVM + 1D Compressible Audit on STAGE-2 COMPATIBLE MAX-BOOST geometry...")
+    opt_res = evaluate_design(opt_params, "stage2_compat_flush_7flare_42p8round_060taper_0889split_scoop_7cant", dx_vox=4.0, run_3d=True)
     print(
         f"    Done in {opt_res['elapsed_s']}s | mass_err={opt_res['cfd_3d']['mass_conservation_error_pct']}% | "
         f"3D dP={opt_res['cfd_3d']['tb_to_plenum_dp_kpa']} kPa | 3D spread={opt_res['cfd_3d']['cyl_maldistribution_spread_pct']}% | "
