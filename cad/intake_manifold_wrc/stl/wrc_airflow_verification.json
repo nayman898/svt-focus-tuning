@@ -1,0 +1,80 @@
+{
+  "operating_point": {
+    "rpm": 7000.0,
+    "boost_psi": 18.0,
+    "iat_c": 52.0,
+    "mass_flow_kgs": 0.2777,
+    "mass_flow_lbmin": 36.73
+  },
+  "cfd_3d": {
+    "n_fluid_cells": 70353,
+    "mass_conservation_error_pct": 0.0,
+    "cyl_mass_flow_raw_kgs": [
+      0.07011,
+      0.07,
+      0.06924,
+      0.06835
+    ],
+    "cyl_flow_share_pct": [
+      25.25,
+      25.21,
+      24.93,
+      24.61
+    ],
+    "cyl_maldistribution_spread_pct": 2.53,
+    "cyl_dp_total_kpa": [
+      2.363,
+      2.381,
+      2.509,
+      2.657
+    ],
+    "tb_to_plenum_dp_kpa": 2.477,
+    "tb_to_plenum_dp_psi": 0.359,
+    "slot_downward_vel_cyl1to4_ms": [
+      0.5,
+      1.21,
+      2.56,
+      2.07
+    ],
+    "max_mach_3d": 0.102,
+    "max_vel_3d_ms": 36.7,
+    "mean_tb_vel_ms": 34.65
+  },
+  "packaging_and_acoustics": {
+    "plenum_vol_l": 3.516,
+    "primary_vol_l": 1.848,
+    "secondary_vol_l": 1.608,
+    "split_solid_vol_cm3": 2023.35,
+    "est_split_mass_kg": 2.77,
+    "est_split_mass_lb": 6.11,
+    "sec_helmholtz_freq_hz": 105.0,
+    "sec_helmholtz_3rd_rpm": 4200.0,
+    "max_z_above_datum_mm": 76.0,
+    "total_z_span_mm": 177.0,
+    "max_y_firewall_mm": 72.0,
+    "max_print_z_mm": 238.0
+  },
+  "baselines": {
+    "oem_short_ve": [
+      0.9879,
+      0.9847,
+      0.9795,
+      0.9679
+    ],
+    "oem_short_spread_pct": 2.04,
+    "oem_short_dp_psi": 0.511,
+    "oem_vol_l": 2.2,
+    "oem_mass_lb": 8.0,
+    "stage2_3d_share_pct": [
+      25.05,
+      25.0,
+      24.98,
+      24.96
+    ],
+    "stage2_3d_spread_pct": 0.36,
+    "stage2_3d_dp_psi": 0.353,
+    "stage2_vol_l": 1.989,
+    "stage2_mass_lb": 4.16
+  },
+  "runtime_seconds": 195.11
+}
