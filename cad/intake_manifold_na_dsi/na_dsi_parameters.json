@@ -30,7 +30,7 @@
       "outer_height_mm": 50.8,
       "corner_radius_mm": 25.4,
       "wall_thickness_mm": 4.0,
-      "land_length_mm": 25.0,
+      "land_length_mm": 27.0,
       "retention_bead_height_mm": 1.1,
       "retention_bead_width_mm": 5.0,
       "retention_bead_offset_from_tip_mm": 3.5,
@@ -40,30 +40,34 @@
     "short_bypass": {
       "bore_diameter_mm": 44.0,
       "wall_thickness_mm": 5.0,
-      "axis_elevation_deg": 38.0,
-      "shaft_center_y_mm": -47.0,
-      "shaft_center_z_mm": 26.0,
-      "bore_lower_extend_mm": 11.0,
+      "axis_elevation_deg": 10.0,
+      "shaft_center_y_mm": -39.0,
+      "shaft_center_z_mm": -28.0,
+      "bore_lower_extend_mm": 9.0,
       "bellmouth_flare_radial_mm": 5.0,
-      "bellmouth_protrusion_mm": 38.0,
-      "merge_y_mm": -114.0,
-      "merge_z_mm": 68.0,
-      "target_upper_length_mm": 165.0
+      "bellmouth_protrusion_mm": 0.0,
+      "merge_y_mm": -95.0,
+      "merge_z_mm": 54.0,
+      "target_upper_length_mm": 180.0,
+      "mid_y_mm": -70.0,
+      "mid_z_mm": 24.0
     },
     "long_scroll": {
       "inner_diameter_mm": 43.0,
       "wall_thickness_mm": 4.5,
-      "plenum_entry_z_mm": -16.0,
+      "plenum_entry_z_mm": -12.0,
       "bellmouth_flare_radial_mm": 6.0,
-      "plenum_rear_wall_offset_mm": 18.0,
-      "min_apex_y_mm": 60.0,
-      "bottom_y_mm": -44.0,
-      "bottom_z_init_mm": -76.0,
-      "merge_y_mm": -114.0,
-      "merge_z_mm": 57.0,
-      "target_upper_length_mm": 365.0,
+      "plenum_rear_wall_offset_mm": 16.0,
+      "min_apex_y_mm": 62.0,
+      "bottom_y_mm": -38.0,
+      "bottom_z_init_mm": -82.0,
+      "merge_y_mm": -95.0,
+      "merge_z_mm": 54.0,
+      "target_upper_length_mm": 395.0,
       "loft_segments": 88,
-      "profile_segments": 80
+      "profile_segments": 80,
+      "knee_y_mm": -98.0,
+      "knee_z_mm": -12.0
     },
     "tie_webs": {
       "enabled": true,
@@ -75,14 +79,14 @@
     }
   },
   "plenum": {
-    "front_inner_y_mm": -34.0,
+    "front_inner_y_mm": -26.0,
     "top_inner_z_mm": 42.0,
     "bottom_inner_z_mm": -42.0,
-    "base_inner_width_y_mm": 92.0,
+    "base_inner_width_y_mm": 88.0,
     "base_inner_height_z_mm": 84.0,
     "base_inner_corner_radius_mm": 24.0,
-    "cyl1_inner_width_y_mm": 66.0,
-    "cyl1_inner_height_z_mm": 66.0,
+    "cyl1_inner_width_y_mm": 58.0,
+    "cyl1_inner_height_z_mm": 78.0,
     "cyl1_inner_corner_radius_mm": 20.0,
     "wall_thickness_mm": 6.0,
     "taper_curve_smooth": true,
@@ -139,15 +143,16 @@
     "insert_pilot_diameter_mm": 6.4,
     "insert_depth_mm": 10.0,
     "oring_width_mm": 3.5,
-    "oring_depth_mm": 2.3
+    "oring_depth_mm": 2.3,
+    "mode": "runner_spine"
   },
   "dsi_valve_system": {
-    "actuator_end": "neg_x",
+    "actuator_end": "pos_x",
     "shaft_diameter_mm": 8.0,
     "shaft_material": "304 Stainless Steel",
     "shaft_overall_length_mm": 363.0,
-    "shaft_left_end_x_mm": -198.0,
-    "shaft_right_end_x_mm": 165.0,
+    "shaft_left_end_x_mm": -165.0,
+    "shaft_right_end_x_mm": 198.0,
     "shaft_flat_offset_from_center_mm": -0.75,
     "shaft_flat_length_mm": 48.0,
     "shaft_double_d_thickness_mm": 6.0,
@@ -169,8 +174,8 @@
     "rotary_seal_spec": "8x16x5 mm FKM/Viton TC Double-Lip Seal",
     "rotary_seal_bore_diameter_mm": 16.05,
     "rotary_seal_depth_mm": 5.2,
-    "left_cap_end_x_mm": -172.0,
-    "right_seal_face_x_mm": 170.0,
+    "left_cap_end_x_mm": -170.0,
+    "right_seal_face_x_mm": 172.0,
     "end_plate_bolt_spacing_mm": 26.0,
     "end_plate_insert_pilot_mm": 5.4,
     "oem_imrc_calibration": {
@@ -226,7 +231,7 @@
     "iacv_mount": {
       "enabled": true,
       "x_center_mm": 156.0,
-      "y_center_mm": 22.0,
+      "y_center_mm": 28.0,
       "pad_length_x_mm": 44.0,
       "pad_width_y_mm": 64.0,
       "pad_corner_radius_mm": 8.0,
@@ -2649,7 +2654,7 @@
       "route_path_xyz_mm": [
         [
           175.0,
-          -16.0,
+          -10.0,
           53.8
         ]
       ],
@@ -2661,7 +2666,7 @@
     "vacuum_primary_pad": {
       "enabled": true,
       "x_center_mm": 56.0,
-      "y_center_mm": 38.0,
+      "y_center_mm": 18.0,
       "length_x_mm": 66.0,
       "width_y_mm": 20.0,
       "pad_height_z_mm": 8.0,
@@ -2684,7 +2689,7 @@
     "vacuum_aux_pad": {
       "enabled": true,
       "x_center_mm": -52.0,
-      "y_center_mm": 26.0,
+      "y_center_mm": 12.0,
       "length_x_mm": 50.0,
       "width_y_mm": 20.0,
       "pad_height_z_mm": 8.0,

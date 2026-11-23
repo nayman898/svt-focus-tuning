@@ -14,12 +14,12 @@
 This Track 2 design adapts the printed composite modular split-plenum C-scroll architecture to **Naturally Aspirated (NA)** Zetec-R builds retaining a **2-length (Dual-Stage / DSI) runner system**:
 
 - **Equal-Length Dual-Path Runners (Cyl 1–4 @ `92.0 mm` pitch):**
-  - **Long C-Scroll Path (`500.0 mm` total / `365.0 mm` upper, `±0.0 mm` spread):** Exits the lower-rear of the dropped plenum (`Z = -16.0 mm`), wraps behind (`+Y`) and beneath (`-Z`, `z_bot` down to `-83.1 mm`) the plenum, and sweeps up in front of the valve housing into the underside of the common runner (`Y = -114.0, Z = +57.0 mm`) for strong low/mid-RPM Helmholtz & quarter-wave ram tuning.
-  - **Short Bypass Path (`301.2 mm` total / `166.2 mm` upper, `±0.0 mm` spread):** Exits the front-upper (`-Y`) wall of the dropped plenum via **`38.0 mm` protruding internal velocity stacks** with rolled `5.0 mm` radial bellmouths, sloped upward at `38.0°` through a **100% continuous `360°` sealed `Ø44.0 mm` butterfly valve housing** (`Z = +26.0 mm`) into each elevated spigot (`Z = +68.0 mm`).
-- **1.838 L Dropped Tapered Plenum (`-68 mm` below spigots, `Z ∈ [-40, +42] mm`):** Dropped `-68 mm` below the boot spigots (matching Stage-2 V2 underhood/strut-bar clearance, `Z_max <= 94.5 mm` at spigot retention beads) with a contoured upper **`rear_wall_flow_guide`** (`18.0 mm` depth) redirecting the `32° / 14°` TB jet into Cyl 4 & 3's velocity stacks.
-- **Wide-Open `-X` (Cyl 1) Actuation & Flush `+X` Blind Bearing Pocket:**
-  - **`-X` (Cyl 1) End:** Houses the `688-2RS` bearing, `8 × 16 × 5 mm` FKM/Viton TC double-lip seal, `svt_na_dsi_seal_retainer_plate.stl`, `6061-T6` actuator lever, and `svt_na_dsi_actuator_bracket_universal.stl` with 100% unobstructed access.
-  - **`+X` (Cyl 4 / TB) End:** Uses a flush internal blind `688-2RS` bearing pocket (`X = +160..+165.2 mm`, solid sealed end wall to `X = +170 mm`) with **zero external hardware behind the `32° / 14°` angled TB flange**.
+  - **Long C-Scroll Path (`530.0 mm` total / `395.0 mm` upper, `±0.0 mm` spread):** Exits the lower-rear of the dropped plenum (`Z = -12.0 mm`), wraps behind (`+Y`) and beneath (`-Z`, `z_bot` down to `-91.4 mm`) the plenum, and tapers smoothly into the underside of the common runner (`Y = -95.0, Z = +54.0 mm`) behind the pure `27.0 mm` boot land (`Y ∈ [-146, -119]`).
+  - **Short Bypass Path (`313.4 mm` total / `178.4 mm` upper, `±0.0 mm` spread):** Exits the lower-front (`-Y`) wall of the dropped plenum at `10.0°` through a **100% continuous `360°` sealed `Ø44.0 mm` butterfly valve housing** (`Y = -39.0, Z = -28.0 mm`) and sweeps smoothly up into each elevated spigot (`Z = +68.0 mm`).
+- **1.854 L Dropped Tapered Plenum (`-68 mm` below spigots, `Z ∈ [-42, +42] mm`):** Dropped `-68 mm` below the boot spigots (matching Stage-2 V2 underhood/strut-bar clearance, `Z_max <= 94.5 mm` at spigot retention beads) with a clean, hatch-free roof.
+- **Factory `+X` (TB-Side) IMRC Actuation & Flush `-X` Blind Bearing Pocket:**
+  - **`+X` (Cyl 4 / TB) End:** Houses the `688-2RS` bearing, `8 × 16 × 5 mm` FKM/Viton TC double-lip seal, `svt_na_dsi_seal_retainer_plate.stl`, `6061-T6` actuator lever, and factory-style IMRC cable bracket boss tucked cleanly **underneath** the `+14°` upward-pitched TB neck (`>= 27 mm` clear air gap to TB flange & body).
+  - **`-X` (Cyl 1) End:** Uses a flush internal blind `688-2RS` bearing pocket (`X = -165.2..-160.0 mm`, solid sealed end wall to `X = -170 mm`) with **zero external hardware**.
 - **Top Service Hatches (`left_seat_z = 48.0 mm`, `right_seat_z = 48.0 mm`):** Coplanar O-ringed bolt-on roof hatches (`104 × 32 mm` opening) give direct top-down access to install, align, loctite, and stake/peen the `M3` butterfly valve screws without unbolting the manifold or splitting `X = 0`.
 - **Two-Piece Split for `256 × 256 × 256 mm` Beds:** Splits along `X = 0` between Cyl 2 & 3 (`8× M6` fasteners + `2× Ø6.0 mm` dowel pins + `371.2 mm` continuous O-ring groove). Both print-oriented halves fit cleanly on the **Elegoo Centauri Carbon 2** (`256³ mm` bed).
 - **Drop-In NA & V2-Matched Vehicle Interfaces:**
@@ -142,11 +142,11 @@ Verified by [verify_na_dsi_airflow.py](verify_na_dsi_airflow.py) (`121.13 s` run
 
 | STL File | Extents `[X, Y, Z]` (mm) | Vol (`cm³`) | CC2 `256³` Fit | Notes |
 | --- | --- | :---: | :---: | --- |
-| `svt_na_dsi_manifold_split_left_print_oriented.stl` | `203.62 × 232.00 × 193.48` | `1001.22` | **Yes** | Left half standing upright on `X = 0` split face |
-| `svt_na_dsi_manifold_split_right_print_oriented.stl` | `197.94 × 246.69 × 253.73` | `1190.44` | **Yes** | Right half (+ TB + IACV) standing upright on `X = 0` |
-| `svt_na_dsi_manifold_1piece_full.stl` | `447.21 × 246.69 × 203.62` | `2074.91` | No | Large-format / SLS / MJF 1-piece reference |
-| `svt_na_dsi_manifold_split_left_cyl1_2.stl` | `193.48 × 232.00 × 203.62` | `1001.22` | Yes | Car-coordinate left half |
-| `svt_na_dsi_manifold_split_right_cyl3_4_tb.stl` | `253.73 × 246.69 × 197.94` | `1190.44` | Yes | Car-coordinate right half |
+| `svt_na_dsi_manifold_split_left_print_oriented.stl` | `211.87 × 234.00 × 193.48` | `1008.19` | **Yes** | Left half standing upright on `X = 0` split face |
+| `svt_na_dsi_manifold_split_right_print_oriented.stl` | `208.70 × 248.48 × 253.73` | `1210.05` | **Yes** | Right half (+ TB + IACV + `+X` IMRC) standing upright on `X = 0` |
+| `svt_na_dsi_manifold_1piece_full.stl` | `447.21 × 248.48 × 211.87` | `2099.54` | No | Large-format / SLS / MJF 1-piece reference |
+| `svt_na_dsi_manifold_split_left_cyl1_2.stl` | `193.48 × 234.00 × 211.87` | `1008.19` | Yes | Car-coordinate left half |
+| `svt_na_dsi_manifold_split_right_cyl3_4_tb.stl` | `253.73 × 248.48 × 208.70` | `1210.05` | Yes | Car-coordinate right half |
 | `svt_na_dsi_service_hatch_left.stl` | `122.0 × 48.0 × 5.7` | `28.35` | **Yes** | Print flat, pilot lip facing up (zero supports) |
 | `svt_na_dsi_service_hatch_right.stl` | `122.0 × 48.0 × 5.7` | `28.35` | **Yes** | Print flat, pilot lip facing up (zero supports) |
 | `svt_na_dsi_blind_bearing_cap.stl` | `40.0 × 32.0 × 7.0` | `8.20` | **Yes** | `-X` bearing cover |

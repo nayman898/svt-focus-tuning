@@ -11,8 +11,8 @@ Everything required to print, machine, assemble, seal, actuate, and bench-test t
 | `1` | `stl/svt_na_dsi_manifold_split_left_print_oriented.stl` | **PPA-CF** or **PAHT-CF** (`1002.58 cm³`, `~1.26 kg` w/ right) | Left half (`203.62 × 232.00 × 193.48 mm`, CC2 `256³` fit) |
 | `1` | `stl/svt_na_dsi_manifold_split_right_print_oriented.stl` | **PPA-CF** or **PAHT-CF** (`1195.72 cm³`) | Right half + V2 flat-face TB/IACV (`197.94 × 246.69 × 253.73 mm`, CC2 `256³` fit) |
 | `2` | `stl/svt_na_dsi_service_hatch_left.stl` & `right.stl` | **PPA-CF** or **PAHT-CF** (`28.35 cm³` each) | Top service hatch lids (`122.0 × 48.0 × 5.7 mm`) |
-| `1` | `stl/svt_na_dsi_seal_retainer_plate.stl` | **PPA-CF** or **PAHT-CF** (`5.51 cm³`) | `-X` Viton lip-seal retainer plate (`40.0 × 32.0 × 5.0 mm`) |
-| `1` | `stl/svt_na_dsi_actuator_bracket_universal.stl` | **PPA-CF** or **PAHT-CF** (`10.39 cm³`) | `-X` universal actuator bracket (`51.0 × 46.0 × 26.0 mm`) |
+| `1` | `stl/svt_na_dsi_seal_retainer_plate.stl` | **PPA-CF** or **PAHT-CF** (`5.51 cm³`) | `+X` (TB-side) Viton lip-seal retainer plate (`40.0 × 32.0 × 5.0 mm`) |
+| `1` | `stl/svt_na_dsi_actuator_bracket_universal.stl` | **PPA-CF** or **PAHT-CF** (`10.39 cm³`) | `+X` (TB-side) IMRC actuator bracket (`51.0 × 46.0 × 26.0 mm`) |
 | `1` set | Fitment Gauges (`5×` STLs in `stl/`) | PLA / PETG / PPA-CF | `runner_boot`, `tb_flange` / `flat_face_iacv_fit_coupon`, `iacv_flange`, `valve_bore`, `alignment_dowel_pins` |
 | `2.5–3 kg` | **PPA-CF** or **PAHT-CF** filament (`1.75 mm`) | Dried `< 15% RH` | `6` perimeters, `40–50%` gyroid infill, `290–310 °C` hardened nozzle |
 | `1` | High-temp penetrating epoxy | **Loctite E-120HP**, **3M DP420**, or **JB Weld HighHeat** | External porosity seal coat (keep gasket grooves & bearing pockets masked) |
@@ -26,7 +26,7 @@ Everything required to print, machine, assemble, seal, actuate, and bench-test t
 | Qty | File | Material & Process | Key Spec |
 | :---: | --- | --- | --- |
 | `4` | `cnc/svt_na_dsi_butterfly_plate_304ss_1p5mm.step` / `.dxf` | **304 Stainless Steel**, `1.5 mm` laser/waterjet | `43.5 × 43.927 mm` ellipse matched to `8°` slanted `Ø44.0 mm` bore |
-| `1` | `cnc/svt_na_dsi_valve_shaft_8mm_304ss.step` | **304 Stainless Steel** round bar, CNC milled | `Ø8.0 mm × 363.0 mm` (`-X` double-D flat `6.0 × 16.0 mm`, `4×` `-0.75 mm` blade flats, `8× M3` holes) |
+| `1` | `cnc/svt_na_dsi_valve_shaft_8mm_304ss.step` | **304 Stainless Steel** round bar, CNC milled | `Ø8.0 mm × 363.0 mm` (`+X` double-D flat `6.0 × 16.0 mm`, `4×` `-0.75 mm` blade flats, `8× M3` holes) |
 | `1` | `cnc/svt_na_dsi_actuator_lever_6061.step` / `.dxf` | **6061-T6 Aluminum**, `6.0 mm` CNC/waterjet | `6.0 × 8.0 mm` Double-D bore, dual clevis holes (`R = 26 & 32 mm`) |
 
 ---
