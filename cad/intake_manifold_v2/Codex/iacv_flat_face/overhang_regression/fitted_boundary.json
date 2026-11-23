@@ -1,0 +1,115 @@
+{
+  "source_sha256": {
+    "parameters": "2661a9f134df4bc3136ccaa64175dc049ace00f04f5d72edfac463e1ee84b5b9",
+    "frozen_solver": "fe263be23c38b12abf65e713f6146f5f249ded7306ebc269e9e68abe19bbd8c0",
+    "generator": "f3abebed26f7527beb4f38e635b1ab0e1fc76a49f6156b15d9d1d80d783364fc",
+    "regression": "b97838c64fd47272f77dc387ba17fb5580ecec7b8d9f2f18ae991ba29393e81a",
+    "svt_intake_manifold_v2_split_left_cyl1_2": "1ddd4d7332fdef5dc6d5a5975685b669e70dc7a72520ec372aa606812e9ab6a1",
+    "svt_intake_manifold_v2_split_right_cyl3_4_tb": "d7913826985d41555fa73a95c19c4c30e4a82fe8513ca337a0b97938130dfc1f"
+  },
+  "cases": [
+    {
+      "dx_mm": 2,
+      "offset_mm": 0,
+      "status": "NOT_CONVERGED",
+      "boundary": {
+        "dx_mm": 2,
+        "grid_offset_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_connected_components": 1,
+        "n_inlet_cells": 701,
+        "active_cyls": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "outlet_face_counts_all": [
+          362,
+          362,
+          362,
+          362
+        ],
+        "outlet_areas_mm2_all": [
+          1448,
+          1448,
+          1448,
+          1448
+        ],
+        "empty_active_outlets": [],
+        "disjoint_outlets": true,
+        "inlet_to_outlet_connected": true
+      }
+    },
+    {
+      "dx_mm": 2,
+      "offset_mm": 1,
+      "status": "NOT_CONVERGED",
+      "boundary": {
+        "dx_mm": 2,
+        "grid_offset_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "n_connected_components": 1,
+        "n_inlet_cells": 703,
+        "active_cyls": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "outlet_face_counts_all": [
+          360,
+          360,
+          360,
+          360
+        ],
+        "outlet_areas_mm2_all": [
+          1440,
+          1440,
+          1440,
+          1440
+        ],
+        "empty_active_outlets": [],
+        "disjoint_outlets": true,
+        "inlet_to_outlet_connected": true
+      }
+    },
+    {
+      "dx_mm": 4,
+      "offset_mm": 0,
+      "status": "FAILED_BOUNDARY",
+      "boundary": {
+        "dx_mm": 4,
+        "grid_offset_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_connected_components": 1,
+        "n_inlet_cells": 179,
+        "active_cyls": [],
+        "outlet_face_counts_all": [
+          90,
+          90,
+          90,
+          90
+        ],
+        "outlet_areas_mm2_all": [
+          1440,
+          1440,
+          1440,
+          1440
+        ],
+        "empty_active_outlets": [],
+        "disjoint_outlets": true,
+        "inlet_to_outlet_connected": false
+      }
+    }
+  ]
+}

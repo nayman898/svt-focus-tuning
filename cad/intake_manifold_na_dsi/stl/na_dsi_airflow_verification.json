@@ -1,0 +1,3451 @@
+{
+  "operating_envelope": {
+    "ambient_kpa": 101.325,
+    "ambient_temp_c": 25.0,
+    "air_density_kg_m3": 1.1839,
+    "engine_disp_liters": 1.988
+  },
+  "cfd_3d_long_mode_4200rpm": {
+    "mode": "long",
+    "n_fluid_cells": 74263,
+    "leaked_throat_voxels": 0,
+    "mass_conservation_error_pct": 0.0,
+    "cyl_mass_flow_raw_kgs": [
+      0.01931,
+      0.01955,
+      0.01964,
+      0.01976
+    ],
+    "cyl_flow_share_pct": [
+      24.68,
+      24.98,
+      25.1,
+      25.25
+    ],
+    "cyl_maldistribution_spread_pct": 2.28,
+    "cyl_dp_total_kpa": [
+      0.7025,
+      0.6784,
+      0.6639,
+      0.6478
+    ],
+    "tb_to_plenum_dp_kpa": 0.6731,
+    "tb_to_plenum_dp_psi": 0.0976,
+    "scroll_path_share_pct": 100.0,
+    "short_path_share_pct": 0.0,
+    "max_mach_3d": 0.092,
+    "max_vel_3d_ms": 31.7,
+    "mean_tb_vel_ms": 19.92
+  },
+  "cfd_3d_short_mode_7000rpm": {
+    "mode": "short",
+    "n_fluid_cells": 75043,
+    "leaked_throat_voxels": 0,
+    "mass_conservation_error_pct": 0.0,
+    "cyl_mass_flow_raw_kgs": [
+      0.03411,
+      0.03395,
+      0.03375,
+      0.03274
+    ],
+    "cyl_flow_share_pct": [
+      25.35,
+      25.23,
+      25.09,
+      24.33
+    ],
+    "cyl_maldistribution_spread_pct": 4.08,
+    "cyl_dp_total_kpa": [
+      1.1753,
+      1.2,
+      1.2292,
+      1.3597
+    ],
+    "tb_to_plenum_dp_kpa": 1.2411,
+    "tb_to_plenum_dp_psi": 0.18,
+    "scroll_path_share_pct": 42.2,
+    "short_path_share_pct": 57.8,
+    "max_mach_3d": 0.162,
+    "max_vel_3d_ms": 56.2,
+    "mean_tb_vel_ms": 34.25
+  },
+  "na_acoustic_sweep": {
+    "crossover_rpm": 5000,
+    "peak_torque_lbft": {
+      "oem_dsi_switched": 139.3,
+      "fixed_short_243mm": 137.2,
+      "custom_na_dsi_switched": 140.5
+    },
+    "torque_4000rpm_lbft": {
+      "oem_dsi_long": 135.3,
+      "fixed_short_243mm": 124.3,
+      "custom_na_dsi_long": 136.8
+    },
+    "peak_power_bhp": {
+      "oem_dsi_switched": 175.4,
+      "fixed_short_243mm": 179.8,
+      "custom_na_dsi_switched": 178.2
+    },
+    "curves": {
+      "oem_long": [
+        {
+          "rpm": 2000.0,
+          "cfg": "oem_long",
+          "ve_pct": 82.21,
+          "airflow_lbmin": 4.27,
+          "torque_lbft": 112.0,
+          "power_bhp": 42.6,
+          "dp_upper_kpa": 0.174,
+          "dp_upper_psi": 0.0252,
+          "cyl_ve": [
+            82.693,
+            82.467,
+            82.094,
+            81.582
+          ],
+          "ve_spread_pct": 1.35,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 2200.0,
+          "cfg": "oem_long",
+          "ve_pct": 84.02,
+          "airflow_lbmin": 4.8,
+          "torque_lbft": 114.6,
+          "power_bhp": 48.0,
+          "dp_upper_kpa": 0.219,
+          "dp_upper_psi": 0.0317,
+          "cyl_ve": [
+            84.514,
+            84.282,
+            83.901,
+            83.377
+          ],
+          "ve_spread_pct": 1.35,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 2400.0,
+          "cfg": "oem_long",
+          "ve_pct": 86.03,
+          "airflow_lbmin": 5.36,
+          "torque_lbft": 117.6,
+          "power_bhp": 53.7,
+          "dp_upper_kpa": 0.272,
+          "dp_upper_psi": 0.0395,
+          "cyl_ve": [
+            86.538,
+            86.301,
+            85.91,
+            85.373
+          ],
+          "ve_spread_pct": 1.35,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 2600.0,
+          "cfg": "oem_long",
+          "ve_pct": 88.23,
+          "airflow_lbmin": 5.95,
+          "torque_lbft": 120.8,
+          "power_bhp": 59.8,
+          "dp_upper_kpa": 0.335,
+          "dp_upper_psi": 0.0486,
+          "cyl_ve": [
+            88.753,
+            88.509,
+            88.108,
+            87.557
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 2800.0,
+          "cfg": "oem_long",
+          "ve_pct": 90.46,
+          "airflow_lbmin": 6.57,
+          "torque_lbft": 124.1,
+          "power_bhp": 66.1,
+          "dp_upper_kpa": 0.408,
+          "dp_upper_psi": 0.0592,
+          "cyl_ve": [
+            90.999,
+            90.749,
+            90.337,
+            89.772
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 3000.0,
+          "cfg": "oem_long",
+          "ve_pct": 92.23,
+          "airflow_lbmin": 7.18,
+          "torque_lbft": 126.6,
+          "power_bhp": 72.3,
+          "dp_upper_kpa": 0.486,
+          "dp_upper_psi": 0.0705,
+          "cyl_ve": [
+            92.771,
+            92.516,
+            92.096,
+            91.52
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 3200.0,
+          "cfg": "oem_long",
+          "ve_pct": 93.98,
+          "airflow_lbmin": 7.8,
+          "torque_lbft": 129.2,
+          "power_bhp": 78.7,
+          "dp_upper_kpa": 0.574,
+          "dp_upper_psi": 0.0833,
+          "cyl_ve": [
+            94.541,
+            94.28,
+            93.852,
+            93.265
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 3400.0,
+          "cfg": "oem_long",
+          "ve_pct": 95.56,
+          "airflow_lbmin": 8.43,
+          "torque_lbft": 131.5,
+          "power_bhp": 85.1,
+          "dp_upper_kpa": 0.67,
+          "dp_upper_psi": 0.0972,
+          "cyl_ve": [
+            96.127,
+            95.862,
+            95.426,
+            94.829
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 3600.0,
+          "cfg": "oem_long",
+          "ve_pct": 96.82,
+          "airflow_lbmin": 9.04,
+          "torque_lbft": 133.3,
+          "power_bhp": 91.4,
+          "dp_upper_kpa": 0.771,
+          "dp_upper_psi": 0.1119,
+          "cyl_ve": [
+            97.393,
+            97.124,
+            96.683,
+            96.077
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 3800.0,
+          "cfg": "oem_long",
+          "ve_pct": 97.71,
+          "airflow_lbmin": 9.63,
+          "torque_lbft": 134.5,
+          "power_bhp": 97.3,
+          "dp_upper_kpa": 0.876,
+          "dp_upper_psi": 0.127,
+          "cyl_ve": [
+            98.285,
+            98.014,
+            97.568,
+            96.957
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 4000.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.25,
+          "airflow_lbmin": 10.2,
+          "torque_lbft": 135.3,
+          "power_bhp": 103.0,
+          "dp_upper_kpa": 0.982,
+          "dp_upper_psi": 0.1424,
+          "cyl_ve": [
+            98.836,
+            98.564,
+            98.115,
+            97.501
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 4200.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.55,
+          "airflow_lbmin": 10.74,
+          "torque_lbft": 135.7,
+          "power_bhp": 108.5,
+          "dp_upper_kpa": 1.09,
+          "dp_upper_psi": 0.1581,
+          "cyl_ve": [
+            99.135,
+            98.862,
+            98.412,
+            97.795
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 4400.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.69,
+          "airflow_lbmin": 11.27,
+          "torque_lbft": 135.8,
+          "power_bhp": 113.8,
+          "dp_upper_kpa": 1.201,
+          "dp_upper_psi": 0.1742,
+          "cyl_ve": [
+            99.271,
+            98.997,
+            98.547,
+            97.929
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 4600.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.71,
+          "airflow_lbmin": 11.78,
+          "torque_lbft": 135.7,
+          "power_bhp": 118.9,
+          "dp_upper_kpa": 1.315,
+          "dp_upper_psi": 0.1907,
+          "cyl_ve": [
+            99.298,
+            99.024,
+            98.573,
+            97.955
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 4800.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.64,
+          "airflow_lbmin": 12.28,
+          "torque_lbft": 135.6,
+          "power_bhp": 123.9,
+          "dp_upper_kpa": 1.432,
+          "dp_upper_psi": 0.2077,
+          "cyl_ve": [
+            99.223,
+            98.948,
+            98.498,
+            97.88
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 5000.0,
+          "cfg": "oem_long",
+          "ve_pct": 98.33,
+          "airflow_lbmin": 12.76,
+          "torque_lbft": 135.0,
+          "power_bhp": 128.6,
+          "dp_upper_kpa": 1.546,
+          "dp_upper_psi": 0.2243,
+          "cyl_ve": [
+            98.918,
+            98.645,
+            98.196,
+            97.58
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 5200.0,
+          "cfg": "oem_long",
+          "ve_pct": 97.58,
+          "airflow_lbmin": 13.16,
+          "torque_lbft": 133.8,
+          "power_bhp": 132.5,
+          "dp_upper_kpa": 1.65,
+          "dp_upper_psi": 0.2392,
+          "cyl_ve": [
+            98.162,
+            97.89,
+            97.444,
+            96.833
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 5400.0,
+          "cfg": "oem_long",
+          "ve_pct": 96.52,
+          "airflow_lbmin": 13.52,
+          "torque_lbft": 132.2,
+          "power_bhp": 135.9,
+          "dp_upper_kpa": 1.743,
+          "dp_upper_psi": 0.2528,
+          "cyl_ve": [
+            97.097,
+            96.829,
+            96.387,
+            95.783
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 5600.0,
+          "cfg": "oem_long",
+          "ve_pct": 95.22,
+          "airflow_lbmin": 13.83,
+          "torque_lbft": 130.2,
+          "power_bhp": 138.8,
+          "dp_upper_kpa": 1.826,
+          "dp_upper_psi": 0.2649,
+          "cyl_ve": [
+            95.783,
+            95.518,
+            95.083,
+            94.486
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 5800.0,
+          "cfg": "oem_long",
+          "ve_pct": 93.72,
+          "airflow_lbmin": 14.1,
+          "torque_lbft": 127.8,
+          "power_bhp": 141.2,
+          "dp_upper_kpa": 1.9,
+          "dp_upper_psi": 0.2756,
+          "cyl_ve": [
+            94.274,
+            94.013,
+            93.585,
+            92.998
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 6000.0,
+          "cfg": "oem_long",
+          "ve_pct": 92.08,
+          "airflow_lbmin": 14.33,
+          "torque_lbft": 125.3,
+          "power_bhp": 143.2,
+          "dp_upper_kpa": 1.965,
+          "dp_upper_psi": 0.2849,
+          "cyl_ve": [
+            92.624,
+            92.368,
+            91.947,
+            91.37
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 6200.0,
+          "cfg": "oem_long",
+          "ve_pct": 90.34,
+          "airflow_lbmin": 14.53,
+          "torque_lbft": 122.6,
+          "power_bhp": 144.8,
+          "dp_upper_kpa": 2.021,
+          "dp_upper_psi": 0.2931,
+          "cyl_ve": [
+            90.875,
+            90.624,
+            90.211,
+            89.645
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 6400.0,
+          "cfg": "oem_long",
+          "ve_pct": 88.53,
+          "airflow_lbmin": 14.7,
+          "torque_lbft": 119.7,
+          "power_bhp": 145.8,
+          "dp_upper_kpa": 2.07,
+          "dp_upper_psi": 0.3002,
+          "cyl_ve": [
+            89.057,
+            88.81,
+            88.406,
+            87.851
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 6600.0,
+          "cfg": "oem_long",
+          "ve_pct": 86.67,
+          "airflow_lbmin": 14.84,
+          "torque_lbft": 116.4,
+          "power_bhp": 146.3,
+          "dp_upper_kpa": 2.111,
+          "dp_upper_psi": 0.3062,
+          "cyl_ve": [
+            87.184,
+            86.943,
+            86.547,
+            86.004
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 6800.0,
+          "cfg": "oem_long",
+          "ve_pct": 84.76,
+          "airflow_lbmin": 14.95,
+          "torque_lbft": 113.1,
+          "power_bhp": 146.4,
+          "dp_upper_kpa": 2.144,
+          "dp_upper_psi": 0.311,
+          "cyl_ve": [
+            85.263,
+            85.027,
+            84.64,
+            84.109
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 7000.0,
+          "cfg": "oem_long",
+          "ve_pct": 82.21,
+          "airflow_lbmin": 14.93,
+          "torque_lbft": 108.9,
+          "power_bhp": 145.1,
+          "dp_upper_kpa": 2.138,
+          "dp_upper_psi": 0.31,
+          "cyl_ve": [
+            82.701,
+            82.472,
+            82.096,
+            81.581
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 7200.0,
+          "cfg": "oem_long",
+          "ve_pct": 79.29,
+          "airflow_lbmin": 14.81,
+          "torque_lbft": 104.1,
+          "power_bhp": 142.7,
+          "dp_upper_kpa": 2.103,
+          "dp_upper_psi": 0.3049,
+          "cyl_ve": [
+            79.765,
+            79.544,
+            79.182,
+            78.685
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 7400.0,
+          "cfg": "oem_long",
+          "ve_pct": 76.15,
+          "airflow_lbmin": 14.62,
+          "torque_lbft": 99.0,
+          "power_bhp": 139.5,
+          "dp_upper_kpa": 2.046,
+          "dp_upper_psi": 0.2968,
+          "cyl_ve": [
+            76.601,
+            76.389,
+            76.041,
+            75.564
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        },
+        {
+          "rpm": 7600.0,
+          "cfg": "oem_long",
+          "ve_pct": 72.83,
+          "airflow_lbmin": 14.36,
+          "torque_lbft": 93.7,
+          "power_bhp": 135.7,
+          "dp_upper_kpa": 1.972,
+          "dp_upper_psi": 0.286,
+          "cyl_ve": [
+            73.258,
+            73.055,
+            72.722,
+            72.266
+          ],
+          "ve_spread_pct": 1.36,
+          "afr_band_at_12p8": [
+            12.72,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 3331.0,
+          "quarter_wave_3rd_rpm": 4712.0
+        }
+      ],
+      "oem_short": [
+        {
+          "rpm": 2000.0,
+          "cfg": "oem_short",
+          "ve_pct": 76.93,
+          "airflow_lbmin": 3.99,
+          "torque_lbft": 104.1,
+          "power_bhp": 39.7,
+          "dp_upper_kpa": 0.1,
+          "dp_upper_psi": 0.0146,
+          "cyl_ve": [
+            77.368,
+            77.165,
+            76.825,
+            76.353
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 2200.0,
+          "cfg": "oem_short",
+          "ve_pct": 78.75,
+          "airflow_lbmin": 4.49,
+          "torque_lbft": 106.8,
+          "power_bhp": 44.7,
+          "dp_upper_kpa": 0.127,
+          "dp_upper_psi": 0.0184,
+          "cyl_ve": [
+            79.197,
+            78.988,
+            78.64,
+            78.157
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 2400.0,
+          "cfg": "oem_short",
+          "ve_pct": 80.57,
+          "airflow_lbmin": 5.02,
+          "torque_lbft": 109.4,
+          "power_bhp": 50.0,
+          "dp_upper_kpa": 0.158,
+          "dp_upper_psi": 0.0229,
+          "cyl_ve": [
+            81.03,
+            80.816,
+            80.46,
+            79.965
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 2600.0,
+          "cfg": "oem_short",
+          "ve_pct": 82.38,
+          "airflow_lbmin": 5.56,
+          "torque_lbft": 112.1,
+          "power_bhp": 55.5,
+          "dp_upper_kpa": 0.193,
+          "dp_upper_psi": 0.028,
+          "cyl_ve": [
+            82.855,
+            82.637,
+            82.272,
+            81.766
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 2800.0,
+          "cfg": "oem_short",
+          "ve_pct": 84.09,
+          "airflow_lbmin": 6.11,
+          "torque_lbft": 114.6,
+          "power_bhp": 61.1,
+          "dp_upper_kpa": 0.233,
+          "dp_upper_psi": 0.0338,
+          "cyl_ve": [
+            84.57,
+            84.347,
+            83.975,
+            83.458
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 3000.0,
+          "cfg": "oem_short",
+          "ve_pct": 85.3,
+          "airflow_lbmin": 6.64,
+          "torque_lbft": 116.3,
+          "power_bhp": 66.4,
+          "dp_upper_kpa": 0.275,
+          "dp_upper_psi": 0.0399,
+          "cyl_ve": [
+            85.789,
+            85.562,
+            85.185,
+            84.66
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 3200.0,
+          "cfg": "oem_short",
+          "ve_pct": 86.65,
+          "airflow_lbmin": 7.19,
+          "torque_lbft": 118.3,
+          "power_bhp": 72.1,
+          "dp_upper_kpa": 0.323,
+          "dp_upper_psi": 0.0468,
+          "cyl_ve": [
+            87.15,
+            86.92,
+            86.536,
+            86.003
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 3400.0,
+          "cfg": "oem_short",
+          "ve_pct": 88.13,
+          "airflow_lbmin": 7.77,
+          "torque_lbft": 120.4,
+          "power_bhp": 78.0,
+          "dp_upper_kpa": 0.377,
+          "dp_upper_psi": 0.0546,
+          "cyl_ve": [
+            88.64,
+            88.406,
+            88.016,
+            87.473
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 3600.0,
+          "cfg": "oem_short",
+          "ve_pct": 89.71,
+          "airflow_lbmin": 8.38,
+          "torque_lbft": 122.7,
+          "power_bhp": 84.1,
+          "dp_upper_kpa": 0.437,
+          "dp_upper_psi": 0.0634,
+          "cyl_ve": [
+            90.231,
+            89.992,
+            89.595,
+            89.042
+          ],
+          "ve_spread_pct": 1.32,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 3800.0,
+          "cfg": "oem_short",
+          "ve_pct": 91.36,
+          "airflow_lbmin": 9.01,
+          "torque_lbft": 125.1,
+          "power_bhp": 90.5,
+          "dp_upper_kpa": 0.505,
+          "dp_upper_psi": 0.0733,
+          "cyl_ve": [
+            91.882,
+            91.639,
+            91.234,
+            90.672
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 4000.0,
+          "cfg": "oem_short",
+          "ve_pct": 93.01,
+          "airflow_lbmin": 9.65,
+          "torque_lbft": 127.5,
+          "power_bhp": 97.1,
+          "dp_upper_kpa": 0.58,
+          "dp_upper_psi": 0.0842,
+          "cyl_ve": [
+            93.549,
+            93.301,
+            92.889,
+            92.316
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 4200.0,
+          "cfg": "oem_short",
+          "ve_pct": 94.64,
+          "airflow_lbmin": 10.31,
+          "torque_lbft": 129.8,
+          "power_bhp": 103.8,
+          "dp_upper_kpa": 0.663,
+          "dp_upper_psi": 0.0961,
+          "cyl_ve": [
+            95.182,
+            94.93,
+            94.51,
+            93.927
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 4400.0,
+          "cfg": "oem_short",
+          "ve_pct": 96.18,
+          "airflow_lbmin": 10.98,
+          "torque_lbft": 132.1,
+          "power_bhp": 110.6,
+          "dp_upper_kpa": 0.752,
+          "dp_upper_psi": 0.109,
+          "cyl_ve": [
+            96.734,
+            96.478,
+            96.051,
+            95.459
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 4600.0,
+          "cfg": "oem_short",
+          "ve_pct": 97.6,
+          "airflow_lbmin": 11.65,
+          "torque_lbft": 134.1,
+          "power_bhp": 117.4,
+          "dp_upper_kpa": 0.847,
+          "dp_upper_psi": 0.1228,
+          "cyl_ve": [
+            98.16,
+            97.9,
+            97.467,
+            96.866
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 4800.0,
+          "cfg": "oem_short",
+          "ve_pct": 98.85,
+          "airflow_lbmin": 12.31,
+          "torque_lbft": 135.9,
+          "power_bhp": 124.2,
+          "dp_upper_kpa": 0.947,
+          "dp_upper_psi": 0.1373,
+          "cyl_ve": [
+            99.415,
+            99.151,
+            98.713,
+            98.103
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 5000.0,
+          "cfg": "oem_short",
+          "ve_pct": 99.8,
+          "airflow_lbmin": 12.95,
+          "torque_lbft": 137.2,
+          "power_bhp": 130.6,
+          "dp_upper_kpa": 1.049,
+          "dp_upper_psi": 0.1521,
+          "cyl_ve": [
+            100.374,
+            100.108,
+            99.665,
+            99.05
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 5200.0,
+          "cfg": "oem_short",
+          "ve_pct": 100.51,
+          "airflow_lbmin": 13.56,
+          "torque_lbft": 138.2,
+          "power_bhp": 136.8,
+          "dp_upper_kpa": 1.152,
+          "dp_upper_psi": 0.1671,
+          "cyl_ve": [
+            101.085,
+            100.817,
+            100.371,
+            99.751
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 5400.0,
+          "cfg": "oem_short",
+          "ve_pct": 101.02,
+          "airflow_lbmin": 14.15,
+          "torque_lbft": 138.9,
+          "power_bhp": 142.8,
+          "dp_upper_kpa": 1.257,
+          "dp_upper_psi": 0.1823,
+          "cyl_ve": [
+            101.6,
+            101.331,
+            100.883,
+            100.26
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 5600.0,
+          "cfg": "oem_short",
+          "ve_pct": 101.33,
+          "airflow_lbmin": 14.72,
+          "torque_lbft": 139.2,
+          "power_bhp": 148.5,
+          "dp_upper_kpa": 1.362,
+          "dp_upper_psi": 0.1976,
+          "cyl_ve": [
+            101.91,
+            101.64,
+            101.19,
+            100.565
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 5800.0,
+          "cfg": "oem_short",
+          "ve_pct": 101.43,
+          "airflow_lbmin": 15.26,
+          "torque_lbft": 139.3,
+          "power_bhp": 153.8,
+          "dp_upper_kpa": 1.466,
+          "dp_upper_psi": 0.2127,
+          "cyl_ve": [
+            102.012,
+            101.741,
+            101.291,
+            100.666
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 6000.0,
+          "cfg": "oem_short",
+          "ve_pct": 101.32,
+          "airflow_lbmin": 15.77,
+          "torque_lbft": 139.1,
+          "power_bhp": 158.9,
+          "dp_upper_kpa": 1.569,
+          "dp_upper_psi": 0.2275,
+          "cyl_ve": [
+            101.909,
+            101.638,
+            101.188,
+            100.563
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 6200.0,
+          "cfg": "oem_short",
+          "ve_pct": 101.03,
+          "airflow_lbmin": 16.25,
+          "torque_lbft": 138.5,
+          "power_bhp": 163.5,
+          "dp_upper_kpa": 1.668,
+          "dp_upper_psi": 0.2419,
+          "cyl_ve": [
+            101.608,
+            101.339,
+            100.89,
+            100.267
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 6400.0,
+          "cfg": "oem_short",
+          "ve_pct": 100.54,
+          "airflow_lbmin": 16.69,
+          "torque_lbft": 137.5,
+          "power_bhp": 167.6,
+          "dp_upper_kpa": 1.763,
+          "dp_upper_psi": 0.2557,
+          "cyl_ve": [
+            101.123,
+            100.855,
+            100.408,
+            99.788
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 6600.0,
+          "cfg": "oem_short",
+          "ve_pct": 99.89,
+          "airflow_lbmin": 17.1,
+          "torque_lbft": 136.0,
+          "power_bhp": 170.9,
+          "dp_upper_kpa": 1.853,
+          "dp_upper_psi": 0.2688,
+          "cyl_ve": [
+            100.466,
+            100.199,
+            99.756,
+            99.14
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 6800.0,
+          "cfg": "oem_short",
+          "ve_pct": 99.08,
+          "airflow_lbmin": 17.48,
+          "torque_lbft": 134.2,
+          "power_bhp": 173.8,
+          "dp_upper_kpa": 1.938,
+          "dp_upper_psi": 0.2811,
+          "cyl_ve": [
+            99.653,
+            99.388,
+            98.948,
+            98.337
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 7000.0,
+          "cfg": "oem_short",
+          "ve_pct": 97.54,
+          "airflow_lbmin": 17.71,
+          "torque_lbft": 131.4,
+          "power_bhp": 175.2,
+          "dp_upper_kpa": 1.992,
+          "dp_upper_psi": 0.289,
+          "cyl_ve": [
+            98.102,
+            97.842,
+            97.409,
+            96.807
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 7200.0,
+          "cfg": "oem_short",
+          "ve_pct": 95.55,
+          "airflow_lbmin": 17.85,
+          "torque_lbft": 128.0,
+          "power_bhp": 175.4,
+          "dp_upper_kpa": 2.024,
+          "dp_upper_psi": 0.2936,
+          "cyl_ve": [
+            96.105,
+            95.85,
+            95.425,
+            94.836
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 7400.0,
+          "cfg": "oem_short",
+          "ve_pct": 93.29,
+          "airflow_lbmin": 17.91,
+          "torque_lbft": 124.1,
+          "power_bhp": 174.9,
+          "dp_upper_kpa": 2.038,
+          "dp_upper_psi": 0.2956,
+          "cyl_ve": [
+            93.826,
+            93.577,
+            93.162,
+            92.587
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        },
+        {
+          "rpm": 7600.0,
+          "cfg": "oem_short",
+          "ve_pct": 90.81,
+          "airflow_lbmin": 17.91,
+          "torque_lbft": 120.0,
+          "power_bhp": 173.6,
+          "dp_upper_kpa": 2.037,
+          "dp_upper_psi": 0.2955,
+          "cyl_ve": [
+            91.334,
+            91.092,
+            90.688,
+            90.128
+          ],
+          "ve_spread_pct": 1.33,
+          "afr_band_at_12p8": [
+            12.73,
+            12.9
+          ],
+          "helmholtz_3rd_rpm": 4122.0,
+          "quarter_wave_3rd_rpm": 6888.0
+        }
+      ],
+      "custom_long": [
+        {
+          "rpm": 2000.0,
+          "cfg": "custom_long",
+          "ve_pct": 82.27,
+          "airflow_lbmin": 4.27,
+          "torque_lbft": 112.1,
+          "power_bhp": 42.7,
+          "dp_upper_kpa": 0.096,
+          "dp_upper_psi": 0.014,
+          "cyl_ve": [
+            82.618,
+            82.363,
+            82.135,
+            81.946
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 2200.0,
+          "cfg": "custom_long",
+          "ve_pct": 84.13,
+          "airflow_lbmin": 4.8,
+          "torque_lbft": 114.8,
+          "power_bhp": 48.1,
+          "dp_upper_kpa": 0.121,
+          "dp_upper_psi": 0.0175,
+          "cyl_ve": [
+            84.487,
+            84.226,
+            83.993,
+            83.799
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 2400.0,
+          "cfg": "custom_long",
+          "ve_pct": 86.23,
+          "airflow_lbmin": 5.37,
+          "torque_lbft": 117.9,
+          "power_bhp": 53.9,
+          "dp_upper_kpa": 0.15,
+          "dp_upper_psi": 0.0218,
+          "cyl_ve": [
+            86.603,
+            86.335,
+            86.095,
+            85.896
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 2600.0,
+          "cfg": "custom_long",
+          "ve_pct": 88.58,
+          "airflow_lbmin": 5.98,
+          "torque_lbft": 121.3,
+          "power_bhp": 60.1,
+          "dp_upper_kpa": 0.185,
+          "dp_upper_psi": 0.0268,
+          "cyl_ve": [
+            88.959,
+            88.683,
+            88.437,
+            88.232
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 2800.0,
+          "cfg": "custom_long",
+          "ve_pct": 91.0,
+          "airflow_lbmin": 6.61,
+          "torque_lbft": 124.9,
+          "power_bhp": 66.6,
+          "dp_upper_kpa": 0.225,
+          "dp_upper_psi": 0.0327,
+          "cyl_ve": [
+            91.389,
+            91.105,
+            90.851,
+            90.642
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 3000.0,
+          "cfg": "custom_long",
+          "ve_pct": 92.96,
+          "airflow_lbmin": 7.24,
+          "torque_lbft": 127.7,
+          "power_bhp": 73.0,
+          "dp_upper_kpa": 0.269,
+          "dp_upper_psi": 0.039,
+          "cyl_ve": [
+            93.358,
+            93.068,
+            92.808,
+            92.594
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 3200.0,
+          "cfg": "custom_long",
+          "ve_pct": 94.89,
+          "airflow_lbmin": 7.88,
+          "torque_lbft": 130.5,
+          "power_bhp": 79.5,
+          "dp_upper_kpa": 0.318,
+          "dp_upper_psi": 0.0461,
+          "cyl_ve": [
+            95.303,
+            95.006,
+            94.741,
+            94.521
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 3400.0,
+          "cfg": "custom_long",
+          "ve_pct": 96.59,
+          "airflow_lbmin": 8.52,
+          "torque_lbft": 133.0,
+          "power_bhp": 86.1,
+          "dp_upper_kpa": 0.371,
+          "dp_upper_psi": 0.0538,
+          "cyl_ve": [
+            97.01,
+            96.708,
+            96.438,
+            96.214
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 3600.0,
+          "cfg": "custom_long",
+          "ve_pct": 97.91,
+          "airflow_lbmin": 9.14,
+          "torque_lbft": 134.9,
+          "power_bhp": 92.5,
+          "dp_upper_kpa": 0.426,
+          "dp_upper_psi": 0.0618,
+          "cyl_ve": [
+            98.33,
+            98.023,
+            97.749,
+            97.523
+          ],
+          "ve_spread_pct": 0.82,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 3800.0,
+          "cfg": "custom_long",
+          "ve_pct": 98.79,
+          "airflow_lbmin": 9.74,
+          "torque_lbft": 136.1,
+          "power_bhp": 98.5,
+          "dp_upper_kpa": 0.483,
+          "dp_upper_psi": 0.07,
+          "cyl_ve": [
+            99.213,
+            98.903,
+            98.626,
+            98.398
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 4000.0,
+          "cfg": "custom_long",
+          "ve_pct": 99.27,
+          "airflow_lbmin": 10.3,
+          "torque_lbft": 136.8,
+          "power_bhp": 104.2,
+          "dp_upper_kpa": 0.54,
+          "dp_upper_psi": 0.0783,
+          "cyl_ve": [
+            99.703,
+            99.391,
+            99.113,
+            98.883
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 4200.0,
+          "cfg": "custom_long",
+          "ve_pct": 99.46,
+          "airflow_lbmin": 10.84,
+          "torque_lbft": 137.0,
+          "power_bhp": 109.6,
+          "dp_upper_kpa": 0.597,
+          "dp_upper_psi": 0.0865,
+          "cyl_ve": [
+            99.89,
+            99.578,
+            99.299,
+            99.068
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 4400.0,
+          "cfg": "custom_long",
+          "ve_pct": 99.43,
+          "airflow_lbmin": 11.35,
+          "torque_lbft": 136.9,
+          "power_bhp": 114.7,
+          "dp_upper_kpa": 0.654,
+          "dp_upper_psi": 0.0948,
+          "cyl_ve": [
+            99.864,
+            99.552,
+            99.273,
+            99.042
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 4600.0,
+          "cfg": "custom_long",
+          "ve_pct": 99.25,
+          "airflow_lbmin": 11.84,
+          "torque_lbft": 136.5,
+          "power_bhp": 119.6,
+          "dp_upper_kpa": 0.712,
+          "dp_upper_psi": 0.1032,
+          "cyl_ve": [
+            99.68,
+            99.368,
+            99.089,
+            98.859
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 4800.0,
+          "cfg": "custom_long",
+          "ve_pct": 98.93,
+          "airflow_lbmin": 12.32,
+          "torque_lbft": 136.0,
+          "power_bhp": 124.3,
+          "dp_upper_kpa": 0.77,
+          "dp_upper_psi": 0.1116,
+          "cyl_ve": [
+            99.363,
+            99.051,
+            98.774,
+            98.544
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 5000.0,
+          "cfg": "custom_long",
+          "ve_pct": 98.39,
+          "airflow_lbmin": 12.76,
+          "torque_lbft": 135.1,
+          "power_bhp": 128.6,
+          "dp_upper_kpa": 0.826,
+          "dp_upper_psi": 0.1198,
+          "cyl_ve": [
+            98.819,
+            98.509,
+            98.233,
+            98.004
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 5200.0,
+          "cfg": "custom_long",
+          "ve_pct": 97.44,
+          "airflow_lbmin": 13.15,
+          "torque_lbft": 133.6,
+          "power_bhp": 132.3,
+          "dp_upper_kpa": 0.876,
+          "dp_upper_psi": 0.1271,
+          "cyl_ve": [
+            97.864,
+            97.557,
+            97.283,
+            97.057
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 5400.0,
+          "cfg": "custom_long",
+          "ve_pct": 96.26,
+          "airflow_lbmin": 13.49,
+          "torque_lbft": 131.8,
+          "power_bhp": 135.5,
+          "dp_upper_kpa": 0.922,
+          "dp_upper_psi": 0.1337,
+          "cyl_ve": [
+            96.68,
+            96.376,
+            96.106,
+            95.882
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 5600.0,
+          "cfg": "custom_long",
+          "ve_pct": 94.93,
+          "airflow_lbmin": 13.79,
+          "torque_lbft": 129.7,
+          "power_bhp": 138.3,
+          "dp_upper_kpa": 0.964,
+          "dp_upper_psi": 0.1399,
+          "cyl_ve": [
+            95.343,
+            95.044,
+            94.777,
+            94.556
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 5800.0,
+          "cfg": "custom_long",
+          "ve_pct": 93.5,
+          "airflow_lbmin": 14.07,
+          "torque_lbft": 127.5,
+          "power_bhp": 140.8,
+          "dp_upper_kpa": 1.004,
+          "dp_upper_psi": 0.1456,
+          "cyl_ve": [
+            93.902,
+            93.608,
+            93.345,
+            93.128
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 6000.0,
+          "cfg": "custom_long",
+          "ve_pct": 91.99,
+          "airflow_lbmin": 14.32,
+          "torque_lbft": 125.2,
+          "power_bhp": 143.0,
+          "dp_upper_kpa": 1.04,
+          "dp_upper_psi": 0.1508,
+          "cyl_ve": [
+            92.389,
+            92.099,
+            91.841,
+            91.627
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 6200.0,
+          "cfg": "custom_long",
+          "ve_pct": 90.42,
+          "airflow_lbmin": 14.54,
+          "torque_lbft": 122.8,
+          "power_bhp": 144.9,
+          "dp_upper_kpa": 1.073,
+          "dp_upper_psi": 0.1556,
+          "cyl_ve": [
+            90.815,
+            90.53,
+            90.275,
+            90.065
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 6400.0,
+          "cfg": "custom_long",
+          "ve_pct": 88.79,
+          "airflow_lbmin": 14.74,
+          "torque_lbft": 120.0,
+          "power_bhp": 146.3,
+          "dp_upper_kpa": 1.103,
+          "dp_upper_psi": 0.1599,
+          "cyl_ve": [
+            89.177,
+            88.897,
+            88.647,
+            88.441
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 6600.0,
+          "cfg": "custom_long",
+          "ve_pct": 87.09,
+          "airflow_lbmin": 14.91,
+          "torque_lbft": 117.0,
+          "power_bhp": 147.1,
+          "dp_upper_kpa": 1.128,
+          "dp_upper_psi": 0.1636,
+          "cyl_ve": [
+            87.469,
+            87.194,
+            86.949,
+            86.747
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 6800.0,
+          "cfg": "custom_long",
+          "ve_pct": 85.31,
+          "airflow_lbmin": 15.05,
+          "torque_lbft": 113.9,
+          "power_bhp": 147.5,
+          "dp_upper_kpa": 1.149,
+          "dp_upper_psi": 0.1667,
+          "cyl_ve": [
+            85.681,
+            85.412,
+            85.172,
+            84.973
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 7000.0,
+          "cfg": "custom_long",
+          "ve_pct": 82.84,
+          "airflow_lbmin": 15.04,
+          "torque_lbft": 109.8,
+          "power_bhp": 146.3,
+          "dp_upper_kpa": 1.148,
+          "dp_upper_psi": 0.1666,
+          "cyl_ve": [
+            83.198,
+            82.937,
+            82.704,
+            82.511
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 7200.0,
+          "cfg": "custom_long",
+          "ve_pct": 79.95,
+          "airflow_lbmin": 14.93,
+          "torque_lbft": 105.1,
+          "power_bhp": 144.0,
+          "dp_upper_kpa": 1.132,
+          "dp_upper_psi": 0.1641,
+          "cyl_ve": [
+            80.298,
+            80.046,
+            79.822,
+            79.636
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 7400.0,
+          "cfg": "custom_long",
+          "ve_pct": 76.8,
+          "airflow_lbmin": 14.75,
+          "torque_lbft": 100.0,
+          "power_bhp": 140.9,
+          "dp_upper_kpa": 1.103,
+          "dp_upper_psi": 0.16,
+          "cyl_ve": [
+            77.137,
+            76.895,
+            76.679,
+            76.501
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        },
+        {
+          "rpm": 7600.0,
+          "cfg": "custom_long",
+          "ve_pct": 73.45,
+          "airflow_lbmin": 14.48,
+          "torque_lbft": 94.7,
+          "power_bhp": 137.0,
+          "dp_upper_kpa": 1.064,
+          "dp_upper_psi": 0.1543,
+          "cyl_ve": [
+            73.772,
+            73.541,
+            73.334,
+            73.163
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 3568.0,
+          "quarter_wave_3rd_rpm": 4480.0
+        }
+      ],
+      "custom_short": [
+        {
+          "rpm": 2000.0,
+          "cfg": "custom_short",
+          "ve_pct": 76.89,
+          "airflow_lbmin": 3.99,
+          "torque_lbft": 104.1,
+          "power_bhp": 39.6,
+          "dp_upper_kpa": 0.067,
+          "dp_upper_psi": 0.0097,
+          "cyl_ve": [
+            77.223,
+            76.982,
+            76.766,
+            76.588
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 2200.0,
+          "cfg": "custom_short",
+          "ve_pct": 78.67,
+          "airflow_lbmin": 4.49,
+          "torque_lbft": 106.7,
+          "power_bhp": 44.7,
+          "dp_upper_kpa": 0.084,
+          "dp_upper_psi": 0.0122,
+          "cyl_ve": [
+            79.011,
+            78.764,
+            78.543,
+            78.36
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 2400.0,
+          "cfg": "custom_short",
+          "ve_pct": 80.43,
+          "airflow_lbmin": 5.01,
+          "torque_lbft": 109.2,
+          "power_bhp": 49.9,
+          "dp_upper_kpa": 0.104,
+          "dp_upper_psi": 0.0151,
+          "cyl_ve": [
+            80.783,
+            80.529,
+            80.303,
+            80.116
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 2600.0,
+          "cfg": "custom_short",
+          "ve_pct": 82.16,
+          "airflow_lbmin": 5.54,
+          "torque_lbft": 111.8,
+          "power_bhp": 55.3,
+          "dp_upper_kpa": 0.127,
+          "dp_upper_psi": 0.0185,
+          "cyl_ve": [
+            82.522,
+            82.263,
+            82.031,
+            81.84
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 2800.0,
+          "cfg": "custom_short",
+          "ve_pct": 83.76,
+          "airflow_lbmin": 6.08,
+          "torque_lbft": 114.1,
+          "power_bhp": 60.8,
+          "dp_upper_kpa": 0.153,
+          "dp_upper_psi": 0.0222,
+          "cyl_ve": [
+            84.126,
+            83.862,
+            83.625,
+            83.43
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 3000.0,
+          "cfg": "custom_short",
+          "ve_pct": 84.84,
+          "airflow_lbmin": 6.6,
+          "torque_lbft": 115.6,
+          "power_bhp": 66.1,
+          "dp_upper_kpa": 0.18,
+          "dp_upper_psi": 0.0261,
+          "cyl_ve": [
+            85.214,
+            84.946,
+            84.706,
+            84.508
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 3200.0,
+          "cfg": "custom_short",
+          "ve_pct": 86.06,
+          "airflow_lbmin": 7.14,
+          "torque_lbft": 117.4,
+          "power_bhp": 71.5,
+          "dp_upper_kpa": 0.21,
+          "dp_upper_psi": 0.0305,
+          "cyl_ve": [
+            86.438,
+            86.166,
+            85.922,
+            85.721
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 3400.0,
+          "cfg": "custom_short",
+          "ve_pct": 87.42,
+          "airflow_lbmin": 7.71,
+          "torque_lbft": 119.4,
+          "power_bhp": 77.3,
+          "dp_upper_kpa": 0.244,
+          "dp_upper_psi": 0.0354,
+          "cyl_ve": [
+            87.801,
+            87.524,
+            87.277,
+            87.073
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 3600.0,
+          "cfg": "custom_short",
+          "ve_pct": 88.91,
+          "airflow_lbmin": 8.3,
+          "torque_lbft": 121.5,
+          "power_bhp": 83.3,
+          "dp_upper_kpa": 0.283,
+          "dp_upper_psi": 0.0411,
+          "cyl_ve": [
+            89.297,
+            89.016,
+            88.764,
+            88.556
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 3800.0,
+          "cfg": "custom_short",
+          "ve_pct": 90.51,
+          "airflow_lbmin": 8.92,
+          "torque_lbft": 123.8,
+          "power_bhp": 89.6,
+          "dp_upper_kpa": 0.327,
+          "dp_upper_psi": 0.0474,
+          "cyl_ve": [
+            90.907,
+            90.62,
+            90.363,
+            90.151
+          ],
+          "ve_spread_pct": 0.83,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 4000.0,
+          "cfg": "custom_short",
+          "ve_pct": 92.19,
+          "airflow_lbmin": 9.57,
+          "torque_lbft": 126.3,
+          "power_bhp": 96.2,
+          "dp_upper_kpa": 0.375,
+          "dp_upper_psi": 0.0544,
+          "cyl_ve": [
+            92.597,
+            92.305,
+            92.043,
+            91.827
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 4200.0,
+          "cfg": "custom_short",
+          "ve_pct": 93.91,
+          "airflow_lbmin": 10.23,
+          "torque_lbft": 128.8,
+          "power_bhp": 103.0,
+          "dp_upper_kpa": 0.429,
+          "dp_upper_psi": 0.0622,
+          "cyl_ve": [
+            94.325,
+            94.027,
+            93.76,
+            93.54
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 4400.0,
+          "cfg": "custom_short",
+          "ve_pct": 95.62,
+          "airflow_lbmin": 10.91,
+          "torque_lbft": 131.2,
+          "power_bhp": 109.9,
+          "dp_upper_kpa": 0.488,
+          "dp_upper_psi": 0.0707,
+          "cyl_ve": [
+            96.035,
+            95.731,
+            95.46,
+            95.235
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 4600.0,
+          "cfg": "custom_short",
+          "ve_pct": 97.24,
+          "airflow_lbmin": 11.6,
+          "torque_lbft": 133.6,
+          "power_bhp": 117.0,
+          "dp_upper_kpa": 0.551,
+          "dp_upper_psi": 0.08,
+          "cyl_ve": [
+            97.667,
+            97.358,
+            97.081,
+            96.853
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 4800.0,
+          "cfg": "custom_short",
+          "ve_pct": 98.72,
+          "airflow_lbmin": 12.29,
+          "torque_lbft": 135.7,
+          "power_bhp": 124.0,
+          "dp_upper_kpa": 0.619,
+          "dp_upper_psi": 0.0897,
+          "cyl_ve": [
+            99.152,
+            98.838,
+            98.557,
+            98.325
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 5000.0,
+          "cfg": "custom_short",
+          "ve_pct": 99.91,
+          "airflow_lbmin": 12.96,
+          "torque_lbft": 137.4,
+          "power_bhp": 130.8,
+          "dp_upper_kpa": 0.688,
+          "dp_upper_psi": 0.0998,
+          "cyl_ve": [
+            100.345,
+            100.027,
+            99.743,
+            99.508
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 5200.0,
+          "cfg": "custom_short",
+          "ve_pct": 100.83,
+          "airflow_lbmin": 13.6,
+          "torque_lbft": 138.7,
+          "power_bhp": 137.3,
+          "dp_upper_kpa": 0.758,
+          "dp_upper_psi": 0.11,
+          "cyl_ve": [
+            101.273,
+            100.952,
+            100.665,
+            100.428
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 5400.0,
+          "cfg": "custom_short",
+          "ve_pct": 101.53,
+          "airflow_lbmin": 14.22,
+          "torque_lbft": 139.6,
+          "power_bhp": 143.6,
+          "dp_upper_kpa": 0.829,
+          "dp_upper_psi": 0.1203,
+          "cyl_ve": [
+            101.978,
+            101.655,
+            101.366,
+            101.127
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 5600.0,
+          "cfg": "custom_short",
+          "ve_pct": 102.0,
+          "airflow_lbmin": 14.82,
+          "torque_lbft": 140.2,
+          "power_bhp": 149.5,
+          "dp_upper_kpa": 0.901,
+          "dp_upper_psi": 0.1307,
+          "cyl_ve": [
+            102.446,
+            102.121,
+            101.831,
+            101.591
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 5800.0,
+          "cfg": "custom_short",
+          "ve_pct": 102.22,
+          "airflow_lbmin": 15.38,
+          "torque_lbft": 140.5,
+          "power_bhp": 155.1,
+          "dp_upper_kpa": 0.971,
+          "dp_upper_psi": 0.1409,
+          "cyl_ve": [
+            102.673,
+            102.347,
+            102.056,
+            101.816
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 6000.0,
+          "cfg": "custom_short",
+          "ve_pct": 102.22,
+          "airflow_lbmin": 15.91,
+          "torque_lbft": 140.4,
+          "power_bhp": 160.4,
+          "dp_upper_kpa": 1.04,
+          "dp_upper_psi": 0.1509,
+          "cyl_ve": [
+            102.669,
+            102.342,
+            102.051,
+            101.811
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 6200.0,
+          "cfg": "custom_short",
+          "ve_pct": 102.0,
+          "airflow_lbmin": 16.41,
+          "torque_lbft": 140.0,
+          "power_bhp": 165.2,
+          "dp_upper_kpa": 1.107,
+          "dp_upper_psi": 0.1605,
+          "cyl_ve": [
+            102.448,
+            102.123,
+            101.832,
+            101.593
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 6400.0,
+          "cfg": "custom_short",
+          "ve_pct": 101.59,
+          "airflow_lbmin": 16.87,
+          "torque_lbft": 139.0,
+          "power_bhp": 169.4,
+          "dp_upper_kpa": 1.171,
+          "dp_upper_psi": 0.1698,
+          "cyl_ve": [
+            102.034,
+            101.71,
+            101.421,
+            101.182
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 6600.0,
+          "cfg": "custom_short",
+          "ve_pct": 101.01,
+          "airflow_lbmin": 17.3,
+          "torque_lbft": 137.6,
+          "power_bhp": 173.0,
+          "dp_upper_kpa": 1.232,
+          "dp_upper_psi": 0.1787,
+          "cyl_ve": [
+            101.451,
+            101.128,
+            100.84,
+            100.603
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 6800.0,
+          "cfg": "custom_short",
+          "ve_pct": 100.28,
+          "airflow_lbmin": 17.69,
+          "torque_lbft": 136.0,
+          "power_bhp": 176.1,
+          "dp_upper_kpa": 1.29,
+          "dp_upper_psi": 0.1871,
+          "cyl_ve": [
+            100.72,
+            100.4,
+            100.114,
+            99.878
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 7000.0,
+          "cfg": "custom_short",
+          "ve_pct": 98.82,
+          "airflow_lbmin": 17.95,
+          "torque_lbft": 133.3,
+          "power_bhp": 177.7,
+          "dp_upper_kpa": 1.328,
+          "dp_upper_psi": 0.1926,
+          "cyl_ve": [
+            99.256,
+            98.94,
+            98.659,
+            98.426
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 7200.0,
+          "cfg": "custom_short",
+          "ve_pct": 96.93,
+          "airflow_lbmin": 18.11,
+          "torque_lbft": 130.0,
+          "power_bhp": 178.2,
+          "dp_upper_kpa": 1.352,
+          "dp_upper_psi": 0.1961,
+          "cyl_ve": [
+            97.354,
+            97.045,
+            96.768,
+            96.54
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 7400.0,
+          "cfg": "custom_short",
+          "ve_pct": 94.76,
+          "airflow_lbmin": 18.19,
+          "torque_lbft": 126.3,
+          "power_bhp": 177.9,
+          "dp_upper_kpa": 1.366,
+          "dp_upper_psi": 0.1981,
+          "cyl_ve": [
+            95.179,
+            94.877,
+            94.607,
+            94.384
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        },
+        {
+          "rpm": 7600.0,
+          "cfg": "custom_short",
+          "ve_pct": 92.39,
+          "airflow_lbmin": 18.22,
+          "torque_lbft": 122.3,
+          "power_bhp": 176.9,
+          "dp_upper_kpa": 1.369,
+          "dp_upper_psi": 0.1986,
+          "cyl_ve": [
+            92.794,
+            92.499,
+            92.236,
+            92.018
+          ],
+          "ve_spread_pct": 0.84,
+          "afr_band_at_12p8": [
+            12.74,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4594.0,
+          "quarter_wave_3rd_rpm": 7293.0
+        }
+      ],
+      "fixed_short": [
+        {
+          "rpm": 2000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 76.88,
+          "airflow_lbmin": 3.99,
+          "torque_lbft": 104.1,
+          "power_bhp": 39.6,
+          "dp_upper_kpa": 0.051,
+          "dp_upper_psi": 0.0073,
+          "cyl_ve": [
+            77.155,
+            76.964,
+            76.775,
+            76.608
+          ],
+          "ve_spread_pct": 0.71,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 2200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 78.64,
+          "airflow_lbmin": 4.49,
+          "torque_lbft": 106.6,
+          "power_bhp": 44.7,
+          "dp_upper_kpa": 0.064,
+          "dp_upper_psi": 0.0093,
+          "cyl_ve": [
+            78.924,
+            78.728,
+            78.535,
+            78.364
+          ],
+          "ve_spread_pct": 0.71,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 2400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 80.37,
+          "airflow_lbmin": 5.0,
+          "torque_lbft": 109.2,
+          "power_bhp": 49.9,
+          "dp_upper_kpa": 0.079,
+          "dp_upper_psi": 0.0115,
+          "cyl_ve": [
+            80.665,
+            80.465,
+            80.267,
+            80.092
+          ],
+          "ve_spread_pct": 0.71,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 2600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 82.06,
+          "airflow_lbmin": 5.54,
+          "torque_lbft": 111.6,
+          "power_bhp": 55.3,
+          "dp_upper_kpa": 0.097,
+          "dp_upper_psi": 0.014,
+          "cyl_ve": [
+            82.357,
+            82.152,
+            81.95,
+            81.771
+          ],
+          "ve_spread_pct": 0.71,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 2800.0,
+          "cfg": "fixed_short",
+          "ve_pct": 83.59,
+          "airflow_lbmin": 6.07,
+          "torque_lbft": 113.8,
+          "power_bhp": 60.7,
+          "dp_upper_kpa": 0.116,
+          "dp_upper_psi": 0.0168,
+          "cyl_ve": [
+            83.891,
+            83.682,
+            83.476,
+            83.294
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 3000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 84.57,
+          "airflow_lbmin": 6.58,
+          "torque_lbft": 115.2,
+          "power_bhp": 65.8,
+          "dp_upper_kpa": 0.136,
+          "dp_upper_psi": 0.0197,
+          "cyl_ve": [
+            84.88,
+            84.668,
+            84.459,
+            84.274
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 3200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 85.66,
+          "airflow_lbmin": 7.11,
+          "torque_lbft": 116.8,
+          "power_bhp": 71.2,
+          "dp_upper_kpa": 0.158,
+          "dp_upper_psi": 0.023,
+          "cyl_ve": [
+            85.969,
+            85.755,
+            85.543,
+            85.356
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.84
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 3400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 86.84,
+          "airflow_lbmin": 7.66,
+          "torque_lbft": 118.5,
+          "power_bhp": 76.7,
+          "dp_upper_kpa": 0.184,
+          "dp_upper_psi": 0.0266,
+          "cyl_ve": [
+            87.159,
+            86.941,
+            86.726,
+            86.536
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 3600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 88.12,
+          "airflow_lbmin": 8.23,
+          "torque_lbft": 120.3,
+          "power_bhp": 82.5,
+          "dp_upper_kpa": 0.212,
+          "dp_upper_psi": 0.0307,
+          "cyl_ve": [
+            88.44,
+            88.219,
+            88.001,
+            87.808
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 3800.0,
+          "cfg": "fixed_short",
+          "ve_pct": 89.47,
+          "airflow_lbmin": 8.82,
+          "torque_lbft": 122.3,
+          "power_bhp": 88.5,
+          "dp_upper_kpa": 0.243,
+          "dp_upper_psi": 0.0352,
+          "cyl_ve": [
+            89.795,
+            89.571,
+            89.35,
+            89.153
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 4000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 90.87,
+          "airflow_lbmin": 9.43,
+          "torque_lbft": 124.3,
+          "power_bhp": 94.7,
+          "dp_upper_kpa": 0.277,
+          "dp_upper_psi": 0.0402,
+          "cyl_ve": [
+            91.199,
+            90.971,
+            90.746,
+            90.547
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 4200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 92.28,
+          "airflow_lbmin": 10.06,
+          "torque_lbft": 126.3,
+          "power_bhp": 101.0,
+          "dp_upper_kpa": 0.315,
+          "dp_upper_psi": 0.0457,
+          "cyl_ve": [
+            92.618,
+            92.386,
+            92.158,
+            91.955
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 4400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 93.67,
+          "airflow_lbmin": 10.69,
+          "torque_lbft": 128.3,
+          "power_bhp": 107.5,
+          "dp_upper_kpa": 0.356,
+          "dp_upper_psi": 0.0517,
+          "cyl_ve": [
+            94.013,
+            93.777,
+            93.545,
+            93.34
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 4600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 94.99,
+          "airflow_lbmin": 11.34,
+          "torque_lbft": 130.2,
+          "power_bhp": 114.1,
+          "dp_upper_kpa": 0.4,
+          "dp_upper_psi": 0.0581,
+          "cyl_ve": [
+            95.343,
+            95.104,
+            94.869,
+            94.66
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 4800.0,
+          "cfg": "fixed_short",
+          "ve_pct": 96.21,
+          "airflow_lbmin": 11.98,
+          "torque_lbft": 131.9,
+          "power_bhp": 120.6,
+          "dp_upper_kpa": 0.447,
+          "dp_upper_psi": 0.0648,
+          "cyl_ve": [
+            96.563,
+            96.321,
+            96.082,
+            95.871
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 5000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 97.19,
+          "airflow_lbmin": 12.61,
+          "torque_lbft": 133.3,
+          "power_bhp": 126.9,
+          "dp_upper_kpa": 0.495,
+          "dp_upper_psi": 0.0718,
+          "cyl_ve": [
+            97.55,
+            97.305,
+            97.064,
+            96.851
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 5200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 97.99,
+          "airflow_lbmin": 13.22,
+          "torque_lbft": 134.4,
+          "power_bhp": 133.1,
+          "dp_upper_kpa": 0.544,
+          "dp_upper_psi": 0.079,
+          "cyl_ve": [
+            98.355,
+            98.108,
+            97.865,
+            97.649
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 5400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 98.67,
+          "airflow_lbmin": 13.82,
+          "torque_lbft": 135.4,
+          "power_bhp": 139.2,
+          "dp_upper_kpa": 0.595,
+          "dp_upper_psi": 0.0864,
+          "cyl_ve": [
+            99.036,
+            98.788,
+            98.543,
+            98.326
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 5600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 99.22,
+          "airflow_lbmin": 14.42,
+          "torque_lbft": 136.1,
+          "power_bhp": 145.1,
+          "dp_upper_kpa": 0.648,
+          "dp_upper_psi": 0.0939,
+          "cyl_ve": [
+            99.589,
+            99.339,
+            99.093,
+            98.875
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 5800.0,
+          "cfg": "fixed_short",
+          "ve_pct": 99.65,
+          "airflow_lbmin": 14.99,
+          "torque_lbft": 136.7,
+          "power_bhp": 150.9,
+          "dp_upper_kpa": 0.701,
+          "dp_upper_psi": 0.1017,
+          "cyl_ve": [
+            100.013,
+            99.761,
+            99.514,
+            99.295
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 6000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 99.94,
+          "airflow_lbmin": 15.56,
+          "torque_lbft": 137.0,
+          "power_bhp": 156.5,
+          "dp_upper_kpa": 0.755,
+          "dp_upper_psi": 0.1095,
+          "cyl_ve": [
+            100.305,
+            100.053,
+            99.805,
+            99.585
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 6200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 100.1,
+          "airflow_lbmin": 16.1,
+          "torque_lbft": 137.2,
+          "power_bhp": 161.9,
+          "dp_upper_kpa": 0.809,
+          "dp_upper_psi": 0.1173,
+          "cyl_ve": [
+            100.467,
+            100.214,
+            99.966,
+            99.745
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 6400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 100.13,
+          "airflow_lbmin": 16.63,
+          "torque_lbft": 136.9,
+          "power_bhp": 166.8,
+          "dp_upper_kpa": 0.863,
+          "dp_upper_psi": 0.1252,
+          "cyl_ve": [
+            100.496,
+            100.243,
+            99.994,
+            99.774
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 6600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 100.02,
+          "airflow_lbmin": 17.13,
+          "torque_lbft": 136.2,
+          "power_bhp": 171.1,
+          "dp_upper_kpa": 0.917,
+          "dp_upper_psi": 0.1329,
+          "cyl_ve": [
+            100.392,
+            100.14,
+            99.891,
+            99.671
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 6800.0,
+          "cfg": "fixed_short",
+          "ve_pct": 99.79,
+          "airflow_lbmin": 17.6,
+          "torque_lbft": 135.3,
+          "power_bhp": 175.1,
+          "dp_upper_kpa": 0.969,
+          "dp_upper_psi": 0.1405,
+          "cyl_ve": [
+            100.157,
+            99.905,
+            99.657,
+            99.437
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 7000.0,
+          "cfg": "fixed_short",
+          "ve_pct": 98.82,
+          "airflow_lbmin": 17.95,
+          "torque_lbft": 133.3,
+          "power_bhp": 177.7,
+          "dp_upper_kpa": 1.007,
+          "dp_upper_psi": 0.1461,
+          "cyl_ve": [
+            99.181,
+            98.932,
+            98.686,
+            98.469
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 7200.0,
+          "cfg": "fixed_short",
+          "ve_pct": 97.39,
+          "airflow_lbmin": 18.19,
+          "torque_lbft": 130.7,
+          "power_bhp": 179.1,
+          "dp_upper_kpa": 1.036,
+          "dp_upper_psi": 0.1502,
+          "cyl_ve": [
+            97.754,
+            97.508,
+            97.266,
+            97.052
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 7400.0,
+          "cfg": "fixed_short",
+          "ve_pct": 95.68,
+          "airflow_lbmin": 18.37,
+          "torque_lbft": 127.6,
+          "power_bhp": 179.8,
+          "dp_upper_kpa": 1.056,
+          "dp_upper_psi": 0.1532,
+          "cyl_ve": [
+            96.037,
+            95.796,
+            95.558,
+            95.347
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        },
+        {
+          "rpm": 7600.0,
+          "cfg": "fixed_short",
+          "ve_pct": 93.75,
+          "airflow_lbmin": 18.49,
+          "torque_lbft": 124.3,
+          "power_bhp": 179.8,
+          "dp_upper_kpa": 1.07,
+          "dp_upper_psi": 0.1552,
+          "cyl_ve": [
+            94.096,
+            93.859,
+            93.626,
+            93.419
+          ],
+          "ve_spread_pct": 0.72,
+          "afr_band_at_12p8": [
+            12.75,
+            12.85
+          ],
+          "helmholtz_3rd_rpm": 4818.0,
+          "quarter_wave_3rd_rpm": 8945.0
+        }
+      ]
+    }
+  },
+  "structural_margins_ppa_cf_90c": {
+    "plenum_wall_vac_stress_mpa": 3.72,
+    "plenum_wall_vac_safety_factor": 18.8,
+    "plenum_buckling_crit_kpa": 15968.0,
+    "plenum_buckling_margin_vs_vac": 193.0,
+    "hatch_lid_vac_stress_mpa": 1.84,
+    "hatch_lid_proof_safety_factor": 30.5,
+    "scroll_collapse_crit_kpa": 12015.2,
+    "scroll_collapse_margin_vs_vac": 145.2,
+    "split_z_proof_safety_factor": 93.8,
+    "shaft_304ss_shear_mpa": 26.0,
+    "shaft_304ss_safety_factor": 4.8
+  },
+  "runtime_seconds": 121.13
+}

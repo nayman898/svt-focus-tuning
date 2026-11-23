@@ -1,0 +1,158 @@
+[
+  {
+    "cup_uv_mm": [
+      -27,
+      26
+    ],
+    "path": "direct",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.1257550440597,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 7.150758568115453,
+    "iacv_bolts_and_outlet_to_feed_mm": 8.634743646302773,
+    "added_rib_to_cable_post_tops_mm": 1.1602233691271298,
+    "flange_holes_to_feed_mm": 9.351051155410547,
+    "socket_clearance_to_feed_mm": 5.62645737690134,
+    "rib_overlap_with_neck_mm3": 6970.310621663137,
+    "rib_overlap_with_iacv_mm3": 10693.935691656292,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.33365361311206,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "cup_uv_mm": [
+      -27,
+      26
+    ],
+    "path": "wider",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.8007182157021,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 8.011881966877516,
+    "iacv_bolts_and_outlet_to_feed_mm": 5.398548642435615,
+    "added_rib_to_cable_post_tops_mm": 2.647538425117473,
+    "flange_holes_to_feed_mm": 9.351051155410547,
+    "socket_clearance_to_feed_mm": 5.509652290160349,
+    "rib_overlap_with_neck_mm3": 6988.690313519764,
+    "rib_overlap_with_iacv_mm3": 11367.061283373496,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.33365361311206,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "cup_uv_mm": [
+      -30,
+      25
+    ],
+    "path": "direct",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.1252503635577,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 7.442730906089041,
+    "iacv_bolts_and_outlet_to_feed_mm": 8.625855045699522,
+    "added_rib_to_cable_post_tops_mm": 1.1631076044957656,
+    "flange_holes_to_feed_mm": 8.285789631226816,
+    "socket_clearance_to_feed_mm": 5.543325455929172,
+    "rib_overlap_with_neck_mm3": 6669.47551601771,
+    "rib_overlap_with_iacv_mm3": 10694.720630290782,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.32196605734296,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "cup_uv_mm": [
+      -30,
+      25
+    ],
+    "path": "wider",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.8001414716109,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 9.044870944766807,
+    "iacv_bolts_and_outlet_to_feed_mm": 5.394664318643516,
+    "added_rib_to_cable_post_tops_mm": 2.6462191390723966,
+    "flange_holes_to_feed_mm": 8.285789631226816,
+    "socket_clearance_to_feed_mm": 5.516566641736828,
+    "rib_overlap_with_neck_mm3": 6688.581502496033,
+    "rib_overlap_with_iacv_mm3": 11367.8692159705,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.32196605734296,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "cup_uv_mm": [
+      -29,
+      24
+    ],
+    "path": "direct",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.1246512438621,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 7.43773899412453,
+    "iacv_bolts_and_outlet_to_feed_mm": 8.629907206663798,
+    "added_rib_to_cable_post_tops_mm": 1.1598930009358273,
+    "flange_holes_to_feed_mm": 9.675033561023893,
+    "socket_clearance_to_feed_mm": 5.894542459221285,
+    "rib_overlap_with_neck_mm3": 6921.948241748577,
+    "rib_overlap_with_iacv_mm3": 10694.071944092782,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.31027821762073,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "cup_uv_mm": [
+      -29,
+      24
+    ],
+    "path": "wider",
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.796857897271,
+    "main_air_to_feed_mm": 5.006983997081545,
+    "bracket_pilots_to_feed_mm": 8.896774044860022,
+    "iacv_bolts_and_outlet_to_feed_mm": 5.399062432224796,
+    "added_rib_to_cable_post_tops_mm": 2.646224595054277,
+    "flange_holes_to_feed_mm": 9.675033561023893,
+    "socket_clearance_to_feed_mm": 5.847821826371338,
+    "rib_overlap_with_neck_mm3": 6940.771604599951,
+    "rib_overlap_with_iacv_mm3": 11367.322891733516,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.31027821762073,
+    "supply_port_floor_z_mm": 48.0,
+    "socket_interference_mm3": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  }
+]

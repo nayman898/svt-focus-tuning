@@ -1,0 +1,64 @@
+{
+  "view_axes": "Viewed as photographed. +X right, +Y down. Origin at bolt-grid center. Plate STL +Y follows photo down.",
+  "assumed_bolt_pitch_mm": [
+    79.0,
+    79.0
+  ],
+  "bore_center_xy_mm": [
+    4.838107537356061,
+    -6.843635867898158
+  ],
+  "photo_bore_circle_fit_diameter_mm": 66.03490090925321,
+  "photo_bore_circle_fit_rms_error_mm": 0.3361738125584419,
+  "nominal_plate_bore_diameter_mm": 65.0,
+  "iacv_opening_bounds_xy_mm": [
+    [
+      -35.90010304396229,
+      0.6517629036767522
+    ],
+    [
+      -8.713621242401775,
+      37.158534720665024
+    ]
+  ],
+  "iacv_opening_bounding_size_mm": [
+    27.186481801560515,
+    36.50677181698827
+  ],
+  "iacv_opening_centroid_mm": [
+    -23.83278087059042,
+    21.219472756912786
+  ],
+  "iacv_opening_traced_area_mm2": 423.5251008780895,
+  "gasket_centerline_bounding_size_mm": [
+    78.1040109979199,
+    85.89976075291115
+  ],
+  "planar_gaps_mm": {
+    "iacv_to_nominal_bore": 2.9885053158867216,
+    "iacv_to_gasket_centerline": 1.8864330599354897,
+    "gasket_centerline_to_plate_edge": 6.708072491161936
+  },
+  "photo_to_mm_matrix": [
+    [
+      0.16365538402847638,
+      -0.008593971978250844,
+      -84.92018338667606
+    ],
+    [
+      0.009957200285654067,
+      0.16973533095412627,
+      -94.03074175250859
+    ],
+    [
+      -1.1363288035244452e-05,
+      0.00015172331735706623,
+      1.0
+    ]
+  ],
+  "fit_plate_extents_mm": [
+    96.0,
+    100.0,
+    4.0
+  ]
+}

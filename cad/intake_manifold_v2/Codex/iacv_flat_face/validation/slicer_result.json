@@ -1,0 +1,31 @@
+{
+  "presets": [
+    "Elegoo Centauri Carbon 2 0.4 nozzle",
+    "0.20mm Standard @Elegoo CC2 0.4 nozzle",
+    "Elegoo PLA @ECC2"
+  ],
+  "geometry_only": true,
+  "support_build_plate_only": true,
+  "support_type": "normal(auto)",
+  "return_code": 0,
+  "model_sha256": "8ab530a63d160336bae6875b592f6854e204fd11e38ec1db65d77da23e22e3a3",
+  "stdout_tail": "",
+  "stderr_tail": "",
+  "sliced_gcode_members": [
+    {
+      "file": "Metadata/plate_1.gcode",
+      "layer_markers": 1271,
+      "support_comments": {
+        ";TYPE:Support": 1486,
+        ";TYPE:Support interface": 450
+      }
+    }
+  ],
+  "effective_slicer_settings": {
+    "enable_support": "1",
+    "support_on_build_plate_only": "1",
+    "support_type": "normal(auto)",
+    "printable_height": "256",
+    "layer_height": "0.2"
+  }
+}

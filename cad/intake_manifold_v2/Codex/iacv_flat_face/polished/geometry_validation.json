@@ -1,0 +1,86 @@
+{
+  "route": {
+    "connected_duct_components": 1,
+    "supply_pocket_intersection_mm3": 564.7790795435574,
+    "main_air_to_feed_mm": 4.928442810634084,
+    "bracket_pilots_to_feed_mm": 8.096337325689205,
+    "iacv_bolts_and_outlet_to_feed_mm": 5.440723498064593,
+    "added_rib_to_cable_post_tops_mm": 3.342235045989848,
+    "flange_holes_to_feed_mm": 9.351051155410547,
+    "socket_clearance_to_feed_mm": 5.606276699413812,
+    "iacv_mounting_face_to_duct_mm": 4.830057190344647,
+    "rib_overlap_with_neck_mm3": 8840.535732054219,
+    "rib_overlap_with_iacv_mm3": 12987.374803745663,
+    "outside_covered_duct_mm3": 0.0,
+    "rib_top_z_mm": 76.33365361311206,
+    "supply_port_floor_z_mm": 48.0
+  },
+  "flat_face_sections": {
+    "0.1": {
+      "seal_centerline_to_edge_mm": 1.5965094631570622,
+      "openings": 6
+    },
+    "0.25": {
+      "seal_centerline_to_edge_mm": 1.5965067544387492,
+      "openings": 6
+    },
+    "1.1": {
+      "seal_centerline_to_edge_mm": 1.596429332882031,
+      "openings": 6
+    },
+    "2.2": {
+      "seal_centerline_to_edge_mm": 1.4644042568549913,
+      "openings": 6
+    }
+  },
+  "rear_sockets": [
+    {
+      "bolt_uv_signs": [
+        -1,
+        -1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 0.9999999999999946
+    },
+    {
+      "bolt_uv_signs": [
+        -1,
+        1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.000000000000006
+    },
+    {
+      "bolt_uv_signs": [
+        1,
+        -1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.000000000000001
+    },
+    {
+      "bolt_uv_signs": [
+        1,
+        1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 0.9999999999999974
+    }
+  ],
+  "left_half_difference_mm3": 0.03756757937944903,
+  "minimum_sampled_bore_area_mm2": 3308.701219677339,
+  "unmodified_minimum_sampled_bore_area_mm2": 3317.4303036498454,
+  "seal_land_support": {
+    "max_local_radial_inset_mm": 0.6726293144179074,
+    "face_opening_area_reduction_mm2": 8.802865383778226,
+    "requested_photo_seal_land_mm": 1.6
+  },
+  "solid_in_capped_iacv_feed_mm3": 1.986675504290172e-05,
+  "stl_simplification_mm": {},
+  "right_print_extents_mm": [
+    159.59,
+    216.75,
+    253.73
+  ],
+  "fit_coupon_sha256": "4c4c3b924b9e2b8921d748aa3fb8a263f3aeb5b7ef0ed1f844b7ed053b1bef16"
+}

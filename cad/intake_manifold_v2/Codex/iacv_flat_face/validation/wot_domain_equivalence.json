@@ -1,0 +1,7 @@
+{
+  "parameter_sha256": {
+    "refined": "4dd40f973ce5938930de751347a2030e2c1e5c5d54a2b6519613841cddf64307",
+    "polished": "a1294d92ddf318b9710ab211b081315b8d423ed057fa3aac8c1a924f4c572b86"
+  },
+  "symmetric_capped_wot_cavity_difference_mm3": 0.0
+}

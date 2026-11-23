@@ -1,0 +1,10 @@
+{
+  "design": "high_entry",
+  "status": "REJECTED",
+  "gate": "Existing Codex minimum sampled internal runner-root material chord of 2.5 mm",
+  "cylinder": 1,
+  "measured_chord_mm": 0.037,
+  "sample_position": "12 mm after lip",
+  "sample_ray_angle_deg": 10.37,
+  "same_cylinder_minimum_sampled_pressure_wall_mm": 6.26
+}

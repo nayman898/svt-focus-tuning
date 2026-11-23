@@ -19,6 +19,7 @@ Outputs:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -171,14 +172,16 @@ def simulate_oem_dsi_point(mode: str, rpm: float) -> dict:
     cd_runner = float(np.mean(1.0 / np.sqrt(1.0 + k_runner_tot)))
 
     a_run_mean = 0.5 * (a_throat + a_exit)
+    l_acoustic_eff_m = l_total_acoustic_m + 0.6 * d_exit_m
     v_cyl_eff = v_plenum * 0.5 + 0.5 * (disp_m3 / 4.0)
-    f_helmholtz_hz = (va.A0_SOUND / (2.0 * math.pi)) * math.sqrt(a_run_mean / (l_total_acoustic_m * v_cyl_eff))
+    f_helmholtz_hz = (va.A0_SOUND / (2.0 * math.pi)) * math.sqrt(a_run_mean / (l_acoustic_eff_m * v_cyl_eff))
     rpm_helmholtz_3rd = f_helmholtz_hz * 120.0 / 3.0
-    f_quarter_hz = va.A0_SOUND / (4.0 * (l_total_acoustic_m + 0.35 * d_exit_m))
+    f_quarter_hz = va.A0_SOUND / (4.0 * l_acoustic_eff_m)
     rpm_pulse_4th = f_quarter_hz * 120.0 / 4.0
 
-    # (B) Matching 720-deg Crank-Angle Unsteady Pulsating Simulation (identical solver to verify_airflow.py)
-    n_ca = 720
+    # (B) Matching 720-deg Crank-Angle Unsteady Pulsating Simulation (identical signed ODE to verify_airflow.py)
+    n_ca = 1440
+    n_cycles = 6
     ca_deg = np.linspace(0.0, 720.0, n_ca, endpoint=False)
     omega = rpm * 2.0 * math.pi / 60.0
     d_theta = math.radians(720.0 / n_ca)
@@ -191,12 +194,14 @@ def simulate_oem_dsi_point(mode: str, rpm: float) -> dict:
     a_valve_max = 0.00102
 
     p_pl_inst = va.P0_IN_PA - 600.0
-    m_run_inst = np.zeros(4)
-    m_run_hist = np.zeros((n_ca, 4))
+    m_run_inst = np.zeros(4, dtype=float)
+    p_port_arr = np.full(4, va.P0_IN_PA - 600.0, dtype=float)
+    m_run_hist = np.zeros((n_ca, 4), dtype=float)
 
-    l_eff_inertia = l_upper_m + 0.097
+    l_eff_inertia = l_upper_m + 0.135
     a_eff_inertia = 0.5 * (a_throat + a_exit)
     inertance = l_eff_inertia / a_eff_inertia
+    v_port = a_eff_inertia * l_upper_m
 
     def valve_area(theta_local: float) -> float:
         if theta_local <= 232.0:
@@ -217,37 +222,52 @@ def simulate_oem_dsi_point(mode: str, rpm: float) -> dict:
         return vol, a_piston * d_x_dth * omega
 
     p_pl_bias_ref = p_pl_nodes - float(np.mean(p_pl_nodes))
-    p_cyl_arr = np.full(4, va.P0_IN_PA)
-    for cyc in range(3):
+    p_cyl_arr = np.full(4, va.P0_IN_PA, dtype=float)
+    last_net_mass = None
+    periodic_res_pct = 0.0
+    for cyc in range(n_cycles):
+        cyc_valve_mass = np.zeros(4, dtype=float)
         for s_idx, th_g in enumerate(ca_deg):
             dp_tb_inst = va.P0_IN_PA - p_pl_inst
             sgn_tb = 1.0 if dp_tb_inst >= 0 else -1.0
             mdot_tb = sgn_tb * (0.94 * a_tb) * math.sqrt(2.0 * va.RHO0 * abs(dp_tb_inst))
             mdot_valves = np.zeros(4)
+            mdot_runners = np.zeros(4)
             for c in range(4):
                 th_loc = (th_g - intake_offsets[c]) % 720.0
                 vol_c, dvol_c = cyl_vol_dvol(th_loc)
                 av = valve_area(th_loc)
                 p_pl_local = p_pl_inst + p_pl_bias_ref[c]
-                loss_pa = 0.5 * k_runner_tot[c] * m_run_inst[c] * abs(m_run_inst[c]) / (va.RHO0 * a_exit**2)
-                dp_v = (p_pl_local - loss_pa) - p_cyl_arr[c]
+                c_drag_lin = 0.5 * k_runner_tot[c] * abs(m_run_inst[c]) / (va.RHO0 * a_exit**2)
+                m_run_inst[c] = (m_run_inst[c] + dt * (p_pl_local - p_port_arr[c]) / inertance) / (
+                    1.0 + dt * c_drag_lin / inertance
+                )
+                mdot_runners[c] = m_run_inst[c]
+
+                dp_v = p_port_arr[c] - p_cyl_arr[c]
                 if av > 1e-7:
                     sgn_v = 1.0 if dp_v >= 0 else -1.0
                     mdot_valves[c] = sgn_v * 0.72 * av * math.sqrt(2.0 * va.RHO0 * abs(dp_v))
-                    dmdt = loss_pa / inertance
-                    m_run_inst[c] = 0.75 * mdot_valves[c] + 0.25 * (m_run_inst[c] + dmdt * dt)
-                else:
-                    m_run_inst[c] *= 0.85
+
+                dp_port = (va.GAMMA * va.R_AIR * va.T0_IN_K / v_port) * (m_run_inst[c] - mdot_valves[c]) * dt
+                p_port_arr[c] = max(0.35 * va.P_AMB_PA, min(1.5 * va.P0_IN_PA, p_port_arr[c] + dp_port))
+
                 if (th_loc <= 250.0) or (th_loc >= 700.0):
                     dm_in = mdot_valves[c] * dt
                     dp_cyl = (va.GAMMA * va.R_AIR * va.T0_IN_K / vol_c) * dm_in - (va.GAMMA * p_cyl_arr[c] / vol_c) * dvol_c * dt
                     p_cyl_arr[c] = max(0.35 * va.P_AMB_PA, min(1.5 * va.P0_IN_PA, p_cyl_arr[c] + dp_cyl))
                 else:
                     p_cyl_arr[c] = va.P0_IN_PA - 1200.0
-            dm_pl = mdot_tb - float(np.sum(mdot_valves))
+                cyc_valve_mass[c] += mdot_valves[c] * dt
+            dm_pl = mdot_tb - float(np.sum(mdot_runners))
             p_pl_inst += (va.GAMMA * va.R_AIR * va.T0_IN_K / v_plenum) * dm_pl * dt
-            if cyc == 2:
+            if cyc == n_cycles - 1:
                 m_run_hist[s_idx, :] = mdot_valves
+        prev_net = last_net_mass
+        last_net_mass = cyc_valve_mass
+        if prev_net is not None:
+            denom = max(float(np.mean(np.abs(last_net_mass))), 1e-9)
+            periodic_res_pct = float(np.max(np.abs(last_net_mass - prev_net))) / denom * 100.0
 
     v_peak_exit = float(np.max(m_run_hist)) / (va.RHO0 * a_exit)
     mach_peak_exit = v_peak_exit / va.A0_SOUND
@@ -258,46 +278,84 @@ def simulate_oem_dsi_point(mode: str, rpm: float) -> dict:
         "dp_total_psi": round(dp_upper_kpa * 0.145038, 3),
         "cyl_ve": [round(float(v), 4) for v in ve_cyl],
         "ve_maldistribution_spread_pct": round(ve_spread_pct, 2),
+        "periodic_state_residual_pct": round(periodic_res_pct, 4),
         "runner_discharge_coeff_cd": round(cd_runner, 4),
         "peak_mach_exit": round(mach_peak_exit, 3),
         "helmholtz_freq_hz": round(f_helmholtz_hz, 1),
         "helmholtz_3rd_harmonic_rpm": round(rpm_helmholtz_3rd, 0),
         "quarter_wave_4th_harmonic_rpm": round(rpm_pulse_4th, 0),
-        "runner_length_total_mm": round(l_total_acoustic_m * 1000.0, 0),
+        "physical_runner_length_mm": round(l_total_acoustic_m * 1000.0, 1),
+        "effective_acoustic_length_mm": round(l_acoustic_eff_m * 1000.0, 1),
     }
+
+
+def _cam_envelope(rpm: float) -> float:
+    return 0.915 + 0.085 * math.exp(-((rpm - 6350.0) / 2150.0) ** 2) - 0.030 * max(0.0, (rpm - 6700.0) / 800.0) ** 1.4
+
+
+def _compute_v037_anchor_scale() -> float:
+    """Calibrate matched-density flow scale directly to v037 Pull 6 (37.85 lb/min @ 6,397 RPM)."""
+    rho_v037 = 225700.0 / (va.R_AIR * 295.37)
+    disp_m3 = va.ENGINE_DISP_L * 1e-3
+    sim_anchor = simulate_oem_dsi_point("short", 6397.0)
+    p_plenum_ratio = (va.P0_IN_PA - sim_anchor["dp_total_kpa"] * 1e3) / va.P0_IN_PA
+    raw_lbmin = rho_v037 * disp_m3 * (6397.0 / 120.0) * _cam_envelope(6397.0) * p_plenum_ratio * 132.277
+    return 37.85 / raw_lbmin
+
+
+V037_ANCHOR_SCALE = _compute_v037_anchor_scale()
 
 
 def estimate_boosted_airflow_lbmin(rpm: float, sim: dict, mode_tag: str) -> float:
     """
-    Estimate WOT 18.0 psi turbo mass airflow [lb/min] across 3,000-7,500 RPM,
-    anchored directly to the car's logged v037 telemetry (37.85 lb/min @ 6,397 RPM,
-    18.04 psi boost, 72 deg F IAT -> rho = 2.660 kg/m^3), scaled by upper-manifold
-    pressure recovery (P0 - dP) and runner inertial/acoustic response.
+    Estimate WOT 18.0 psi turbo mass airflow [lb/min] across 3,000-7,500 RPM at matched
+    pressure-loss conditions, anchored directly to v037 Pull 6 (37.85 lb/min @ 6,397 RPM,
+    18.04 psi boost, 72 deg F IAT -> rho = 2.662 kg/m^3).
+    Both OEM Short and Custom Stage-2 use acoustic = 1.000 (pure pressure-loss recovery
+    comparison with zero arbitrary high-RPM custom multiplier).
     """
-    # At v037 Pull 6 logged IAT (72 F = 295.37 K) and 18.04 psi boost (225.7 kPa abs):
-    rho_v037 = 225700.0 / (va.R_AIR * 295.37)  # 2.662 kg/m^3
-    cam_env = 0.915 + 0.085 * math.exp(-((rpm - 6350.0) / 2150.0) ** 2) - 0.030 * max(0.0, (rpm - 6700.0) / 800.0) ** 1.4
+    rho_v037 = 225700.0 / (va.R_AIR * 295.37)
+    cam_env = _cam_envelope(rpm)
     p_plenum_ratio = (va.P0_IN_PA - sim["dp_total_kpa"] * 1e3) / va.P0_IN_PA
 
     if mode_tag == "oem_long":
         acoustic = 1.0 + 0.024 * math.exp(-((rpm - 4350.0) / 1350.0) ** 2) - 0.078 * max(0.0, (rpm - 4900.0) / 2600.0) ** 1.55
-    elif mode_tag == "oem_short":
-        acoustic = 1.000
     else:
-        low_tradeoff = -0.008 * max(0.0, (3900.0 - rpm) / 900.0)
-        high_gain = 0.020 * (1.0 / (1.0 + math.exp(-(rpm - 5300.0) / 550.0)))
-        acoustic = 1.000 + low_tradeoff + high_gain
+        acoustic = 1.000
 
     disp_m3 = va.ENGINE_DISP_L * 1e-3
-    # Calibration factor 1.004 anchors OEM Short-Runner directly through v037 Pull 6 (37.85 lb/min @ 6,397 RPM)
-    mdot_raw_kgs = rho_v037 * disp_m3 * (rpm / 120.0) * cam_env * p_plenum_ratio * acoustic * 1.004
+    mdot_raw_kgs = rho_v037 * disp_m3 * (rpm / 120.0) * cam_env * p_plenum_ratio * acoustic * V037_ANCHOR_SCALE
     return round(mdot_raw_kgs * 132.277, 2)
+
+
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main():
     params = json.loads(PARAMS_PATH.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     verif = json.loads(VERIF_PATH.read_text(encoding="utf-8"))
+
+    # Provenance & convergence gate
+    prov = verif.get("provenance") or {}
+    stl_1pc = ROOT / "stl" / "svt_intake_manifold_1piece_full.stl"
+    if (
+        prov.get("intake_manifold_parameters_sha256") != _sha256_file(PARAMS_PATH)
+        or prov.get("manifest_sha256") != _sha256_file(MANIFEST_PATH)
+        or prov.get("stl_1piece_full_sha256") != _sha256_file(stl_1pc)
+    ):
+        raise RuntimeError(
+            "Stale stl/airflow_verification.json: provenance hashes do not match current "
+            "intake_manifold_parameters.json / manifest.json / STL. Re-run verify_airflow.py first."
+        )
+    cfd3d = verif["boost_optimized"]["cfd_3d"]
+    if not cfd3d.get("converged") or cfd3d.get("status") != "CONVERGED":
+        raise RuntimeError(f"Cannot compare factory vs custom: 3D FVM did not converge ({cfd3d.get('status')}).")
+
+    # Verify v037 Pull 6 calibration anchor directly
+    anchor_pred = estimate_boosted_airflow_lbmin(6397.0, simulate_oem_dsi_point("short", 6397.0), "oem_short")
+    assert abs(anchor_pred - 37.85) < 0.05, f"v037 calibration drift: {anchor_pred} vs 37.85"
 
     custom_audit = verif["boost_optimized"]["cad_audit"]
     left_vol_cm3 = manifest["parts"]["svt_intake_manifold_split_left_cyl1_2"]["solid_volume_cm3"]
@@ -320,7 +378,6 @@ def main():
         s_cust = va.solve_1d_compressible_and_pulsating(params, custom_audit, rpm=float(rpm))
         c_entry = {k: v for k, v in s_cust.items() if not k.startswith("_")}
         c_entry["est_airflow_lbmin"] = estimate_boosted_airflow_lbmin(float(rpm), c_entry, "custom")
-        c_entry["runner_length_total_mm"] = 243.0
         curves["custom"].append(c_entry)
 
     # Extract 6,500 RPM (closest grid to v037 Pull 6 6,397 RPM) & 7,000 RPM snapshots
@@ -330,23 +387,27 @@ def main():
     def summarize_7000(pt: dict, tag: str) -> dict:
         ve_arr = pt["cyl_ve"]
         afr_target = 11.0
-        # At constant injected fuel per cylinder (batch/sequential equal pulsewidth), leanest cyl AFR ~ 11.0 * (mean_ve / min_ve)
+        # At equal injected fuel per cylinder, more air (higher VE) runs LEANER (higher AFR): AFR_i = 11.0 * (VE_i / mean_VE)
         mean_ve = sum(ve_arr) / 4.0
-        lean_afr = afr_target * (mean_ve / min(ve_arr))
-        rich_afr = afr_target * (mean_ve / max(ve_arr))
+        cyl_afr = [afr_target * (v / mean_ve) for v in ve_arr]
+        rich_afr = min(cyl_afr)
+        lean_afr = max(cyl_afr)
         return {
             "mode": tag,
             "dp_7000_kpa": pt["dp_total_kpa"],
             "dp_7000_psi": pt["dp_total_psi"],
             "ve_spread_7000_pct": pt["ve_maldistribution_spread_pct"],
             "cyl_ve_7000": ve_arr,
-            "leanest_to_richest_afr_at_11p0": [round(rich_afr, 2), round(lean_afr, 2)],
+            "cyl_afr_at_11p0": [round(a, 2) for a in cyl_afr],
+            "richest_to_leanest_afr_at_11p0": [round(rich_afr, 2), round(lean_afr, 2)],
             "afr_spread_band": round(lean_afr - rich_afr, 2),
+            "afr_projection_note": "Equal-fueling projection from 1D VE distribution; not a measured knock margin",
             "peak_mach_exit_7000": pt["peak_mach_exit"],
             "est_airflow_6500_lbmin": curves[tag if tag != "custom_round" else "custom"][idx_6500]["est_airflow_lbmin"],
             "est_airflow_7000_lbmin": pt["est_airflow_lbmin"],
             "helmholtz_3rd_harmonic_rpm": pt["helmholtz_3rd_harmonic_rpm"],
-            "runner_length_total_mm": pt.get("runner_length_total_mm", 243.0),
+            "physical_runner_length_mm": pt["physical_runner_length_mm"],
+            "effective_acoustic_length_mm": pt["effective_acoustic_length_mm"],
         }
 
     summary_7000 = {
@@ -360,9 +421,10 @@ def main():
     summary_7000["custom_round_2in"]["cfd_3d_dp_psi"] = verif["boost_optimized"]["cfd_3d"]["tb_to_plenum_dp_psi"]
     summary_7000["custom_round_2in"]["cfd_3d_cyl_share_pct"] = verif["boost_optimized"]["cfd_3d"]["cyl_flow_share_pct"]
 
-    hp_per_lbmin = 10.75  # Anchored to v037 Pull 6: 37.85 lb/min -> ~407 bhp
     dl_short = round(curves["custom"][idx_7000]["est_airflow_lbmin"] - curves["oem_short"][idx_7000]["est_airflow_lbmin"], 2)
     dl_long = round(curves["custom"][idx_7000]["est_airflow_lbmin"] - curves["oem_long"][idx_7000]["est_airflow_lbmin"], 2)
+    pct_short = round(dl_short / max(curves["oem_short"][idx_7000]["est_airflow_lbmin"], 1e-6) * 100.0, 2)
+    pct_long = round(dl_long / max(curves["oem_long"][idx_7000]["est_airflow_lbmin"], 1e-6) * 100.0, 2)
 
     hardware_comp = {
         "oem_upper_dsi": {
@@ -388,14 +450,16 @@ def main():
             "iacv_metering": "OEM 2-bolt Ford IACV with isolated 1/4 NPT blow-through MAF supply barb",
         },
         "estimated_gains_7000rpm_18psi": {
+            "basis": "Matched pressure-loss recovery only (acoustic = 1.000 for OEM Short & Custom; empirical uncertainty unmeasured without back-to-back dyno)",
             "airflow_gain_vs_oem_short_lbmin": dl_short,
-            "estimated_bhp_gain_vs_oem_short": round(dl_short * hp_per_lbmin, 1),
+            "airflow_gain_vs_oem_short_pct": pct_short,
             "airflow_gain_vs_oem_long_lbmin": dl_long,
-            "estimated_bhp_gain_vs_oem_long": round(dl_long * hp_per_lbmin, 1),
+            "airflow_gain_vs_oem_long_pct": pct_long,
         },
     }
 
     report = {
+        "provenance": prov,
         "methodology_note": (
             "Custom manifold specs & 3D CFD values come directly from CAD solids and verify_airflow.py. "
             "OEM Focus SVT/ST170 DSI values represent physics-modeled estimates based on documented "
@@ -410,7 +474,7 @@ def main():
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
-    render_comparison_figure(rpms, curves, summary_7000, hardware_comp, OUT_PNG)
+    render_comparison_figure(rpms, curves, summary_7000, hardware_comp, OUT_PNG, case_id=prov.get("case_id", ""))
     print(f"Saved {OUT_JSON.relative_to(ROOT)} and {OUT_PNG.relative_to(ROOT)}")
     print(
         f"7000 RPM @ 18 psi: "
@@ -421,11 +485,11 @@ def main():
     print(
         f"Weight: Custom {hardware_comp['custom_stage2_round']['estimated_mass_lb']} lb vs OEM {hardware_comp['oem_upper_dsi']['estimated_mass_lb']} lb "
         f"(saves {hardware_comp['custom_stage2_round']['mass_savings_lb']} lb) | "
-        f"Est Gain @ 7k: +{dl_short} lb/min (~+{round(dl_short*hp_per_lbmin,1)} bhp) vs Short, +{dl_long} lb/min (~+{round(dl_long*hp_per_lbmin,1)} bhp) vs Long"
+        f"Modeled Pressure-Loss Flow Diff @ 7k: +{dl_short} lb/min (+{pct_short}%) vs Short, +{dl_long} lb/min (+{pct_long}%) vs Long (no unverified acoustic/bhp bonus)"
     )
 
 
-def render_comparison_figure(rpms, curves, s7k, hw, out_path: Path):
+def render_comparison_figure(rpms, curves, s7k, hw, out_path: Path, case_id: str = ""):
     fig = plt.figure(figsize=(18, 12), facecolor="#f5f4f0")
     fig.suptitle(
         'Custom Stage-2 Max-Boost (Ø50.8 / Ø42.8 mm Round) vs. Factory 2004 Focus SVT DSI Manifold — 18 PSI Boost',
@@ -577,13 +641,13 @@ def render_comparison_figure(rpms, curves, s7k, hw, out_path: Path):
         ["Upper Manifold Material", "PA66-GF30 Plastic", "PA66-GF30 Plastic", "PPA-CF / PAHT-CF*"],
         ["Upper Mass (w/ Hardware)", f"{hw['oem_upper_dsi']['estimated_mass_lb']:.1f} lb", f"{hw['oem_upper_dsi']['estimated_mass_lb']:.1f} lb", f"{hw['custom_stage2_round']['estimated_mass_lb']:.2f} lb (-{hw['custom_stage2_round']['mass_savings_lb']:.1f} lb)"],
         ["Thermal Cond. [W/(m·K)]", "~0.40 (molded)", "~0.40 (molded)", "~0.90 (both low soak)"],
-        ["Total Runner Length [mm]", "~475 mm", "~320 mm", "243 mm (108 mm upper)"],
+        ["Total Runner Length [mm]", "~475 mm", "~320 mm", f"{s7k['custom_round_2in']['physical_runner_length_mm']:.0f} mm (eff {s7k['custom_round_2in']['effective_acoustic_length_mm']:.0f})"],
         ["Internal Cross-Flow Blockage", "~18% (drum)", "~12% (drum)", "0.00% (CAD verified)"],
         ["Upper ΔP @ 7,000 RPM", f"{s7k['oem_dsi_long']['dp_7000_psi']:.3f} psi", f"{s7k['oem_dsi_short']['dp_7000_psi']:.3f} psi", f"{s7k['custom_round_2in']['dp_7000_psi']:.3f} psi (3D {s7k['custom_round_2in']['cfd_3d_dp_psi']:.3f})"],
         ["1D Cyl VE Spread @ 7k", f"{s7k['oem_dsi_long']['ve_spread_7000_pct']:.2f}%", f"{s7k['oem_dsi_short']['ve_spread_7000_pct']:.2f}%", f"{s7k['custom_round_2in']['ve_spread_7000_pct']:.2f}% (3D {s7k['custom_round_2in']['cfd_3d_spread_pct']:.2f}%)"],
-        ["AFR Spread @ 11.0 Target", f"{s7k['oem_dsi_long']['leanest_to_richest_afr_at_11p0'][0]:.2f}–{s7k['oem_dsi_long']['leanest_to_richest_afr_at_11p0'][1]:.2f}", f"{s7k['oem_dsi_short']['leanest_to_richest_afr_at_11p0'][0]:.2f}–{s7k['oem_dsi_short']['leanest_to_richest_afr_at_11p0'][1]:.2f}", f"{s7k['custom_round_2in']['leanest_to_richest_afr_at_11p0'][0]:.2f}–{s7k['custom_round_2in']['leanest_to_richest_afr_at_11p0'][1]:.2f}"],
+        ["Equal-Fuel AFR (Rich–Lean)", f"{s7k['oem_dsi_long']['richest_to_leanest_afr_at_11p0'][0]:.2f}–{s7k['oem_dsi_long']['richest_to_leanest_afr_at_11p0'][1]:.2f}", f"{s7k['oem_dsi_short']['richest_to_leanest_afr_at_11p0'][0]:.2f}–{s7k['oem_dsi_short']['richest_to_leanest_afr_at_11p0'][1]:.2f}", f"{s7k['custom_round_2in']['richest_to_leanest_afr_at_11p0'][0]:.2f}–{s7k['custom_round_2in']['richest_to_leanest_afr_at_11p0'][1]:.2f}"],
         ["Helmholtz 3rd Harmonic", f"{int(s7k['oem_dsi_long']['helmholtz_3rd_harmonic_rpm'])} RPM", f"{int(s7k['oem_dsi_short']['helmholtz_3rd_harmonic_rpm'])} RPM", f"{int(s7k['custom_round_2in']['helmholtz_3rd_harmonic_rpm'])} RPM"],
-        ["Est. WOT Flow / ΔBHP @ 7k", f"{s7k['oem_dsi_long']['est_airflow_7000_lbmin']} lb/m", f"{s7k['oem_dsi_short']['est_airflow_7000_lbmin']} lb/m", f"{s7k['custom_round_2in']['est_airflow_7000_lbmin']} lb/m (+{hw['estimated_gains_7000rpm_18psi']['estimated_bhp_gain_vs_oem_short']:.0f} vs S)"],
+        ["Modeled Flow (ΔP-Only vs S)", f"{s7k['oem_dsi_long']['est_airflow_7000_lbmin']} lb/m", f"{s7k['oem_dsi_short']['est_airflow_7000_lbmin']} lb/m", f"{s7k['custom_round_2in']['est_airflow_7000_lbmin']} lb/m (+{hw['estimated_gains_7000rpm_18psi']['airflow_gain_vs_oem_short_lbmin']:.2f})"],
     ]
     tbl = ax6.table(
         cellText=table_rows,
@@ -608,11 +672,11 @@ def render_comparison_figure(rpms, curves, s7k, hw, out_path: Path):
 
     fig.text(
         0.5,
-        0.012,
-        "*Custom printed part requires annealed CF-Nylon (PPA-CF/PAHT-CF) + epoxy exterior seal & 20–25 psi leak test before under-hood boost service. "
-        "OEM curves modeled from SVT DSI architecture; v037 telemetry points anchored to car logs.",
+        0.010,
+        f"Case ID: {case_id} | *Custom printed part requires annealed CF-Nylon (PPA-CF/PAHT-CF) + epoxy exterior seal & 20–25 psi leak test before boost service. "
+        "OEM curves modeled from SVT DSI architecture; v037 telemetry anchored at matched pressure loss (acoustic=1.000).",
         ha="center",
-        fontsize=8,
+        fontsize=7.8,
         color="#444444",
     )
     plt.tight_layout(rect=[0, 0.025, 1, 0.945])

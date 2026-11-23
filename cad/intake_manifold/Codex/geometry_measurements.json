@@ -1,0 +1,1096 @@
+{
+  "source": {
+    "runner_samples": [
+      {
+        "cylinder_x_mm": -138.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 5.892711169845715,
+            "angle_deg": 105.37,
+            "local_wall_rays": 40
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 5.757842570657289,
+            "angle_deg": 105.37,
+            "local_wall_rays": 45
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 5.628750699369693,
+            "angle_deg": 100.37,
+            "local_wall_rays": 52
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 5.53263356375917,
+            "angle_deg": 100.37,
+            "local_wall_rays": 60
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.499384084683143,
+            "angle_deg": 95.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.499391242452091,
+            "angle_deg": 95.37,
+            "local_wall_rays": 66
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.500730211507214,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.49707771462262,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.490154430107069,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462672291808168,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.41761717774699,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.3561048219789775,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "Bezier t=0.2",
+          "min_radial_wall_mm": 5.3561048219789775,
+          "angle_deg": 275.37,
+          "local_wall_rays": 72
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          -137.99999944541025,
+          -34.99999993803024
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.79174831081033,
+          42.798346241407096
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.79020247444681,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.9992227579998065
+      },
+      {
+        "cylinder_x_mm": -46.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.577413178911545,
+            "angle_deg": 90.37,
+            "local_wall_rays": 34
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.305401792631766,
+            "angle_deg": 90.37,
+            "local_wall_rays": 39
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 6.039691422965788,
+            "angle_deg": 90.37,
+            "local_wall_rays": 44
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 5.794639228952921,
+            "angle_deg": 90.37,
+            "local_wall_rays": 51
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.598218785821363,
+            "angle_deg": 90.37,
+            "local_wall_rays": 58
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.501559479980113,
+            "angle_deg": 90.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.500911305343841,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.4970787402421735,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.49015389681723,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462668975577792,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417618132786696,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.356105100860702,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "Bezier t=0.2",
+          "min_radial_wall_mm": 5.356105100860702,
+          "angle_deg": 95.37,
+          "local_wall_rays": 72
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          -46.00000020390495,
+          -34.99999993469703
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.791747099836655,
+          42.79833714096512
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.790207213936306,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.999228375702515
+      },
+      {
+        "cylinder_x_mm": 46.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.959035761793739,
+            "angle_deg": 80.37,
+            "local_wall_rays": 31
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.639198759454018,
+            "angle_deg": 85.37,
+            "local_wall_rays": 36
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 0.679170088038255,
+            "angle_deg": 175.37,
+            "local_wall_rays": 43
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 6.007197215081284,
+            "angle_deg": 85.37,
+            "local_wall_rays": 48
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.736300504425444,
+            "angle_deg": 85.37,
+            "local_wall_rays": 57
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.549491359578266,
+            "angle_deg": 85.37,
+            "local_wall_rays": 65
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.501032874465071,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.497078773348953,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.49015420290074,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462673346390051,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417615865371136,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.3561032514348135,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "10 mm after lip",
+          "min_radial_wall_mm": 0.679170088038255,
+          "angle_deg": 175.37,
+          "local_wall_rays": 43
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          46.00000017639788,
+          -34.99999994498512
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.791747099836655,
+          42.79833714096512
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.790207213936306,
+          50.79802642801806
+        ],
+        "spigot_min_radial_wall_mm": 3.9992283757040674
+      },
+      {
+        "cylinder_x_mm": 138.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.563420456227885,
+            "angle_deg": 50.37,
+            "local_wall_rays": 33
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.411458864294609,
+            "angle_deg": 55.37,
+            "local_wall_rays": 40
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 6.21072942622007,
+            "angle_deg": 60.37,
+            "local_wall_rays": 50
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 1.4220786335405151,
+            "angle_deg": 160.37,
+            "local_wall_rays": 53
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 0.7543723950123571,
+            "angle_deg": 175.37,
+            "local_wall_rays": 58
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.5493987479098585,
+            "angle_deg": 65.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.504878345419222,
+            "angle_deg": 80.37,
+            "local_wall_rays": 59
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.497080062992588,
+            "angle_deg": 95.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.490154679655603,
+            "angle_deg": 95.37,
+            "local_wall_rays": 67
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462673644992567,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417616563315811,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.356106661194374,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "14 mm after lip",
+          "min_radial_wall_mm": 0.7543723950123571,
+          "angle_deg": 175.37,
+          "local_wall_rays": 58
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          137.9999994179024,
+          -34.99999994165245
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.79174831081033,
+          42.79834485084114
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.79020151428,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.999221793546784
+      }
+    ],
+    "adjacent_spigot_pitches_mm": [
+      91.9999992415053,
+      92.00000038030284,
+      91.9999992415045
+    ],
+    "plenum_front_barrel": [
+      {
+        "x_mm": -157.3,
+        "front_barrel_wall_min_mm": 5.113883287825622,
+        "nominal_wall_after_taper_scale_mm": 5.114901878047371
+      },
+      {
+        "x_mm": -115.7,
+        "front_barrel_wall_min_mm": 5.456624345626054,
+        "nominal_wall_after_taper_scale_mm": 5.457654414395821
+      },
+      {
+        "x_mm": 2.13,
+        "front_barrel_wall_min_mm": 6.13531633793103,
+        "nominal_wall_after_taper_scale_mm": 6.1365456123722675
+      },
+      {
+        "x_mm": 114.7,
+        "front_barrel_wall_min_mm": 6.454660208084235,
+        "nominal_wall_after_taper_scale_mm": 6.455924230949523
+      },
+      {
+        "x_mm": 167.8,
+        "front_barrel_wall_min_mm": 6.498562019495054,
+        "nominal_wall_after_taper_scale_mm": 6.499896797267836
+      }
+    ],
+    "iacv_floor": {
+      "samples": 468,
+      "centerline_wall_mm": 4.936284730955997,
+      "minimum": {
+        "x_mm": 179.25,
+        "y_mm": 0.25,
+        "wall_mm": 3.413624487546329
+      }
+    },
+    "throttle_bore_measured_diameter_range_mm": [
+      64.98706238442564,
+      64.99911643340202
+    ],
+    "thin_internal_lip_crossings": [
+      {
+        "cylinder": 3,
+        "section_after_bellmouth_lip_mm": 10.0,
+        "angle_deg": 175.37,
+        "world_endpoints_mm": [
+          [
+            22.630855329470673,
+            -45.840339086863224,
+            -6.259188425086807
+          ],
+          [
+            21.95448472276933,
+            -45.80755430882759,
+            -6.207035101074826
+          ]
+        ],
+        "distance_from_runner_center_to_crossings_mm": [
+          23.74604976293731,
+          24.425219850975566,
+          214.4193521045725,
+          227.97377514033184
+        ],
+        "material_span_mm": 0.679170088038255
+      },
+      {
+        "cylinder": 4,
+        "section_after_bellmouth_lip_mm": 14.0,
+        "angle_deg": 175.37,
+        "world_endpoints_mm": [
+          [
+            115.288923983979,
+            -47.652196500475995,
+            -7.456176731649757
+          ],
+          [
+            114.54979188802938,
+            -47.5129361683789,
+            -7.398142129919457
+          ]
+        ],
+        "distance_from_runner_center_to_crossings_mm": [
+          23.179359821334298,
+          23.933732216346655,
+          330.6895101454632,
+          337.11350373575124
+        ],
+        "material_span_mm": 0.7543723950123571
+      }
+    ],
+    "washer_and_socket_clearance": {
+      "split": [
+        {
+          "clock_deg": 25.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 108.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 150.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 228.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 285.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 335.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        }
+      ],
+      "throttle_body": [
+        {
+          "bolt_uv_sign": [
+            -1,
+            -1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            -1,
+            1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            1,
+            -1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            1,
+            1
+          ],
+          "interference_mm3": 0.0
+        }
+      ]
+    }
+  },
+  "codex": {
+    "runner_samples": [
+      {
+        "cylinder_x_mm": -138.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 5.892711169845715,
+            "angle_deg": 105.37,
+            "local_wall_rays": 40
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 5.757842570657289,
+            "angle_deg": 105.37,
+            "local_wall_rays": 45
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 5.628750699369693,
+            "angle_deg": 100.37,
+            "local_wall_rays": 52
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 5.53263356375917,
+            "angle_deg": 100.37,
+            "local_wall_rays": 60
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.499384084683143,
+            "angle_deg": 95.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.499391242452091,
+            "angle_deg": 95.37,
+            "local_wall_rays": 66
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.500730211507214,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.49707771462262,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.490154430107069,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462672291808168,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.41761717774699,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.3561048219789775,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "Bezier t=0.2",
+          "min_radial_wall_mm": 5.3561048219789775,
+          "angle_deg": 275.37,
+          "local_wall_rays": 72
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          -137.99999944541025,
+          -34.99999993803024
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.79174831081033,
+          42.798346241407096
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.79020247444681,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.9992227579998065
+      },
+      {
+        "cylinder_x_mm": -46.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.577413178911545,
+            "angle_deg": 90.37,
+            "local_wall_rays": 34
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.305401792631766,
+            "angle_deg": 90.37,
+            "local_wall_rays": 39
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 6.039691422965788,
+            "angle_deg": 90.37,
+            "local_wall_rays": 44
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 5.794639228952921,
+            "angle_deg": 90.37,
+            "local_wall_rays": 51
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.598218785821363,
+            "angle_deg": 90.37,
+            "local_wall_rays": 58
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.501559479980113,
+            "angle_deg": 90.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.500911305343841,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.4970787402421735,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.49015389681723,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462668975577792,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417618132786696,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.356105100860702,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "Bezier t=0.2",
+          "min_radial_wall_mm": 5.356105100860702,
+          "angle_deg": 95.37,
+          "local_wall_rays": 72
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          -46.00000020390495,
+          -34.99999993469703
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.791747099836655,
+          42.79833714096512
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.790207213936306,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.999228375702515
+      },
+      {
+        "cylinder_x_mm": 46.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.959035761793739,
+            "angle_deg": 80.37,
+            "local_wall_rays": 31
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.639198759454018,
+            "angle_deg": 85.37,
+            "local_wall_rays": 36
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 0.679170088038255,
+            "angle_deg": 175.37,
+            "local_wall_rays": 43
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 6.007197215081284,
+            "angle_deg": 85.37,
+            "local_wall_rays": 48
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 5.736300504425444,
+            "angle_deg": 85.37,
+            "local_wall_rays": 57
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.549491359578266,
+            "angle_deg": 85.37,
+            "local_wall_rays": 65
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.501032874465071,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.497078773348953,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.49015420290074,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462673346390051,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417615865371136,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.3561032514348135,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "10 mm after lip",
+          "min_radial_wall_mm": 0.679170088038255,
+          "angle_deg": 175.37,
+          "local_wall_rays": 43
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          46.00000017639788,
+          -34.99999994498512
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.791747099836655,
+          42.79833714096512
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.790207213936306,
+          50.79802642801806
+        ],
+        "spigot_min_radial_wall_mm": 3.9992283757040674
+      },
+      {
+        "cylinder_x_mm": 138.0,
+        "roots": [
+          {
+            "station": "6 mm after lip",
+            "min_radial_wall_mm": 6.563420456227885,
+            "angle_deg": 50.37,
+            "local_wall_rays": 33
+          },
+          {
+            "station": "8 mm after lip",
+            "min_radial_wall_mm": 6.411458864294609,
+            "angle_deg": 55.37,
+            "local_wall_rays": 40
+          },
+          {
+            "station": "10 mm after lip",
+            "min_radial_wall_mm": 6.21072942622007,
+            "angle_deg": 60.37,
+            "local_wall_rays": 50
+          },
+          {
+            "station": "12 mm after lip",
+            "min_radial_wall_mm": 1.4220786335405151,
+            "angle_deg": 160.37,
+            "local_wall_rays": 53
+          },
+          {
+            "station": "14 mm after lip",
+            "min_radial_wall_mm": 0.7543723950123571,
+            "angle_deg": 175.37,
+            "local_wall_rays": 58
+          },
+          {
+            "station": "16 mm after lip",
+            "min_radial_wall_mm": 5.5493987479098585,
+            "angle_deg": 65.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "18 mm after lip",
+            "min_radial_wall_mm": 5.504878345419222,
+            "angle_deg": 80.37,
+            "local_wall_rays": 59
+          },
+          {
+            "station": "Bezier t=0.025",
+            "min_radial_wall_mm": 5.497080062992588,
+            "angle_deg": 95.37,
+            "local_wall_rays": 62
+          },
+          {
+            "station": "Bezier t=0.05",
+            "min_radial_wall_mm": 5.490154679655603,
+            "angle_deg": 95.37,
+            "local_wall_rays": 67
+          },
+          {
+            "station": "Bezier t=0.1",
+            "min_radial_wall_mm": 5.462673644992567,
+            "angle_deg": 95.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.15",
+            "min_radial_wall_mm": 5.417616563315811,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          },
+          {
+            "station": "Bezier t=0.2",
+            "min_radial_wall_mm": 5.356106661194374,
+            "angle_deg": 275.37,
+            "local_wall_rays": 72
+          }
+        ],
+        "minimum_in_sample": {
+          "station": "14 mm after lip",
+          "min_radial_wall_mm": 0.7543723950123571,
+          "angle_deg": 175.37,
+          "local_wall_rays": 58
+        },
+        "spigot_center_from_circle_fit_xz_mm": [
+          137.9999994179024,
+          -34.99999994165245
+        ],
+        "spigot_inner_diameter_min_max_mm": [
+          42.79174831081033,
+          42.79834485084114
+        ],
+        "spigot_outer_diameter_min_max_mm": [
+          50.79020151428,
+          50.79802767023284
+        ],
+        "spigot_min_radial_wall_mm": 3.999221793546784
+      }
+    ],
+    "adjacent_spigot_pitches_mm": [
+      91.9999992415053,
+      92.00000038030284,
+      91.9999992415045
+    ],
+    "plenum_front_barrel": [
+      {
+        "x_mm": -157.3,
+        "front_barrel_wall_min_mm": 5.113883287825622,
+        "nominal_wall_after_taper_scale_mm": 5.114901878047371
+      },
+      {
+        "x_mm": -115.7,
+        "front_barrel_wall_min_mm": 5.456624345626054,
+        "nominal_wall_after_taper_scale_mm": 5.457654414395821
+      },
+      {
+        "x_mm": 2.13,
+        "front_barrel_wall_min_mm": 6.13531633793103,
+        "nominal_wall_after_taper_scale_mm": 6.1365456123722675
+      },
+      {
+        "x_mm": 114.7,
+        "front_barrel_wall_min_mm": 6.454660208084235,
+        "nominal_wall_after_taper_scale_mm": 6.455924230949523
+      },
+      {
+        "x_mm": 167.8,
+        "front_barrel_wall_min_mm": 6.498562019495054,
+        "nominal_wall_after_taper_scale_mm": 6.499896797267836
+      }
+    ],
+    "iacv_floor": {
+      "samples": 468,
+      "centerline_wall_mm": 4.936284730955997,
+      "minimum": {
+        "x_mm": 179.25,
+        "y_mm": 0.25,
+        "wall_mm": 3.413624487546329
+      }
+    },
+    "throttle_bore_measured_diameter_range_mm": [
+      64.98706238442564,
+      64.99911643340202
+    ],
+    "thin_internal_lip_crossings": [
+      {
+        "cylinder": 3,
+        "section_after_bellmouth_lip_mm": 10.0,
+        "angle_deg": 175.37,
+        "world_endpoints_mm": [
+          [
+            22.630855329470673,
+            -45.840339086863224,
+            -6.259188425086807
+          ],
+          [
+            21.95448472276933,
+            -45.80755430882759,
+            -6.207035101074826
+          ]
+        ],
+        "distance_from_runner_center_to_crossings_mm": [
+          23.74604976293731,
+          24.425219850975566,
+          214.4193521045725,
+          227.97377514033184
+        ],
+        "material_span_mm": 0.679170088038255
+      },
+      {
+        "cylinder": 4,
+        "section_after_bellmouth_lip_mm": 14.0,
+        "angle_deg": 175.37,
+        "world_endpoints_mm": [
+          [
+            115.288923983979,
+            -47.652196500475995,
+            -7.456176731649757
+          ],
+          [
+            114.54979188802938,
+            -47.5129361683789,
+            -7.398142129919457
+          ]
+        ],
+        "distance_from_runner_center_to_crossings_mm": [
+          23.179359821334298,
+          23.933732216346655,
+          330.6895101454632,
+          337.11350373575124
+        ],
+        "material_span_mm": 0.7543723950123571
+      }
+    ],
+    "washer_and_socket_clearance": {
+      "split": [
+        {
+          "clock_deg": 25.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 108.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 150.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 228.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 285.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        },
+        {
+          "clock_deg": 335.0,
+          "left_mm3": 0.0,
+          "right_mm3": 0.0
+        }
+      ],
+      "throttle_body": [
+        {
+          "bolt_uv_sign": [
+            -1,
+            -1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            -1,
+            1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            1,
+            -1
+          ],
+          "interference_mm3": 0.0
+        },
+        {
+          "bolt_uv_sign": [
+            1,
+            1
+          ],
+          "interference_mm3": 0.0
+        }
+      ]
+    }
+  }
+}

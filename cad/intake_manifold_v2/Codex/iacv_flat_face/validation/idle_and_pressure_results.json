@@ -1,0 +1,758 @@
+{
+  "source_params_sha256": "4dd40f973ce5938930de751347a2030e2c1e5c5d54a2b6519613841cddf64307",
+  "centerline_length_mm_including_adapter": 117.51807115118801,
+  "minimum_spline_centerline_bend_radius_mm": 9.244838903999526,
+  "minimum_sampled_flow_section": {
+    "section": "duct_centerline",
+    "station_mm": 45.85361458419051,
+    "area_mm2": 96.5753397041324,
+    "hydraulic_diameter_mm": 11.08474556237181
+  },
+  "minimum_sampled_hydraulic_diameter_mm": 11.084711929147414,
+  "sampled_sections": [
+    {
+      "section": "face_adapter",
+      "station_mm": 0.0,
+      "area_mm2": 256.24834829591543,
+      "hydraulic_diameter_mm": 11.807177972146711
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 0.4673913043478261,
+      "area_mm2": 256.21058449085024,
+      "hydraulic_diameter_mm": 11.807610466183196
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 0.9347826086956522,
+      "area_mm2": 255.70294132448103,
+      "hydraulic_diameter_mm": 11.813533231752846
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 1.4021739130434783,
+      "area_mm2": 253.7065149454153,
+      "hydraulic_diameter_mm": 11.836693983467491
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 1.8695652173913044,
+      "area_mm2": 249.63303033442983,
+      "hydraulic_diameter_mm": 11.883646642526996
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 2.3369565217391304,
+      "area_mm2": 243.54392365561625,
+      "hydraulic_diameter_mm": 11.95364306337911
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 2.8043478260869565,
+      "area_mm2": 235.53060152193595,
+      "hydraulic_diameter_mm": 12.042767172212882
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 3.2717391304347827,
+      "area_mm2": 226.59913567456223,
+      "hydraulic_diameter_mm": 12.139100797081063
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 3.739130434782609,
+      "area_mm2": 217.44804414656628,
+      "hydraulic_diameter_mm": 12.234519984958773
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 4.206521739130435,
+      "area_mm2": 208.13527989528183,
+      "hydraulic_diameter_mm": 12.323228012330734
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 4.673913043478261,
+      "area_mm2": 198.69347201041975,
+      "hydraulic_diameter_mm": 12.405708895187374
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 5.141304347826087,
+      "area_mm2": 189.12375620136686,
+      "hydraulic_diameter_mm": 12.479268765973588
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 5.608695652173913,
+      "area_mm2": 179.3912632118943,
+      "hydraulic_diameter_mm": 12.535042226000447
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 6.076086956521739,
+      "area_mm2": 169.53386516151053,
+      "hydraulic_diameter_mm": 12.571781339785465
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 6.543478260869565,
+      "area_mm2": 159.54134243023012,
+      "hydraulic_diameter_mm": 12.579898019830102
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 7.010869565217392,
+      "area_mm2": 149.39331219062802,
+      "hydraulic_diameter_mm": 12.543265393020116
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 7.478260869565218,
+      "area_mm2": 139.12035014501774,
+      "hydraulic_diameter_mm": 12.453611167146525
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 7.945652173913044,
+      "area_mm2": 128.76672941237246,
+      "hydraulic_diameter_mm": 12.288547046128208
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 8.41304347826087,
+      "area_mm2": 118.94787910232887,
+      "hydraulic_diameter_mm": 12.043222450975938
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 8.880434782608695,
+      "area_mm2": 110.42921670466852,
+      "hydraulic_diameter_mm": 11.752965921411723
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 9.347826086956522,
+      "area_mm2": 103.97304427002035,
+      "hydraulic_diameter_mm": 11.473824378802309
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 9.815217391304348,
+      "area_mm2": 99.7389632297581,
+      "hydraulic_diameter_mm": 11.261169994172464
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 10.282608695652174,
+      "area_mm2": 97.48076069873673,
+      "hydraulic_diameter_mm": 11.136973701907886
+    },
+    {
+      "section": "face_adapter",
+      "station_mm": 10.75,
+      "area_mm2": 96.81076236953879,
+      "hydraulic_diameter_mm": 11.100214440293705
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 0.5,
+      "area_mm2": 96.69751552310323,
+      "hydraulic_diameter_mm": 11.089351312653404
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 1.7958175595483004,
+      "area_mm2": 96.65545305119576,
+      "hydraulic_diameter_mm": 11.092159701133374
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 3.0916351190966007,
+      "area_mm2": 96.68853287339999,
+      "hydraulic_diameter_mm": 11.09374736626463
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 4.387452678644901,
+      "area_mm2": 96.6753336600612,
+      "hydraulic_diameter_mm": 11.093368585509486
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 5.683270238193201,
+      "area_mm2": 96.63079120648372,
+      "hydraulic_diameter_mm": 11.091030148968803
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 6.979087797741502,
+      "area_mm2": 96.64663188097543,
+      "hydraulic_diameter_mm": 11.09206911902192
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 8.274905357289802,
+      "area_mm2": 96.68619858126885,
+      "hydraulic_diameter_mm": 11.094097376911897
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 9.570722916838102,
+      "area_mm2": 96.69689863681204,
+      "hydraulic_diameter_mm": 11.094123676495721
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 10.866540476386403,
+      "area_mm2": 96.67590913944287,
+      "hydraulic_diameter_mm": 11.093235352095514
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 12.162358035934703,
+      "area_mm2": 96.63930481590634,
+      "hydraulic_diameter_mm": 11.090709686941205
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 13.458175595483004,
+      "area_mm2": 96.61554692498876,
+      "hydraulic_diameter_mm": 11.08896004031034
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 14.753993155031305,
+      "area_mm2": 96.67458402881097,
+      "hydraulic_diameter_mm": 11.092522900651913
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 16.049810714579603,
+      "area_mm2": 96.63237222628133,
+      "hydraulic_diameter_mm": 11.09018130997813
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 17.345628274127904,
+      "area_mm2": 96.61612279441053,
+      "hydraulic_diameter_mm": 11.089465301976277
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 18.641445833676205,
+      "area_mm2": 96.64157057699063,
+      "hydraulic_diameter_mm": 11.09110296045502
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 19.937263393224505,
+      "area_mm2": 96.6789882779558,
+      "hydraulic_diameter_mm": 11.093148328726306
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 21.233080952772806,
+      "area_mm2": 96.69340998872784,
+      "hydraulic_diameter_mm": 11.093945133911356
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 22.528898512321106,
+      "area_mm2": 96.69030366746051,
+      "hydraulic_diameter_mm": 11.094312874741119
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 23.824716071869407,
+      "area_mm2": 96.69542144856995,
+      "hydraulic_diameter_mm": 11.094823140119205
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 25.120533631417707,
+      "area_mm2": 96.69962520794212,
+      "hydraulic_diameter_mm": 11.09484079393521
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 26.416351190966008,
+      "area_mm2": 96.69991672918593,
+      "hydraulic_diameter_mm": 11.094122853219988
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 27.71216875051431,
+      "area_mm2": 96.70034360067436,
+      "hydraulic_diameter_mm": 11.094896321544626
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 29.00798631006261,
+      "area_mm2": 96.69721305127575,
+      "hydraulic_diameter_mm": 11.095112832500352
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 30.30380386961091,
+      "area_mm2": 96.6922740988424,
+      "hydraulic_diameter_mm": 11.094714753197247
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 31.599621429159207,
+      "area_mm2": 96.69314163490152,
+      "hydraulic_diameter_mm": 11.094146292417063
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 32.89543898870751,
+      "area_mm2": 96.6855562796068,
+      "hydraulic_diameter_mm": 11.093685651436619
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 34.19125654825581,
+      "area_mm2": 96.65362475235055,
+      "hydraulic_diameter_mm": 11.092289704175482
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 35.48707410780411,
+      "area_mm2": 96.64208259702505,
+      "hydraulic_diameter_mm": 11.091552520987403
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 36.78289166735241,
+      "area_mm2": 96.65976641878954,
+      "hydraulic_diameter_mm": 11.092182695742686
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 38.07870922690071,
+      "area_mm2": 96.69507241069333,
+      "hydraulic_diameter_mm": 11.09379945191724
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 39.37452678644901,
+      "area_mm2": 96.64364495958937,
+      "hydraulic_diameter_mm": 11.090812548688666
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 40.670344345997314,
+      "area_mm2": 96.61433693182879,
+      "hydraulic_diameter_mm": 11.08882723892759
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 41.96616190554561,
+      "area_mm2": 96.61680174656217,
+      "hydraulic_diameter_mm": 11.08872020428634
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 43.26197946509391,
+      "area_mm2": 96.66685683873646,
+      "hydraulic_diameter_mm": 11.09184620289827
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 44.55779702464221,
+      "area_mm2": 96.63056211411238,
+      "hydraulic_diameter_mm": 11.089059226948915
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 45.85361458419051,
+      "area_mm2": 96.5753397041324,
+      "hydraulic_diameter_mm": 11.08474556237181
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 47.149432143738814,
+      "area_mm2": 96.57905921705485,
+      "hydraulic_diameter_mm": 11.084731610662876
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 48.44524970328711,
+      "area_mm2": 96.62981431427087,
+      "hydraulic_diameter_mm": 11.0885329992992
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 49.741067262835415,
+      "area_mm2": 96.67825199314223,
+      "hydraulic_diameter_mm": 11.092334229962484
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 51.03688482238371,
+      "area_mm2": 96.60678644133965,
+      "hydraulic_diameter_mm": 11.08667386046707
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 52.332702381932016,
+      "area_mm2": 96.57997690977066,
+      "hydraulic_diameter_mm": 11.084711929147414
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 53.62851994148031,
+      "area_mm2": 96.59962446550558,
+      "hydraulic_diameter_mm": 11.086468299870669
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 54.92433750102862,
+      "area_mm2": 96.67580081275179,
+      "hydraulic_diameter_mm": 11.092294458602108
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 56.220155060576914,
+      "area_mm2": 96.64700193434889,
+      "hydraulic_diameter_mm": 11.090371034923326
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 57.51597262012522,
+      "area_mm2": 96.63624739065763,
+      "hydraulic_diameter_mm": 11.089678261453754
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 58.811790179673515,
+      "area_mm2": 96.65756641489791,
+      "hydraulic_diameter_mm": 11.091173610932499
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 60.10760773922182,
+      "area_mm2": 96.68547789236298,
+      "hydraulic_diameter_mm": 11.093083590552533
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 61.40342529877012,
+      "area_mm2": 96.69639915734015,
+      "hydraulic_diameter_mm": 11.093834717951278
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 62.699242858318414,
+      "area_mm2": 96.69547190995546,
+      "hydraulic_diameter_mm": 11.093776023281027
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 63.99506041786672,
+      "area_mm2": 96.69827519118579,
+      "hydraulic_diameter_mm": 11.093957910401366
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 65.29087797741502,
+      "area_mm2": 96.69945139779345,
+      "hydraulic_diameter_mm": 11.09403614376183
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 66.58669553696332,
+      "area_mm2": 96.69970796957266,
+      "hydraulic_diameter_mm": 11.094049941516738
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 67.88251309651162,
+      "area_mm2": 96.69549667656467,
+      "hydraulic_diameter_mm": 11.093810212538557
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 69.17833065605991,
+      "area_mm2": 96.68890649284283,
+      "hydraulic_diameter_mm": 11.093432431607209
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 70.47414821560822,
+      "area_mm2": 96.6843717098294,
+      "hydraulic_diameter_mm": 11.09317102502469
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 71.76996577515652,
+      "area_mm2": 96.68961978175281,
+      "hydraulic_diameter_mm": 11.093470903370289
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 73.06578333470482,
+      "area_mm2": 96.68395842969095,
+      "hydraulic_diameter_mm": 11.093144887706599
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 74.36160089425312,
+      "area_mm2": 96.6522730845607,
+      "hydraulic_diameter_mm": 11.09132387235753
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 75.65741845380143,
+      "area_mm2": 96.633110731291,
+      "hydraulic_diameter_mm": 11.090222594569733
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 76.95323601334972,
+      "area_mm2": 96.64453502326242,
+      "hydraulic_diameter_mm": 11.090880002880521
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 78.24905357289802,
+      "area_mm2": 96.69488377896843,
+      "hydraulic_diameter_mm": 11.093772749598992
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 79.54487113244632,
+      "area_mm2": 96.63967328933829,
+      "hydraulic_diameter_mm": 11.090603340006162
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 80.84068869199463,
+      "area_mm2": 96.62378033448526,
+      "hydraulic_diameter_mm": 11.089691527673475
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 82.13650625154293,
+      "area_mm2": 96.63700176354074,
+      "hydraulic_diameter_mm": 11.090451357423754
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 83.43232381109122,
+      "area_mm2": 96.67721418368443,
+      "hydraulic_diameter_mm": 11.092759403371556
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 84.72814137063952,
+      "area_mm2": 96.66118134210343,
+      "hydraulic_diameter_mm": 11.091839778352595
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 86.02395893018782,
+      "area_mm2": 96.61855412526587,
+      "hydraulic_diameter_mm": 11.089393266784326
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 87.31977648973613,
+      "area_mm2": 96.61292249385436,
+      "hydraulic_diameter_mm": 11.089069648482601
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 88.61559404928443,
+      "area_mm2": 96.66224514071911,
+      "hydraulic_diameter_mm": 11.091900536528057
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 89.91141160883272,
+      "area_mm2": 96.69493023090395,
+      "hydraulic_diameter_mm": 11.093775593535934
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 91.20722916838102,
+      "area_mm2": 96.68981939076299,
+      "hydraulic_diameter_mm": 11.09348236836875
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 92.50304672792933,
+      "area_mm2": 96.69660103992854,
+      "hydraulic_diameter_mm": 11.093871382511537
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 93.79886428747763,
+      "area_mm2": 96.69980008662891,
+      "hydraulic_diameter_mm": 11.094054932780223
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 95.09468184702592,
+      "area_mm2": 96.69924594232332,
+      "hydraulic_diameter_mm": 11.094023161885966
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 96.39049940657422,
+      "area_mm2": 96.68968937067605,
+      "hydraulic_diameter_mm": 11.093475013313133
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 97.68631696612253,
+      "area_mm2": 96.66592437276034,
+      "hydraulic_diameter_mm": 11.09211145303595
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 98.98213452567083,
+      "area_mm2": 96.65435288765576,
+      "hydraulic_diameter_mm": 11.09144726952801
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 100.27795208521913,
+      "area_mm2": 96.67279293142046,
+      "hydraulic_diameter_mm": 11.092505466399077
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 101.57376964476742,
+      "area_mm2": 96.68234527606965,
+      "hydraulic_diameter_mm": 11.09305354299603
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 102.86958720431574,
+      "area_mm2": 96.64005644259663,
+      "hydraulic_diameter_mm": 11.090626467838344
+    },
+    {
+      "section": "duct_centerline",
+      "station_mm": 104.16540476386403,
+      "area_mm2": 96.61895572544907,
+      "hydraulic_diameter_mm": 11.089414980108073
+    }
+  ],
+  "inlet_pressure_kpa_abs": 101.325,
+  "inlet_temperature_k": 320,
+  "logged_v024_return_vacuum_psig": -7.29,
+  "tapped_pressure_difference_at_logged_return_kpa": 50.26277853,
+  "ideal_choked_flow_g_s_assuming_cd_1": 22.107995718361817,
+  "duct_roughness_assumption_mm": 0.15,
+  "duct_loss_screens": [
+    {
+      "engine_airflow_lb_min": 0.587,
+      "all_through_duct_g_s": 4.437645353166666,
+      "assumed_minor_loss_coefficient": 2,
+      "reynolds": 26807.552002116947,
+      "inlet_velocity_m_s": 41.65597116898868,
+      "friction_factor": 0.0438963787720833,
+      "total_loss_coefficient": 2.465381310474341,
+      "duct_pressure_loss_kpa": 2.3876185618121237
+    },
+    {
+      "engine_airflow_lb_min": 0.587,
+      "all_through_duct_g_s": 4.437645353166666,
+      "assumed_minor_loss_coefficient": 5,
+      "reynolds": 26807.552002116947,
+      "inlet_velocity_m_s": 41.65597116898868,
+      "friction_factor": 0.0438963787720833,
+      "total_loss_coefficient": 5.465381310474341,
+      "duct_pressure_loss_kpa": 5.373094055269685
+    },
+    {
+      "engine_airflow_lb_min": 0.587,
+      "all_through_duct_g_s": 4.437645353166666,
+      "assumed_minor_loss_coefficient": 10,
+      "reynolds": 26807.552002116947,
+      "inlet_velocity_m_s": 41.65597116898868,
+      "friction_factor": 0.0438963787720833,
+      "total_loss_coefficient": 10.46538131047434,
+      "duct_pressure_loss_kpa": 10.56686206151433
+    },
+    {
+      "engine_airflow_lb_min": 0.85,
+      "all_through_duct_g_s": 6.425891908333333,
+      "assumed_minor_loss_coefficient": 2,
+      "reynolds": 38818.43134889167,
+      "inlet_velocity_m_s": 60.319549392913764,
+      "friction_factor": 0.04337818097137507,
+      "total_loss_coefficient": 2.4598874729796663,
+      "duct_pressure_loss_kpa": 5.062890149248342
+    },
+    {
+      "engine_airflow_lb_min": 0.85,
+      "all_through_duct_g_s": 6.425891908333333,
+      "assumed_minor_loss_coefficient": 5,
+      "reynolds": 38818.43134889167,
+      "inlet_velocity_m_s": 60.319549392913764,
+      "friction_factor": 0.04337818097137507,
+      "total_loss_coefficient": 5.459887472979666,
+      "duct_pressure_loss_kpa": 11.623358249957208
+    },
+    {
+      "engine_airflow_lb_min": 0.85,
+      "all_through_duct_g_s": 6.425891908333333,
+      "assumed_minor_loss_coefficient": 10,
+      "reynolds": 38818.43134889167,
+      "inlet_velocity_m_s": 60.319549392913764,
+      "friction_factor": 0.04337818097137507,
+      "total_loss_coefficient": 10.459887472979666,
+      "duct_pressure_loss_kpa": 23.781233225716875
+    },
+    {
+      "engine_airflow_lb_min": 1.39,
+      "all_through_duct_g_s": 10.508223238333333,
+      "assumed_minor_loss_coefficient": 2,
+      "reynolds": 63479.55244112872,
+      "inlet_velocity_m_s": 98.6402043013531,
+      "friction_factor": 0.04292085794025673,
+      "total_loss_coefficient": 2.4550390185630278,
+      "duct_pressure_loss_kpa": 14.164952304651452
+    },
+    {
+      "engine_airflow_lb_min": 1.39,
+      "all_through_duct_g_s": 10.508223238333333,
+      "assumed_minor_loss_coefficient": 5,
+      "reynolds": 63479.55244112872,
+      "inlet_velocity_m_s": 98.6402043013531,
+      "friction_factor": 0.04292085794025673,
+      "total_loss_coefficient": 5.455039018563028,
+      "duct_pressure_loss_kpa": 35.48928634776872
+    },
+    {
+      "engine_airflow_lb_min": 1.39,
+      "all_through_duct_g_s": 10.508223238333333,
+      "assumed_minor_loss_coefficient": 10,
+      "reynolds": 63479.55244112872,
+      "inlet_velocity_m_s": 98.6402043013531,
+      "friction_factor": 0.04292085794025673,
+      "total_loss_coefficient": 10.455039018563028,
+      "duct_pressure_loss_kpa": null
+    }
+  ],
+  "pressure_load_screens": [
+    {
+      "differential_pressure_psig": 18,
+      "nominal_isolated_duct_hoop_stress_mpa": 0.21908111779788816,
+      "main_flange_force_n_pressure_only": 410.62843571629173,
+      "iacv_feed_force_n_pressure_only": 31.801861676730613,
+      "plenum_split_force_n_pressure_only": 752.5445401996974
+    },
+    {
+      "differential_pressure_psig": 25,
+      "nominal_isolated_duct_hoop_stress_mpa": 0.30427933027484466,
+      "main_flange_force_n_pressure_only": 570.317271828183,
+      "iacv_feed_force_n_pressure_only": 44.16925232879252,
+      "plenum_split_force_n_pressure_only": 1045.2007502773577
+    }
+  ]
+}

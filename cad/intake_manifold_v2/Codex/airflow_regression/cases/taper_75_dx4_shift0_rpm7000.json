@@ -1,0 +1,138 @@
+{
+  "inputs": {
+    "design": "taper_75",
+    "dx": 4,
+    "offset": 0,
+    "rpm": 7000,
+    "cylinder": null,
+    "max_iterations": 320,
+    "drag": 1.4,
+    "valve_k": 14
+  },
+  "flow_kg_s": 0.2777,
+  "boost_psig": 18.0,
+  "temperature_c": 52.0,
+  "density_kg_m3": 2.415235614076,
+  "fluid_volume_cm3": 3118.04960069771,
+  "source_sha256": {
+    "generator": "f3abebed26f7527beb4f38e635b1ab0e1fc76a49f6156b15d9d1d80d783364fc",
+    "parameters": "2661a9f134df4bc3136ccaa64175dc049ace00f04f5d72edfac463e1ee84b5b9",
+    "solver": "fe263be23c38b12abf65e713f6146f5f249ded7306ebc269e9e68abe19bbd8c0"
+  },
+  "parameter_overrides": {
+    "plenum": {
+      "taper_cyl1_area_ratio": 0.75
+    }
+  },
+  "elapsed_seconds": 568.7,
+  "result": {
+    "status": "CONVERGED",
+    "converged": true,
+    "outer_iterations": 154,
+    "n_fluid_cells": 48673,
+    "boundary_diagnostics": {
+      "dx_mm": 4,
+      "grid_offset_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_connected_components": 1,
+      "n_inlet_cells": 179,
+      "active_cyls": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "outlet_face_counts_all": [
+        90,
+        90,
+        90,
+        90
+      ],
+      "outlet_areas_mm2_all": [
+        1440,
+        1440,
+        1440,
+        1440
+      ],
+      "empty_active_outlets": [],
+      "disjoint_outlets": true,
+      "inlet_to_outlet_connected": true
+    },
+    "convergence": {
+      "final_momentum_rel_res": 0.000169,
+      "final_face_continuity_rel": 2e-10,
+      "cell_vel_imbalance_ratio": 1.67497,
+      "cg_max_info": 0,
+      "cg_max_rel_res": 1e-08,
+      "bicgstab_max_info": 0,
+      "bicgstab_max_rel_res": 1e-06,
+      "dp_history_tail_kpa": [
+        1.2754,
+        1.2753,
+        1.2752,
+        1.2751,
+        1.2751
+      ],
+      "spread_history_tail_pct": [
+        6.627,
+        6.626,
+        6.625,
+        6.624,
+        6.623
+      ]
+    },
+    "reference_planes": {
+      "inlet_section_dist_from_tb_face_mm": [
+        -22.0,
+        -14.0
+      ],
+      "outlet_section_y_mm": [
+        -124.0,
+        -116.0
+      ],
+      "porous_zone_y_max_mm": -126.0,
+      "inlet_flux_weighted_p0_rel_pa": 9027.73
+    },
+    "mass_conservation_error_pct": 0.0,
+    "cyl_mass_flow_raw_kgs": [
+      0.070999,
+      0.07076,
+      0.06954,
+      0.066401
+    ],
+    "cyl_forward_flow_kgs": [
+      0.070999,
+      0.07076,
+      0.06954,
+      0.066401
+    ],
+    "cyl_reverse_flow_kgs": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cyl_flow_share_pct": [
+      25.567,
+      25.481,
+      25.042,
+      23.911
+    ],
+    "cyl_maldistribution_spread_pct": 6.623,
+    "cyl_dp_total_kpa": [
+      0.9234,
+      0.9778,
+      1.2581,
+      1.941
+    ],
+    "tb_to_plenum_dp_kpa": 1.2751,
+    "tb_to_plenum_dp_psi": 0.1849,
+    "max_mach_3d": 0.161,
+    "max_vel_3d_ms": 58.2,
+    "mean_tb_vel_ms": 34.65,
+    "model_assumptions": "Steady incompressible screening FVM (rho=2.415 kg/m^3, uniform nu_eff=0.0045 m^2/s, Colebrook wall drag mult=1.4, outlet porous valve K=14); flux-weighted total pressure planes outside source & porous zones."
+  }
+}

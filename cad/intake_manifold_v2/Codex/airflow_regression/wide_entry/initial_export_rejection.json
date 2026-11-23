@@ -1,0 +1,6 @@
+{
+  "design": "wide_entry",
+  "status": "REJECTED",
+  "gate": "Existing float32 STL closure, orientation and connected-body checks",
+  "failed_check": "Float32 export is not a single closed volume for svt_intake_manifold_v2_1piece_full_codex.stl"
+}

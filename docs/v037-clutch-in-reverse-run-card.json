@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "session": null,
+  "purpose": "Identify the first RPM drop during clutch-in, the stop, reverse selection or reverse clutch take-up.",
+  "tune": {
+    "filename": "v037-spool-vct.hpt",
+    "sha256": "F81325ADF88757E6AD3901BD1A479595B161B18CD13DDB2DC8C53BCAC79C9621",
+    "installation_evidence": "Last documented production file. Record the actual flashed filename if different."
+  },
+  "changes_since_previous_run": null,
+  "profile": {
+    "filename": "2004 Focus SVT - Drive Torque Diagnostics.Channels.xml",
+    "sha256": null,
+    "saved_from_active_scanner": false
+  },
+  "conditions": {
+    "start_ect_f": null,
+    "soak_minutes": null,
+    "fuel_or_refueling": null,
+    "accessories": null,
+    "water_meth": "OFF per standing owner instruction"
+  },
+  "planned_actions": [
+    "Capture VCM and SCG together. At warm idle, check actual RPM, desired RPM, VSS, TPS, Fuel Source, IAC duty, Spark Source, timing, module voltage and SCG lambda. Record the profile actually used.",
+    "During ordinary light-load operation in a flat, clear area, mark a normal approach to a stop and when the clutch pedal reaches the floor. Keep logging through the stop and several seconds of idle before selecting reverse.",
+    "At a complete stop with brake applied and clutch fully down, note when reverse is selected and whether RPM changes before clutch take-up. If the maneuver continues normally, mark when the clutch starts to bite and whether the wheel is being turned. Use a passenger or make notes after parking.",
+    "Preserve the full capture with both CSVs, HPL, SCG data, profile and session manifest. Include the approximate time of each action and which clock was used."
+  ],
+  "completion_event": "One complete approach to stop and reverse sequence or the first captured abnormal dip or stall.",
+  "stop_conditions": [
+    "End the test for a severe dip or stall, vehicle creep with the clutch fully depressed, difficult gear engagement, or abnormal mechanical noise. Secure the car and save the available recording."
+  ],
+  "events": [],
+  "event_example": {
+    "elapsed_s": null,
+    "clock": "VCM / SCG / wall time",
+    "approximate": true,
+    "event": "Clutch fully down / speed zero / reverse selected / clutch starts to bite / steering input / felt dip",
+    "source": "Owner observation. Record each action separately."
+  },
+  "owner_observations": null,
+  "export_status": null,
+  "comparison_session": [
+    "reports/2026-11-03-v026-drive-review.md",
+    "reports/2026-11-03-v028-drive-review.md"
+  ],
+  "analysis": {
+    "input_hashes": {},
+    "analyzer_version_or_hash": null,
+    "alignment": null,
+    "windows": [
+      "From throttle lift through clutch-in and vehicle stop",
+      "Stopped in neutral through reverse selection with the clutch down",
+      "Reverse clutch take-up and any steering input"
+    ],
+    "coverage_report": null,
+    "decision": null,
+    "next_test": null
+  },
+  "calibration_context": {
+    "historical_dfco": "The baseline had 35 mph entry, 12 mph exit and 750 RPM exit. v018 raised RPM exit to 1,000. v027 and v028 extended low-speed operation. The v037 snapshot shows 14 mph entry, 10 mph exit, 1,200 RPM entry, 1,000 RPM exit and a 1.40 s closed-throttle delay.",
+    "historical_idle_handoff": "The 3 mph Idle Minimum VSS, 4 mph dashpot enable with 2 mph hysteresis, and 0.10 dashpot air clip at 0–15 mph appear in the earlier file. The active low-flow decay rates came from v028. The P/N and Drive targets both show 950 RPM in v037.",
+    "reverse_gear_check": "ECM 20016 displays 4.16. Multiplying by the 2.88 common final-drive reference gives 11.98, consistent with Ford's 12.0 overall reverse ratio. Source: https://www.fordservicecontent.com/ford_content/catalog/owner_guides/04focsv1e.pdf",
+    "steering_check": "ECM 45797 Power Steering Pressure Switch is enabled in the v037 snapshot. Record steering input explicitly because switch operation has not been verified on the car."
+  },
+  "review_rules": [
+    "While rolling, determine whether Injector Cut persists into the RPM drop and when Fuel Source changes back. Compare RPM, speed, IAC duty and timing around the change. Check channel sampling and wideband transport delay before assigning order.",
+    "If fuel has resumed and IAC command falls ahead of a dip near the stop, audit the low-speed dashpot clip and idle handoff. If IAC rises while RPM continues to fall, inspect delivered airflow or added load.",
+    "If selecting reverse from settled idle drags RPM down with the clutch fully down, prioritize clutch release or drag. If the dip starts at take-up or during steering, inspect the coincident load and idle response. Use owner pedal notes because the gear flag has no verified one-to-one mapping to clutch position.",
+    "If the RPM signal drops abruptly to zero and returns, compare module voltage and pending codes and revisit the prior crank-signal anomaly."
+  ]
+}

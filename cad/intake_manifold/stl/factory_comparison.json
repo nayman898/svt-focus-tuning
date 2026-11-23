@@ -67,32 +67,32 @@
     },
     "custom_round_2in": {
       "mode": "custom_round",
-      "dp_7000_kpa": 1.864,
-      "dp_7000_psi": 0.27,
-      "ve_spread_7000_pct": 0.5,
+      "dp_7000_kpa": 1.836,
+      "dp_7000_psi": 0.266,
+      "ve_spread_7000_pct": 0.44,
       "cyl_ve_7000": [
-        0.9821,
-        0.981,
-        0.9798,
-        0.9772
+        0.9819,
+        0.9809,
+        0.9796,
+        0.9776
       ],
       "leanest_to_richest_afr_at_11p0": [
         10.98,
         11.03
       ],
-      "afr_spread_band": 0.06,
+      "afr_spread_band": 0.05,
       "peak_mach_exit_7000": 0.296,
       "est_airflow_6500_lbmin": 38.92,
       "est_airflow_7000_lbmin": 41.3,
-      "helmholtz_3rd_harmonic_rpm": 4785.0,
+      "helmholtz_3rd_harmonic_rpm": 4738.0,
       "runner_length_total_mm": 243.0,
-      "cfd_3d_spread_pct": 0.36,
-      "cfd_3d_dp_psi": 0.353,
+      "cfd_3d_spread_pct": 0.35,
+      "cfd_3d_dp_psi": 0.355,
       "cfd_3d_cyl_share_pct": [
-        25.05,
-        25.0,
-        24.98,
-        24.96
+        25.06,
+        24.99,
+        24.97,
+        24.99
       ]
     }
   },
@@ -109,12 +109,12 @@
     },
     "custom_stage2_round": {
       "material": "Annealed PPA-CF / PAHT-CF (3D Printed 2-Piece Split) + Epoxy Exterior Seal",
-      "printed_volume_cm3": 1353.57,
-      "estimated_mass_kg": 1.89,
-      "estimated_mass_lb": 4.16,
-      "mass_savings_lb": 3.85,
+      "printed_volume_cm3": 1367.01,
+      "estimated_mass_kg": 1.9,
+      "estimated_mass_lb": 4.19,
+      "mass_savings_lb": 3.81,
       "thermal_conductivity_w_mk": 0.9,
-      "plenum_volume_liters": 1.989,
+      "plenum_volume_liters": 2.038,
       "imrc_drum_and_shaft_seals": "Deleted (0 rotating shafts; dual Viton O-rings + 2x dowels)",
       "vac_boost_reference_ports": "5 dedicated NPT pads (3x boost/vac + 2x check-valved vac-only)",
       "iacv_metering": "OEM 2-bolt Ford IACV with isolated 1/4 NPT blow-through MAF supply barb"
@@ -863,18 +863,18 @@
         "total_mass_flow_kgs": 0.119,
         "total_mass_flow_lbmin": 15.74,
         "cyl_mass_flow_kgs": [
-          0.02983,
+          0.02982,
           0.02979,
-          0.02975,
-          0.02966
+          0.02974,
+          0.02968
         ],
         "cyl_ve": [
-          0.9823,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9773
         ],
-        "ve_maldistribution_spread_pct": 0.55,
+        "ve_maldistribution_spread_pct": 0.49,
         "cyl_ve_720ca_pulsating": [
           0.9802,
           0.9801,
@@ -882,29 +882,29 @@
           0.9798
         ],
         "ve_maldistribution_720ca_pct": 0.04,
-        "runner_discharge_coeff_cd": 0.918,
+        "runner_discharge_coeff_cd": 0.9186,
         "k_runner_total": [
-          0.171,
-          0.1783,
-          0.1859,
-          0.2118
+          0.1708,
+          0.1778,
+          0.1858,
+          0.2066
         ],
-        "dp_total_kpa": 0.346,
-        "dp_total_psi": 0.05,
+        "dp_total_kpa": 0.341,
+        "dp_total_psi": 0.049,
         "dp_tb_diffuser_kpa": 0.039,
         "plenum_static_pressure_kpa": [
-          225.329,
-          225.312,
-          225.288,
-          225.254
+          225.331,
+          225.315,
+          225.292,
+          225.258
         ],
         "peak_runner_vel_throat_ms": 52.4,
         "peak_runner_vel_exit_ms": 55.5,
         "peak_mach_throat": 0.145,
         "peak_mach_exit": 0.153,
-        "plenum_ripple_kpa": 1.11,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.1,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 16.25,
         "runner_length_total_mm": 243.0
@@ -920,46 +920,46 @@
         "cyl_mass_flow_kgs": [
           0.03231,
           0.03227,
-          0.03223,
-          0.03213
+          0.03222,
+          0.03215
         ],
         "cyl_ve": [
-          0.9823,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9773
         ],
-        "ve_maldistribution_spread_pct": 0.55,
+        "ve_maldistribution_spread_pct": 0.49,
         "cyl_ve_720ca_pulsating": [
           0.9802,
           0.9801,
-          0.98,
-          0.9797
+          0.9799,
+          0.9798
         ],
-        "ve_maldistribution_720ca_pct": 0.05,
-        "runner_discharge_coeff_cd": 0.9182,
+        "ve_maldistribution_720ca_pct": 0.04,
+        "runner_discharge_coeff_cd": 0.9187,
         "k_runner_total": [
-          0.1706,
-          0.178,
-          0.1855,
-          0.2114
+          0.1705,
+          0.1775,
+          0.1854,
+          0.2062
         ],
-        "dp_total_kpa": 0.405,
-        "dp_total_psi": 0.059,
+        "dp_total_kpa": 0.399,
+        "dp_total_psi": 0.058,
         "dp_tb_diffuser_kpa": 0.046,
         "plenum_static_pressure_kpa": [
-          225.311,
-          225.292,
-          225.263,
-          225.223
+          225.314,
+          225.295,
+          225.268,
+          225.228
         ],
         "peak_runner_vel_throat_ms": 56.3,
         "peak_runner_vel_exit_ms": 59.6,
         "peak_mach_throat": 0.156,
         "peak_mach_exit": 0.165,
-        "plenum_ripple_kpa": 1.19,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.18,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 17.7,
         "runner_length_total_mm": 243.0
@@ -973,48 +973,48 @@
         "total_mass_flow_kgs": 0.1389,
         "total_mass_flow_lbmin": 18.37,
         "cyl_mass_flow_kgs": [
-          0.0348,
-          0.03476,
-          0.03471,
-          0.03461
+          0.03479,
+          0.03475,
+          0.0347,
+          0.03462
         ],
         "cyl_ve": [
-          0.9823,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9773
         ],
-        "ve_maldistribution_spread_pct": 0.55,
+        "ve_maldistribution_spread_pct": 0.49,
         "cyl_ve_720ca_pulsating": [
           0.9802,
           0.9801,
-          0.98,
+          0.9799,
           0.9797
         ],
-        "ve_maldistribution_720ca_pct": 0.06,
-        "runner_discharge_coeff_cd": 0.9183,
+        "ve_maldistribution_720ca_pct": 0.05,
+        "runner_discharge_coeff_cd": 0.9188,
         "k_runner_total": [
-          0.1703,
-          0.1776,
-          0.1852,
-          0.2111
+          0.1701,
+          0.1771,
+          0.1851,
+          0.2059
         ],
-        "dp_total_kpa": 0.47,
-        "dp_total_psi": 0.068,
+        "dp_total_kpa": 0.463,
+        "dp_total_psi": 0.067,
         "dp_tb_diffuser_kpa": 0.053,
         "plenum_static_pressure_kpa": [
-          225.292,
-          225.27,
-          225.236,
-          225.19
+          225.295,
+          225.274,
+          225.242,
+          225.196
         ],
         "peak_runner_vel_throat_ms": 60.1,
         "peak_runner_vel_exit_ms": 63.7,
         "peak_mach_throat": 0.166,
         "peak_mach_exit": 0.176,
-        "plenum_ripple_kpa": 1.28,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.27,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 19.19,
         "runner_length_total_mm": 243.0
@@ -1030,46 +1030,46 @@
         "cyl_mass_flow_kgs": [
           0.03728,
           0.03724,
-          0.03719,
-          0.03708
+          0.03718,
+          0.0371
         ],
         "cyl_ve": [
-          0.9823,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9773
         ],
-        "ve_maldistribution_spread_pct": 0.55,
+        "ve_maldistribution_spread_pct": 0.49,
         "cyl_ve_720ca_pulsating": [
           0.9803,
           0.9801,
           0.9799,
-          0.9796
+          0.9797
         ],
-        "ve_maldistribution_720ca_pct": 0.07,
-        "runner_discharge_coeff_cd": 0.9184,
+        "ve_maldistribution_720ca_pct": 0.06,
+        "runner_discharge_coeff_cd": 0.919,
         "k_runner_total": [
-          0.17,
-          0.1774,
-          0.1849,
-          0.2108
+          0.1698,
+          0.1768,
+          0.1848,
+          0.2056
         ],
-        "dp_total_kpa": 0.539,
-        "dp_total_psi": 0.078,
+        "dp_total_kpa": 0.531,
+        "dp_total_psi": 0.077,
         "dp_tb_diffuser_kpa": 0.061,
         "plenum_static_pressure_kpa": [
-          225.272,
-          225.246,
-          225.208,
-          225.154
+          225.275,
+          225.25,
+          225.214,
+          225.161
         ],
         "peak_runner_vel_throat_ms": 63.8,
         "peak_runner_vel_exit_ms": 67.6,
         "peak_mach_throat": 0.176,
         "peak_mach_exit": 0.187,
         "plenum_ripple_kpa": 1.35,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 20.72,
         "runner_length_total_mm": 243.0
@@ -1083,48 +1083,48 @@
         "total_mass_flow_kgs": 0.1587,
         "total_mass_flow_lbmin": 20.99,
         "cyl_mass_flow_kgs": [
-          0.03977,
+          0.03976,
           0.03972,
           0.03966,
-          0.03955
+          0.03957
         ],
         "cyl_ve": [
-          0.9823,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9773
         ],
-        "ve_maldistribution_spread_pct": 0.54,
+        "ve_maldistribution_spread_pct": 0.48,
         "cyl_ve_720ca_pulsating": [
           0.9803,
-          0.9802,
+          0.9801,
           0.9799,
           0.9796
         ],
         "ve_maldistribution_720ca_pct": 0.07,
-        "runner_discharge_coeff_cd": 0.9185,
+        "runner_discharge_coeff_cd": 0.9191,
         "k_runner_total": [
-          0.1698,
-          0.1771,
-          0.1846,
-          0.2106
+          0.1696,
+          0.1766,
+          0.1845,
+          0.2054
         ],
-        "dp_total_kpa": 0.612,
-        "dp_total_psi": 0.089,
+        "dp_total_kpa": 0.603,
+        "dp_total_psi": 0.087,
         "dp_tb_diffuser_kpa": 0.069,
         "plenum_static_pressure_kpa": [
-          225.25,
-          225.22,
-          225.177,
-          225.116
+          225.254,
+          225.226,
+          225.184,
+          225.124
         ],
         "peak_runner_vel_throat_ms": 67.4,
         "peak_runner_vel_exit_ms": 71.3,
         "peak_mach_throat": 0.186,
         "peak_mach_exit": 0.197,
-        "plenum_ripple_kpa": 1.46,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.45,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 22.28,
         "runner_length_total_mm": 243.0
@@ -1141,45 +1141,45 @@
           0.04225,
           0.0422,
           0.04214,
-          0.04202
+          0.04204
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.54,
+        "ve_maldistribution_spread_pct": 0.48,
         "cyl_ve_720ca_pulsating": [
-          0.9804,
+          0.9803,
           0.9802,
           0.9799,
-          0.9795
+          0.9796
         ],
-        "ve_maldistribution_720ca_pct": 0.08,
-        "runner_discharge_coeff_cd": 0.9186,
+        "ve_maldistribution_720ca_pct": 0.07,
+        "runner_discharge_coeff_cd": 0.9191,
         "k_runner_total": [
-          0.1695,
-          0.1769,
-          0.1844,
-          0.2103
+          0.1694,
+          0.1764,
+          0.1843,
+          0.2051
         ],
-        "dp_total_kpa": 0.691,
-        "dp_total_psi": 0.1,
+        "dp_total_kpa": 0.68,
+        "dp_total_psi": 0.099,
         "dp_tb_diffuser_kpa": 0.078,
         "plenum_static_pressure_kpa": [
-          225.227,
-          225.193,
-          225.144,
-          225.075
+          225.231,
+          225.199,
+          225.152,
+          225.084
         ],
         "peak_runner_vel_throat_ms": 70.8,
         "peak_runner_vel_exit_ms": 75.0,
         "peak_mach_throat": 0.196,
         "peak_mach_exit": 0.207,
-        "plenum_ripple_kpa": 1.57,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.56,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 23.86,
         "runner_length_total_mm": 243.0
@@ -1193,48 +1193,48 @@
         "total_mass_flow_kgs": 0.1785,
         "total_mass_flow_lbmin": 23.62,
         "cyl_mass_flow_kgs": [
-          0.04474,
-          0.04469,
+          0.04473,
+          0.04468,
           0.04462,
-          0.0445
+          0.04452
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.9769
+          0.9821,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.54,
+        "ve_maldistribution_spread_pct": 0.48,
         "cyl_ve_720ca_pulsating": [
           0.9804,
           0.9802,
           0.9799,
-          0.9795
+          0.9796
         ],
-        "ve_maldistribution_720ca_pct": 0.09,
-        "runner_discharge_coeff_cd": 0.9187,
+        "ve_maldistribution_720ca_pct": 0.08,
+        "runner_discharge_coeff_cd": 0.9192,
         "k_runner_total": [
-          0.1693,
-          0.1767,
-          0.1842,
-          0.2101
+          0.1691,
+          0.1761,
+          0.1841,
+          0.2049
         ],
-        "dp_total_kpa": 0.774,
-        "dp_total_psi": 0.112,
+        "dp_total_kpa": 0.762,
+        "dp_total_psi": 0.111,
         "dp_tb_diffuser_kpa": 0.087,
         "plenum_static_pressure_kpa": [
-          225.202,
-          225.165,
-          225.11,
-          225.032
+          225.207,
+          225.171,
+          225.119,
+          225.042
         ],
         "peak_runner_vel_throat_ms": 74.1,
         "peak_runner_vel_exit_ms": 78.5,
         "peak_mach_throat": 0.205,
         "peak_mach_exit": 0.217,
-        "plenum_ripple_kpa": 1.7,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.69,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 25.49,
         "runner_length_total_mm": 243.0
@@ -1248,48 +1248,48 @@
         "total_mass_flow_kgs": 0.1885,
         "total_mass_flow_lbmin": 24.93,
         "cyl_mass_flow_kgs": [
-          0.04722,
-          0.04717,
+          0.04721,
+          0.04716,
           0.0471,
-          0.04697
+          0.04699
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.977
+          0.982,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.54,
+        "ve_maldistribution_spread_pct": 0.47,
         "cyl_ve_720ca_pulsating": [
           0.9804,
           0.9802,
           0.9799,
-          0.9794
+          0.9795
         ],
-        "ve_maldistribution_720ca_pct": 0.1,
-        "runner_discharge_coeff_cd": 0.9187,
+        "ve_maldistribution_720ca_pct": 0.09,
+        "runner_discharge_coeff_cd": 0.9193,
         "k_runner_total": [
-          0.1691,
-          0.1765,
-          0.184,
-          0.2099
+          0.169,
+          0.176,
+          0.1839,
+          0.2047
         ],
-        "dp_total_kpa": 0.862,
-        "dp_total_psi": 0.125,
+        "dp_total_kpa": 0.849,
+        "dp_total_psi": 0.123,
         "dp_tb_diffuser_kpa": 0.097,
         "plenum_static_pressure_kpa": [
-          225.176,
-          225.134,
-          225.073,
-          224.987
+          225.181,
+          225.142,
+          225.083,
+          224.998
         ],
         "peak_runner_vel_throat_ms": 77.3,
         "peak_runner_vel_exit_ms": 81.9,
         "peak_mach_throat": 0.214,
         "peak_mach_exit": 0.227,
         "plenum_ripple_kpa": 1.81,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 27.17,
         "runner_length_total_mm": 243.0
@@ -1303,48 +1303,48 @@
         "total_mass_flow_kgs": 0.1984,
         "total_mass_flow_lbmin": 26.24,
         "cyl_mass_flow_kgs": [
-          0.04971,
+          0.0497,
           0.04965,
-          0.04958,
-          0.04944
+          0.04957,
+          0.04946
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.977
+          0.982,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.53,
+        "ve_maldistribution_spread_pct": 0.47,
         "cyl_ve_720ca_pulsating": [
-          0.9805,
+          0.9804,
           0.9802,
           0.9799,
-          0.9794
+          0.9795
         ],
-        "ve_maldistribution_720ca_pct": 0.11,
-        "runner_discharge_coeff_cd": 0.9188,
+        "ve_maldistribution_720ca_pct": 0.1,
+        "runner_discharge_coeff_cd": 0.9194,
         "k_runner_total": [
-          0.169,
-          0.1763,
-          0.1838,
-          0.2098
+          0.1688,
+          0.1758,
+          0.1837,
+          0.2046
         ],
-        "dp_total_kpa": 0.954,
-        "dp_total_psi": 0.138,
+        "dp_total_kpa": 0.94,
+        "dp_total_psi": 0.136,
         "dp_tb_diffuser_kpa": 0.108,
         "plenum_static_pressure_kpa": [
-          225.148,
-          225.102,
-          225.034,
-          224.939
+          225.154,
+          225.11,
+          225.046,
+          224.951
         ],
         "peak_runner_vel_throat_ms": 80.4,
         "peak_runner_vel_exit_ms": 85.2,
         "peak_mach_throat": 0.222,
         "peak_mach_exit": 0.236,
-        "plenum_ripple_kpa": 1.94,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 1.93,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 28.9,
         "runner_length_total_mm": 243.0
@@ -1358,48 +1358,48 @@
         "total_mass_flow_kgs": 0.2083,
         "total_mass_flow_lbmin": 27.55,
         "cyl_mass_flow_kgs": [
-          0.05219,
+          0.05218,
           0.05213,
-          0.05206,
-          0.05192
+          0.05205,
+          0.05194
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.977
+          0.982,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.53,
+        "ve_maldistribution_spread_pct": 0.47,
         "cyl_ve_720ca_pulsating": [
           0.9805,
-          0.9803,
+          0.9802,
           0.9799,
-          0.9793
+          0.9794
         ],
-        "ve_maldistribution_720ca_pct": 0.13,
-        "runner_discharge_coeff_cd": 0.9189,
+        "ve_maldistribution_720ca_pct": 0.11,
+        "runner_discharge_coeff_cd": 0.9194,
         "k_runner_total": [
-          0.1688,
-          0.1761,
+          0.1686,
+          0.1756,
           0.1836,
-          0.2096
+          0.2044
         ],
-        "dp_total_kpa": 1.051,
-        "dp_total_psi": 0.152,
+        "dp_total_kpa": 1.036,
+        "dp_total_psi": 0.15,
         "dp_tb_diffuser_kpa": 0.119,
         "plenum_static_pressure_kpa": [
-          225.12,
-          225.069,
-          224.994,
-          224.889
+          225.126,
+          225.078,
+          225.006,
+          224.902
         ],
         "peak_runner_vel_throat_ms": 83.4,
         "peak_runner_vel_exit_ms": 88.3,
         "peak_mach_throat": 0.231,
         "peak_mach_exit": 0.244,
         "plenum_ripple_kpa": 2.07,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 30.65,
         "runner_length_total_mm": 243.0
@@ -1413,48 +1413,48 @@
         "total_mass_flow_kgs": 0.2182,
         "total_mass_flow_lbmin": 28.87,
         "cyl_mass_flow_kgs": [
-          0.05468,
-          0.05462,
-          0.05454,
-          0.05439
+          0.05467,
+          0.05461,
+          0.05453,
+          0.05441
         ],
         "cyl_ve": [
-          0.9822,
-          0.9811,
-          0.9797,
-          0.977
+          0.982,
+          0.981,
+          0.9796,
+          0.9774
         ],
-        "ve_maldistribution_spread_pct": 0.52,
+        "ve_maldistribution_spread_pct": 0.47,
         "cyl_ve_720ca_pulsating": [
-          0.9806,
+          0.9805,
           0.9803,
           0.9799,
-          0.9792
+          0.9793
         ],
-        "ve_maldistribution_720ca_pct": 0.14,
-        "runner_discharge_coeff_cd": 0.9189,
+        "ve_maldistribution_720ca_pct": 0.12,
+        "runner_discharge_coeff_cd": 0.9195,
         "k_runner_total": [
-          0.1687,
-          0.176,
-          0.1835,
-          0.2095
+          0.1685,
+          0.1755,
+          0.1834,
+          0.2043
         ],
-        "dp_total_kpa": 1.153,
-        "dp_total_psi": 0.167,
+        "dp_total_kpa": 1.136,
+        "dp_total_psi": 0.165,
         "dp_tb_diffuser_kpa": 0.13,
         "plenum_static_pressure_kpa": [
-          225.089,
-          225.033,
-          224.951,
-          224.836
+          225.096,
+          225.043,
+          224.965,
+          224.851
         ],
         "peak_runner_vel_throat_ms": 86.2,
         "peak_runner_vel_exit_ms": 91.3,
         "peak_mach_throat": 0.238,
         "peak_mach_exit": 0.253,
-        "plenum_ripple_kpa": 2.19,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.15,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 32.41,
         "runner_length_total_mm": 243.0
@@ -1468,48 +1468,48 @@
         "total_mass_flow_kgs": 0.2281,
         "total_mass_flow_lbmin": 30.18,
         "cyl_mass_flow_kgs": [
-          0.05716,
-          0.0571,
-          0.05702,
-          0.05686
+          0.05715,
+          0.05709,
+          0.05701,
+          0.05689
         ],
         "cyl_ve": [
-          0.9821,
-          0.9811,
-          0.9797,
-          0.977
+          0.982,
+          0.981,
+          0.9796,
+          0.9775
         ],
-        "ve_maldistribution_spread_pct": 0.52,
+        "ve_maldistribution_spread_pct": 0.46,
         "cyl_ve_720ca_pulsating": [
           0.9806,
           0.9803,
-          0.9799,
-          0.9792
+          0.9798,
+          0.9793
         ],
-        "ve_maldistribution_720ca_pct": 0.15,
-        "runner_discharge_coeff_cd": 0.919,
+        "ve_maldistribution_720ca_pct": 0.13,
+        "runner_discharge_coeff_cd": 0.9195,
         "k_runner_total": [
-          0.1685,
-          0.1759,
-          0.1834,
-          0.2093
+          0.1684,
+          0.1754,
+          0.1833,
+          0.2041
         ],
-        "dp_total_kpa": 1.26,
-        "dp_total_psi": 0.183,
+        "dp_total_kpa": 1.241,
+        "dp_total_psi": 0.18,
         "dp_tb_diffuser_kpa": 0.143,
         "plenum_static_pressure_kpa": [
-          225.058,
-          224.996,
-          224.907,
-          224.781
+          225.065,
+          225.007,
+          224.921,
+          224.797
         ],
         "peak_runner_vel_throat_ms": 88.9,
         "peak_runner_vel_exit_ms": 94.2,
         "peak_mach_throat": 0.246,
         "peak_mach_exit": 0.261,
-        "plenum_ripple_kpa": 2.28,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.32,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 34.14,
         "runner_length_total_mm": 243.0
@@ -1523,50 +1523,50 @@
         "total_mass_flow_kgs": 0.2381,
         "total_mass_flow_lbmin": 31.49,
         "cyl_mass_flow_kgs": [
-          0.05964,
-          0.05958,
-          0.0595,
-          0.05934
+          0.05963,
+          0.05957,
+          0.05949,
+          0.05936
         ],
         "cyl_ve": [
-          0.9821,
-          0.9811,
-          0.9797,
-          0.9771
+          0.982,
+          0.981,
+          0.9796,
+          0.9775
         ],
-        "ve_maldistribution_spread_pct": 0.52,
+        "ve_maldistribution_spread_pct": 0.46,
         "cyl_ve_720ca_pulsating": [
-          0.9807,
+          0.9806,
           0.9803,
-          0.9799,
-          0.9791
+          0.9798,
+          0.9792
         ],
-        "ve_maldistribution_720ca_pct": 0.17,
-        "runner_discharge_coeff_cd": 0.919,
+        "ve_maldistribution_720ca_pct": 0.15,
+        "runner_discharge_coeff_cd": 0.9196,
         "k_runner_total": [
-          0.1684,
-          0.1757,
+          0.1682,
+          0.1752,
           0.1832,
-          0.2092
+          0.204
         ],
-        "dp_total_kpa": 1.371,
-        "dp_total_psi": 0.199,
+        "dp_total_kpa": 1.351,
+        "dp_total_psi": 0.196,
         "dp_tb_diffuser_kpa": 0.155,
         "plenum_static_pressure_kpa": [
-          225.025,
-          224.958,
-          224.86,
-          224.723
+          225.033,
+          224.97,
+          224.876,
+          224.741
         ],
         "peak_runner_vel_throat_ms": 91.6,
         "peak_runner_vel_exit_ms": 97.0,
         "peak_mach_throat": 0.253,
         "peak_mach_exit": 0.268,
         "plenum_ripple_kpa": 2.44,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
-        "est_airflow_lbmin": 35.81,
+        "est_airflow_lbmin": 35.82,
         "runner_length_total_mm": 243.0
       },
       {
@@ -1578,48 +1578,48 @@
         "total_mass_flow_kgs": 0.248,
         "total_mass_flow_lbmin": 32.8,
         "cyl_mass_flow_kgs": [
-          0.06213,
-          0.06206,
-          0.06198,
-          0.06181
+          0.06212,
+          0.06205,
+          0.06197,
+          0.06184
         ],
         "cyl_ve": [
-          0.9821,
-          0.9811,
-          0.9797,
-          0.9771
+          0.9819,
+          0.9809,
+          0.9796,
+          0.9775
         ],
-        "ve_maldistribution_spread_pct": 0.51,
+        "ve_maldistribution_spread_pct": 0.45,
         "cyl_ve_720ca_pulsating": [
-          0.9808,
-          0.9804,
-          0.9799,
-          0.979
+          0.9807,
+          0.9803,
+          0.9798,
+          0.9791
         ],
-        "ve_maldistribution_720ca_pct": 0.18,
-        "runner_discharge_coeff_cd": 0.9191,
+        "ve_maldistribution_720ca_pct": 0.16,
+        "runner_discharge_coeff_cd": 0.9196,
         "k_runner_total": [
-          0.1683,
-          0.1756,
-          0.1831,
-          0.2091
+          0.1681,
+          0.1751,
+          0.183,
+          0.2039
         ],
-        "dp_total_kpa": 1.487,
-        "dp_total_psi": 0.216,
+        "dp_total_kpa": 1.465,
+        "dp_total_psi": 0.213,
         "dp_tb_diffuser_kpa": 0.168,
         "plenum_static_pressure_kpa": [
-          224.99,
-          224.918,
-          224.812,
-          224.663
+          224.999,
+          224.931,
+          224.829,
+          224.682
         ],
         "peak_runner_vel_throat_ms": 94.1,
         "peak_runner_vel_exit_ms": 99.6,
         "peak_mach_throat": 0.26,
         "peak_mach_exit": 0.276,
         "plenum_ripple_kpa": 2.56,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 37.41,
         "runner_length_total_mm": 243.0
@@ -1633,48 +1633,48 @@
         "total_mass_flow_kgs": 0.2579,
         "total_mass_flow_lbmin": 34.11,
         "cyl_mass_flow_kgs": [
-          0.06461,
+          0.0646,
           0.06454,
-          0.06446,
-          0.06428
+          0.06445,
+          0.06431
         ],
         "cyl_ve": [
-          0.9821,
-          0.981,
-          0.9797,
-          0.9771
+          0.9819,
+          0.9809,
+          0.9796,
+          0.9775
         ],
-        "ve_maldistribution_spread_pct": 0.51,
+        "ve_maldistribution_spread_pct": 0.45,
         "cyl_ve_720ca_pulsating": [
           0.9808,
           0.9804,
-          0.9799,
-          0.9789
+          0.9798,
+          0.9791
         ],
-        "ve_maldistribution_720ca_pct": 0.2,
-        "runner_discharge_coeff_cd": 0.9191,
+        "ve_maldistribution_720ca_pct": 0.17,
+        "runner_discharge_coeff_cd": 0.9197,
         "k_runner_total": [
-          0.1682,
-          0.1755,
-          0.183,
-          0.209
+          0.168,
+          0.175,
+          0.1829,
+          0.2038
         ],
-        "dp_total_kpa": 1.608,
-        "dp_total_psi": 0.233,
+        "dp_total_kpa": 1.584,
+        "dp_total_psi": 0.23,
         "dp_tb_diffuser_kpa": 0.182,
         "plenum_static_pressure_kpa": [
-          224.954,
-          224.876,
-          224.761,
-          224.6
+          224.964,
+          224.89,
+          224.78,
+          224.621
         ],
         "peak_runner_vel_throat_ms": 96.5,
         "peak_runner_vel_exit_ms": 102.2,
         "peak_mach_throat": 0.267,
         "peak_mach_exit": 0.283,
-        "plenum_ripple_kpa": 2.68,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.67,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 38.92,
         "runner_length_total_mm": 243.0
@@ -1688,50 +1688,50 @@
         "total_mass_flow_kgs": 0.2678,
         "total_mass_flow_lbmin": 35.43,
         "cyl_mass_flow_kgs": [
-          0.0671,
-          0.06703,
-          0.06694,
-          0.06676
+          0.06709,
+          0.06702,
+          0.06693,
+          0.06679
         ],
         "cyl_ve": [
-          0.9821,
-          0.981,
-          0.9798,
-          0.9771
-        ],
-        "ve_maldistribution_spread_pct": 0.5,
-        "cyl_ve_720ca_pulsating": [
+          0.9819,
           0.9809,
+          0.9796,
+          0.9775
+        ],
+        "ve_maldistribution_spread_pct": 0.45,
+        "cyl_ve_720ca_pulsating": [
+          0.9808,
           0.9804,
           0.9798,
-          0.9788
+          0.979
         ],
-        "ve_maldistribution_720ca_pct": 0.21,
-        "runner_discharge_coeff_cd": 0.9191,
+        "ve_maldistribution_720ca_pct": 0.19,
+        "runner_discharge_coeff_cd": 0.9197,
         "k_runner_total": [
-          0.1681,
-          0.1754,
-          0.1829,
-          0.2089
+          0.1679,
+          0.1749,
+          0.1828,
+          0.2037
         ],
-        "dp_total_kpa": 1.733,
-        "dp_total_psi": 0.251,
+        "dp_total_kpa": 1.708,
+        "dp_total_psi": 0.248,
         "dp_tb_diffuser_kpa": 0.197,
         "plenum_static_pressure_kpa": [
-          224.917,
-          224.833,
-          224.709,
-          224.535
+          224.928,
+          224.847,
+          224.729,
+          224.557
         ],
         "peak_runner_vel_throat_ms": 98.8,
         "peak_runner_vel_exit_ms": 104.6,
         "peak_mach_throat": 0.273,
         "peak_mach_exit": 0.289,
-        "plenum_ripple_kpa": 2.79,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.78,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
-        "est_airflow_lbmin": 40.29,
+        "est_airflow_lbmin": 40.3,
         "runner_length_total_mm": 243.0
       },
       {
@@ -1743,48 +1743,48 @@
         "total_mass_flow_kgs": 0.2777,
         "total_mass_flow_lbmin": 36.74,
         "cyl_mass_flow_kgs": [
-          0.06958,
-          0.06951,
-          0.06942,
-          0.06923
+          0.06957,
+          0.0695,
+          0.06941,
+          0.06926
         ],
         "cyl_ve": [
-          0.9821,
-          0.981,
-          0.9798,
-          0.9772
+          0.9819,
+          0.9809,
+          0.9796,
+          0.9776
         ],
-        "ve_maldistribution_spread_pct": 0.5,
+        "ve_maldistribution_spread_pct": 0.44,
         "cyl_ve_720ca_pulsating": [
-          0.981,
-          0.9805,
+          0.9809,
+          0.9804,
           0.9798,
-          0.9787
+          0.9789
         ],
-        "ve_maldistribution_720ca_pct": 0.23,
-        "runner_discharge_coeff_cd": 0.9192,
+        "ve_maldistribution_720ca_pct": 0.2,
+        "runner_discharge_coeff_cd": 0.9197,
         "k_runner_total": [
-          0.168,
-          0.1753,
-          0.1828,
-          0.2088
+          0.1678,
+          0.1748,
+          0.1827,
+          0.2036
         ],
-        "dp_total_kpa": 1.864,
-        "dp_total_psi": 0.27,
+        "dp_total_kpa": 1.836,
+        "dp_total_psi": 0.266,
         "dp_tb_diffuser_kpa": 0.211,
         "plenum_static_pressure_kpa": [
-          224.878,
-          224.787,
-          224.654,
-          224.467
+          224.89,
+          224.803,
+          224.676,
+          224.491
         ],
         "peak_runner_vel_throat_ms": 101.0,
         "peak_runner_vel_exit_ms": 107.0,
         "peak_mach_throat": 0.279,
         "peak_mach_exit": 0.296,
-        "plenum_ripple_kpa": 2.9,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.89,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 41.3,
         "runner_length_total_mm": 243.0
@@ -1798,48 +1798,48 @@
         "total_mass_flow_kgs": 0.2877,
         "total_mass_flow_lbmin": 38.05,
         "cyl_mass_flow_kgs": [
-          0.07206,
-          0.07199,
-          0.0719,
-          0.07171
+          0.07205,
+          0.07198,
+          0.07189,
+          0.07174
         ],
         "cyl_ve": [
-          0.982,
-          0.981,
-          0.9798,
-          0.9772
+          0.9819,
+          0.9809,
+          0.9796,
+          0.9776
         ],
-        "ve_maldistribution_spread_pct": 0.49,
+        "ve_maldistribution_spread_pct": 0.44,
         "cyl_ve_720ca_pulsating": [
           0.981,
           0.9805,
           0.9798,
-          0.9786
+          0.9788
         ],
-        "ve_maldistribution_720ca_pct": 0.24,
-        "runner_discharge_coeff_cd": 0.9192,
+        "ve_maldistribution_720ca_pct": 0.22,
+        "runner_discharge_coeff_cd": 0.9198,
         "k_runner_total": [
-          0.1679,
-          0.1752,
-          0.1828,
-          0.2087
+          0.1677,
+          0.1747,
+          0.1827,
+          0.2035
         ],
-        "dp_total_kpa": 1.998,
-        "dp_total_psi": 0.29,
+        "dp_total_kpa": 1.969,
+        "dp_total_psi": 0.286,
         "dp_tb_diffuser_kpa": 0.227,
         "plenum_static_pressure_kpa": [
-          224.838,
-          224.741,
-          224.598,
-          224.397
+          224.851,
+          224.758,
+          224.621,
+          224.423
         ],
         "peak_runner_vel_throat_ms": 103.1,
         "peak_runner_vel_exit_ms": 109.2,
         "peak_mach_throat": 0.285,
         "peak_mach_exit": 0.302,
-        "plenum_ripple_kpa": 3.0,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 2.99,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
         "est_airflow_lbmin": 42.05,
         "runner_length_total_mm": 243.0
@@ -1853,50 +1853,50 @@
         "total_mass_flow_kgs": 0.2976,
         "total_mass_flow_lbmin": 39.36,
         "cyl_mass_flow_kgs": [
-          0.07455,
-          0.07447,
-          0.07438,
-          0.07418
+          0.07453,
+          0.07446,
+          0.07437,
+          0.07421
         ],
         "cyl_ve": [
-          0.982,
-          0.981,
-          0.9798,
-          0.9772
+          0.9819,
+          0.9809,
+          0.9796,
+          0.9776
         ],
-        "ve_maldistribution_spread_pct": 0.49,
+        "ve_maldistribution_spread_pct": 0.43,
         "cyl_ve_720ca_pulsating": [
-          0.9811,
+          0.981,
           0.9805,
           0.9798,
-          0.9786
+          0.9788
         ],
-        "ve_maldistribution_720ca_pct": 0.26,
-        "runner_discharge_coeff_cd": 0.9192,
+        "ve_maldistribution_720ca_pct": 0.23,
+        "runner_discharge_coeff_cd": 0.9198,
         "k_runner_total": [
-          0.1678,
-          0.1752,
-          0.1827,
-          0.2086
+          0.1677,
+          0.1747,
+          0.1826,
+          0.2034
         ],
-        "dp_total_kpa": 2.138,
-        "dp_total_psi": 0.31,
+        "dp_total_kpa": 2.106,
+        "dp_total_psi": 0.306,
         "dp_tb_diffuser_kpa": 0.243,
         "plenum_static_pressure_kpa": [
-          224.797,
-          224.692,
-          224.54,
-          224.325
+          224.81,
+          224.711,
+          224.565,
+          224.352
         ],
         "peak_runner_vel_throat_ms": 105.2,
         "peak_runner_vel_exit_ms": 111.4,
         "peak_mach_throat": 0.291,
         "peak_mach_exit": 0.308,
-        "plenum_ripple_kpa": 3.1,
-        "helmholtz_freq_hz": 119.6,
-        "helmholtz_3rd_harmonic_rpm": 4785.0,
+        "plenum_ripple_kpa": 3.09,
+        "helmholtz_freq_hz": 118.5,
+        "helmholtz_3rd_harmonic_rpm": 4738.0,
         "quarter_wave_4th_harmonic_rpm": 9349.0,
-        "est_airflow_lbmin": 42.59,
+        "est_airflow_lbmin": 42.6,
         "runner_length_total_mm": 243.0
       }
     ]

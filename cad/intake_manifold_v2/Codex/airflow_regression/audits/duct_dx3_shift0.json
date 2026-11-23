@@ -1,0 +1,103 @@
+{
+  "dx_mm": 3.0,
+  "offset_mm": 0,
+  "fvm_total_pressure_loss_pa": 80.8,
+  "haaland_darcy_loss_pa": 74.88701738620321,
+  "fvm_to_darcy_ratio": 1.078958714343004,
+  "reynolds": 151778.50762149095,
+  "solver_sha256": "fe263be23c38b12abf65e713f6146f5f249ded7306ebc269e9e68abe19bbd8c0",
+  "packages": {
+    "numpy": "2.2.2",
+    "scipy": "1.17.1",
+    "manifold3d": "3.5.4",
+    "trimesh": "5.2.0",
+    "matplotlib": "3.11.2",
+    "shapely": "2.2.0"
+  },
+  "result": {
+    "status": "CONVERGED",
+    "converged": true,
+    "outer_iterations": 53,
+    "n_fluid_cells": 10854,
+    "boundary_diagnostics": {
+      "dx_mm": 3.0,
+      "grid_offset_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_connected_components": 1,
+      "n_inlet_cells": 162,
+      "active_cyls": [
+        1
+      ],
+      "outlet_face_counts_all": [
+        162
+      ],
+      "outlet_areas_mm2_all": [
+        1458.0
+      ],
+      "empty_active_outlets": [],
+      "disjoint_outlets": true,
+      "inlet_to_outlet_connected": true
+    },
+    "convergence": {
+      "final_momentum_rel_res": 1.35e-05,
+      "final_face_continuity_rel": 0.0,
+      "cell_vel_imbalance_ratio": 0.00542,
+      "cg_max_info": 0,
+      "cg_max_rel_res": 1e-08,
+      "bicgstab_max_info": 0,
+      "bicgstab_max_rel_res": 9.9e-07,
+      "dp_history_tail_kpa": [
+        0.0808,
+        0.0808,
+        0.0808,
+        0.0808,
+        0.0808
+      ],
+      "spread_history_tail_pct": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "reference_planes": {
+      "inlet_section_dist_from_tb_face_mm": [
+        -22.0,
+        -14.0
+      ],
+      "outlet_section_y_mm": [
+        -124.0,
+        -116.0
+      ],
+      "porous_zone_y_max_mm": null,
+      "inlet_flux_weighted_p0_rel_pa": 1072.24
+    },
+    "mass_conservation_error_pct": 0.0,
+    "cyl_mass_flow_raw_kgs": [
+      0.1
+    ],
+    "cyl_forward_flow_kgs": [
+      0.1
+    ],
+    "cyl_reverse_flow_kgs": [
+      0.0
+    ],
+    "cyl_flow_share_pct": [
+      100.0
+    ],
+    "cyl_maldistribution_spread_pct": null,
+    "cyl_dp_total_kpa": [
+      0.0808
+    ],
+    "tb_to_plenum_dp_kpa": 0.0808,
+    "tb_to_plenum_dp_psi": 0.0117,
+    "max_mach_3d": 0.082,
+    "max_vel_3d_ms": 29.8,
+    "mean_tb_vel_ms": 28.78,
+    "model_assumptions": "Steady incompressible screening FVM (rho=2.415 kg/m^3, uniform nu_eff=0.0045 m^2/s, Colebrook wall drag mult=1.0, outlet porous valve K=0.0); flux-weighted total pressure planes outside source & porous zones."
+  }
+}

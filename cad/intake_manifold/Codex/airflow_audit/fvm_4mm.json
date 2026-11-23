@@ -1,0 +1,1322 @@
+{
+  "source_sha256": "54aea809ee11f6876f61926cbd75c72f666df5c277018934e7abe6f7194bbcba",
+  "dx_mm": 4.0,
+  "cell_components": [
+    45486
+  ],
+  "geometry_volume_mm3": 2930705.548433144,
+  "mass_flow_input_kgs": 0.2777,
+  "cases": {
+    "all_cylinders": {
+      "trace": [
+        {
+          "iteration": 1,
+          "max_mach": 0.13867159885626915,
+          "projection_linear_relative_l2": 9.274214024453452e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 8.395497458698362e-07,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.837567029044435,
+          "signed_outlet_kgs": 0.2776999988885057,
+          "positive_only_outlet_kgs": 0.2776999988885057,
+          "signed_cylinder_kgs": [
+            0.05035320028439037,
+            0.05887741757803578,
+            0.07345428146836236,
+            0.09501509955771721
+          ]
+        },
+        {
+          "iteration": 2,
+          "max_mach": 0.14249329431742333,
+          "projection_linear_relative_l2": 9.411886479078426e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.404887130924966e-07,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.802735491764427,
+          "signed_outlet_kgs": 0.2776999996433053,
+          "positive_only_outlet_kgs": 0.2776999996433053,
+          "signed_cylinder_kgs": [
+            0.0529066316633833,
+            0.06077634180106882,
+            0.07352089662393269,
+            0.0904961295549204
+          ]
+        },
+        {
+          "iteration": 3,
+          "max_mach": 0.14533563971649718,
+          "projection_linear_relative_l2": 9.529617464418746e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.4444333406422353e-07,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.7865216759028275,
+          "signed_outlet_kgs": 0.27769999976668874,
+          "positive_only_outlet_kgs": 0.27769999976668874,
+          "signed_cylinder_kgs": [
+            0.05512190394583112,
+            0.06225933381499277,
+            0.07333604477364689,
+            0.08698271723221793
+          ]
+        },
+        {
+          "iteration": 4,
+          "max_mach": 0.1473088355050688,
+          "projection_linear_relative_l2": 9.648634556604577e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.4761560676328986e-07,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.7709546424348637,
+          "signed_outlet_kgs": 0.277699999572425,
+          "positive_only_outlet_kgs": 0.277699999572425,
+          "signed_cylinder_kgs": [
+            0.05699629048839817,
+            0.06341308347044317,
+            0.07303247864145174,
+            0.08425814697213196
+          ]
+        },
+        {
+          "iteration": 5,
+          "max_mach": 0.14866223262425993,
+          "projection_linear_relative_l2": 9.840328680842196e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.0138958250428043e-07,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.7553465403408595,
+          "signed_outlet_kgs": 0.27769999960599623,
+          "positive_only_outlet_kgs": 0.27769999960599623,
+          "signed_cylinder_kgs": [
+            0.05862967360641537,
+            0.06436147387905775,
+            0.0727036926305555,
+            0.08200515948996763
+          ]
+        },
+        {
+          "iteration": 6,
+          "max_mach": 0.1495963761678188,
+          "projection_linear_relative_l2": 9.965729925283238e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 7.936522351028512e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.739158943627164,
+          "signed_outlet_kgs": 0.2776999994088039,
+          "positive_only_outlet_kgs": 0.2776999994088039,
+          "signed_cylinder_kgs": [
+            0.0600525716987545,
+            0.0651465732547131,
+            0.0723748515549631,
+            0.08012600290037325
+          ]
+        },
+        {
+          "iteration": 7,
+          "max_mach": 0.15024727160718657,
+          "projection_linear_relative_l2": 9.455698620906549e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 6.311315852569358e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.7228736687121362,
+          "signed_outlet_kgs": 0.2776999998285712,
+          "positive_only_outlet_kgs": 0.2776999998285712,
+          "signed_cylinder_kgs": [
+            0.0612928123249359,
+            0.06580029149500656,
+            0.07205916418248742,
+            0.07854773182614133
+          ]
+        },
+        {
+          "iteration": 8,
+          "max_mach": 0.15070441936529771,
+          "projection_linear_relative_l2": 9.301275934062157e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 5.4040922839529144e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.7067983811510072,
+          "signed_outlet_kgs": 0.27770000004445455,
+          "positive_only_outlet_kgs": 0.27770000004445455,
+          "signed_cylinder_kgs": [
+            0.06237381582713549,
+            0.06634693789731302,
+            0.07176343987261606,
+            0.07721580644739
+          ]
+        },
+        {
+          "iteration": 9,
+          "max_mach": 0.15102750790583408,
+          "projection_linear_relative_l2": 9.32974014499815e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.755421134459507e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6915149491205743,
+          "signed_outlet_kgs": 0.2777000001378749,
+          "positive_only_outlet_kgs": 0.2777000001378749,
+          "signed_cylinder_kgs": [
+            0.06331554877503136,
+            0.0668055094580529,
+            0.07149093114131974,
+            0.07608801076347088
+          ]
+        },
+        {
+          "iteration": 10,
+          "max_mach": 0.15125710327824127,
+          "projection_linear_relative_l2": 9.973389636681261e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.480584951228178e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6773116714929188,
+          "signed_outlet_kgs": 0.27770000017199004,
+          "positive_only_outlet_kgs": 0.27770000017199004,
+          "signed_cylinder_kgs": [
+            0.06413551186993463,
+            0.06719112340390417,
+            0.0712425410254077,
+            0.0751308238727436
+          ]
+        },
+        {
+          "iteration": 11,
+          "max_mach": 0.15142101494929405,
+          "projection_linear_relative_l2": 9.424256923902971e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.749851802581938e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6643435282848056,
+          "signed_outlet_kgs": 0.27770000014674845,
+          "positive_only_outlet_kgs": 0.27770000014674845,
+          "signed_cylinder_kgs": [
+            0.06484911892436403,
+            0.06751611379684833,
+            0.07101800252166961,
+            0.07431676490386648
+          ]
+        },
+        {
+          "iteration": 12,
+          "max_mach": 0.15153827058294406,
+          "projection_linear_relative_l2": 9.689551138489582e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.3943759618896966e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.652596898551193,
+          "signed_outlet_kgs": 0.27770000010222234,
+          "positive_only_outlet_kgs": 0.27770000010222234,
+          "signed_cylinder_kgs": [
+            0.06546993259109347,
+            0.06779060962915516,
+            0.07081632577264277,
+            0.07362313210933097
+          ]
+        },
+        {
+          "iteration": 13,
+          "max_mach": 0.15162193202533628,
+          "projection_linear_relative_l2": 9.944624353226421e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.096853283409955e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6419652181671491,
+          "signed_outlet_kgs": 0.2777000000224728,
+          "positive_only_outlet_kgs": 0.2777000000224728,
+          "signed_cylinder_kgs": [
+            0.06600986697312705,
+            0.06802292295609236,
+            0.0706360817601223,
+            0.07303112833313113
+          ]
+        },
+        {
+          "iteration": 14,
+          "max_mach": 0.15168110738303067,
+          "projection_linear_relative_l2": 9.809635515422162e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.7202810544729963e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6323605910787071,
+          "signed_outlet_kgs": 0.2777000000261973,
+          "positive_only_outlet_kgs": 0.2777000000261973,
+          "signed_cylinder_kgs": [
+            0.06647936893230039,
+            0.06821990209335851,
+            0.07047562091100115,
+            0.07252510808953726
+          ]
+        },
+        {
+          "iteration": 15,
+          "max_mach": 0.1517222978987327,
+          "projection_linear_relative_l2": 9.847669297959966e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.450439234702339e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6237033556333538,
+          "signed_outlet_kgs": 0.2777000000236961,
+          "positive_only_outlet_kgs": 0.2777000000236961,
+          "signed_cylinder_kgs": [
+            0.06688759512857531,
+            0.06838722761558315,
+            0.07033319147051349,
+            0.07209198580902416
+          ]
+        },
+        {
+          "iteration": 16,
+          "max_mach": 0.15175021477927525,
+          "projection_linear_relative_l2": 9.436963006415863e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.1133449217560107e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.61591322379967,
+          "signed_outlet_kgs": 0.2777000000204412,
+          "positive_only_outlet_kgs": 0.2777000000204412,
+          "signed_cylinder_kgs": [
+            0.0672425397212785,
+            0.06852959845994169,
+            0.07020709439105945,
+            0.07172076744816154
+          ]
+        },
+        {
+          "iteration": 17,
+          "max_mach": 0.15176835341436928,
+          "projection_linear_relative_l2": 9.467826372532893e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.918892574003035e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6088795889142498,
+          "signed_outlet_kgs": 0.27770000001814427,
+          "positive_only_outlet_kgs": 0.27770000001814427,
+          "signed_cylinder_kgs": [
+            0.0675511862885374,
+            0.06865092642372811,
+            0.07009568134420875,
+            0.07140220596166998
+          ]
+        },
+        {
+          "iteration": 18,
+          "max_mach": 0.15177932490703364,
+          "projection_linear_relative_l2": 9.247969521105157e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.7056703786549256e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.6025255503396258,
+          "signed_outlet_kgs": 0.27770000001611683,
+          "positive_only_outlet_kgs": 0.27770000001611683,
+          "signed_cylinder_kgs": [
+            0.06781963020136618,
+            0.06875448222842466,
+            0.06999740583673707,
+            0.07112848174958891
+          ]
+        },
+        {
+          "iteration": 19,
+          "max_mach": 0.15178510177280774,
+          "projection_linear_relative_l2": 9.764434424659202e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.6464088879077434e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5967923854642871,
+          "signed_outlet_kgs": 0.2777000000155398,
+          "positive_only_outlet_kgs": 0.2777000000155398,
+          "signed_cylinder_kgs": [
+            0.06805317485200603,
+            0.06884301374281321,
+            0.06991084352067452,
+            0.07089296790004605
+          ]
+        },
+        {
+          "iteration": 20,
+          "max_mach": 0.15178717829011698,
+          "projection_linear_relative_l2": 9.115177256305994e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.411932686049607e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5916214038097873,
+          "signed_outlet_kgs": 0.2777000000143208,
+          "positive_only_outlet_kgs": 0.2777000000143208,
+          "signed_cylinder_kgs": [
+            0.0682564340968715,
+            0.06891882059612309,
+            0.06983468210506222,
+            0.07069006321626398
+          ]
+        },
+        {
+          "iteration": 21,
+          "max_mach": 0.15178668621822305,
+          "projection_linear_relative_l2": 9.263891888402186e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.3244347723012136e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5869568368163796,
+          "signed_outlet_kgs": 0.2777000000110834,
+          "positive_only_outlet_kgs": 0.2777000000110834,
+          "signed_cylinder_kgs": [
+            0.0684334292512853,
+            0.06898382951762867,
+            0.0697677354316967,
+            0.07051500581047275
+          ]
+        },
+        {
+          "iteration": 22,
+          "max_mach": 0.15178448691444427,
+          "projection_linear_relative_l2": 9.547878262758461e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.2642607621413393e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5827449666264033,
+          "signed_outlet_kgs": 0.27770000000362083,
+          "positive_only_outlet_kgs": 0.27770000000362083,
+          "signed_cylinder_kgs": [
+            0.0685876426167834,
+            0.06903967911817875,
+            0.06970894348394865,
+            0.07036373478471004
+          ]
+        },
+        {
+          "iteration": 23,
+          "max_mach": 0.15178122889121132,
+          "projection_linear_relative_l2": 9.748395616574442e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.1982784638009255e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.578907426718676,
+          "signed_outlet_kgs": 0.2777000000003353,
+          "positive_only_outlet_kgs": 0.2777000000003353,
+          "signed_cylinder_kgs": [
+            0.06872210127062067,
+            0.06908774345830339,
+            0.06965735985504466,
+            0.07023279541636654
+          ]
+        },
+        {
+          "iteration": 24,
+          "max_mach": 0.15177740054088742,
+          "projection_linear_relative_l2": 9.493150828299692e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.0883780955418611e-08,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5754376279604485,
+          "signed_outlet_kgs": 0.2777000000000539,
+          "positive_only_outlet_kgs": 0.2777000000000539,
+          "signed_cylinder_kgs": [
+            0.06883943138975397,
+            0.06912918803207077,
+            0.06961214401828282,
+            0.07011923655994637
+          ]
+        },
+        {
+          "iteration": 25,
+          "max_mach": 0.15177335858115926,
+          "projection_linear_relative_l2": 9.213081799258112e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 9.870337979747012e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5722920425437794,
+          "signed_outlet_kgs": 0.27769999999899364,
+          "positive_only_outlet_kgs": 0.27769999999899364,
+          "signed_cylinder_kgs": [
+            0.06894191529851369,
+            0.06916500269106614,
+            0.0695725490690947,
+            0.07002053294031914
+          ]
+        },
+        {
+          "iteration": 26,
+          "max_mach": 0.15176936794522325,
+          "projection_linear_relative_l2": 9.348449243559345e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 9.404120932325917e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5694528504669967,
+          "signed_outlet_kgs": 0.27769999999877715,
+          "positive_only_outlet_kgs": 0.27769999999877715,
+          "signed_cylinder_kgs": [
+            0.06903153544152323,
+            0.06919601984264674,
+            0.0695379160899439,
+            0.0699345286246633
+          ]
+        },
+        {
+          "iteration": 27,
+          "max_mach": 0.1517656187723071,
+          "projection_linear_relative_l2": 9.254132400965085e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 8.76562130290891e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5669035964733886,
+          "signed_outlet_kgs": 0.27769999999808914,
+          "positive_only_outlet_kgs": 0.27769999999808914,
+          "signed_cylinder_kgs": [
+            0.06911000850467211,
+            0.06922294979839708,
+            0.06950766092129436,
+            0.06985938077372557
+          ]
+        },
+        {
+          "iteration": 28,
+          "max_mach": 0.15176224177939418,
+          "projection_linear_relative_l2": 9.717434844053399e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 8.696916645419864e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5646209497205075,
+          "signed_outlet_kgs": 0.27769999999655015,
+          "positive_only_outlet_kgs": 0.27769999999655015,
+          "signed_cylinder_kgs": [
+            0.06917881907119554,
+            0.06924640777438212,
+            0.0694812572123414,
+            0.06979351593863113
+          ]
+        },
+        {
+          "iteration": 29,
+          "max_mach": 0.15175932580369197,
+          "projection_linear_relative_l2": 9.969866983905625e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 8.443978899070276e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5625889506448325,
+          "signed_outlet_kgs": 0.2776999999928926,
+          "positive_only_outlet_kgs": 0.2776999999928926,
+          "signed_cylinder_kgs": [
+            0.06923925540606725,
+            0.0692669092895532,
+            0.0694582528814407,
+            0.06973558241583144
+          ]
+        },
+        {
+          "iteration": 30,
+          "max_mach": 0.15175693268437593,
+          "projection_linear_relative_l2": 9.625266882839715e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 7.729317513013334e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.560756362301524,
+          "signed_outlet_kgs": 0.2776999999912304,
+          "positive_only_outlet_kgs": 0.2776999999912304,
+          "signed_cylinder_kgs": [
+            0.0692924351292583,
+            0.06928489557135352,
+            0.06943824527898367,
+            0.06968442401163495
+          ]
+        },
+        {
+          "iteration": 31,
+          "max_mach": 0.15175509086704927,
+          "projection_linear_relative_l2": 9.796161609667823e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 7.477884970588019e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5591026747185894,
+          "signed_outlet_kgs": 0.2776999999872647,
+          "positive_only_outlet_kgs": 0.2776999999872647,
+          "signed_cylinder_kgs": [
+            0.0693393235425752,
+            0.0693007430989373,
+            0.06942088916630955,
+            0.06963904417944262
+          ]
+        },
+        {
+          "iteration": 32,
+          "max_mach": 0.15175381729497806,
+          "projection_linear_relative_l2": 9.977024210109507e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 7.24256127300222e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5576115190251998,
+          "signed_outlet_kgs": 0.27769999997842487,
+          "positive_only_outlet_kgs": 0.27769999997842487,
+          "signed_cylinder_kgs": [
+            0.06938075478206675,
+            0.06931476789173133,
+            0.06940587557820005,
+            0.0695986017264267
+          ]
+        },
+        {
+          "iteration": 33,
+          "max_mach": 0.15175311762627683,
+          "projection_linear_relative_l2": 9.984090950926241e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 6.938700369729904e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5562829125398543,
+          "signed_outlet_kgs": 0.2776999999524997,
+          "positive_only_outlet_kgs": 0.2776999999524997,
+          "signed_cylinder_kgs": [
+            0.06941746017970818,
+            0.06932724192219235,
+            0.06939293619171555,
+            0.06956236165888366
+          ]
+        },
+        {
+          "iteration": 34,
+          "max_mach": 0.1517529933428149,
+          "projection_linear_relative_l2": 9.934620348487906e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 6.625010135545348e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5550974016589263,
+          "signed_outlet_kgs": 0.27769999995615136,
+          "positive_only_outlet_kgs": 0.27769999995615136,
+          "signed_cylinder_kgs": [
+            0.06945006438149288,
+            0.06933839270269417,
+            0.06938182286352775,
+            0.06952972000843657
+          ]
+        },
+        {
+          "iteration": 35,
+          "max_mach": 0.15175343724704923,
+          "projection_linear_relative_l2": 9.74327622260999e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 6.199843838069242e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5540298838934747,
+          "signed_outlet_kgs": 0.2776999999604401,
+          "positive_only_outlet_kgs": 0.2776999999604401,
+          "signed_cylinder_kgs": [
+            0.06947911756268327,
+            0.0693484271905381,
+            0.06937232847849402,
+            0.06950012672872469
+          ]
+        },
+        {
+          "iteration": 36,
+          "max_mach": 0.1517544324122966,
+          "projection_linear_relative_l2": 9.657378756371693e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 5.917498881573689e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5530884793671453,
+          "signed_outlet_kgs": 0.27769999996348427,
+          "positive_only_outlet_kgs": 0.27769999996348427,
+          "signed_cylinder_kgs": [
+            0.06950508271640836,
+            0.06935751100898052,
+            0.06936427300086773,
+            0.06947313323722763
+          ]
+        },
+        {
+          "iteration": 37,
+          "max_mach": 0.15175597215728084,
+          "projection_linear_relative_l2": 9.797331758682489e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 5.775026741424609e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5522400654092527,
+          "signed_outlet_kgs": 0.2776999999656459,
+          "positive_only_outlet_kgs": 0.2776999999656459,
+          "signed_cylinder_kgs": [
+            0.06952836485281179,
+            0.06936579024963732,
+            0.06935749717069893,
+            0.06944834769249791
+          ]
+        },
+        {
+          "iteration": 38,
+          "max_mach": 0.15175804030362,
+          "projection_linear_relative_l2": 9.289601380848378e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 5.273534187962677e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5514711397216867,
+          "signed_outlet_kgs": 0.2776999999685674,
+          "positive_only_outlet_kgs": 0.2776999999685674,
+          "signed_cylinder_kgs": [
+            0.06954931887550381,
+            0.06937338625757478,
+            0.0693518593150995,
+            0.06942543552038935
+          ]
+        },
+        {
+          "iteration": 39,
+          "max_mach": 0.1517606104021906,
+          "projection_linear_relative_l2": 9.899388845612483e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 5.420744454807746e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5507800003103467,
+          "signed_outlet_kgs": 0.27769999997137595,
+          "positive_only_outlet_kgs": 0.27769999997137595,
+          "signed_cylinder_kgs": [
+            0.06956825071240631,
+            0.06938040463815273,
+            0.06934723344430523,
+            0.06940411117651171
+          ]
+        },
+        {
+          "iteration": 40,
+          "max_mach": 0.15176365671019176,
+          "projection_linear_relative_l2": 9.437414125362638e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.995733298983807e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5501606040809766,
+          "signed_outlet_kgs": 0.27769999997503153,
+          "positive_only_outlet_kgs": 0.27769999997503153,
+          "signed_cylinder_kgs": [
+            0.06958542559233621,
+            0.06938693553727333,
+            0.06934350710223831,
+            0.06938413174318366
+          ]
+        },
+        {
+          "iteration": 41,
+          "max_mach": 0.15176715539628807,
+          "projection_linear_relative_l2": 8.982307023208093e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.603835421466913e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5496191165881463,
+          "signed_outlet_kgs": 0.2776999999787782,
+          "positive_only_outlet_kgs": 0.2776999999787782,
+          "signed_cylinder_kgs": [
+            0.06960107100433137,
+            0.06939305550477633,
+            0.06934058485148771,
+            0.06936528861818277
+          ]
+        },
+        {
+          "iteration": 42,
+          "max_mach": 0.15177107948263666,
+          "projection_linear_relative_l2": 9.644756715475047e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.794717679857567e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.549144227577952,
+          "signed_outlet_kgs": 0.27769999998221756,
+          "positive_only_outlet_kgs": 0.27769999998221756,
+          "signed_cylinder_kgs": [
+            0.06961538781971796,
+            0.06939883151693607,
+            0.0693383777267456,
+            0.06934740291881795
+          ]
+        },
+        {
+          "iteration": 43,
+          "max_mach": 0.1517754061426257,
+          "projection_linear_relative_l2": 9.267929238781603e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.470775975505957e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5487347978471686,
+          "signed_outlet_kgs": 0.27769999998614064,
+          "positive_only_outlet_kgs": 0.27769999998614064,
+          "signed_cylinder_kgs": [
+            0.06962854646481852,
+            0.06940431753922176,
+            0.06933680752034037,
+            0.06933032846175993
+          ]
+        },
+        {
+          "iteration": 44,
+          "max_mach": 0.15178011634619284,
+          "projection_linear_relative_l2": 8.986775642852408e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.210260243002416e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5483841538889613,
+          "signed_outlet_kgs": 0.2776999999898782,
+          "positive_only_outlet_kgs": 0.2776999999898782,
+          "signed_cylinder_kgs": [
+            0.06964069501552599,
+            0.06940956297485719,
+            0.06933580617235374,
+            0.06931393582714127
+          ]
+        },
+        {
+          "iteration": 45,
+          "max_mach": 0.1517851841704399,
+          "projection_linear_relative_l2": 9.826634046317918e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.47927694028113e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5480876625111797,
+          "signed_outlet_kgs": 0.27769999999341666,
+          "positive_only_outlet_kgs": 0.27769999999341666,
+          "signed_cylinder_kgs": [
+            0.06965196431232977,
+            0.0694146081644906,
+            0.0693353163221,
+            0.06929811119449628
+          ]
+        },
+        {
+          "iteration": 46,
+          "max_mach": 0.1517905859407994,
+          "projection_linear_relative_l2": 9.731285512871506e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.321762337249682e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5478433467223287,
+          "signed_outlet_kgs": 0.2776999999969236,
+          "positive_only_outlet_kgs": 0.2776999999969236,
+          "signed_cylinder_kgs": [
+            0.06966246424331118,
+            0.06941948450274765,
+            0.0693352806817542,
+            0.06928277056911054
+          ]
+        },
+        {
+          "iteration": 47,
+          "max_mach": 0.1517963040743455,
+          "projection_linear_relative_l2": 9.747500256746882e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.222921772864398e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5476528835340484,
+          "signed_outlet_kgs": 0.27770000000059636,
+          "positive_only_outlet_kgs": 0.27770000000059636,
+          "signed_cylinder_kgs": [
+            0.0696722923954461,
+            0.06942422289413396,
+            0.06933565288998916,
+            0.06926783182102718
+          ]
+        },
+        {
+          "iteration": 48,
+          "max_mach": 0.1518023210995461,
+          "projection_linear_relative_l2": 9.84902193350156e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 4.166953373892185e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5475081697777426,
+          "signed_outlet_kgs": 0.2777000000038985,
+          "positive_only_outlet_kgs": 0.2777000000038985,
+          "signed_cylinder_kgs": [
+            0.06968153109131334,
+            0.0694288444772372,
+            0.0693363867409856,
+            0.0692532376943624
+          ]
+        },
+        {
+          "iteration": 49,
+          "max_mach": 0.15180861456001882,
+          "projection_linear_relative_l2": 9.021002074987015e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.733534034483771e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5474065268784851,
+          "signed_outlet_kgs": 0.27770000000394934,
+          "positive_only_outlet_kgs": 0.27770000000394934,
+          "signed_cylinder_kgs": [
+            0.06969025407308924,
+            0.06943337330069692,
+            0.06933744544669926,
+            0.06923892718346392
+          ]
+        },
+        {
+          "iteration": 50,
+          "max_mach": 0.15181516299168005,
+          "projection_linear_relative_l2": 9.19149532637511e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.7168027771412673e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5473449400365642,
+          "signed_outlet_kgs": 0.27770000000069317,
+          "positive_only_outlet_kgs": 0.27770000000069317,
+          "signed_cylinder_kgs": [
+            0.06969852179741598,
+            0.06943782349972555,
+            0.06933879471732526,
+            0.06922485998622643
+          ]
+        },
+        {
+          "iteration": 51,
+          "max_mach": 0.15182194023187104,
+          "projection_linear_relative_l2": 9.212203160967658e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.6415616460743668e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5473166976898776,
+          "signed_outlet_kgs": 0.2776999999973508,
+          "positive_only_outlet_kgs": 0.2776999999973508,
+          "signed_cylinder_kgs": [
+            0.0697063880321294,
+            0.06944220643302529,
+            0.06934040450482488,
+            0.06921100102737121
+          ]
+        },
+        {
+          "iteration": 52,
+          "max_mach": 0.15182891227132114,
+          "projection_linear_relative_l2": 9.833327789251638e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.802523316969442e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5473145550225955,
+          "signed_outlet_kgs": 0.2776999999953465,
+          "positive_only_outlet_kgs": 0.2776999999953465,
+          "signed_cylinder_kgs": [
+            0.06971390105990471,
+            0.069446533308298,
+            0.06934224737284995,
+            0.06919731825429386
+          ]
+        },
+        {
+          "iteration": 53,
+          "max_mach": 0.15183606920005088,
+          "projection_linear_relative_l2": 9.2125723701301e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.487556916514622e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.547334490178245,
+          "signed_outlet_kgs": 0.2776999999939686,
+          "positive_only_outlet_kgs": 0.2776999999939686,
+          "signed_cylinder_kgs": [
+            0.06972110001544897,
+            0.06945081163329064,
+            0.06934429531184676,
+            0.06918379303338223
+          ]
+        },
+        {
+          "iteration": 54,
+          "max_mach": 0.15184340044710035,
+          "projection_linear_relative_l2": 9.414526753257282e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.4871900451743485e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5473772635962275,
+          "signed_outlet_kgs": 0.27769999999438394,
+          "positive_only_outlet_kgs": 0.27769999999438394,
+          "signed_cylinder_kgs": [
+            0.0697280193992401,
+            0.06945504738892985,
+            0.06934652333518662,
+            0.06917040987102738
+          ]
+        },
+        {
+          "iteration": 55,
+          "max_mach": 0.15185089528729653,
+          "projection_linear_relative_l2": 9.50954318605693e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.4415129172739223e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5474433059908657,
+          "signed_outlet_kgs": 0.27769999999412426,
+          "positive_only_outlet_kgs": 0.27769999999412426,
+          "signed_cylinder_kgs": [
+            0.06973468792626326,
+            0.06945924560706991,
+            0.06934890909299982,
+            0.06915715736779125
+          ]
+        },
+        {
+          "iteration": 56,
+          "max_mach": 0.15185853544494698,
+          "projection_linear_relative_l2": 9.190889163585025e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.257304437231831e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5475324166533275,
+          "signed_outlet_kgs": 0.27769999999262146,
+          "positive_only_outlet_kgs": 0.27769999999262146,
+          "signed_cylinder_kgs": [
+            0.06974113089235356,
+            0.06946340951558595,
+            0.0693514337334371,
+            0.06914402585124478
+          ]
+        },
+        {
+          "iteration": 57,
+          "max_mach": 0.1518663040034541,
+          "projection_linear_relative_l2": 9.593459049162048e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.3302733988062644e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5476330568759573,
+          "signed_outlet_kgs": 0.2776999999918464,
+          "positive_only_outlet_kgs": 0.2776999999918464,
+          "signed_cylinder_kgs": [
+            0.06974736932515088,
+            0.06946754201151191,
+            0.06935407877306123,
+            0.06913100988212242
+          ]
+        },
+        {
+          "iteration": 58,
+          "max_mach": 0.15187418468612288,
+          "projection_linear_relative_l2": 9.909274920858576e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.3685033621178654e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5477546893084657,
+          "signed_outlet_kgs": 0.2776999999909686,
+          "positive_only_outlet_kgs": 0.2776999999909686,
+          "signed_cylinder_kgs": [
+            0.0697534201105335,
+            0.06947164457930821,
+            0.06935682609609656,
+            0.06911810920503035
+          ]
+        },
+        {
+          "iteration": 59,
+          "max_mach": 0.15188216151952813,
+          "projection_linear_relative_l2": 8.996606045949931e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.997690168898491e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5478915970496439,
+          "signed_outlet_kgs": 0.2776999999886011,
+          "positive_only_outlet_kgs": 0.2776999999886011,
+          "signed_cylinder_kgs": [
+            0.06975929836234125,
+            0.06947571598795983,
+            0.06935965938548094,
+            0.06910532625281905
+          ]
+        },
+        {
+          "iteration": 60,
+          "max_mach": 0.15189021784654233,
+          "projection_linear_relative_l2": 9.229866861288098e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.014367895547378e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5480444408505305,
+          "signed_outlet_kgs": 0.2776999999876465,
+          "positive_only_outlet_kgs": 0.2776999999876465,
+          "signed_cylinder_kgs": [
+            0.06976501649450173,
+            0.06947975472562103,
+            0.06936256476900578,
+            0.069092663998518
+          ]
+        },
+        {
+          "iteration": 61,
+          "max_mach": 0.1518983394155832,
+          "projection_linear_relative_l2": 9.455749744389567e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.0269328381280033e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5482109483286182,
+          "signed_outlet_kgs": 0.277699999986717,
+          "positive_only_outlet_kgs": 0.277699999986717,
+          "signed_cylinder_kgs": [
+            0.06977058467375767,
+            0.06948375859161214,
+            0.06936552846665324,
+            0.06908012825469396
+          ]
+        },
+        {
+          "iteration": 62,
+          "max_mach": 0.1519065116037588,
+          "projection_linear_relative_l2": 9.674741723487172e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 3.036567735036321e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5483884654071154,
+          "signed_outlet_kgs": 0.277699999985909,
+          "positive_only_outlet_kgs": 0.277699999985909,
+          "signed_cylinder_kgs": [
+            0.06977601149940914,
+            0.06948772509214127,
+            0.06936853792712148,
+            0.06906772546723716
+          ]
+        },
+        {
+          "iteration": 63,
+          "max_mach": 0.15191472167230613,
+          "projection_linear_relative_l2": 9.7497811016599e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.996471970150454e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.548569791157276,
+          "signed_outlet_kgs": 0.27769999998587336,
+          "positive_only_outlet_kgs": 0.27769999998587336,
+          "signed_cylinder_kgs": [
+            0.06978130449067836,
+            0.06949165091701504,
+            0.06937158125314379,
+            0.06905546332503615
+          ]
+        },
+        {
+          "iteration": 64,
+          "max_mach": 0.15192295718424187,
+          "projection_linear_relative_l2": 9.07297184078746e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.734871266021241e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5487605111356924,
+          "signed_outlet_kgs": 0.27769999998295114,
+          "positive_only_outlet_kgs": 0.27769999998295114,
+          "signed_cylinder_kgs": [
+            0.06978646903018346,
+            0.06949553374009344,
+            0.06937464705153204,
+            0.06904335016114217
+          ]
+        },
+        {
+          "iteration": 65,
+          "max_mach": 0.15193120676565344,
+          "projection_linear_relative_l2": 9.263443665283054e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.7402549635863554e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.548960975631254,
+          "signed_outlet_kgs": 0.2776999999822893,
+          "positive_only_outlet_kgs": 0.2776999999822893,
+          "signed_cylinder_kgs": [
+            0.06979150975469829,
+            0.06949937005105984,
+            0.06937772460915004,
+            0.06903139556738111
+          ]
+        },
+        {
+          "iteration": 66,
+          "max_mach": 0.15193945732041422,
+          "projection_linear_relative_l2": 9.482633611914006e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.740672420239115e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5491726851448342,
+          "signed_outlet_kgs": 0.2776999999817161,
+          "positive_only_outlet_kgs": 0.2776999999817161,
+          "signed_cylinder_kgs": [
+            0.0697964326548475,
+            0.06950315925714338,
+            0.06938080691362497,
+            0.06901960115610023
+          ]
+        },
+        {
+          "iteration": 67,
+          "max_mach": 0.1519476973087429,
+          "projection_linear_relative_l2": 9.672128090016615e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.7335667702189472e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5493965267867125,
+          "signed_outlet_kgs": 0.2776999999812274,
+          "positive_only_outlet_kgs": 0.2776999999812274,
+          "signed_cylinder_kgs": [
+            0.06980124060902906,
+            0.06950689826342216,
+            0.0693838785921662,
+            0.06900798251661001
+          ]
+        },
+        {
+          "iteration": 68,
+          "max_mach": 0.15195591563692404,
+          "projection_linear_relative_l2": 9.837503609004239e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.7219374295735046e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5496257839925391,
+          "signed_outlet_kgs": 0.27769999998078715,
+          "positive_only_outlet_kgs": 0.27769999998078715,
+          "signed_cylinder_kgs": [
+            0.06980593578992506,
+            0.0695105830659847,
+            0.06938693409112237,
+            0.06899654703375502
+          ]
+        },
+        {
+          "iteration": 69,
+          "max_mach": 0.15196410459553514,
+          "projection_linear_relative_l2": 9.981995087186652e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.7021978018187255e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.549857399580556,
+          "signed_outlet_kgs": 0.2776999999804675,
+          "positive_only_outlet_kgs": 0.2776999999804675,
+          "signed_cylinder_kgs": [
+            0.06981051902183802,
+            0.06951420965690246,
+            0.0693899653710027,
+            0.06898530593072437
+          ]
+        },
+        {
+          "iteration": 70,
+          "max_mach": 0.15197225814223184,
+          "projection_linear_relative_l2": 9.249427446214797e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.43985730354845e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5501021725007096,
+          "signed_outlet_kgs": 0.27769999997961425,
+          "positive_only_outlet_kgs": 0.27769999997961425,
+          "signed_cylinder_kgs": [
+            0.06981499111492556,
+            0.06951777404647098,
+            0.06939296471334767,
+            0.06897427010487008
+          ]
+        },
+        {
+          "iteration": 71,
+          "max_mach": 0.15198036621592315,
+          "projection_linear_relative_l2": 9.307367477815477e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.403830659442333e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5503487959278093,
+          "signed_outlet_kgs": 0.27769999997952255,
+          "positive_only_outlet_kgs": 0.27769999997952255,
+          "signed_cylinder_kgs": [
+            0.06981935241499196,
+            0.06952127166847272,
+            0.06939592611283493,
+            0.06896344978322293
+          ]
+        },
+        {
+          "iteration": 72,
+          "max_mach": 0.15198842038960494,
+          "projection_linear_relative_l2": 9.33283048376258e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.3633683054137554e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5506011307091707,
+          "signed_outlet_kgs": 0.2776999999795284,
+          "positive_only_outlet_kgs": 0.2776999999795284,
+          "signed_cylinder_kgs": [
+            0.06982360406654739,
+            0.06952469980753058,
+            0.06939884131576322,
+            0.06895285478968713
+          ]
+        },
+        {
+          "iteration": 73,
+          "max_mach": 0.15199641400739075,
+          "projection_linear_relative_l2": 9.32330597816191e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.317073190673686e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5508557203537738,
+          "signed_outlet_kgs": 0.277699999979635,
+          "positive_only_outlet_kgs": 0.277699999979635,
+          "signed_cylinder_kgs": [
+            0.06982774658101258,
+            0.06952805549261501,
+            0.06940170389828626,
+            0.06894249400772114
+          ]
+        },
+        {
+          "iteration": 74,
+          "max_mach": 0.15200434022322604,
+          "projection_linear_relative_l2": 9.288964937007599e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.2669080078117636e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5511097347620084,
+          "signed_outlet_kgs": 0.27769999997984274,
+          "positive_only_outlet_kgs": 0.27769999997984274,
+          "signed_cylinder_kgs": [
+            0.06983178046469196,
+            0.0695313355101162,
+            0.06940450803482566,
+            0.06893237597020893
+          ]
+        },
+        {
+          "iteration": 75,
+          "max_mach": 0.15201218869959923,
+          "projection_linear_relative_l2": 9.253860841981868e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.217216975828114e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5513639346348795,
+          "signed_outlet_kgs": 0.27769999998014727,
+          "positive_only_outlet_kgs": 0.27769999998014727,
+          "signed_cylinder_kgs": [
+            0.06983570719165577,
+            0.06953453893290729,
+            0.06940725033509965,
+            0.06892250352048455
+          ]
+        },
+        {
+          "iteration": 76,
+          "max_mach": 0.15201995435104046,
+          "projection_linear_relative_l2": 9.239477168470262e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.174295071055477e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5516174313141862,
+          "signed_outlet_kgs": 0.2776999999805565,
+          "positive_only_outlet_kgs": 0.2776999999805565,
+          "signed_cylinder_kgs": [
+            0.06983952926555399,
+            0.0695376660949826,
+            0.06940993023720027,
+            0.0689128743828196
+          ]
+        },
+        {
+          "iteration": 77,
+          "max_mach": 0.15202763091944502,
+          "projection_linear_relative_l2": 9.247937098559529e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.1419105757451506e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.551872498484446,
+          "signed_outlet_kgs": 0.2776999999810208,
+          "positive_only_outlet_kgs": 0.2776999999810208,
+          "signed_cylinder_kgs": [
+            0.06984324447130603,
+            0.06954071163289094,
+            0.06941253885286011,
+            0.06890350502396368
+          ]
+        },
+        {
+          "iteration": 78,
+          "max_mach": 0.1520352112830447,
+          "projection_linear_relative_l2": 9.311093790630104e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.1245238424040765e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5521294160586234,
+          "signed_outlet_kgs": 0.2776999999814374,
+          "positive_only_outlet_kgs": 0.2776999999814374,
+          "signed_cylinder_kgs": [
+            0.0698468547203713,
+            0.06954367459340935,
+            0.06941507179173056,
+            0.06889439887592619
+          ]
+        },
+        {
+          "iteration": 79,
+          "max_mach": 0.15204269191502867,
+          "projection_linear_relative_l2": 9.427521505924984e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.1224427659189486e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.552394693994006,
+          "signed_outlet_kgs": 0.27769999998208283,
+          "positive_only_outlet_kgs": 0.27769999998208283,
+          "signed_cylinder_kgs": [
+            0.06985035823118232,
+            0.06954655182657789,
+            0.06941752393684453,
+            0.06888556598747811
+          ]
+        },
+        {
+          "iteration": 80,
+          "max_mach": 0.15205006825818468,
+          "projection_linear_relative_l2": 9.609111382542151e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 2.1361530558369566e-09,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 1.5526658837281608,
+          "signed_outlet_kgs": 0.277699999982633,
+          "positive_only_outlet_kgs": 0.277699999982633,
+          "signed_cylinder_kgs": [
+            0.06985375643644998,
+            0.06954934253072886,
+            0.06941989148672852,
+            0.06887700952872566
+          ]
+        }
+      ],
+      "inlet_cells": 281,
+      "outlet_faces_by_cylinder": [
+        89,
+        89,
+        89,
+        89
+      ],
+      "active_outlet_faces": 356,
+      "linear_solver_exit_codes": {
+        "cg": {
+          "0": 81
+        },
+        "bicgstab": {
+          "0": 240
+        }
+      },
+      "reported_metrics": {
+        "n_fluid_cells": 45486,
+        "mass_conservation_error_pct": 0.0,
+        "cyl_mass_flow_raw_kgs": [
+          0.06985,
+          0.06955,
+          0.06942,
+          0.06888
+        ],
+        "cyl_flow_share_pct": [
+          25.15,
+          25.04,
+          25.0,
+          24.8
+        ],
+        "cyl_maldistribution_spread_pct": 1.41,
+        "cyl_dp_total_kpa": [
+          2.435,
+          2.487,
+          2.508,
+          2.607
+        ],
+        "tb_to_plenum_dp_kpa": 2.509,
+        "tb_to_plenum_dp_psi": 0.364,
+        "max_mach_3d": 0.152,
+        "max_vel_3d_ms": 55.0,
+        "mean_tb_vel_ms": 34.65
+      }
+    },
+    "single_cylinder": {
+      "trace": [
+        {
+          "iteration": 1,
+          "max_mach": 0.3253262757330279,
+          "projection_linear_relative_l2": 9.29342257895497e-08,
+          "projected_local_continuity_abs_l1_over_inlet": 1.5661349721259919e-06,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 2.1695250115893256,
+          "signed_outlet_kgs": 0.2777000000779227,
+          "positive_only_outlet_kgs": 0.2777000000779227,
+          "signed_cylinder_kgs": [
+            0.0,
+            0.2777000000779227,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "inlet_cells": 281,
+      "outlet_faces_by_cylinder": [
+        89,
+        89,
+        89,
+        89
+      ],
+      "active_outlet_faces": 89,
+      "linear_solver_exit_codes": {
+        "cg": {
+          "0": 2
+        },
+        "bicgstab": {
+          "0": 3
+        }
+      },
+      "reported_metrics": {
+        "n_fluid_cells": 45486,
+        "mass_conservation_error_pct": 300.53,
+        "cyl_mass_flow_raw_kgs": [
+          0.27819,
+          0.2777,
+          0.27819,
+          0.27819
+        ],
+        "cyl_flow_share_pct": [
+          25.01,
+          24.97,
+          25.01,
+          25.01
+        ],
+        "cyl_maldistribution_spread_pct": 0.18,
+        "cyl_dp_total_kpa": [
+          2.622,
+          27.417,
+          2.381,
+          2.237
+        ],
+        "tb_to_plenum_dp_kpa": 8.664,
+        "tb_to_plenum_dp_psi": 1.257,
+        "max_mach_3d": 0.325,
+        "max_vel_3d_ms": 117.6,
+        "mean_tb_vel_ms": 34.65
+      }
+    }
+  }
+}

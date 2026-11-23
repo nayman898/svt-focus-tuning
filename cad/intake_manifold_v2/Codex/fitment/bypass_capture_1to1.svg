@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="215.9mm" height="279.4mm" viewBox="0 0 215.9 279.4">
+  <title>Focus SVT throttle-body bypass tracing sheet</title>
+  <desc>Two actual-size views of the fitted Codex flange, one viewed from the throttle inlet and one mirrored to match the hardware mating face.</desc>
+  <defs>
+    <g id="face" fill="none" stroke="#263039" stroke-width=".24">
+      <rect x="-48" y="-50" width="96" height="100" rx="8"/>
+      <circle cx="-39.5" cy="-39.5" r="3.5"/>
+      <circle cx="39.5" cy="-39.5" r="3.5"/>
+      <circle cx="-39.5" cy="39.5" r="3.5"/>
+      <circle cx="39.5" cy="39.5" r="3.5"/>
+      <circle cx="5" cy="7" r="32.5"/>
+      <path d="M-3 0h6M0 -3v6M3 7h4M5 5v4" stroke="#586773"/>
+      <circle cx="5" cy="7" r="36.5" stroke="#677582" stroke-dasharray="1.4 1"/>
+      <circle cx="5" cy="7" r="39.7" stroke="#677582" stroke-dasharray="1.4 1"/>
+    </g>
+  </defs>
+  <rect width="215.9" height="279.4" fill="white"/>
+  <g font-family="sans-serif" fill="#17242e">
+    <text x="12" y="12" font-size="5" font-weight="bold">Focus SVT throttle-body bypass tracing sheet</text>
+    <text x="12" y="18" font-size="3.3">Print at actual size. Verify the 50 mm bar before tracing.</text>
+    <text x="17" y="26" font-size="3.6" font-weight="bold">Manifold face viewed from the throttle body</text>
+    <text x="17" y="151" font-size="3.6" font-weight="bold">Throttle-body mating face viewed from behind</text>
+    <g font-size="3" text-anchor="middle">
+      <text x="65" y="32">HOOD</text>
+      <text x="65" y="140">GROUND</text>
+      <text x="28" y="143">RADIATOR</text>
+      <text x="101" y="143">FIREWALL</text>
+      <text x="65" y="157">HOOD</text>
+      <text x="65" y="265">GROUND</text>
+      <text x="28" y="268">FIREWALL</text>
+      <text x="101" y="268">RADIATOR</text>
+    </g>
+    <g font-size="3.2">
+      <text x="121" y="41" font-weight="bold">Fitted Codex geometry</text>
+      <text x="121" y="48">79 × 79 mm bolt-center pitch</text>
+      <text x="121" y="54">Ø7 mm holes and Ø65 mm bore</text>
+      <text x="121" y="60">Bore offset 5 mm toward firewall</text>
+      <text x="121" y="66">and 7 mm toward ground</text>
+      <text x="121" y="75">Dashed rings show the current</text>
+      <text x="121" y="81">round O-ring groove edges.</text>
+      <text x="121" y="116" font-weight="bold">50 mm print check</text>
+      <text x="121" y="166" font-weight="bold">Trace the actual hardware</text>
+      <text x="121" y="173">Label the part BBK or factory.</text>
+      <text x="121" y="180">Align all four bolt centers.</text>
+      <text x="121" y="187">Trace each bypass opening and</text>
+      <text x="121" y="193">the gasket or seal outline.</text>
+      <text x="121" y="202">Mark the IACV feed and its</text>
+      <text x="121" y="208">connection upstream of the blade.</text>
+      <text x="121" y="219">Part number __________________</text>
+    </g>
+  </g>
+  <use href="#face" transform="translate(65 85)"/>
+  <use href="#face" transform="translate(65 210) scale(-1 1)"/>
+  <path d="M122 121h50m-50 -1.5v3m50 -3v3" fill="none" stroke="#17242e" stroke-width=".28"/>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "revision": "Stage-2 V2 Flat-Face IACV + Optimized WOT Plenum & High-Flow 12.4 mm IACV Feed",
+  "manifest_sha256": "8cf1a4eee8e903e0c67263f0f1a6bce2e2e486430cd1021dadae53c1858cb94e",
+  "parts": {
+    "svt_intake_manifold_v2_split_left_cyl1_2": {
+      "sha256": "cf13c424a21091af92b3d45d850ed2b5f4ead04a56cc9f2b2e56c56870eda46f",
+      "manifest_sha256": "cf13c424a21091af92b3d45d850ed2b5f4ead04a56cc9f2b2e56c56870eda46f",
+      "manifest_is_volume": true,
+      "manifest_body_count": 1,
+      "reloaded_is_volume": false,
+      "reloaded_is_watertight": false,
+      "reloaded_body_count": 1,
+      "boundary_edges": 0,
+      "edges_over_two_incident_faces": 6
+    },
+    "svt_intake_manifold_v2_split_right_cyl3_4_tb": {
+      "sha256": "6cef883e1417e7efb96b44a46bc0e07a4a9c16790236168f6ccc72d36c236b5b",
+      "manifest_sha256": "6cef883e1417e7efb96b44a46bc0e07a4a9c16790236168f6ccc72d36c236b5b",
+      "manifest_is_volume": true,
+      "manifest_body_count": 1,
+      "reloaded_is_volume": false,
+      "reloaded_is_watertight": false,
+      "reloaded_body_count": 1,
+      "boundary_edges": 0,
+      "edges_over_two_incident_faces": 351
+    }
+  }
+}

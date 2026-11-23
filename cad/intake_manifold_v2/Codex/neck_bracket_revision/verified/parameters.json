@@ -1,0 +1,301 @@
+{
+  "metadata": {
+    "vehicle": "2004 Ford Focus SVT (2.0L Zetec-E Turbo)",
+    "revision": "Stage-2 V2 Codex extended throttle neck and cable-bracket fit candidate",
+    "target_application": "Upper intake manifold replacement between 65mm TB and OEM lower cylinder-head plenum/fuel-rail manifold via 4 silicone coupler boots (IMRC deleted), dropping plenum -68 mm below boots to clear FocusSport strut bar, FRPS, Aeromotive FPR, and brake reservoir",
+    "boost_design_rating_psi": 18.0,
+    "units": "mm",
+    "coordinate_system": {
+      "X": "Engine inline axis (Cyl 1 at -138 mm, Cyl 2 at -46 mm, Cyl 3 at +46 mm, Cyl 4 at +138 mm; TB on +X / Cyl 4 end)",
+      "Y": "Front-to-rear axis (-Y = toward cylinder head / silicone boot spigots & charge pipe, +Y = toward firewall / brake reservoir)",
+      "Z": "Vertical axis (+Z = up toward hood & boot spigots at +68 mm, 0 = dropped plenum centerline below FRPS & strut bar, -Z = downward behind engine block)"
+    }
+  },
+  "runners": {
+    "count": 4,
+    "pitch_mm": 92.0,
+    "center_x_mm": [
+      -138.0,
+      -46.0,
+      46.0,
+      138.0
+    ],
+    "spigot": {
+      "outer_width_mm": 50.8,
+      "outer_height_mm": 50.8,
+      "corner_radius_mm": 25.4,
+      "wall_thickness_mm": 4.0,
+      "land_length_mm": 27.0,
+      "retention_bead_height_mm": 1.1,
+      "retention_bead_width_mm": 5.0,
+      "retention_bead_offset_from_tip_mm": 3.5,
+      "tip_y_mm": -146.0,
+      "center_z_mm": 68.0
+    },
+    "sweep": {
+      "axial_sweep_length_mm": 133.0,
+      "vertical_drop_mm": -68.0,
+      "entry_elevation_deg": 32.0,
+      "plenum_entry_diameter_mm": 46.0,
+      "plenum_entry_y_mm": -32.0,
+      "plenum_entry_z_mm": 10.0,
+      "loft_segments": 120,
+      "profile_segments": 160
+    },
+    "bellmouth": {
+      "wall_flush_bellmouth": true,
+      "protrusion_into_plenum_mm": 14.0,
+      "flare_radial_mm": 7.5,
+      "wall_thickness_mm": 6.0,
+      "lip_outer_radius_mm": 2.25,
+      "axial_entry_angles_deg": [
+        0.0,
+        2.5,
+        4.0,
+        11.5
+      ],
+      "exterior_fillet_z_mm": 13.5,
+      "exterior_fillet_x_mm": 13.5
+    },
+    "tie_webs": {
+      "enabled": true,
+      "sculpted": true,
+      "thickness_mm": 6.0,
+      "y_start_mm": -112.0,
+      "y_end_mm": -86.0,
+      "height_mm": 18.0,
+      "waist_y_start_mm": -112.0,
+      "waist_y_end_mm": -86.0,
+      "root_y_start_mm": -116.0,
+      "root_y_end_mm": -82.0,
+      "waist_height_mm": 18.0,
+      "root_height_mm": 28.0,
+      "edge_radius_mm": 5.5,
+      "root_fillet_span_mm": 9.0
+    }
+  },
+  "plenum": {
+    "inner_width_y_mm": 96.0,
+    "inner_height_z_mm": 84.0,
+    "inner_corner_radius_mm": 38.0,
+    "wall_thickness_mm": 6.5,
+    "taper_cyl1_area_ratio": 0.6,
+    "split_x_area_ratio": 0.8886904761904763,
+    "taper_curve_smooth": true,
+    "cyl1_end_x_mm": -166.0,
+    "cyl1_dome_length_mm": 30.0,
+    "cyl1_dome_steps": 44,
+    "cyl4_end_x_mm": 166.0,
+    "axial_segments": 144,
+    "profile_segments": 160,
+    "hoop_ribs": {
+      "enabled": false,
+      "x_positions_mm": [
+        -92.0,
+        92.0
+      ],
+      "width_mm": 6.0,
+      "base_width_mm": 16.0,
+      "crest_width_mm": 4.0,
+      "radial_height_mm": 5.0
+    },
+    "vacuum_boss_pad": {
+      "enabled": true,
+      "x_center_mm": 56.0,
+      "y_center_mm": 8.0,
+      "length_x_mm": 66.0,
+      "width_y_mm": 28.0,
+      "pad_height_z_mm": 9.5,
+      "skirt_flare_x_mm": 12.0,
+      "skirt_flare_y_mm": 11.0,
+      "top_chamfer_mm": 2.2,
+      "port_count": 3,
+      "port_spacing_x_mm": 21.0,
+      "port_pilot_diameter_mm": 8.5,
+      "port_pilot_diameters_mm": [
+        8.5,
+        8.5,
+        8.5
+      ],
+      "port_names": [
+        "Dedicated Blow-Off Valve (BOV) Direct (1/8-27 NPT)",
+        "1:1 Aeromotive FPR / OEM FRPS (1/8-27 NPT)",
+        "SCG-1 MAP / Boost Gauge (1/8-27 NPT)"
+      ]
+    },
+    "vacuum_only_boss_pad": {
+      "enabled": true,
+      "x_center_mm": -52.0,
+      "y_center_mm": 8.0,
+      "length_x_mm": 52.0,
+      "width_y_mm": 28.0,
+      "pad_height_z_mm": 9.5,
+      "skirt_flare_x_mm": 12.0,
+      "skirt_flare_y_mm": 11.0,
+      "top_chamfer_mm": 2.2,
+      "port_count": 2,
+      "port_spacing_x_mm": 22.0,
+      "port_pilot_diameter_mm": 8.5,
+      "port_pilot_diameters_mm": [
+        11.1,
+        8.5
+      ],
+      "port_names": [
+        "Brake Booster + Check Valve (1/4-18 NPT)",
+        "EVAP Canister Purge + Check Valve (1/8-27 NPT)"
+      ]
+    }
+  },
+  "throttle_body": {
+    "bore_diameter_mm": 65.0,
+    "neck_length_mm": 62.0,
+    "forward_toward_head_deg": 32.0,
+    "upward_pitch_deg": 14.0,
+    "flange_back_offset_mm": [
+      47.582859547016604,
+      -32.113427178854394,
+      27.935375164797343
+    ],
+    "neck_wall_thickness_mm": 6.5,
+    "flange_width_mm": 96.0,
+    "flange_height_mm": 100.0,
+    "flange_corner_radius_mm": 8.0,
+    "flange_thickness_mm": 12.0,
+    "flange_back_fillet_radial_mm": 8.5,
+    "flange_back_fillet_axial_mm": 10.0,
+    "flange_gusset_ribs": false,
+    "flange_back_chamfer_mm": 2.0,
+    "bolt_spacing_x_mm": 79.0,
+    "bolt_spacing_y_mm": 79.0,
+    "bolt_hole_diameter_mm": 7.0,
+    "oring_groove": {
+      "enabled": true,
+      "inner_diameter_mm": 73.0,
+      "width_mm": 3.2,
+      "depth_mm": 2.2
+    },
+    "iacv_mount": {
+      "enabled": true,
+      "x_center_mm": 156.0,
+      "y_center_mm": 10.0,
+      "pad_length_x_mm": 48.0,
+      "pad_width_y_mm": 68.0,
+      "pad_corner_radius_mm": 8.0,
+      "top_z_mm": 65.0,
+      "base_z_mm": 18.0,
+      "skirt_flare_neg_x_mm": 14.0,
+      "skirt_flare_pos_x_mm": 4.0,
+      "base_width_y_mm": 80.0,
+      "top_chamfer_mm": 2.2,
+      "bolt_spacing_y_mm": 46.0,
+      "bolt_pilot_diameter_mm": 5.2,
+      "bolt_depth_mm": 14.0,
+      "port_spacing_x_mm": 22.0,
+      "port_diameter_mm": 13.0,
+      "supply_pocket_bottom_z_mm": 48.0,
+      "side_supply_tap_diameter_mm": 11.1,
+      "side_supply_tap_z_mm": 54.5,
+      "side_supply_tap_face": "pos_y"
+    },
+    "cable_bracket_boss": {
+      "enabled": true,
+      "neck_t_center": 0.45157948857112234,
+      "top_z_mm": 70.20960947799834,
+      "bolt_spacing_mm": 28.0,
+      "bolt_pilot_diameter_mm": 5.2,
+      "bolt_depth_mm": 10.0,
+      "lateral_front_offset_mm": 6.0,
+      "offset_xy_mm": [
+        -0.5084016611247772,
+        -12.89569449334278
+      ],
+      "post_diameter_mm": 15.0,
+      "foot_diameter_mm": 19.5
+    },
+    "codex_neck_blend": {
+      "loft_stations": 116,
+      "round_at_t": 0.978,
+      "taper_rate_ramps": [
+        0.359,
+        0.396
+      ],
+      "turn_interval_t": [
+        0.001,
+        0.942
+      ],
+      "turn_rate_ramps": [
+        0.17,
+        0.152
+      ]
+    },
+    "bore_from_bolt_grid_uv_mm": [
+      5.0,
+      -7.0
+    ],
+    "socket_relief": {
+      "bolt_uv_signs": [
+        1,
+        -1
+      ],
+      "radius_mm": 6.25,
+      "reach_mm": 12.55,
+      "seat_land_mm": 0.23
+    }
+  },
+  "center_split": {
+    "split_x_mm": 0.0,
+    "flange_radial_extension_mm": 19.0,
+    "flange_thickness_per_side_mm": 12.0,
+    "flange_outer_corner_radius_mm": 44.0,
+    "back_fillet_radial_mm": 5.5,
+    "back_fillet_axial_mm": 14.0,
+    "outer_rim_chamfer_mm": 2.5,
+    "bolt_count": 6,
+    "bolt_hole_diameter_mm": 6.6,
+    "bolt_radial_offset_mm": 11.5,
+    "bolt_angles_deg": [
+      25.0,
+      108.0,
+      150.0,
+      228.0,
+      285.0,
+      335.0
+    ],
+    "dowel_pin_diameter_mm": 6.0,
+    "dowel_pin_angles_deg": [
+      55.0,
+      255.0
+    ],
+    "dowel_pin_radial_offset_mm": 11.5,
+    "oring_groove": {
+      "enabled": true,
+      "radial_offset_from_inner_wall_mm": 4.2,
+      "width_mm": 3.5,
+      "depth_mm": 2.3
+    }
+  },
+  "gauges": {
+    "boot_fit_gauge_length_mm": 44.0,
+    "tb_fit_gauge_thickness_mm": 4.0,
+    "iacv_fit_gauge_thickness_mm": 4.0,
+    "dowel_pin_length_mm": 20.0,
+    "dowel_pin_diameters_mm": [
+      5.85,
+      5.75
+    ]
+  },
+  "printers": {
+    "centauri_carbon_2": {
+      "name": "Elegoo Centauri Carbon 2",
+      "bed_x_mm": 256.0,
+      "bed_y_mm": 256.0,
+      "bed_z_mm": 256.0
+    },
+    "ender_3_s1_pro": {
+      "name": "Ender 3 S1 Pro",
+      "bed_x_mm": 220.0,
+      "bed_y_mm": 220.0,
+      "bed_z_mm": 270.0
+    }
+  }
+}

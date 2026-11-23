@@ -31,6 +31,7 @@ import manifold3d as md
 import matplotlib
 
 matplotlib.use("Agg")
+from matplotlib.colors import LightSource
 from matplotlib.path import Path as MplPath
 from matplotlib.patches import PathPatch
 import matplotlib.pyplot as plt
@@ -72,6 +73,17 @@ def rounded_rect_points(width: float, height: float, radius: float, total_pts: i
         for a in rad:
             pts.append([cx + r * math.cos(a), cy + r * math.sin(a)])
     return np.asarray(pts, dtype=np.float64)
+
+
+def ellipse_points(width: float, height: float, total_pts: int = 64) -> np.ndarray:
+    """
+    Generate (N, 2) CCW points for a smooth ellipse of full extents `width` x `height`.
+    When `width == height`, produces an exact circle.
+    """
+    angles = np.linspace(0.0, 2.0 * math.pi, total_pts, endpoint=False)
+    a = 0.5 * width
+    b = 0.5 * height
+    return np.column_stack([a * np.cos(angles), b * np.sin(angles)]).astype(np.float64)
 
 
 def ring_frame_points(
@@ -240,11 +252,51 @@ def plenum_area_scale(x: float, params: dict) -> float:
         return float(r_cyl1 + (1.0 - r_cyl1) * t)
     r_split = float(r_split)
     x_split = float(params.get("center_split", {}).get("split_x_mm", 0.0))
+    if p.get("taper_curve_smooth", False) and (x0 < x_split < x1) and (r_cyl1 < r_split < 1.0):
+        t = float(np.clip((x - x0) / (x1 - x0), 0.0, 1.0))
+        t_s = (x_split - x0) / (x1 - x0)
+        exponent = math.log((1.0 - r_split) / (1.0 - r_cyl1)) / math.log(1.0 - t_s)
+        return float(r_cyl1 + (1.0 - r_cyl1) * (1.0 - (1.0 - t) ** exponent))
     if x <= x_split:
         t = np.clip((x - x0) / (x_split - x0), 0.0, 1.0)
         return float(r_cyl1 + (r_split - r_cyl1) * t)
     t = np.clip((x - x_split) / (x1 - x_split), 0.0, 1.0)
     return float(r_split + (1.0 - r_split) * t)
+
+
+def _rounded_rect_sdf_2d(y: float, z: float, w: float, h: float, r: float) -> float:
+    r_c = min(r, 0.5 * min(w, h) - 1e-3)
+    qx = abs(y) - (0.5 * w - r_c)
+    qy = abs(z) - (0.5 * h - r_c)
+    outside = math.hypot(max(qx, 0.0), max(qy, 0.0))
+    inside = min(max(qx, qy), 0.0)
+    return outside + inside - r_c
+
+
+def plenum_outer_sdf(pt: np.ndarray, params: dict) -> float:
+    """Signed distance to outer plenum barrel surface (>0 outside, <0 inside)."""
+    p = params["plenum"]
+    wall = float(p["wall_thickness_mm"])
+    w_base = float(p["inner_width_y_mm"]) + 2.0 * wall
+    h_base = float(p["inner_height_z_mm"]) + 2.0 * wall
+    r_base = float(p["inner_corner_radius_mm"]) + wall
+    x_clamped = float(np.clip(pt[0], p["cyl1_end_x_mm"], p["cyl4_end_x_mm"]))
+    scale = math.sqrt(plenum_area_scale(x_clamped, params))
+    return _rounded_rect_sdf_2d(float(pt[1]), float(pt[2]), w_base * scale, h_base * scale, r_base * scale)
+
+
+def plenum_outer_sdf_and_normal(pt: np.ndarray, params: dict) -> tuple[float, np.ndarray]:
+    """Return (signed_distance_mm, unit_outward_normal_3d) to outer plenum barrel surface."""
+    d0 = plenum_outer_sdf(pt, params)
+    eps = 0.2
+    dx = (plenum_outer_sdf(pt + np.array([eps, 0.0, 0.0]), params) - d0) / eps
+    dy = (plenum_outer_sdf(pt + np.array([0.0, eps, 0.0]), params) - d0) / eps
+    dz = (plenum_outer_sdf(pt + np.array([0.0, 0.0, eps]), params) - d0) / eps
+    g = np.array([dx, dy, dz], dtype=np.float64)
+    n_len = float(np.linalg.norm(g))
+    if n_len < 1e-8:
+        return d0, np.array([0.0, -1.0, 0.0], dtype=np.float64)
+    return d0, g / n_len
 
 
 def build_plenum_loft(params: dict, is_inner: bool) -> md.Manifold:
@@ -262,14 +314,13 @@ def build_plenum_loft(params: dict, is_inner: bool) -> md.Manifold:
 
     x_dome_tip = p["cyl1_end_x_mm"] - (p["cyl1_dome_length_mm"] - (wall if is_inner else 0.0))
     x_cyl1 = p["cyl1_end_x_mm"]
-    x_cyl4 = p["cyl4_end_x_mm"] + (-2.0 if is_inner else 2.0)
+    x_cyl4 = float(p["cyl4_end_x_mm"])
 
     rings: list[np.ndarray] = []
     # 1) Ellipsoidal dome from tip to cyl1 end
     dome_len = x_cyl1 - x_dome_tip
-    dome_steps = 12
-    # Start at theta=0.22 rad (~12.6 deg) so end cap stays broad and smoothly closed
-    thetas = np.linspace(0.22, math.pi * 0.5, dome_steps, endpoint=False)
+    dome_steps = int(p.get("cyl1_dome_steps", 44))
+    thetas = np.linspace(0.04, math.pi * 0.5, dome_steps, endpoint=False)
     s_cyl1 = math.sqrt(p["taper_cyl1_area_ratio"])
     for th in thetas:
         x = x_cyl1 - dome_len * math.cos(th)
@@ -279,7 +330,7 @@ def build_plenum_loft(params: dict, is_inner: bool) -> md.Manifold:
         ring = np.column_stack([np.full(n_pts, x), uv[:, 0], uv[:, 1]])
         rings.append(ring)
 
-    # 2) Linearly/piecewise tapered plenum barrel from x_cyl1 to x_cyl4
+    # 2) Tapered plenum barrel from x_cyl1 to x_cyl4
     xs = np.linspace(x_cyl1, x_cyl4, p["axial_segments"])
     x_split = float(params.get("center_split", {}).get("split_x_mm", 0.0))
     if p.get("split_x_area_ratio") is not None and x_cyl1 < x_split < x_cyl4:
@@ -302,12 +353,60 @@ def bezier_point_and_tangent(p0: np.ndarray, p1: np.ndarray, p2: np.ndarray, p3:
     return pt, tan
 
 
+def tb_neck_bezier_points(params: dict) -> tuple[np.ndarray, ...]:
+    """Return cubic-Bezier control points and endpoints for the throttle body neck."""
+    tb = params["throttle_body"]
+    pl = params["plenum"]
+    x_start = float(pl["cyl4_end_x_mm"])
+    p_start = np.array([x_start, 0.0, 0.0])
+    cant_rad = math.radians(tb["forward_cant_deg"])
+    tb_axis = np.array([math.cos(cant_rad), math.sin(cant_rad), 0.0])
+    p_flange_back = np.array([x_start, 0.0, 0.0]) + tb_axis * float(tb["neck_length_mm"])
+    p_flange_face = p_flange_back + tb_axis * float(tb["flange_thickness_mm"])
+    p_neck_end = p_flange_back + tb_axis * 4.0
+    chord = float(np.linalg.norm(p_neck_end - p_start))
+    c0 = p_start + np.array([1.0, 0.0, 0.0]) * (0.38 * chord)
+    c1 = p_neck_end - tb_axis * (0.38 * chord)
+    return p_start, c0, c1, p_neck_end, p_flange_back, p_flange_face, tb_axis
+
+
+def runner_bezier_points(x_center: float, params: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return (p_bm_tip, inlet_dir, p0, p1, p2, p3) for a runner at `x_center`."""
+    r_cfg = params["runners"]
+    sp = r_cfg["spigot"]
+    bm = r_cfg["bellmouth"]
+    wall_flush = bool(bm.get("wall_flush_bellmouth", False))
+    cyl_idx = min(range(len(r_cfg["center_x_mm"])), key=lambda idx: abs(r_cfg["center_x_mm"][idx] - x_center))
+    scoop_angles = bm.get("axial_entry_angles_deg", [0.0, 0.0, 0.0, 0.0])
+    alpha_x_deg = float(scoop_angles[cyl_idx]) if (wall_flush and cyl_idx < len(scoop_angles)) else 0.0
+    ax_rad = math.radians(alpha_x_deg)
+    el_rad = math.radians(18.0)
+    inlet_dir = np.array([
+        -math.sin(ax_rad),
+        -math.cos(el_rad) * math.cos(ax_rad),
+        -math.sin(el_rad) * math.cos(ax_rad),
+    ])
+    if wall_flush:
+        s_x = math.sqrt(plenum_area_scale(x_center, params))
+        y_plenum_rear_in = -0.5 * params["plenum"]["inner_width_y_mm"] * s_x
+        p_bm_tip = np.array([x_center + 14.0 * math.sin(ax_rad), y_plenum_rear_in + 9.0, -5.0])
+        p0 = p_bm_tip + inlet_dir * 18.0
+    else:
+        p_bm_tip = np.array([x_center, -24.0, -10.0])
+        p0 = p_bm_tip + inlet_dir * 16.0
+    sweep_end_y = float(sp["tip_y_mm"]) + float(sp["land_length_mm"])
+    p3 = np.array([x_center, sweep_end_y, float(sp["center_z_mm"])])
+    p1 = p0 + inlet_dir * 26.0
+    p2 = p3 + np.array([0.0, 32.0, 0.0])
+    return p_bm_tip, inlet_dir, p0, p1, p2, p3
+
+
 def build_single_runner_components(x_center: float, params: dict) -> dict[str, md.Manifold]:
     """
     For one cylinder at `x_center`, build:
-      - `outer`: smooth swept outer runner + straight spigot clamping land + retention bead
-      - `bellmouth_outer`: flared velocity-stack trumpet overlapping plenum wall and protruding inside
-      - `inner_bore`: full continuous bore from flared bellmouth lip inside plenum to past spigot tip
+      - `outer`: smooth swept outer runner + C^inf curvature-compensated root fillet + straight spigot + crowned bead
+      - `bellmouth_outer`: protruding bellmouth sleeve outer (None when wall_flush=True, integrated in `outer`)
+      - `inner_bore`: continuous bore from flared bellmouth lip inside plenum to past spigot tip
     """
     r_cfg = params["runners"]
     sp = r_cfg["spigot"]
@@ -324,11 +423,12 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
     sp_h_in = sp_h_out - 2.0 * wall
     sp_r_in = sp_r_out - wall
 
+    wall_flush = bool(bm.get("wall_flush_bellmouth", False))
     entry_d = sw["plenum_entry_diameter_mm"]
-    entry_w_in = entry_d
-    entry_h_in = entry_d - 6.0  # slightly oval (e.g. 46 x 40 mm) for vertical plenum breathing margin
+    entry_w_in = (entry_d + 0.4) if wall_flush else entry_d
+    entry_h_in = (entry_d - 4.2) if wall_flush else (entry_d - 6.0)
     entry_r_in = entry_h_in * 0.48
-    entry_wall = max(wall, 5.0)
+    entry_wall = max(wall, 5.5)
     entry_w_out = entry_w_in + 2.0 * entry_wall
     entry_h_out = entry_h_in + 2.0 * entry_wall
     entry_r_out = entry_r_in + entry_wall
@@ -338,124 +438,179 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
     sweep_end_y = tip_y + land_len
     sp_z = sp["center_z_mm"]
 
-    wall_flush = bool(bm.get("wall_flush_bellmouth", False))
-    cyl_idx = min(range(len(r_cfg["center_x_mm"])), key=lambda idx: abs(r_cfg["center_x_mm"][idx] - x_center))
-    scoop_angles = bm.get("axial_entry_angles_deg", [0.0, 0.0, 0.0, 0.0])
-    alpha_x_deg = float(scoop_angles[cyl_idx]) if (wall_flush and cyl_idx < len(scoop_angles)) else 0.0
-    ax_rad = math.radians(alpha_x_deg)
-    el_rad = math.radians(18.0)
-    inlet_dir = np.array([
-        -math.sin(ax_rad),
-        -math.cos(el_rad) * math.cos(ax_rad),
-        -math.sin(el_rad) * math.cos(ax_rad),
-    ])
-    if wall_flush:
-        # Contour the velocity-stack trumpet flush into the tapered plenum inner rear wall
-        # so zero protruding sleeve obstructs axial cross-flow feeding Cylinders 1-3.
-        s_x = math.sqrt(plenum_area_scale(x_center, params))
-        y_plenum_rear_in = -0.5 * params["plenum"]["inner_width_y_mm"] * s_x
-        p_bm_tip = np.array([x_center + 14.0 * math.sin(ax_rad), y_plenum_rear_in + 8.5, -5.0])
-        p0 = p_bm_tip + inlet_dir * 18.0
-    else:
-        # Legacy protruding sleeve (kept toggleable for baseline CFD comparison)
-        p_bm_tip = np.array([x_center, -24.0, -10.0])
-        p0 = p_bm_tip + inlet_dir * 16.0  # Starts at Y = -39.2, Z = -14.9 inside plenum wall
-    p3 = np.array([x_center, sweep_end_y, sp_z])
-    p1 = p0 + inlet_dir * 26.0
-    p2 = p3 + np.array([0.0, 32.0, 0.0])  # enters spigot tangentially along -Y
+    p_bm_tip, inlet_dir, p0, p1, p2, p3 = runner_bezier_points(x_center, params)
+    throat_len = float(np.linalg.norm(p0 - p_bm_tip))
 
     up_hint = np.array([0.0, 0.0, 1.0])
-    # Wait: let's check u/v alignment!
-    # At spigot: tangent = (0, -1, 0). up_hint = (0, 0, 1).
-    # u_axis = up_hint x tangent = (0,0,1) x (0,-1,0) = (+1, 0, 0) -> X axis (width)!
-    # v_axis = tangent x u_axis = (0,-1,0) x (1,0,0) = (0, 0, +1) -> Z axis (height)!
-    # That matches outer_width_mm along X and outer_height_mm along Z!
-
-    # 1) Outer runner sweep (from p0 to p3, then straight spigot land to tip_y with retention bead)
-    outer_rings: list[np.ndarray] = []
     n_loft = sw["loft_segments"]
-    for k in range(n_loft + 1):
-        t = k / n_loft
-        pt, tan = bezier_point_and_tangent(p0, p1, p2, p3, t)
-        s_t = 0.5 - 0.5 * math.cos(math.pi * t)
-        w = entry_w_out + (sp_w_out - entry_w_out) * s_t
-        h = entry_h_out + (sp_h_out - entry_h_out) * s_t
-        r = entry_r_out + (sp_r_out - entry_r_out) * s_t
-        uv = rounded_rect_points(w, h, r, n_pts)
-        outer_rings.append(ring_frame_points(pt, tan, up_hint, uv))
+    bm_len = bm["protrusion_into_plenum_mm"]
+    bm_flare = bm["flare_radial_mm"]
+    bm_wall = bm["wall_thickness_mm"]
 
-    # Straight spigot land from sweep_end_y to tip_y with boost retention bead
+    s_x = math.sqrt(plenum_area_scale(x_center, params)) if wall_flush else 1.0
+    bm_flare_eff = bm_flare * (0.75 + 0.25 * s_x) if wall_flush else bm_flare
+
+    def _profile_pts(w: float, h: float, r: float) -> np.ndarray:
+        return ellipse_points(w, h, n_pts) if wall_flush else rounded_rect_points(w, h, r, n_pts)
+
+    # 1) Outer runner skin
+    outer_rings: list[np.ndarray] = []
+    if wall_flush:
+        r_f = float(bm.get("exterior_fillet_z_mm", 11.0)) * s_x
+
+        def fillet_ring_smooth(
+            ring_pts: np.ndarray,
+            uv: np.ndarray,
+            tangent: np.ndarray,
+            f_wt: float = 1.0,
+        ) -> np.ndarray:
+            if f_wt <= 1e-4:
+                return ring_pts
+            t_hat = tangent / np.linalg.norm(tangent)
+            u_ax = np.cross(up_hint, t_hat)
+            if np.linalg.norm(u_ax) < 1e-6:
+                u_ax = np.array([1.0, 0.0, 0.0])
+            u_ax = u_ax / np.linalg.norm(u_ax)
+            v_ax = np.cross(t_hat, u_ax)
+            v_ax = v_ax / np.linalg.norm(v_ax)
+
+            out = ring_pts.copy()
+            for idx in range(len(out)):
+                p_base = out[idx]
+                d, n_pl = plenum_outer_sdf_and_normal(p_base, params)
+                if d >= r_f:
+                    continue
+                n_rad = uv[idx, 0] * u_ax + uv[idx, 1] * v_ax
+                nr_len = float(np.linalg.norm(n_rad))
+                if nr_len < 1e-6:
+                    continue
+                n_rad = n_rad / nr_len
+                t_surf = n_rad - float(np.dot(n_rad, n_pl)) * n_pl
+                ts_len = float(np.linalg.norm(t_surf))
+                t_surf = (t_surf / ts_len) if ts_len > 1e-6 else n_rad
+
+                u = float(np.clip(1.0 - max(d, 0.0) / r_f, 0.0, 1.0))
+                fade_in = float(np.clip((d + 6.0) / 6.0, 0.0, 1.0))
+                fade_in = f_wt * fade_in * fade_in * (3.0 - 2.0 * fade_in)
+                delta_t = fade_in * r_f * (1.0 - math.sqrt(max(0.0, 1.0 - (0.82 * u) ** 2)))
+                p_tang = p_base + delta_t * t_surf
+                d_tang, n_tang = plenum_outer_sdf_and_normal(p_tang, params)
+                d_target = d - fade_in * 0.15 * (u ** 4)
+                out[idx] = p_tang + (d_target - d_tang) * n_tang
+            return out
+
+        # Clean constant elliptical entry stub + branch-free C^inf root fillet (s_dist = -4.0 -> throat_len)
+        uv_entry_out = ellipse_points(entry_w_out, entry_h_out, n_pts)
+        for s_dist in np.linspace(-4.0, throat_len, 32):
+            pos = p_bm_tip + inlet_dir * float(s_dist)
+            ring = ring_frame_points(pos, inlet_dir, up_hint, uv_entry_out)
+            outer_rings.append(fillet_ring_smooth(ring, uv_entry_out, inlet_dir, f_wt=1.0))
+
+        # Bezier sweep from k=1..n_loft with smooth taper-out of root fillet over t <= 0.42
+        for k in range(1, n_loft + 1):
+            t = k / n_loft
+            pt, tan = bezier_point_and_tangent(p0, p1, p2, p3, t)
+            s_t = 0.5 - 0.5 * math.cos(math.pi * t)
+            w = entry_w_out + (sp_w_out - entry_w_out) * s_t
+            h = entry_h_out + (sp_h_out - entry_h_out) * s_t
+            uv = ellipse_points(w, h, n_pts)
+            ring = ring_frame_points(pt, tan, up_hint, uv)
+            if t < 0.42:
+                f_wt = 0.5 + 0.5 * math.cos(math.pi * (t / 0.42))
+                ring = fillet_ring_smooth(ring, uv, tan, f_wt=f_wt)
+            outer_rings.append(ring)
+    else:
+        for k in range(n_loft + 1):
+            t = k / n_loft
+            pt, tan = bezier_point_and_tangent(p0, p1, p2, p3, t)
+            s_t = 0.5 - 0.5 * math.cos(math.pi * t)
+            w = entry_w_out + (sp_w_out - entry_w_out) * s_t
+            h = entry_h_out + (sp_h_out - entry_h_out) * s_t
+            r = entry_r_out + (sp_r_out - entry_r_out) * s_t
+            uv = rounded_rect_points(w, h, r, n_pts)
+            outer_rings.append(ring_frame_points(pt, tan, up_hint, uv))
+
+    # Straight spigot land from sweep_end_y to tip_y with smooth crowned retention bead & tip chamfer
     bead_h = sp["retention_bead_height_mm"]
     bead_w = sp["retention_bead_width_mm"]
     bead_off = sp["retention_bead_offset_from_tip_mm"]
-    # Stations measured back from tip_y toward sweep_end_y:
-    # (y_from_tip, radial_expansion)
     y_bead_start = tip_y + bead_off
-    y_bead_peak1 = y_bead_start + 1.5
-    y_bead_peak2 = y_bead_start + bead_w - 1.5
     y_bead_end = y_bead_start + bead_w
-    spigot_stations = [
-        (y_bead_end + 4.0, 0.0),
-        (y_bead_end, 0.0),
-        (y_bead_peak2, bead_h),
-        (y_bead_peak1, bead_h),
-        (y_bead_start, 0.0),
-        (tip_y, 0.0),
+    spigot_stations: list[tuple[float, float]] = [
+        (float(y_s), 0.0) for y_s in np.linspace(sweep_end_y, y_bead_end, 12)[1:]
     ]
+    for b_idx in range(1, 20):
+        frac = b_idx / 20.0
+        yb = y_bead_end - frac * bead_w
+        dr = bead_h * math.sin(math.pi * frac)
+        spigot_stations.append((yb, dr))
+    spigot_stations.extend([
+        (y_bead_start, 0.0),
+        (tip_y + 0.8, 0.0),
+        (tip_y, -0.8),
+    ])
     tan_sp = np.array([0.0, -1.0, 0.0])
     for y_pos, dr in spigot_stations:
-        uv = rounded_rect_points(sp_w_out + 2.0 * dr, sp_h_out + 2.0 * dr, sp_r_out + dr, n_pts)
+        uv = _profile_pts(sp_w_out + 2.0 * dr, sp_h_out + 2.0 * dr, sp_r_out + dr)
         outer_rings.append(ring_frame_points(np.array([x_center, y_pos, sp_z]), tan_sp, up_hint, uv))
 
     outer_solid = trimesh_to_manifold(loft_closed_solid(outer_rings))
 
-    # 2) Internal velocity-stack bellmouth outer solid
-    bm_len = bm["protrusion_into_plenum_mm"]
-    bm_flare = bm["flare_radial_mm"]
-    bm_wall = bm["wall_thickness_mm"]
-    bm_rings: list[np.ndarray] = []
-
-    p_bm_anchor = p0 + inlet_dir * 10.0  # inside runner stub
-    bm_total_len = float(np.linalg.norm(p_bm_anchor - p_bm_tip))
-    n_bm = 20
-    s_start_bm = -2.2 if wall_flush else 0.0
-    for k in range(n_bm + 1):
-        s_dist = s_start_bm + (k / n_bm) * (bm_total_len - s_start_bm)
-        pos = p_bm_tip + inlet_dir * float(s_dist)
-        if s_dist < 0.0:
-            inner_flare = bm_flare + (-s_dist) * 0.40
-        else:
+    # 2) Internal velocity-stack bellmouth outer solid (only needed when protruding inside plenum)
+    bellmouth_outer = None
+    if not wall_flush:
+        bm_rings: list[np.ndarray] = []
+        p_bm_anchor = p0 + inlet_dir * 10.0  # inside runner stub
+        bm_total_len = float(np.linalg.norm(p_bm_anchor - p_bm_tip))
+        n_bm = 20
+        for k in range(n_bm + 1):
+            s_dist = (k / n_bm) * bm_total_len
+            pos = p_bm_tip + inlet_dir * float(s_dist)
             u = np.clip(s_dist / bm_len, 0.0, 1.0)
             inner_flare = bm_flare * ((1.0 - u) ** 2)
-        w_out = entry_w_in + 2.0 * inner_flare + 2.0 * bm_wall
-        h_out = entry_h_in + 2.0 * inner_flare + 2.0 * bm_wall
-        r_out = entry_r_in + inner_flare + bm_wall
-        if (not wall_flush) and k == 0:
-            # Slightly rounded front rim bevel (1.5 mm inward inset on protruding sleeve face)
-            w_out -= 2.2
-            h_out -= 2.2
-            r_out -= 1.1
-        uv = rounded_rect_points(w_out, h_out, r_out, n_pts)
-        bm_rings.append(ring_frame_points(pos, inlet_dir, up_hint, uv))
+            w_out = entry_w_in + 2.0 * inner_flare + 2.0 * bm_wall
+            h_out = entry_h_in + 2.0 * inner_flare + 2.0 * bm_wall
+            r_out = entry_r_in + inner_flare + bm_wall
+            if k == 0:
+                w_out -= 2.2
+                h_out -= 2.2
+                r_out -= 1.1
+            uv = rounded_rect_points(w_out, h_out, r_out, n_pts)
+            bm_rings.append(ring_frame_points(pos, inlet_dir, up_hint, uv))
+        bellmouth_outer = trimesh_to_manifold(loft_closed_solid(bm_rings))
 
-    bellmouth_outer = trimesh_to_manifold(loft_closed_solid(bm_rings))
-
-    # 3) Continuous inner air bore (starts ahead of p_bm_tip -> passes smoothly through bellmouth -> sweeps to 6 mm past tip_y)
-    # Avoid placing a ring coplanar with p_bm_tip (s=0) or p0 so booleans have zero coplanar sliver triangles
+    # 3) Continuous inner air bore (inside plenum -> bellmouth -> Bezier sweep -> past spigot tip)
     bore_rings: list[np.ndarray] = []
-    throat_len = float(np.linalg.norm(p0 - p_bm_tip))
-    s_lead = -3.0 if wall_flush else -3.5
-    s_samples = np.linspace(s_lead, throat_len - 0.8, 17)
-    for s_dist in s_samples:
-        pos = p_bm_tip + inlet_dir * float(s_dist)
-        if s_dist < 0.0:
-            # Smooth trumpet lead-in ahead of bellmouth rim
-            flare_r = bm_flare + (-s_dist) * (0.45 if wall_flush else 0.85)
-        else:
-            u = np.clip(s_dist / bm_len, 0.0, 1.0)
-            flare_r = bm_flare * ((1.0 - u) ** 2)
-        uv = rounded_rect_points(entry_w_in + 2.0 * flare_r, entry_h_in + 2.0 * flare_r, entry_r_in + flare_r, n_pts)
-        bore_rings.append(ring_frame_points(pos, inlet_dir, up_hint, uv))
+    if wall_flush:
+        s_lead = -4.5
+        s_samples = np.linspace(s_lead, throat_len - 0.8, 40)
+        angles = np.linspace(0.0, 2.0 * math.pi, n_pts, endpoint=False)
+        cos_a = np.cos(angles)
+        sin_a = np.sin(angles)
+        v_flare_wt = np.where(sin_a > 0.0, 1.0 - 0.78 * sin_a, 1.0)
+        for s_dist in s_samples:
+            pos = p_bm_tip + inlet_dir * float(s_dist)
+            if s_dist < 0.0:
+                flare_r = bm_flare_eff + 1.5 * (1.0 - math.exp(float(s_dist) / 1.5))
+            else:
+                u = np.clip(s_dist / bm_len, 0.0, 1.0)
+                flare_r = bm_flare_eff * ((1.0 - u) ** 2)
+            u_pts = (0.5 * entry_w_in + flare_r) * cos_a
+            v_pts = (0.5 * entry_h_in + flare_r * v_flare_wt) * sin_a
+            uv = np.column_stack([u_pts, v_pts]).astype(np.float64)
+            bore_rings.append(ring_frame_points(pos, inlet_dir, up_hint, uv))
+    else:
+        s_lead = -3.5
+        s_samples = np.linspace(s_lead, throat_len - 0.8, 17)
+        for s_dist in s_samples:
+            pos = p_bm_tip + inlet_dir * float(s_dist)
+            if s_dist < 0.0:
+                flare_r = bm_flare + (-s_dist) * 0.85
+            else:
+                u = np.clip(s_dist / bm_len, 0.0, 1.0)
+                flare_r = bm_flare * ((1.0 - u) ** 2)
+            uv = rounded_rect_points(entry_w_in + 2.0 * flare_r, entry_h_in + 2.0 * flare_r, entry_r_in + flare_r, n_pts)
+            bore_rings.append(ring_frame_points(pos, inlet_dir, up_hint, uv))
 
     # Sweep bore from p0 (t>0) to p3
     for k in range(1, n_loft + 1):
@@ -465,11 +620,11 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
         w = entry_w_in + (sp_w_in - entry_w_in) * s_t
         h = entry_h_in + (sp_h_in - entry_h_in) * s_t
         r = entry_r_in + (sp_r_in - entry_r_in) * s_t
-        uv = rounded_rect_points(w, h, r, n_pts)
+        uv = _profile_pts(w, h, r)
         bore_rings.append(ring_frame_points(pt, tan, up_hint, uv))
 
     # Extend straight bore 6 mm past spigot tip so exit is clean and open
-    uv_exit = rounded_rect_points(sp_w_in, sp_h_in, sp_r_in, n_pts)
+    uv_exit = _profile_pts(sp_w_in, sp_h_in, sp_r_in)
     bore_rings.append(ring_frame_points(np.array([x_center, tip_y - 6.0, sp_z]), tan_sp, up_hint, uv_exit))
 
     inner_bore = trimesh_to_manifold(loft_closed_solid(bore_rings))
@@ -483,22 +638,15 @@ def build_single_runner_components(x_center: float, params: dict) -> dict[str, m
 
 def build_throttle_body_components(params: dict) -> dict[str, md.Manifold]:
     """
-    Build angled TB neck, 4-bolt flange, bore cutter, bolt holes, and face O-ring groove.
+    Build C1 cubic-Bezier TB neck, radiused 4-bolt flange with continuous 360-deg lofted
+    transition bell & spot-faced bolt pockets, bore cutter, bolt holes, and face O-ring groove.
     """
     tb = params["throttle_body"]
     pl = params["plenum"]
     wall = tb["neck_wall_thickness_mm"]
     bore_d = tb["bore_diameter_mm"]
-    neck_len = tb["neck_length_mm"]
-    cant_rad = math.radians(tb["forward_cant_deg"])
 
-    # Plenum ends at x_plenum = cyl4_end_x_mm (170 mm). Overlap 4 mm inside plenum.
-    x_start = pl["cyl4_end_x_mm"]
-    p_start = np.array([x_start - 4.0, 0.0, 0.0])
-    # Cant toward +Y (away from head)
-    tb_axis = np.array([math.cos(cant_rad), math.sin(cant_rad), 0.0])
-    p_flange_back = np.array([x_start, 0.0, 0.0]) + tb_axis * neck_len
-    p_flange_face = p_flange_back + tb_axis * tb["flange_thickness_mm"]
+    p_start, c0, c1, p_neck_end, p_flange_back, p_flange_face, tb_axis = tb_neck_bezier_points(params)
 
     pl_wall = pl["wall_thickness_mm"]
     pl_w_in = pl["inner_width_y_mm"]
@@ -511,15 +659,29 @@ def build_throttle_body_components(params: dict) -> dict[str, md.Manifold]:
     n_pts = pl["profile_segments"]
     up_hint = np.array([0.0, 0.0, 1.0])
 
-    # Neck outer loft
-    neck_out_rings = []
-    neck_in_rings = []
-    n_steps = 18
+    # Smooth cubic-Bezier neck outer & inner lofts (starting cleanly at X=170 with C1 dr/dx=0 match)
+    neck_out_rings = [
+        ring_frame_points(
+            p_start - np.array([2.0, 0.0, 0.0]),
+            np.array([1.0, 0.0, 0.0]),
+            up_hint,
+            rounded_rect_points(pl_w_out - 0.12, pl_h_out - 0.12, pl_r_out - 0.06, n_pts),
+        )
+    ]
+    neck_in_rings = [
+        ring_frame_points(
+            p_start - np.array([4.0, 0.0, 0.0]),
+            np.array([1.0, 0.0, 0.0]),
+            up_hint,
+            rounded_rect_points(pl_w_in, pl_h_in, pl_r_in, n_pts),
+        )
+    ]
+    n_steps = 56
     for k in range(n_steps + 1):
         t = k / n_steps
-        s_t = 0.5 - 0.5 * math.cos(math.pi * t)
-        pos = p_start + (p_flange_back + tb_axis * 4.0 - p_start) * t
-        tan = np.array([1.0, 0.0, 0.0]) * (1.0 - s_t) + tb_axis * s_t
+        t_taper = min(t / 0.86, 1.0)
+        s_t = 0.5 - 0.5 * math.cos(math.pi * t_taper)
+        pos, tan = bezier_point_and_tangent(p_start, c0, c1, p_neck_end, t)
         w_out = pl_w_out + (bore_d + 2.0 * wall - pl_w_out) * s_t
         h_out = pl_h_out + (bore_d + 2.0 * wall - pl_h_out) * s_t
         r_out = pl_r_out + ((bore_d + 2.0 * wall) * 0.5 - pl_r_out) * s_t
@@ -530,39 +692,67 @@ def build_throttle_body_components(params: dict) -> dict[str, md.Manifold]:
         r_in = pl_r_in + (bore_d * 0.5 - pl_r_in) * s_t
         neck_in_rings.append(ring_frame_points(pos, tan, up_hint, rounded_rect_points(w_in, h_in, r_in, n_pts)))
 
-    # Extend inner bore cleanly 6 mm past outer flange face
     uv_bore_end = rounded_rect_points(bore_d, bore_d, bore_d * 0.5, n_pts)
     neck_in_rings.append(ring_frame_points(p_flange_face + tb_axis * 6.0, tb_axis, up_hint, uv_bore_end))
 
     neck_outer = trimesh_to_manifold(loft_closed_solid(neck_out_rings))
     tb_bore = trimesh_to_manifold(loft_closed_solid(neck_in_rings))
 
-    # Flange plate extruded along tb_axis
-    fl_uv = rounded_rect_points(tb["flange_width_mm"], tb["flange_height_mm"], tb["flange_corner_radius_mm"], 64)
-    fl_rings = [
-        ring_frame_points(p_flange_back, tb_axis, up_hint, fl_uv),
-        ring_frame_points(p_flange_face, tb_axis, up_hint, fl_uv),
-    ]
+    # Flange plate extruded along tb_axis with smooth quarter-round back rim edge
+    fl_w = float(tb["flange_width_mm"])
+    fl_h = float(tb["flange_height_mm"])
+    fl_r = float(tb["flange_corner_radius_mm"])
+    fl_ch = float(tb.get("flange_back_chamfer_mm", 2.0))
+    fl_rings = []
+    for th in np.linspace(0.0, 0.5 * math.pi, 10):
+        ax_off = fl_ch * (1.0 - math.cos(th))
+        inset = fl_ch * (1.0 - math.sin(th))
+        uv_k = rounded_rect_points(fl_w - 2.0 * inset, fl_h - 2.0 * inset, max(fl_r - inset, 1.0), 128)
+        fl_rings.append(ring_frame_points(p_flange_back + tb_axis * ax_off, tb_axis, up_hint, uv_k))
+    fl_uv_full = rounded_rect_points(fl_w, fl_h, fl_r, 128)
+    fl_rings.append(ring_frame_points(p_flange_face, tb_axis, up_hint, fl_uv_full))
     flange_outer = trimesh_to_manifold(loft_closed_solid(fl_rings))
 
-    # 4 M6 bolt holes
-    bx = tb["bolt_spacing_x_mm"] * 0.5
-    by = tb["bolt_spacing_y_mm"] * 0.5
-    b_rad = tb["bolt_hole_diameter_mm"] * 0.5
+    outer_pieces = [neck_outer, flange_outer]
+
     u_ax = np.cross(up_hint, tb_axis)
     u_ax /= np.linalg.norm(u_ax)
     v_ax = np.cross(tb_axis, u_ax)
     v_ax /= np.linalg.norm(v_ax)
 
+    # Organic 4-lobed C^inf concave transition bell leaving all 4 M6 bolt corners (+/-35, +/-35) flat & unobstructed
+    bf_ax = float(tb.get("flange_back_fillet_axial_mm", 10.0))
+    if bf_ax > 0.0:
+        n_bell = 160
+        angles_b = np.linspace(0.0, 2.0 * math.pi, n_bell, endpoint=False)
+        r_start = 0.5 * (bore_d + 2.0 * wall) - 0.4
+        r_end_theta = 44.4 + 1.6 * np.cos(4.0 * angles_b)
+        bell_peak = 1.0 - math.sqrt(1.0 - 0.94 ** 2)
+        bell_rings = []
+        for k in range(28):
+            u = k / 27.0
+            pos_k = p_flange_back - tb_axis * (bf_ax * (1.0 - u))
+            fac = (1.0 - math.sqrt(max(0.0, 1.0 - (0.94 * u) ** 2))) / bell_peak
+            rk_theta = r_start + (r_end_theta - r_start) * fac
+            uv_b = np.column_stack([rk_theta * np.cos(angles_b), rk_theta * np.sin(angles_b)]).astype(np.float64)
+            bell_rings.append(ring_frame_points(pos_k, tb_axis, up_hint, uv_b))
+        uv_b_end = np.column_stack([r_end_theta * np.cos(angles_b), r_end_theta * np.sin(angles_b)]).astype(np.float64)
+        bell_rings.append(ring_frame_points(p_flange_back + tb_axis * 2.0, tb_axis, up_hint, uv_b_end))
+        outer_pieces.append(trimesh_to_manifold(loft_closed_solid(bell_rings)))
+
+    # 4 M6 bolt through-holes (corners remain flat-backed without spot-face crescent cuts)
+    bx = tb["bolt_spacing_x_mm"] * 0.5
+    by = tb["bolt_spacing_y_mm"] * 0.5
+    b_rad = tb["bolt_hole_diameter_mm"] * 0.5
+
     cutters: list[md.Manifold] = [tb_bore]
     for sx in (-1.0, 1.0):
         for sy in (-1.0, 1.0):
             pt_center = p_flange_back + u_ax * (sx * bx) + v_ax * (sy * by)
-            c0 = pt_center - tb_axis * 3.0
-            c1 = pt_center + tb_axis * (tb["flange_thickness_mm"] + 3.0)
-            cutters.append(make_cylinder_along(c0, c1, b_rad, segments=32))
+            c0_b = pt_center - tb_axis * 2.0
+            c1_b = pt_center + tb_axis * (tb["flange_thickness_mm"] + 3.0)
+            cutters.append(make_cylinder_along(c0_b, c1_b, b_rad, segments=64))
 
-    # Face O-ring groove on outer flange face
     og = tb["oring_groove"]
     if og["enabled"]:
         r_in_g = og["inner_diameter_mm"] * 0.5
@@ -572,18 +762,19 @@ def build_throttle_body_components(params: dict) -> dict[str, md.Manifold]:
             p_flange_face - tb_axis * depth_g,
             p_flange_face + tb_axis * 1.0,
             r_out_g,
-            segments=72,
+            segments=128,
         )
         inner_g = make_cylinder_along(
             p_flange_face - tb_axis * (depth_g + 1.0),
             p_flange_face + tb_axis * 2.0,
             r_in_g,
-            segments=72,
+            segments=128,
         )
         cutters.append(outer_g - inner_g)
 
     return {
-        "outer": m_union([neck_outer, flange_outer]),
+        "outer": m_union(outer_pieces),
+        "tb_bore": tb_bore,
         "cutters": m_union(cutters),
         "flange_face_center": p_flange_face,
         "tb_axis": tb_axis,
@@ -592,8 +783,9 @@ def build_throttle_body_components(params: dict) -> dict[str, md.Manifold]:
 
 def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold]:
     """
-    Build the center split flange ring centered at X = split_x_mm, plus
-    through-bolt holes, alignment dowel pin holes, and face O-ring groove on the -X half.
+    Build the center split flange ring centered at X = split_x_mm with quarter-round
+    outer rims, sweeping concave back-fillet collars, spot-faced washer seats,
+    through-bolt holes, alignment dowel holes, and left-half face O-ring groove.
     """
     cs = params["center_split"]
     pl = params["plenum"]
@@ -610,20 +802,68 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
     w_fl = w_out + 2.0 * ext
     h_fl = h_out + 2.0 * ext
     r_fl = cs["flange_outer_corner_radius_mm"]
-    thick_total = 2.0 * cs["flange_thickness_per_side_mm"]
+    t_half = float(cs["flange_thickness_per_side_mm"])
+    thick_total = 2.0 * t_half
+    r_edge = float(cs.get("outer_rim_chamfer_mm", 2.5))
 
-    flange_solid = make_rounded_prism(
-        w_fl, h_fl, r_fl, thick_total, segments=72, center=(x_split, 0.0, 0.0), axis="x"
-    )
+    n_fl = 160
+    fl_stations: list[tuple[float, float]] = []
+    if r_edge > 0.0:
+        for th in np.linspace(0.0, 0.5 * math.pi, 9):
+            fl_stations.append((x_split - t_half + r_edge * (1.0 - math.cos(th)), r_edge * (1.0 - math.sin(th))))
+        for th in np.linspace(0.5 * math.pi, 0.0, 9):
+            fl_stations.append((x_split + t_half - r_edge * (1.0 - math.cos(th)), r_edge * (1.0 - math.sin(th))))
+    else:
+        fl_stations = [(x_split - t_half, 0.0), (x_split + t_half, 0.0)]
+
+    fl_rings = []
+    for x_loc, inset in fl_stations:
+        uv = rounded_rect_points(w_fl - 2.0 * inset, h_fl - 2.0 * inset, max(r_fl - inset, 2.0), n_fl)
+        fl_rings.append(np.column_stack([np.full(n_fl, x_loc), uv[:, 0], uv[:, 1]]))
+    flange_pieces = [trimesh_to_manifold(loft_closed_solid(fl_rings))]
+
+    bf_rad = float(cs.get("back_fillet_radial_mm", 0.0))
+    bf_ax = float(cs.get("back_fillet_axial_mm", 0.0))
+    if bf_rad > 0.0 and bf_ax > 0.0:
+        col_peak = 1.0 - math.sqrt(1.0 - 0.95 ** 2)
+        for side_sign in (-1.0, 1.0):
+            col_rings = []
+            u_vals = np.linspace(0.0, 1.0, 28)
+            xs_col = [x_split + side_sign * (t_half + bf_ax * (1.0 - u)) for u in u_vals]
+            if side_sign > 0:
+                xs_col = list(reversed(xs_col))
+                u_vals = list(reversed(u_vals))
+            for x_loc, u in zip(xs_col, u_vals):
+                s_loc = math.sqrt(plenum_area_scale(float(x_loc), params))
+                fac = (1.0 - math.sqrt(max(0.0, 1.0 - (0.95 * float(u)) ** 2))) / col_peak
+                dr = -1.2 + (bf_rad + 1.2) * fac
+                w_c = pl["inner_width_y_mm"] * s_loc + 2.0 * (wall + dr)
+                h_c = pl["inner_height_z_mm"] * s_loc + 2.0 * (wall + dr)
+                r_c = pl["inner_corner_radius_mm"] * s_loc + wall + dr
+                uv = rounded_rect_points(w_c, h_c, r_c, n_fl)
+                col_rings.append(np.column_stack([np.full(n_fl, float(x_loc)), uv[:, 0], uv[:, 1]]))
+            x_anc = float(x_split + side_sign * (t_half - 1.5))
+            s_anc = math.sqrt(plenum_area_scale(x_anc, params))
+            uv_e = rounded_rect_points(
+                pl["inner_width_y_mm"] * s_anc + 2.0 * (wall + bf_rad),
+                pl["inner_height_z_mm"] * s_anc + 2.0 * (wall + bf_rad),
+                pl["inner_corner_radius_mm"] * s_anc + wall + bf_rad,
+                n_fl,
+            )
+            ring_anchor = np.column_stack([np.full(n_fl, x_anc), uv_e[:, 0], uv_e[:, 1]])
+            if side_sign < 0:
+                col_rings.append(ring_anchor)
+            else:
+                col_rings.insert(0, ring_anchor)
+            flange_pieces.append(trimesh_to_manifold(loft_closed_solid(col_rings)))
+
+    flange_solid = m_union(flange_pieces)
     plenum_bore_clear = make_rounded_prism(
-        w_in, h_in, r_in, thick_total + 4.0, segments=72, center=(x_split, 0.0, 0.0), axis="x"
+        w_in, h_in, r_in, thick_total + 2.0 * bf_ax + 6.0, segments=160, center=(x_split, 0.0, 0.0), axis="x"
     )
     flange_ring = flange_solid - plenum_bore_clear
 
-    # Helper to compute offset point along rounded-rect normal direction
     def perimeter_point(angle_deg: float, radial_offset_from_inner: float) -> tuple[float, float]:
-        # Sample dense loop of the inner rounded-rect and pick point at angle_deg,
-        # then step outward along local outward normal
         pts = rounded_rect_points(w_in, h_in, r_in, 720)
         angles = np.degrees(np.arctan2(pts[:, 1], pts[:, 0])) % 360.0
         target = angle_deg % 360.0
@@ -639,35 +879,50 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
         return float(out[0]), float(out[1])
 
     cutters: list[md.Manifold] = []
-    # M6 bolt holes
     bolt_offset_from_inner = wall + cs["bolt_radial_offset_mm"]
     b_rad = cs["bolt_hole_diameter_mm"] * 0.5
+    spot_reach = t_half + max(bf_ax, 6.0) + 4.0
     for ang in cs["bolt_angles_deg"]:
         by, bz = perimeter_point(ang, bolt_offset_from_inner)
         cutters.append(
             make_cylinder_along(
-                np.array([x_split - thick_total * 0.6, by, bz]),
-                np.array([x_split + thick_total * 0.6, by, bz]),
+                np.array([x_split - thick_total * 0.65, by, bz]),
+                np.array([x_split + thick_total * 0.65, by, bz]),
                 b_rad,
-                segments=32,
+                segments=64,
+            )
+        )
+        # Spot-faced Ø13.0 mm flat washer pockets on both flange back faces
+        cutters.append(
+            make_cylinder_along(
+                np.array([x_split - spot_reach, by, bz]),
+                np.array([x_split - t_half - 0.02, by, bz]),
+                6.5,
+                segments=64,
+            )
+        )
+        cutters.append(
+            make_cylinder_along(
+                np.array([x_split + t_half + 0.02, by, bz]),
+                np.array([x_split + spot_reach, by, bz]),
+                6.5,
+                segments=64,
             )
         )
 
-    # Alignment dowel pin holes
     pin_offset_from_inner = wall + cs["dowel_pin_radial_offset_mm"]
     p_rad = cs["dowel_pin_diameter_mm"] * 0.5
     for ang in cs["dowel_pin_angles_deg"]:
         py, pz = perimeter_point(ang, pin_offset_from_inner)
         cutters.append(
             make_cylinder_along(
-                np.array([x_split - thick_total * 0.6, py, pz]),
-                np.array([x_split + thick_total * 0.6, py, pz]),
+                np.array([x_split - thick_total * 0.65, py, pz]),
+                np.array([x_split + thick_total * 0.65, py, pz]),
                 p_rad,
-                segments=32,
+                segments=64,
             )
         )
 
-    # Continuous O-ring groove on the -X face (recessed into left half from x_split to x_split - depth)
     og_cut = None
     og = cs["oring_groove"]
     if og["enabled"]:
@@ -678,11 +933,11 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
         d_out = r_mid + gw * 0.5
         g_outer = make_rounded_prism(
             w_in + 2.0 * d_out, h_in + 2.0 * d_out, r_in + d_out, gd + 0.8,
-            segments=72, center=(x_split - gd * 0.5 + 0.4, 0.0, 0.0), axis="x"
+            segments=160, center=(x_split - gd * 0.5 + 0.4, 0.0, 0.0), axis="x"
         )
         g_inner = make_rounded_prism(
             w_in + 2.0 * d_in, h_in + 2.0 * d_in, r_in + d_in, gd + 2.0,
-            segments=72, center=(x_split - gd * 0.5 + 0.4, 0.0, 0.0), axis="x"
+            segments=160, center=(x_split - gd * 0.5 + 0.4, 0.0, 0.0), axis="x"
         )
         og_cut = g_outer - g_inner
 
@@ -694,15 +949,42 @@ def build_center_split_flange_and_cutters(params: dict) -> dict[str, md.Manifold
 
 
 def build_boss_pad_components(pad_cfg: dict, params: dict) -> tuple[md.Manifold, list[md.Manifold]]:
-    """Build a top plenum NPT vacuum/boost boss pad and its through pilot bores."""
+    """Build a low-profile, wide-skirted, radius-topped NPT vacuum/boost boss pad."""
     s_bp = math.sqrt(plenum_area_scale(pad_cfg["x_center_mm"], params))
     z_roof_in = params["plenum"]["inner_height_z_mm"] * 0.5 * s_bp
     z_top = z_roof_in + params["plenum"]["wall_thickness_mm"] + pad_cfg["pad_height_z_mm"] - 2.0
-    z_bot = z_roof_in - 4.0  # overlaps into plenum wall; plenum_cavity trims cleanly underneath
-    pad = make_rounded_prism(
-        pad_cfg["length_x_mm"], pad_cfg["width_y_mm"], 6.0, z_top - z_bot,
-        segments=48, center=(pad_cfg["x_center_mm"], pad_cfg["y_center_mm"], 0.5 * (z_top + z_bot)), axis="z"
-    )
+    z_bot = z_roof_in - 6.0
+
+    xc = float(pad_cfg["x_center_mm"])
+    yc = float(pad_cfg["y_center_mm"])
+    lx = float(pad_cfg["length_x_mm"])
+    wy = float(pad_cfg["width_y_mm"])
+    fx = float(pad_cfg.get("skirt_flare_x_mm", 12.0))
+    fy = float(pad_cfg.get("skirt_flare_y_mm", 11.0))
+    r_edge = min(float(pad_cfg.get("top_chamfer_mm", 2.2)), 2.2)
+
+    z_collar = z_top - 2.8
+    n_p = 128
+    pad_rings: list[np.ndarray] = []
+    for k in range(22):
+        u = k / 21.0
+        zk = z_bot + (z_collar - z_bot) * u
+        cove = (1.0 - u) ** 2.2
+        wk = lx + 2.0 * fx * cove
+        hk = wy + 2.0 * fy * cove
+        rk = 6.5 + 8.5 * cove
+        uv = rounded_rect_points(wk, hk, rk, n_p)
+        pad_rings.append(np.column_stack([uv[:, 0] + xc, uv[:, 1] + yc, np.full(n_p, zk)]))
+
+    # Smooth 9-station quarter-round top perimeter radius
+    for th in np.linspace(0.0, 0.5 * math.pi, 9):
+        zk = (z_top - r_edge) + r_edge * math.sin(th)
+        inset = r_edge * (1.0 - math.cos(th))
+        uv_k = rounded_rect_points(lx - 2.0 * inset, wy - 2.0 * inset, max(6.5 - inset, 1.5), n_p)
+        pad_rings.append(np.column_stack([uv_k[:, 0] + xc, uv_k[:, 1] + yc, np.full(n_p, zk)]))
+
+    pad = trimesh_to_manifold(loft_closed_solid(pad_rings))
+
     diameters = pad_cfg.get("port_pilot_diameters_mm") or [pad_cfg["port_pilot_diameter_mm"]] * pad_cfg["port_count"]
     assert len(diameters) == pad_cfg["port_count"]
     start_x = pad_cfg["x_center_mm"] - pad_cfg["port_spacing_x_mm"] * (pad_cfg["port_count"] - 1) * 0.5
@@ -715,7 +997,7 @@ def build_boss_pad_components(pad_cfg: dict, params: dict) -> tuple[md.Manifold,
                 np.array([px, pad_cfg["y_center_mm"], z_roof_in - 12.0]),
                 np.array([px, pad_cfg["y_center_mm"], z_top + 4.0]),
                 p_rad,
-                segments=32,
+                segments=64,
             )
         )
     return pad, bores
@@ -723,30 +1005,36 @@ def build_boss_pad_components(pad_cfg: dict, params: dict) -> tuple[md.Manifold,
 
 def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
     """
-    Build the 2-bolt Ford IACV mounting pad on top of the TB neck / Cyl 4 plenum junction:
+    Build outward-flared, overhang-free 2-bolt Ford IACV pedestal on top of the TB neck / Cyl 4 junction:
       - Downstream port (-X side): punches cleanly into the plenum chamber.
       - Upstream metered supply port (+X side): blind pocket >= 4.5 mm above the TB bore,
-        intersected by a horizontal rear-facing 1/4"-18 NPT (Ø11.1 mm) side tap.
+        intersected by a flat-faced rear 1/4"-18 NPT (Ø11.1 mm) side tap.
       - 2x M6 blind bolt pilot holes (Ø5.2 mm) along Y.
     """
     iac = params["throttle_body"]["iacv_mount"]
     pl = params["plenum"]
     tb = params["throttle_body"]
 
-    xc = iac["x_center_mm"]
-    yc = iac["y_center_mm"]
-    top_z = iac["top_z_mm"]
-    base_z = iac["base_z_mm"]
-    port_half = iac["port_spacing_x_mm"] * 0.5
+    xc = float(iac["x_center_mm"])
+    yc = float(iac["y_center_mm"])
+    top_z = float(iac["top_z_mm"])
+    port_half = float(iac["port_spacing_x_mm"]) * 0.5
     x_plenum_port = xc - port_half
     x_supply_port = xc + port_half
 
-    # Verify solid floor between isolated IAC supply pocket and TB inner bore (>= 4.5 mm)
-    cant_rad = math.radians(tb["forward_cant_deg"])
-    x_neck_start = pl["cyl4_end_x_mm"] - 4.0
-    x_neck_end = pl["cyl4_end_x_mm"] + (tb["neck_length_mm"] + 4.0) * math.cos(cant_rad)
-    t_supply = np.clip((x_supply_port - x_neck_start) / (x_neck_end - x_neck_start), 0.0, 1.0)
-    s_t = 0.5 - 0.5 * math.cos(math.pi * float(t_supply))
+    # Verify solid floor between isolated IAC supply pocket and exact Bezier TB inner bore (>= 4.5 mm)
+    p_start, c0, c1, p_neck_end, _, _, _ = tb_neck_bezier_points(params)
+    t_lo, t_hi = 0.0, 1.0
+    for _ in range(30):
+        t_mid = 0.5 * (t_lo + t_hi)
+        pt_m, _ = bezier_point_and_tangent(p_start, c0, c1, p_neck_end, t_mid)
+        if pt_m[0] < x_supply_port:
+            t_lo = t_mid
+        else:
+            t_hi = t_mid
+    t_supply = 0.5 * (t_lo + t_hi)
+    t_taper = min(t_supply / 0.86, 1.0)
+    s_t = 0.5 - 0.5 * math.cos(math.pi * t_taper)
     h_in_at_supply = pl["inner_height_z_mm"] + (tb["bore_diameter_mm"] - pl["inner_height_z_mm"]) * s_t
     tb_inner_roof_z = 0.5 * h_in_at_supply
     floor_thickness = iac["supply_pocket_bottom_z_mm"] - tb_inner_roof_z
@@ -754,18 +1042,46 @@ def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
         f"IACV supply floor {floor_thickness:.2f} mm < 4.5 mm at X={x_supply_port}"
     )
 
-    pad_outer = make_rounded_prism(
-        iac["pad_length_x_mm"],
-        iac["pad_width_y_mm"],
-        iac["pad_corner_radius_mm"],
-        top_z - base_z,
-        segments=48,
-        center=(xc, yc, 0.5 * (top_z + base_z)),
-        axis="z",
-    )
+    pad_l = float(iac["pad_length_x_mm"])
+    pad_w = float(iac["pad_width_y_mm"])
+    pad_r = float(iac["pad_corner_radius_mm"])
+    fl_nx = float(iac.get("skirt_flare_neg_x_mm", 16.0))
+    fl_px = float(iac.get("skirt_flare_pos_x_mm", 2.0))
+    base_wy = float(iac.get("base_width_y_mm", 82.0))
+    r_edge = min(float(iac.get("top_chamfer_mm", 2.2)), 2.2)
+
+    z_skirt_bot = min(float(iac["base_z_mm"]), 24.0)
+    z_collar = 47.0
+    n_p = 128
+    iac_rings: list[np.ndarray] = []
+
+    # Outward-flared base skirt (Z = 24.0 -> 47.0) smoothly seating wider base (82 mm) into upper 68 mm pad
+    for k in range(26):
+        u = k / 25.0
+        cove = (1.0 - u) ** 2.2
+        zk = z_skirt_bot + (z_collar - z_skirt_bot) * u
+        x_min_k = (xc - 0.5 * pad_l) - fl_nx * cove
+        x_max_k = (xc + 0.5 * pad_l) + fl_px * cove
+        wy_k = pad_w + (base_wy - pad_w) * cove
+        rk = pad_r + 8.0 * cove
+        uv = rounded_rect_points(x_max_k - x_min_k, wy_k, rk, n_p)
+        cx_k = 0.5 * (x_min_k + x_max_k)
+        iac_rings.append(np.column_stack([uv[:, 0] + cx_k, uv[:, 1] + yc, np.full(n_p, zk)]))
+
+    # Vertical upper collar for flat -Y 1/4-18 NPT tap + quarter-round top perimeter edge
+    for zk in (50.0, 58.0):
+        uv = rounded_rect_points(pad_l, pad_w, pad_r, n_p)
+        iac_rings.append(np.column_stack([uv[:, 0] + xc, uv[:, 1] + yc, np.full(n_p, zk)]))
+
+    for th in np.linspace(0.0, 0.5 * math.pi, 9):
+        zk = (top_z - r_edge) + r_edge * math.sin(th)
+        inset = r_edge * (1.0 - math.cos(th))
+        uv_k = rounded_rect_points(pad_l - 2.0 * inset, pad_w - 2.0 * inset, max(pad_r - inset, 2.0), n_p)
+        iac_rings.append(np.column_stack([uv_k[:, 0] + xc, uv_k[:, 1] + yc, np.full(n_p, zk)]))
+
+    pad_outer = trimesh_to_manifold(loft_closed_solid(iac_rings))
 
     cutters: list[md.Manifold] = []
-    # 2x M6 blind bolt pilot holes
     b_rad = iac["bolt_pilot_diameter_mm"] * 0.5
     b_half = iac["bolt_spacing_y_mm"] * 0.5
     b_bot = top_z - iac["bolt_depth_mm"]
@@ -775,30 +1091,27 @@ def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
                 np.array([xc, yc + sy * b_half, b_bot]),
                 np.array([xc, yc + sy * b_half, top_z + 4.0]),
                 b_rad,
-                segments=32,
+                segments=64,
             )
         )
 
     p_rad = iac["port_diameter_mm"] * 0.5
-    # Downstream IAC discharge port -> punches straight into plenum
     cutters.append(
         make_cylinder_along(
             np.array([x_plenum_port, yc, 20.0]),
             np.array([x_plenum_port, yc, top_z + 4.0]),
             p_rad,
-            segments=36,
+            segments=64,
         )
     )
-    # Upstream metered IAC supply pocket -> stops cleanly above TB neck bore
     cutters.append(
         make_cylinder_along(
             np.array([x_supply_port, yc, iac["supply_pocket_bottom_z_mm"]]),
             np.array([x_supply_port, yc, top_z + 4.0]),
             p_rad,
-            segments=36,
+            segments=64,
         )
     )
-    # Horizontal rear-facing 1/4"-18 NPT (Ø11.1 mm) side supply tap into supply pocket
     tap_rad = iac["side_supply_tap_diameter_mm"] * 0.5
     y_rear_face = yc - iac["pad_width_y_mm"] * 0.5
     cutters.append(
@@ -806,7 +1119,7 @@ def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
             np.array([x_supply_port, y_rear_face - 4.0, iac["side_supply_tap_z_mm"]]),
             np.array([x_supply_port, yc + 3.0, iac["side_supply_tap_z_mm"]]),
             tap_rad,
-            segments=36,
+            segments=64,
         )
     )
 
@@ -815,6 +1128,244 @@ def build_iacv_components(params: dict) -> dict[str, md.Manifold]:
         "cutters": m_union(cutters),
         "floor_thickness_mm": floor_thickness,
     }
+
+
+def build_sculpted_runner_tie_web(x_left: float, x_right: float, params: dict) -> md.Manifold:
+    """
+    Build a trimmed-down straight runner tie-bar between adjacent runners,
+    conformal-filleted 360 deg onto both curved cylindrical runner barrels via
+    exact 3D runner outer SDF + normal rolling-ball sweep.
+    """
+    r_cfg = params["runners"]
+    tw = r_cfg["tie_webs"]
+    sp = r_cfg["spigot"]
+    sw = r_cfg["sweep"]
+    bm = r_cfg["bellmouth"]
+    wall = float(sp["wall_thickness_mm"])
+    tip_y = float(sp["tip_y_mm"])
+    sp_z = float(sp["center_z_mm"])
+    sp_w_out = float(sp["outer_width_mm"])
+    sp_h_out = float(sp["outer_height_mm"])
+    sweep_end_y = tip_y + float(sp["land_length_mm"])
+    wall_flush = bool(bm.get("wall_flush_bellmouth", False))
+    entry_d = float(sw["plenum_entry_diameter_mm"])
+    entry_w_in = (entry_d + 0.4) if wall_flush else entry_d
+    entry_h_in = (entry_d - 4.2) if wall_flush else (entry_d - 6.0)
+    entry_wall = max(wall, 5.5)
+    entry_w_out = entry_w_in + 2.0 * entry_wall
+    entry_h_out = entry_h_in + 2.0 * entry_wall
+    up_hint = np.array([0.0, 0.0, 1.0])
+
+    def sample_runner_sdf_data(xc: float) -> tuple[dict[str, np.ndarray], np.ndarray, np.ndarray]:
+        _, _, p0, p1, p2, p3 = runner_bezier_points(xc, params)
+        centers_l: list[np.ndarray] = []
+        tans_l: list[np.ndarray] = []
+        u_l: list[np.ndarray] = []
+        v_l: list[np.ndarray] = []
+        a_l: list[float] = []
+        b_l: list[float] = []
+
+        def _push(pt: np.ndarray, tan: np.ndarray, w_o: float, h_o: float):
+            t_hat = tan / np.linalg.norm(tan)
+            u_ax = np.cross(up_hint, t_hat)
+            u_ax = u_ax / np.linalg.norm(u_ax)
+            v_ax = np.cross(t_hat, u_ax)
+            v_ax = v_ax / np.linalg.norm(v_ax)
+            centers_l.append(pt)
+            tans_l.append(t_hat)
+            u_l.append(u_ax)
+            v_l.append(v_ax)
+            a_l.append(0.5 * w_o)
+            b_l.append(0.5 * h_o)
+
+        for k in range(121):
+            t = k / 120.0
+            pt, tan = bezier_point_and_tangent(p0, p1, p2, p3, t)
+            s_t = 0.5 - 0.5 * math.cos(math.pi * t)
+            _push(
+                pt,
+                tan,
+                entry_w_out + (sp_w_out - entry_w_out) * s_t,
+                entry_h_out + (sp_h_out - entry_h_out) * s_t,
+            )
+        tan_sp = np.array([0.0, -1.0, 0.0])
+        for y_s in np.linspace(sweep_end_y, tip_y, 21)[1:]:
+            _push(np.array([xc, float(y_s), sp_z]), tan_sp, sp_w_out, sp_h_out)
+
+        arr_c = np.asarray(centers_l, dtype=np.float64)
+        order_y = np.argsort(arr_c[:, 1])
+        data = {
+            "centers": arr_c,
+            "tangents": np.asarray(tans_l, dtype=np.float64),
+            "u_axes": np.asarray(u_l, dtype=np.float64),
+            "v_axes": np.asarray(v_l, dtype=np.float64),
+            "a_out": np.asarray(a_l, dtype=np.float64),
+            "b_out": np.asarray(b_l, dtype=np.float64),
+        }
+        return data, arr_c[order_y, 1], arr_c[order_y, 2]
+
+    left_data, yl, zl = sample_runner_sdf_data(x_left)
+    right_data, yr, zr = sample_runner_sdf_data(x_right)
+
+    def runner_outer_sdf(pt: np.ndarray, rdata: dict[str, np.ndarray]) -> float:
+        centers = rdata["centers"]
+        tans = rdata["tangents"]
+        diffs = centers - pt[None, :]
+        idx = int(np.argmin(np.einsum("ij,ij->i", diffs, diffs)))
+        m_cnt = len(centers)
+        ds = float(np.dot(pt - centers[idx], tans[idx]))
+        if ds >= 0.0 and idx < m_cnt - 1:
+            idx2 = idx + 1
+            seg_len = float(np.linalg.norm(centers[idx2] - centers[idx]))
+            alpha = float(np.clip(ds / max(seg_len, 1e-6), 0.0, 1.0))
+        elif ds < 0.0 and idx > 0:
+            idx2 = idx - 1
+            seg_len = float(np.linalg.norm(centers[idx] - centers[idx2]))
+            alpha = float(np.clip(-ds / max(seg_len, 1e-6), 0.0, 1.0))
+        else:
+            idx2 = idx
+            alpha = 0.0
+
+        c_loc = (1.0 - alpha) * centers[idx] + alpha * centers[idx2]
+        u_loc = (1.0 - alpha) * rdata["u_axes"][idx] + alpha * rdata["u_axes"][idx2]
+        v_loc = (1.0 - alpha) * rdata["v_axes"][idx] + alpha * rdata["v_axes"][idx2]
+        u_loc = u_loc / np.linalg.norm(u_loc)
+        v_loc = v_loc / np.linalg.norm(v_loc)
+        a_loc = float((1.0 - alpha) * rdata["a_out"][idx] + alpha * rdata["a_out"][idx2])
+        b_loc = float((1.0 - alpha) * rdata["b_out"][idx] + alpha * rdata["b_out"][idx2])
+
+        rel = pt - c_loc
+        du = float(np.dot(rel, u_loc))
+        dv = float(np.dot(rel, v_loc))
+        q = math.hypot(du / a_loc, dv / b_loc)
+        if q < 1e-8:
+            return -min(a_loc, b_loc)
+        denom = math.hypot(du / (a_loc * a_loc), dv / (b_loc * b_loc))
+        return q * (q - 1.0) / denom
+
+    def nearest_runner_sdf_and_normal(pt: np.ndarray) -> tuple[float, np.ndarray]:
+        d0 = min(runner_outer_sdf(pt, left_data), runner_outer_sdf(pt, right_data))
+        eps = 0.15
+        gx = (min(runner_outer_sdf(pt + np.array([eps, 0.0, 0.0]), left_data), runner_outer_sdf(pt + np.array([eps, 0.0, 0.0]), right_data)) - d0) / eps
+        gy = (min(runner_outer_sdf(pt + np.array([0.0, eps, 0.0]), left_data), runner_outer_sdf(pt + np.array([0.0, eps, 0.0]), right_data)) - d0) / eps
+        gz = (min(runner_outer_sdf(pt + np.array([0.0, 0.0, eps]), left_data), runner_outer_sdf(pt + np.array([0.0, 0.0, eps]), right_data)) - d0) / eps
+        g = np.array([gx, gy, gz], dtype=np.float64)
+        n_len = float(np.linalg.norm(g))
+        if n_len < 1e-8:
+            return d0, np.array([1.0, 0.0, 0.0], dtype=np.float64)
+        return d0, g / n_len
+
+    y0 = float(tw.get("waist_y_start_mm", -108.0))
+    y1 = float(tw.get("waist_y_end_mm", -78.0))
+    hz = 0.5 * float(tw.get("waist_height_mm", 18.0))
+    r_end = min(float(tw.get("edge_radius_mm", 5.5)), hz * 0.92, 0.36 * (y1 - y0))
+    r_fil = float(tw.get("root_fillet_span_mm", 9.0))
+
+    x_start = x_left + 16.0
+    x_end = x_right - 16.0
+    y_inner0 = y0 + r_end
+    y_inner1 = y1 - r_end
+    n_edge = 28
+    n_arc = 28
+    rings: list[np.ndarray] = []
+
+    for x in np.linspace(x_start, x_end, 120):
+        frac_lr = (x - x_left) / (x_right - x_left)
+
+        def z_c(y_val: np.ndarray | float) -> np.ndarray | float:
+            zl_v = np.interp(y_val, yl, zl)
+            zr_v = np.interp(y_val, yr, zr)
+            return (1.0 - frac_lr) * zl_v + frac_lr * zr_v
+
+        pts_yz: list[list[float]] = []
+        nrms_yz: list[list[float]] = []
+
+        ys_bot = np.linspace(y_inner0, y_inner1, n_edge, endpoint=False)
+        zs_bot = z_c(ys_bot) - hz
+        dz_bot = np.gradient(zs_bot, ys_bot)
+        for yy, zz, sl in zip(ys_bot, zs_bot, dz_bot):
+            pts_yz.append([float(yy), float(zz)])
+            n_m = math.hypot(float(sl), 1.0)
+            nrms_yz.append([float(sl) / n_m, -1.0 / n_m])
+
+        z_rear_c = float(z_c(y_inner1))
+        for ang in np.linspace(-0.5 * math.pi, 0.5 * math.pi, n_arc, endpoint=False):
+            pts_yz.append([y_inner1 + r_end * math.cos(ang), z_rear_c + hz * math.sin(ang)])
+            nx_a, nz_a = math.cos(ang) / r_end, math.sin(ang) / hz
+            n_m = math.hypot(nx_a, nz_a)
+            nrms_yz.append([nx_a / n_m, nz_a / n_m])
+
+        ys_top = np.linspace(y_inner1, y_inner0, n_edge, endpoint=False)
+        zs_top = z_c(ys_top) + hz
+        dz_top = np.gradient(zs_top, ys_top)
+        for yy, zz, sl in zip(ys_top, zs_top, dz_top):
+            pts_yz.append([float(yy), float(zz)])
+            n_m = math.hypot(float(sl), 1.0)
+            nrms_yz.append([-float(sl) / n_m, 1.0 / n_m])
+
+        z_front_c = float(z_c(y_inner0))
+        for ang in np.linspace(0.5 * math.pi, 1.5 * math.pi, n_arc, endpoint=False):
+            pts_yz.append([y_inner0 + r_end * math.cos(ang), z_front_c + hz * math.sin(ang)])
+            nx_a, nz_a = math.cos(ang) / r_end, math.sin(ang) / hz
+            n_m = math.hypot(nx_a, nz_a)
+            nrms_yz.append([nx_a / n_m, nz_a / n_m])
+
+        ring = np.column_stack([np.full(len(pts_yz), float(x)), np.asarray(pts_yz, dtype=np.float64)])
+        for idx in range(len(ring)):
+            p_base = ring[idx]
+            d_run, n_run = nearest_runner_sdf_and_normal(p_base)
+            if d_run >= r_fil:
+                continue
+            n_bar = np.array([0.0, nrms_yz[idx][0], nrms_yz[idx][1]], dtype=np.float64)
+            t_surf = n_bar - float(np.dot(n_bar, n_run)) * n_run
+            ts_len = float(np.linalg.norm(t_surf))
+            t_surf = (t_surf / ts_len) if ts_len > 1e-6 else n_bar
+
+            u = float(np.clip(1.0 - max(d_run, 0.0) / r_fil, 0.0, 1.0))
+            fade_in = float(np.clip((d_run + 6.5) / 6.5, 0.0, 1.0))
+            fade_in = fade_in * fade_in * (3.0 - 2.0 * fade_in)
+            delta_t = fade_in * r_fil * (1.0 - math.sqrt(max(0.0, 1.0 - (0.88 * u) ** 2)))
+            p_tang = p_base + delta_t * t_surf
+            d_tang, n_tang = nearest_runner_sdf_and_normal(p_tang)
+            d_target = d_run - fade_in * 0.8 * (u ** 3)
+            ring[idx] = p_tang + (d_target - d_tang) * n_tang
+
+        rings.append(ring)
+
+    return trimesh_to_manifold(loft_closed_solid(rings))
+
+
+def build_sculpted_hoop_rib(x_center: float, params: dict) -> md.Manifold:
+    """Build a support-free ~45 deg beveled and crowned circumferential hoop rib."""
+    pl = params["plenum"]
+    hr = pl["hoop_ribs"]
+    wall = float(pl["wall_thickness_mm"])
+    base_half = float(hr.get("base_width_mm", 16.0)) * 0.5
+    crest_half = float(hr.get("crest_width_mm", 4.0)) * 0.5
+    rad_h = float(hr["radial_height_mm"])
+
+    stations = [
+        (-base_half, -1.5),
+        (-0.88 * base_half, 0.2),
+        (-0.62 * base_half, 0.52 * rad_h),
+        (-crest_half, 0.92 * rad_h),
+        (0.0, rad_h),
+        (crest_half, 0.92 * rad_h),
+        (0.62 * base_half, 0.52 * rad_h),
+        (0.88 * base_half, 0.2),
+        (base_half, -1.5),
+    ]
+    n_p = 72
+    rings: list[np.ndarray] = []
+    for dx, dr in stations:
+        x_loc = x_center + dx
+        s = math.sqrt(plenum_area_scale(x_loc, params))
+        w_r = pl["inner_width_y_mm"] * s + 2.0 * (wall + dr)
+        h_r = pl["inner_height_z_mm"] * s + 2.0 * (wall + dr)
+        r_r = pl["inner_corner_radius_mm"] * s + wall + dr
+        uv = rounded_rect_points(w_r, h_r, r_r, n_p)
+        rings.append(np.column_stack([np.full(n_p, x_loc), uv[:, 0], uv[:, 1]]))
+    return trimesh_to_manifold(loft_closed_solid(rings))
 
 
 def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
@@ -836,22 +1387,23 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
     bead_off = sp["retention_bead_offset_from_tip_mm"]
     total_len = g["boot_fit_gauge_length_mm"]
 
-    # Build vertically along +Z from Z=0 (base grip collar) to Z=total_len (spigot tip)
     z_tip = total_len
     z_b_start = z_tip - bead_off
-    z_b_p1 = z_b_start - 1.5
-    z_b_p2 = z_b_start - bead_w + 1.5
     z_b_end = z_b_start - bead_w
-    stations = [
+    stations: list[tuple[float, float]] = [
         (0.0, 3.0),
         (5.0, 3.0),
         (6.5, 0.0),
         (z_b_end, 0.0),
-        (z_b_p2, bead_h),
-        (z_b_p1, bead_h),
-        (z_b_start, 0.0),
-        (z_tip, 0.0),
     ]
+    for b_idx in range(1, 20):
+        frac = b_idx / 20.0
+        stations.append((z_b_end + frac * bead_w, bead_h * math.sin(math.pi * frac)))
+    stations.extend([
+        (z_b_start, 0.0),
+        (z_tip - 0.8, 0.0),
+        (z_tip, -0.8),
+    ])
     rings = []
     for z, dr in stations:
         uv = rounded_rect_points(w_out + 2.0 * dr, h_out + 2.0 * dr, r_out + dr, n_pts)
@@ -865,10 +1417,10 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
     t_g = g["tb_fit_gauge_thickness_mm"]
     tb_plate = make_rounded_prism(
         tb["flange_width_mm"], tb["flange_height_mm"], tb["flange_corner_radius_mm"], t_g,
-        segments=64, center=(0.0, 0.0, t_g * 0.5), axis="z"
+        segments=128, center=(0.0, 0.0, t_g * 0.5), axis="z"
     )
     tb_cutters = [
-        md.Manifold.cylinder(t_g + 4.0, tb["bore_diameter_mm"] * 0.5, tb["bore_diameter_mm"] * 0.5, circular_segments=72, center=True).translate([0.0, 0.0, t_g * 0.5])
+        md.Manifold.cylinder(t_g + 4.0, tb["bore_diameter_mm"] * 0.5, tb["bore_diameter_mm"] * 0.5, circular_segments=128, center=True).translate([0.0, 0.0, t_g * 0.5])
     ]
     bx = tb["bolt_spacing_x_mm"] * 0.5
     by = tb["bolt_spacing_y_mm"] * 0.5
@@ -876,7 +1428,7 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
     for sx in (-1.0, 1.0):
         for sy in (-1.0, 1.0):
             tb_cutters.append(
-                md.Manifold.cylinder(t_g + 4.0, b_rad, b_rad, circular_segments=32, center=True).translate([sx * bx, sy * by, t_g * 0.5])
+                md.Manifold.cylinder(t_g + 4.0, b_rad, b_rad, circular_segments=64, center=True).translate([sx * bx, sy * by, t_g * 0.5])
             )
     tb_gauge = m_diff(tb_plate, tb_cutters)
 
@@ -885,20 +1437,20 @@ def build_fitment_gauges(params: dict) -> dict[str, md.Manifold]:
     t_iac = g["iacv_fit_gauge_thickness_mm"]
     iac_plate = make_rounded_prism(
         iac["pad_length_x_mm"], iac["pad_width_y_mm"], iac["pad_corner_radius_mm"], t_iac,
-        segments=48, center=(0.0, 0.0, t_iac * 0.5), axis="z"
+        segments=128, center=(0.0, 0.0, t_iac * 0.5), axis="z"
     )
     iac_cutters: list[md.Manifold] = []
     for sx in (-1.0, 1.0):
         iac_cutters.append(
             md.Manifold.cylinder(
                 t_iac + 4.0, iac["port_diameter_mm"] * 0.5, iac["port_diameter_mm"] * 0.5,
-                circular_segments=36, center=True
+                circular_segments=64, center=True
             ).translate([sx * iac["port_spacing_x_mm"] * 0.5, 0.0, t_iac * 0.5])
         )
     for sy in (-1.0, 1.0):
         iac_cutters.append(
             md.Manifold.cylinder(
-                t_iac + 4.0, 3.2, 3.2, circular_segments=32, center=True
+                t_iac + 4.0, 3.2, 3.2, circular_segments=64, center=True
             ).translate([0.0, sy * iac["bolt_spacing_y_mm"] * 0.5, t_iac * 0.5])
         )
     iacv_gauge = m_diff(iac_plate, iac_cutters)
@@ -949,33 +1501,32 @@ def assemble_all(params: dict):
     for x_c in params["runners"]["center_x_mm"]:
         rc = build_single_runner_components(x_c, params)
         runner_outers.append(rc["outer"])
-        bellmouth_outers.append(rc["bellmouth_outer"])
+        if rc["bellmouth_outer"] is not None:
+            bellmouth_outers.append(rc["bellmouth_outer"])
         runner_bores.append(rc["inner_bore"])
 
     # External runner tie webs between Cyl 1-2 (X=-92) and Cyl 3-4 (X=+92)
     tw = params["runners"]["tie_webs"]
     webs: list[md.Manifold] = []
     if tw["enabled"]:
-        y_mid = 0.5 * (tw["y_start_mm"] + tw["y_end_mm"])
-        y_len = abs(tw["y_end_mm"] - tw["y_start_mm"])
-        z_mid = params["runners"]["spigot"]["center_z_mm"] + 4.0
-        for x_mid in (-92.0, 92.0):
-            # Span 54 mm across X (overlaps into both adjacent runner walls cleanly)
-            web = md.Manifold.cube([54.0, y_len, tw["height_mm"]], center=True).translate([x_mid, y_mid, z_mid])
-            webs.append(web)
+        if tw.get("sculpted", False):
+            cxs = params["runners"]["center_x_mm"]
+            webs.append(build_sculpted_runner_tie_web(float(cxs[0]), float(cxs[1]), params))
+            webs.append(build_sculpted_runner_tie_web(float(cxs[2]), float(cxs[3]), params))
+        else:
+            y_mid = 0.5 * (tw["y_start_mm"] + tw["y_end_mm"])
+            y_len = abs(tw["y_end_mm"] - tw["y_start_mm"])
+            z_mid = params["runners"]["spigot"]["center_z_mm"] + 4.0
+            for x_mid in (-92.0, 92.0):
+                web = md.Manifold.cube([54.0, y_len, tw["height_mm"]], center=True).translate([x_mid, y_mid, z_mid])
+                webs.append(web)
 
     # Plenum external hoop stiffening ribs
     ribs: list[md.Manifold] = []
     hr = params["plenum"]["hoop_ribs"]
     if hr["enabled"]:
-        pl = params["plenum"]
-        wall = pl["wall_thickness_mm"]
         for xr in hr["x_positions_mm"]:
-            s = math.sqrt(plenum_area_scale(xr, params))
-            w_rib = pl["inner_width_y_mm"] * s + 2.0 * (wall + hr["radial_height_mm"])
-            h_rib = pl["inner_height_z_mm"] * s + 2.0 * (wall + hr["radial_height_mm"])
-            r_rib = pl["inner_corner_radius_mm"] * s + wall + hr["radial_height_mm"]
-            ribs.append(make_rounded_prism(w_rib, h_rib, r_rib, hr["width_mm"], segments=64, center=(xr, 0.0, 0.0), axis="x"))
+            ribs.append(build_sculpted_hoop_rib(float(xr), params))
 
     # Vacuum & Boost NPT boss pads on top of plenum (Right = direct boost/vac, Left = check-valved vacuum-only)
     boss_solids: list[md.Manifold] = []
@@ -992,24 +1543,18 @@ def assemble_all(params: dict):
     iacv_parts = build_iacv_components(params) if params["throttle_body"]["iacv_mount"]["enabled"] else None
 
     # --- 3-Stage Watertight Boolean Assembly ---
-    # 1. Outer monolithic body (with center rib at X=0 for 1-piece stiffness)
-    s_0 = math.sqrt(plenum_area_scale(0.0, params))
-    pl_w0 = params["plenum"]["inner_width_y_mm"] * s_0 + 2.0 * (params["plenum"]["wall_thickness_mm"] + hr["radial_height_mm"])
-    pl_h0 = params["plenum"]["inner_height_z_mm"] * s_0 + 2.0 * (params["plenum"]["wall_thickness_mm"] + hr["radial_height_mm"])
-    pl_r0 = params["plenum"]["inner_corner_radius_mm"] * s_0 + params["plenum"]["wall_thickness_mm"] + hr["radial_height_mm"]
-    center_rib = make_rounded_prism(pl_w0, pl_h0, pl_r0, hr["width_mm"], segments=64, center=(0.0, 0.0, 0.0), axis="x")
-
+    # 1. Outer monolithic body (center rib only when hoop_ribs are enabled)
     wall_flush = bool(params["runners"]["bellmouth"].get("wall_flush_bellmouth", False))
-    outer_parts_1pc = [pl_outer, *runner_outers, *webs, *ribs, center_rib, *boss_solids, tb_parts["outer"]]
-    if wall_flush:
-        outer_parts_1pc.extend(bellmouth_outers)
+    outer_parts_1pc = [pl_outer, *runner_outers, *webs, *ribs, *boss_solids, tb_parts["outer"]]
+    if hr["enabled"]:
+        outer_parts_1pc.append(build_sculpted_hoop_rib(float(params["center_split"]["split_x_mm"]), params))
     if iacv_parts is not None:
         outer_parts_1pc.append(iacv_parts["outer"])
     outer_1pc = m_union(outer_parts_1pc)
     # 2. Hollow plenum & TB bore
     hollow_1pc = outer_1pc - m_union([pl_inner, tb_parts["cutters"]])
     # 3. Union internal velocity-stack bellmouths (when protruding inside plenum)
-    with_bm_1pc = hollow_1pc if wall_flush else m_union([hollow_1pc, *bellmouth_outers])
+    with_bm_1pc = hollow_1pc if (wall_flush or not bellmouth_outers) else m_union([hollow_1pc, *bellmouth_outers])
     # 4. Subtract runner bores (with bellmouth flare), vacuum pilot bores, and IACV passages
     sub_parts_1pc = [*runner_bores, *boss_bores]
     if iacv_parts is not None:
@@ -1019,13 +1564,11 @@ def assemble_all(params: dict):
     # --- 2-Piece Split Version (add center split flange at X=0, omit simple center rib) ---
     split_parts = build_center_split_flange_and_cutters(params)
     outer_parts_split = [pl_outer, *runner_outers, *webs, *ribs, *boss_solids, tb_parts["outer"]]
-    if wall_flush:
-        outer_parts_split.extend(bellmouth_outers)
     if iacv_parts is not None:
         outer_parts_split.append(iacv_parts["outer"])
     outer_split_base = m_union(outer_parts_split)
     hollow_split = outer_split_base - m_union([pl_inner, tb_parts["cutters"]])
-    split_add_parts = [split_parts["flange_ring"]] if wall_flush else [*bellmouth_outers, split_parts["flange_ring"]]
+    split_add_parts = [split_parts["flange_ring"]] if (wall_flush or not bellmouth_outers) else [*bellmouth_outers, split_parts["flange_ring"]]
     with_bm_split = m_union([hollow_split, *split_add_parts])
     sub_parts_split = [*runner_bores, *boss_bores, split_parts["hole_cutters"]]
     if iacv_parts is not None:
@@ -1043,12 +1586,9 @@ def assemble_all(params: dict):
     split_right = full_for_split ^ right_box
 
     # Print-oriented copies (flat center split flange sitting at Z=0)
-    # Left half (x <= 0): rotate +90 deg around Y -> z' = -x >= 0
     split_left_print = split_left.rotate([0.0, 90.0, 0.0])
-    # Right half (x >= 0): rotate -90 deg around Y -> z' = +x >= 0
     split_right_print = split_right.rotate([0.0, -90.0, 0.0])
 
-    # Shift print-oriented copies into positive X/Y quadrant for clean bed placement
     def center_xy_on_bed(solid: md.Manifold) -> md.Manifold:
         bb = solid.bounding_box()
         cx = 0.5 * (bb[0] + bb[3])
@@ -1079,109 +1619,134 @@ def assemble_all(params: dict):
 # Visualization & Documentation Generators
 # ---------------------------------------------------------------------------
 
+def _add_section_patches(
+    ax,
+    polys_2d: list[np.ndarray],
+    facecolor: str,
+    edgecolor: str,
+    lw: float = 0.9,
+    alpha: float = 1.0,
+    ls: str = "-",
+):
+    """Render 2D cross-section polygons with true outer/hole nesting via PathPatch."""
+    if not polys_2d:
+        return
+    sh_polys = [ShapelyPolygon(p) for p in polys_2d if len(p) >= 3]
+    depths = []
+    for i, pi in enumerate(sh_polys):
+        d = sum(1 for j, pj in enumerate(sh_polys) if i != j and pj.area > pi.area and pj.contains(pi.representative_point()))
+        depths.append(d)
+    for i, pi in enumerate(sh_polys):
+        if depths[i] % 2 != 0:
+            continue
+        rings = [np.asarray(pi.exterior.coords)]
+        for j, pj in enumerate(sh_polys):
+            if depths[j] == depths[i] + 1 and pi.contains(pj.representative_point()):
+                rings.append(np.asarray(pj.exterior.coords))
+        verts = []
+        codes = []
+        for r_idx, r in enumerate(rings):
+            area = 0.5 * np.sum(r[:-1, 0] * r[1:, 1] - r[1:, 0] * r[:-1, 1])
+            if (r_idx == 0 and area < 0) or (r_idx > 0 and area > 0):
+                r = r[::-1]
+            verts.extend(r)
+            codes.extend([MplPath.MOVETO] + [MplPath.LINETO] * (len(r) - 2) + [MplPath.CLOSEPOLY])
+        path = MplPath(np.asarray(verts), codes)
+        ax.add_patch(PathPatch(path, facecolor=facecolor, edgecolor=edgecolor, linewidth=lw, alpha=alpha, linestyle=ls))
+
+
+def _plot_mesh_panel(
+    ax,
+    mesh: trimesh.Trimesh,
+    title: str,
+    elev: float,
+    azim: float,
+    color: str = "#3a434e",
+    bounds_override: tuple[np.ndarray, np.ndarray] | None = None,
+    zoom_scale: float = 0.44,
+    lightsource: LightSource | None = None,
+    bg_color: str = "#f5f4f0",
+    hide_axes: bool = False,
+):
+    ax.set_facecolor(bg_color)
+    kwargs = {}
+    if lightsource is not None:
+        kwargs["lightsource"] = lightsource
+    ax.plot_trisurf(
+        mesh.vertices[:, 0],
+        mesh.vertices[:, 1],
+        mesh.vertices[:, 2],
+        triangles=mesh.faces,
+        color=color,
+        linewidth=0,
+        antialiased=False,
+        shade=True,
+        **kwargs,
+    )
+    if bounds_override is not None:
+        mins, maxs = bounds_override
+    else:
+        b = mesh.bounds
+        mins, maxs = b[0], b[1]
+    spans = maxs - mins
+    max_span = max(spans) * zoom_scale
+    c = 0.5 * (mins + maxs)
+    ax.set_xlim(c[0] - max_span, c[0] + max_span)
+    ax.set_ylim(c[1] - max_span, c[1] + max_span)
+    ax.set_zlim(c[2] - max_span, c[2] + max_span)
+    ax.set_box_aspect([1, 1, 1])
+    ax.view_init(elev=elev, azim=azim)
+    ax.set_title(title, fontsize=11, fontweight="bold", color="#1f242b", pad=6)
+    if hide_axes:
+        ax.set_axis_off()
+    else:
+        ax.set_xlabel("X (mm)", fontsize=8)
+        ax.set_ylabel("Y (mm)", fontsize=8)
+        ax.set_zlabel("Z (mm)", fontsize=8)
+        ax.tick_params(labelsize=7)
+
+
 def render_overview_png(meshes: dict[str, trimesh.Trimesh], solids: dict[str, md.Manifold], params: dict, out_path: Path):
     fig = plt.figure(figsize=(16, 11), facecolor="#f5f4f0")
     fig.suptitle(
-        "2004 Ford Focus SVT Turbo — 3D-Printable Upper Intake Manifold (Rough Draft)",
+        "2004 Ford Focus SVT Turbo — Stage-2 Production Intake Manifold (Sculpted Exterior)",
         fontsize=15,
         fontweight="bold",
         y=0.97,
         color="#1f242b",
     )
 
-    def add_section_patches(ax, polys_2d: list[np.ndarray], facecolor: str, edgecolor: str, lw: float = 0.9, alpha: float = 1.0):
-        """Render 2D cross-section polygons with true outer/hole nesting via PathPatch."""
-        if not polys_2d:
-            return
-        sh_polys = [ShapelyPolygon(p) for p in polys_2d if len(p) >= 3]
-        # Determine nesting depth: even depth = solid outer ring, odd depth = hole
-        depths = []
-        for i, pi in enumerate(sh_polys):
-            d = sum(1 for j, pj in enumerate(sh_polys) if i != j and pj.area > pi.area and pj.contains(pi.representative_point()))
-            depths.append(d)
-        # Pair each even-depth outer with its direct odd-depth holes (depth == d + 1)
-        for i, pi in enumerate(sh_polys):
-            if depths[i] % 2 != 0:
-                continue
-            rings = [np.asarray(pi.exterior.coords)]
-            for j, pj in enumerate(sh_polys):
-                if depths[j] == depths[i] + 1 and pi.contains(pj.representative_point()):
-                    rings.append(np.asarray(pj.exterior.coords))
-            verts = []
-            codes = []
-            for r_idx, r in enumerate(rings):
-                # Ensure outer is CCW and holes are CW for non-zero winding rule
-                area = 0.5 * np.sum(r[:-1, 0] * r[1:, 1] - r[1:, 0] * r[:-1, 1])
-                if (r_idx == 0 and area < 0) or (r_idx > 0 and area > 0):
-                    r = r[::-1]
-                verts.extend(r)
-                codes.extend([MplPath.MOVETO] + [MplPath.LINETO] * (len(r) - 2) + [MplPath.CLOSEPOLY])
-            path = MplPath(np.asarray(verts), codes)
-            ax.add_patch(PathPatch(path, facecolor=facecolor, edgecolor=edgecolor, linewidth=lw, alpha=alpha))
-
-    def plot_mesh_panel(ax, mesh: trimesh.Trimesh, title: str, elev: float, azim: float, color="#3a434e"):
-        ax.set_facecolor("#f5f4f0")
-        ax.plot_trisurf(
-            mesh.vertices[:, 0],
-            mesh.vertices[:, 1],
-            mesh.vertices[:, 2],
-            triangles=mesh.faces,
-            color=color,
-            linewidth=0,
-            antialiased=False,
-            shade=True,
-        )
-        b = mesh.bounds
-        mins, maxs = b[0], b[1]
-        spans = maxs - mins
-        max_span = max(spans) * 0.55
-        c = 0.5 * (mins + maxs)
-        ax.set_xlim(c[0] - max_span, c[0] + max_span)
-        ax.set_ylim(c[1] - max_span, c[1] + max_span)
-        ax.set_zlim(c[2] - max_span, c[2] + max_span)
-        ax.set_box_aspect([1, 1, 1])
-        ax.view_init(elev=elev, azim=azim)
-        ax.set_title(title, fontsize=11, fontweight="bold", color="#1f242b", pad=6)
-        ax.set_xlabel("X (mm)", fontsize=8)
-        ax.set_ylabel("Y (mm)", fontsize=8)
-        ax.set_zlabel("Z (mm)", fontsize=8)
-        ax.tick_params(labelsize=7)
-
-    # Panel 1: 1-piece full isometric
     ax1 = fig.add_subplot(2, 2, 1, projection="3d")
-    plot_mesh_panel(ax1, meshes["svt_intake_manifold_1piece_full"], "1-Piece Reference Assembly (IMRC Deleted)", 26, -55, "#4d5661")
+    _plot_mesh_panel(ax1, meshes["svt_intake_manifold_1piece_full"], "1-Piece Reference Assembly (IMRC Deleted)", 26, -55, "#4d5661", zoom_scale=0.44)
 
-    # Panel 2: 2-piece exploded isometric (split left & right offset by 48 mm)
     ax2 = fig.add_subplot(2, 2, 2, projection="3d")
     m_l = meshes["svt_intake_manifold_split_left_cyl1_2"].copy()
     m_r = meshes["svt_intake_manifold_split_right_cyl3_4_tb"].copy()
     m_l.apply_translation([-24.0, 0.0, 0.0])
     m_r.apply_translation([24.0, 0.0, 0.0])
-    plot_mesh_panel(ax2, trimesh.util.concatenate([m_l, m_r]), "2-Piece Split Assembly (256x256x256 Bed Fit)", 26, -55, "#36688d")
+    _plot_mesh_panel(ax2, trimesh.util.concatenate([m_l, m_r]), "2-Piece Split Assembly (256x256x256 Bed Fit)", 26, -55, "#36688d", zoom_scale=0.44)
 
-    # Panel 3: Cross-section at X = +46 mm (Cyl 3) showing plenum + velocity stack + swept runner + beaded spigot
     ax3 = fig.add_subplot(2, 2, 3)
     ax3.set_facecolor("#ffffff")
     full_solid = solids["svt_intake_manifold_1piece_full"]
     rot_x = full_solid.rotate([0.0, -90.0, 0.0])
     sec_yz = rot_x.slice(46.0)
     yz_polys = [np.column_stack([np.asarray(p)[:, 1], -np.asarray(p)[:, 0]]) for p in sec_yz.to_polygons()]
-    add_section_patches(ax3, yz_polys, facecolor="#4c5c6b", edgecolor="#1b2026", lw=0.9)
+    _add_section_patches(ax3, yz_polys, facecolor="#4c5c6b", edgecolor="#1b2026", lw=0.9)
     ax3.axhline(0, color="#999999", lw=0.6, ls="--")
     ax3.axvline(0, color="#999999", lw=0.6, ls="--")
     ax3.set_aspect("equal")
     ax3.set_xlim(-160, 75)
     ax3.set_ylim(-65, 75)
     ax3.grid(True, linestyle=":", alpha=0.5)
-    ax3.set_title("Section at Cyl 3 (X = +46 mm): Plenum, Bellmouth & Beaded Spigot", fontsize=11, fontweight="bold")
+    ax3.set_title("Section at Cyl 3 (X = +46 mm): Plenum, Bellmouth & Crowned Spigot", fontsize=11, fontweight="bold")
     ax3.set_xlabel("Y: Spigot (-Y) to Front (+Y) [mm]")
     ax3.set_ylabel("Z: Height [mm]")
 
-    # Panel 4: Top/Front overview slice + print-envelope annotations
     ax4 = fig.add_subplot(2, 2, 4)
     ax4.set_facecolor("#ffffff")
     sec_xy = [np.asarray(p) for p in full_solid.slice(-35.0).to_polygons()]
-    add_section_patches(ax4, sec_xy, facecolor="#2f5d80", edgecolor="#182a38", lw=0.9, alpha=0.88)
+    _add_section_patches(ax4, sec_xy, facecolor="#2f5d80", edgecolor="#182a38", lw=0.9, alpha=0.88)
     sec_xy0 = [np.asarray(p) for p in full_solid.slice(0.0).to_polygons()]
     for pts in sec_xy0:
         closed = np.vstack([pts, pts[0]])
@@ -1195,11 +1760,113 @@ def render_overview_png(meshes: dict[str, trimesh.Trimesh], solids: dict[str, md
     ax4.set_xlim(-210, 250)
     ax4.set_ylim(-172, 92)
     ax4.grid(True, linestyle=":", alpha=0.5)
-    ax4.set_title("Plan Layout: 92 mm Pitch Spigots (Blue) & Plenum/TB Bore (Red Dashed)", fontsize=11, fontweight="bold")
+    ax4.set_title("Plan Layout: 92 mm Pitch Spigots (Blue) & C2 Plenum/TB Bore (Red)", fontsize=11, fontweight="bold")
     ax4.set_xlabel("X: Cyl 1 (-X) to TB (+X) [mm]")
     ax4.set_ylabel("Y [mm]")
 
     plt.tight_layout(rect=[0, 0, 1, 0.94])
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out_path, dpi=180)
+    plt.close(fig)
+
+
+def render_exterior_closeup_png(meshes: dict[str, trimesh.Trimesh], solids: dict[str, md.Manifold], params: dict, out_path: Path):
+    """Render 4-panel high-resolution inspection sheet including bottom-rear viewer angle."""
+    fig = plt.figure(figsize=(16, 12), facecolor="#f5f4f0")
+    fig.suptitle(
+        "Stage-2 Production Manifold — Polished Exterior, Root Transition & Tie-Bar Inspection",
+        fontsize=15,
+        fontweight="bold",
+        y=0.97,
+        color="#1f242b",
+    )
+    gs = fig.add_gridspec(2, 2, hspace=0.28, wspace=0.22, left=0.06, right=0.97, top=0.91, bottom=0.06)
+
+    full_mesh = meshes["svt_intake_manifold_1piece_full"]
+    full_solid = solids["svt_intake_manifold_1piece_full"]
+    right_mesh = meshes["svt_intake_manifold_split_right_cyl3_4_tb"]
+
+    # Panel 1: Exact bottom-rear camera angle matching user's 3D viewer screenshot
+    ax1 = fig.add_subplot(gs[0, 0], projection="3d")
+    ls = LightSource(azdeg=210, altdeg=48)
+    _plot_mesh_panel(
+        ax1,
+        full_mesh,
+        "Bottom-Rear View: Smooth Plenum, Eyebrow-Free Roots & Straight Tie-Bars",
+        elev=-18,
+        azim=-90,
+        color="#3c4046",
+        bounds_override=(np.array([-195.0, -148.0, -65.0]), np.array([225.0, 62.0, 68.0])),
+        zoom_scale=0.28,
+        lightsource=ls,
+        hide_axes=True,
+    )
+
+    # Panel 2: Right half close-up showing outward-flared IACV pedestal, lofted TB bell & spot-faces
+    ax2 = fig.add_subplot(gs[0, 1], projection="3d")
+    _plot_mesh_panel(
+        ax2,
+        right_mesh,
+        "Right Half: Outward-Flared IACV Pedestal, Lofted TB Bell & Spot-Faced Pockets",
+        elev=26,
+        azim=-48,
+        color="#46586b",
+        bounds_override=(np.array([25.0, -110.0, -65.0]), np.array([235.0, 75.0, 75.0])),
+        zoom_scale=0.47,
+        lightsource=ls,
+    )
+
+    # Panel 3: Overlaid Y-Z cross-sections at Cyl 3 (X=+46) and Cyl 1 (X=-138)
+    ax3 = fig.add_subplot(gs[1, 0])
+    ax3.set_facecolor("#ffffff")
+    rot_x = full_solid.rotate([0.0, -90.0, 0.0])
+    sec3 = rot_x.slice(46.0)
+    polys3 = [np.column_stack([np.asarray(p)[:, 1], -np.asarray(p)[:, 0]]) for p in sec3.to_polygons()]
+    _add_section_patches(ax3, polys3, facecolor="#4c5c6b", edgecolor="#161b22", lw=1.0, alpha=0.88)
+
+    sec1 = rot_x.slice(-138.0)
+    polys1 = [np.column_stack([np.asarray(p)[:, 1], -np.asarray(p)[:, 0]]) for p in sec1.to_polygons()]
+    for p1 in polys1:
+        closed = np.vstack([p1, p1[0]])
+        ax3.plot(closed[:, 0], closed[:, 1], color="#d95f02", lw=1.35, ls="--", label="Cyl 1 (X=-138)" if p1 is polys1[0] else None)
+
+    ax3.axhline(0, color="#999999", lw=0.6, ls=":")
+    ax3.axvline(0, color="#999999", lw=0.6, ls=":")
+    ax3.set_aspect("equal")
+    ax3.set_xlim(-152, 62)
+    ax3.set_ylim(-64, 68)
+    ax3.grid(True, linestyle=":", alpha=0.5)
+    ax3.legend(loc="upper right", fontsize=8.5)
+    ax3.set_title("Tooth-Free Bellmouth & Low-Profile Boss Sections: Cyl 3 (Solid) vs Cyl 1 (Dashed)", fontsize=10.5, fontweight="bold")
+    ax3.set_xlabel("Y: Spigot (-Y) to Front (+Y) [mm]")
+    ax3.set_ylabel("Z [mm]")
+
+    # Panel 4: Two stacked sections showing trimmed straight tie-bars in X-Y (Z=-22) and X-Z (Y=-92)
+    sub = gs[1, 1].subgridspec(2, 1, hspace=0.38)
+    ax4a = fig.add_subplot(sub[0, 0])
+    ax4a.set_facecolor("#ffffff")
+    sec_xy_web = [np.asarray(p) for p in full_solid.slice(-22.0).to_polygons()]
+    _add_section_patches(ax4a, sec_xy_web, facecolor="#2f5d80", edgecolor="#162836", lw=0.9)
+    ax4a.set_aspect("equal")
+    ax4a.set_xlim(-195, 230)
+    ax4a.set_ylim(-145, 50)
+    ax4a.grid(True, linestyle=":", alpha=0.5)
+    ax4a.set_title("X-Y Slice at Z = -22 mm: Trimmed Straight Tie-Bars & Uninterrupted Barrel", fontsize=10, fontweight="bold")
+    ax4a.set_ylabel("Y [mm]")
+
+    ax4b = fig.add_subplot(sub[1, 0])
+    ax4b.set_facecolor("#ffffff")
+    rot_y = full_solid.rotate([90.0, 0.0, 0.0])
+    sec_xz_web = [np.column_stack([np.asarray(p)[:, 0], -np.asarray(p)[:, 1]]) for p in rot_y.slice(-92.0).to_polygons()]
+    _add_section_patches(ax4b, sec_xz_web, facecolor="#1f7a68", edgecolor="#0f3d34", lw=0.9)
+    ax4b.set_aspect("equal")
+    ax4b.set_xlim(-175, 175)
+    ax4b.set_ylim(-55, 10)
+    ax4b.grid(True, linestyle=":", alpha=0.5)
+    ax4b.set_title("X-Z Slice at Y = -92 mm: Straight Tie-Bar Bridging Runners w/ Root Fillets", fontsize=10, fontweight="bold")
+    ax4b.set_xlabel("X [mm]")
+    ax4b.set_ylabel("Z [mm]")
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=180)
     plt.close(fig)
@@ -1327,8 +1994,60 @@ def main():
     }
     (STL_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
+    # Programmatic section sanity checks across all 4 cylinders:
+    # Cutting straight down each open runner centerline must yield 1 continuous C-section polygon.
+    rot_x = solids["svt_intake_manifold_1piece_full"].rotate([0.0, -90.0, 0.0])
+    for xc_check in params["runners"]["center_x_mm"]:
+        polys_chk = [ShapelyPolygon(p) for p in rot_x.slice(xc_check).to_polygons() if len(p) >= 3]
+        assert len(polys_chk) == 1 and polys_chk[0].area > 1500.0 and polys_chk[0].is_valid, (
+            f"Section at X={xc_check} has {len(polys_chk)} polygons (areas={[round(pg.area, 1) for pg in polys_chk]})"
+        )
+    for half_name in ("svt_intake_manifold_split_left_print_oriented", "svt_intake_manifold_split_right_print_oriented"):
+        assert manifest_parts[half_name]["fits_centauri_carbon_2_256"], f"{half_name} exceeds CC2 256 mm cube!"
+
+    # Programmatic bolt/washer & socket clearance audit (Ø12.4 mm wrench envelope)
+    cs = params["center_split"]
+    pl = params["plenum"]
+    x_sp = float(cs["split_x_mm"])
+    t_half = float(cs["flange_thickness_per_side_mm"])
+    s_sp = math.sqrt(plenum_area_scale(x_sp, params))
+    w_in_sp = pl["inner_width_y_mm"] * s_sp
+    h_in_sp = pl["inner_height_z_mm"] * s_sp
+    r_in_sp = pl["inner_corner_radius_mm"] * s_sp
+    pts_sp = rounded_rect_points(w_in_sp, h_in_sp, r_in_sp, 720)
+    angs_sp = np.degrees(np.arctan2(pts_sp[:, 1], pts_sp[:, 0])) % 360.0
+    sp_l = solids["svt_intake_manifold_split_left_cyl1_2"]
+    sp_r = solids["svt_intake_manifold_split_right_cyl3_4_tb"]
+    for ang in cs["bolt_angles_deg"]:
+        diffs = np.abs(((angs_sp - (ang % 360.0) + 180.0) % 360.0) - 180.0)
+        idx = int(np.argmin(diffs))
+        tang = pts_sp[(idx + 1) % 720] - pts_sp[(idx - 1) % 720]
+        nrm = np.array([tang[1], -tang[0]])
+        nrm /= np.linalg.norm(nrm)
+        by, bz = pts_sp[idx] + nrm * (pl["wall_thickness_mm"] + cs["bolt_radial_offset_mm"])
+        cyl_l = make_cylinder_along(np.array([x_sp - t_half - 18.0, by, bz]), np.array([x_sp - t_half - 0.3, by, bz]), 6.2, segments=24)
+        cyl_r = make_cylinder_along(np.array([x_sp + t_half + 0.3, by, bz]), np.array([x_sp + t_half + 18.0, by, bz]), 6.2, segments=24)
+        assert (sp_l ^ cyl_l).volume() < 0.1 and (sp_r ^ cyl_r).volume() < 0.1, (
+            f"Split bolt {ang} deg socket/washer interference!"
+        )
+    _, _, _, _, p_fb, _, tb_axis = tb_neck_bezier_points(params)
+    up_chk = np.array([0.0, 0.0, 1.0])
+    u_chk = np.cross(up_chk, tb_axis)
+    u_chk /= np.linalg.norm(u_chk)
+    v_chk = np.cross(tb_axis, u_chk)
+    v_chk /= np.linalg.norm(v_chk)
+    bx_tb = params["throttle_body"]["bolt_spacing_x_mm"] * 0.5
+    by_tb = params["throttle_body"]["bolt_spacing_y_mm"] * 0.5
+    for sx in (-1.0, 1.0):
+        for sy in (-1.0, 1.0):
+            pc = p_fb + u_chk * (sx * bx_tb) + v_chk * (sy * by_tb)
+            cyl_tb = make_cylinder_along(pc - tb_axis * 10.5, pc - tb_axis * 0.3, 6.2, segments=24)
+            iv_tb = float((sp_r ^ cyl_tb).volume())
+            assert iv_tb < 0.1, f"TB bolt ({sx:+.0f},{sy:+.0f}) nut/washer interference: {iv_tb:.2f} mm3"
+
     render_overview_png(meshes, solids, params, FITMENT_DIR / "01_intake_manifold_overview.png")
     render_1to1_svg(solids, params, FITMENT_DIR / "02_interfaces_1to1_template.svg")
+    render_exterior_closeup_png(meshes, solids, params, FITMENT_DIR / "05_exterior_transitions_closeup.png")
 
     print(f"Generated {len(meshes)} watertight STLs. Plenum volume: {plenum_liters:.3f} L")
     for pname, info in manifest_parts.items():

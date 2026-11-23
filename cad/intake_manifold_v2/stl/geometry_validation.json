@@ -1,0 +1,217 @@
+{
+  "revision": "Stage-2 V2 Flat-Face IACV + Optimized WOT Plenum & High-Flow 12.4 mm IACV Feed",
+  "rear_sockets": [
+    {
+      "bolt_uv_signs": [
+        -1,
+        -1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.0
+    },
+    {
+      "bolt_uv_signs": [
+        -1,
+        1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.0
+    },
+    {
+      "bolt_uv_signs": [
+        1,
+        -1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.0
+    },
+    {
+      "bolt_uv_signs": [
+        1,
+        1
+      ],
+      "interference_mm3": 0.0,
+      "rear_washer_annulus_support_fraction": 1.0
+    }
+  ],
+  "flat_face_sections": {
+    "0.1": {
+      "seal_centerline_to_edge_mm": 1.5965,
+      "openings": 6
+    },
+    "0.25": {
+      "seal_centerline_to_edge_mm": 1.5965,
+      "openings": 6
+    },
+    "1.1": {
+      "seal_centerline_to_edge_mm": 1.5964,
+      "openings": 6
+    },
+    "2.2": {
+      "seal_centerline_to_edge_mm": 1.4644,
+      "openings": 6
+    }
+  },
+  "seal_land_support": {
+    "max_local_radial_inset_mm": 0.6726293144179074,
+    "face_opening_area_reduction_mm2": 8.802865383778226,
+    "requested_photo_seal_land_mm": 1.6
+  },
+  "flange_back_blend": {
+    "removed_exterior_mm3": 2.67766352320839e-08,
+    "minimum_bore_wall_at_trim_mm": null,
+    "measured_depth_behind_face_mm": [
+      9.5,
+      22.0
+    ]
+  },
+  "iacv_route_clearances": {
+    "connected_duct_components": 1,
+    "centerline_length_mm": 83.24,
+    "min_bend_radius_mm": 20.4,
+    "duct_diameter_mm": 12.4,
+    "supply_pocket_intersection_mm3": 607.79,
+    "main_air_to_feed_mm": 4.881,
+    "bracket_pilots_to_feed_mm": null,
+    "iacv_bolts_and_outlet_to_feed_mm": 5.41,
+    "added_rib_to_cable_post_tops_mm": null,
+    "flange_holes_to_feed_mm": 9.025,
+    "socket_clearance_to_feed_mm": 6.278,
+    "iacv_mounting_face_to_duct_mm": 4.8,
+    "outside_covered_duct_mm3": 0.0,
+    "solid_in_capped_iacv_feed_mm3": 0.0
+  },
+  "iacv_duct_loss_screens": [
+    {
+      "airflow_lbmin": 0.587,
+      "airflow_gs": 4.44,
+      "k_minor": 2,
+      "reynolds": 23488.0,
+      "dp_kpa": 1.409
+    },
+    {
+      "airflow_lbmin": 0.587,
+      "airflow_gs": 4.44,
+      "k_minor": 5,
+      "reynolds": 23488.0,
+      "dp_kpa": 3.289
+    },
+    {
+      "airflow_lbmin": 0.587,
+      "airflow_gs": 4.44,
+      "k_minor": 10,
+      "reynolds": 23488.0,
+      "dp_kpa": 6.505
+    },
+    {
+      "airflow_lbmin": 0.85,
+      "airflow_gs": 6.43,
+      "k_minor": 2,
+      "reynolds": 34011.0,
+      "dp_kpa": 2.972
+    },
+    {
+      "airflow_lbmin": 0.85,
+      "airflow_gs": 6.43,
+      "k_minor": 5,
+      "reynolds": 34011.0,
+      "dp_kpa": 7.022
+    },
+    {
+      "airflow_lbmin": 0.85,
+      "airflow_gs": 6.43,
+      "k_minor": 10,
+      "reynolds": 34011.0,
+      "dp_kpa": 14.19
+    },
+    {
+      "airflow_lbmin": 1.39,
+      "airflow_gs": 10.51,
+      "k_minor": 2,
+      "reynolds": 55618.0,
+      "dp_kpa": 8.147
+    },
+    {
+      "airflow_lbmin": 1.39,
+      "airflow_gs": 10.51,
+      "k_minor": 5,
+      "reynolds": 55618.0,
+      "dp_kpa": 20.111
+    },
+    {
+      "airflow_lbmin": 1.39,
+      "airflow_gs": 10.51,
+      "k_minor": 10,
+      "reynolds": 55618.0,
+      "dp_kpa": 45.486
+    }
+  ],
+  "runner_root_wall_audit": [
+    {
+      "cylinder": 1,
+      "x_mm": -138.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 2,
+      "x_mm": -46.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 3,
+      "x_mm": 46.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 4,
+      "x_mm": 138.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 3.237,
+      "min_all_ray_loc": {
+        "station": "16 mm after lip",
+        "angle_deg": 185.37
+      }
+    }
+  ],
+  "iacv_floor_468ray_audit": {
+    "samples": 468,
+    "centerline_wall_mm": 6.386,
+    "min_wall_mm": 6.309,
+    "min_location_mm": [
+      167.75,
+      4.25
+    ]
+  },
+  "cable_bracket_boss_audit": null
+}

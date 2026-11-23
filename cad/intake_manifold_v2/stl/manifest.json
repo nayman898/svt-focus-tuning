@@ -1,0 +1,345 @@
+{
+  "vehicle": "2004 Ford Focus SVT (2.0L Zetec-E Turbo)",
+  "revision": "Stage-2 V2 Flat-Face IACV + Optimized WOT Plenum & High-Flow 12.4 mm IACV Feed",
+  "plenum_internal_volume_liters": 1.859,
+  "runner_pitch_mm": 92.0,
+  "spigot_outer_mm": [
+    50.8,
+    50.8
+  ],
+  "spigot_inner_mm": [
+    42.8,
+    42.8
+  ],
+  "throttle_body_bore_mm": 65.0,
+  "runner_root_wall_audit": [
+    {
+      "cylinder": 1,
+      "x_mm": -138.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 2,
+      "x_mm": -46.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 3,
+      "x_mm": 46.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 7.165,
+      "min_all_ray_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      }
+    },
+    {
+      "cylinder": 4,
+      "x_mm": 138.0,
+      "min_pressure_wall_mm": 7.165,
+      "min_pressure_loc": {
+        "station": "Bezier t=0.2",
+        "angle_deg": 275.37
+      },
+      "min_all_ray_span_mm": 3.237,
+      "min_all_ray_loc": {
+        "station": "16 mm after lip",
+        "angle_deg": 185.37
+      }
+    }
+  ],
+  "iacv_floor_468ray_audit": {
+    "samples": 468,
+    "centerline_wall_mm": 6.386,
+    "min_wall_mm": 6.309,
+    "min_location_mm": [
+      167.75,
+      4.25
+    ]
+  },
+  "cable_bracket_boss_audit": null,
+  "parts": {
+    "svt_intake_manifold_v2_1piece_full": {
+      "file": "stl/svt_intake_manifold_v2_1piece_full.stl",
+      "sha256": "4ef9caf5081dfda86db4c7de618c799d7dc717a822dba52033140ff1bb2352f9",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 698136,
+      "extents_mm": [
+        449.71,
+        200.5,
+        143.0
+      ],
+      "bounds_min_mm": [
+        -195.98,
+        -146.0,
+        -48.5
+      ],
+      "bounds_max_mm": [
+        253.73,
+        54.5,
+        94.5
+      ],
+      "solid_volume_cm3": 1397.71,
+      "fits_centauri_carbon_2_256": false,
+      "fits_ender_3_s1_pro_220": false
+    },
+    "svt_intake_manifold_v2_split_left_cyl1_2": {
+      "file": "stl/svt_intake_manifold_v2_split_left_cyl1_2.stl",
+      "sha256": "51e1d5035e0206df7e985ad91e13a072d587878e416fe36949e668d39b034f79",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 303338,
+      "extents_mm": [
+        195.98,
+        216.75,
+        159.59
+      ],
+      "bounds_min_mm": [
+        -195.98,
+        -146.0,
+        -65.09
+      ],
+      "bounds_max_mm": [
+        0.0,
+        70.75,
+        94.5
+      ],
+      "solid_volume_cm3": 615.71,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_intake_manifold_v2_split_right_cyl3_4_tb": {
+      "file": "stl/svt_intake_manifold_v2_split_right_cyl3_4_tb.stl",
+      "sha256": "b91c0822c0682589cb7952bb8baf7ccf3cb8ccbefd95b58af678fe4e86f082d1",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 410160,
+      "extents_mm": [
+        253.73,
+        216.75,
+        159.59
+      ],
+      "bounds_min_mm": [
+        0.0,
+        -146.0,
+        -65.09
+      ],
+      "bounds_max_mm": [
+        253.73,
+        70.75,
+        94.5
+      ],
+      "solid_volume_cm3": 995.86,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": false
+    },
+    "svt_intake_manifold_v2_split_left_print_oriented": {
+      "file": "stl/svt_intake_manifold_v2_split_left_print_oriented.stl",
+      "sha256": "eed84527c284a378e08278c91f62780601e1f833e9dda7978aa1079d0121da4e",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 303338,
+      "extents_mm": [
+        159.59,
+        216.75,
+        195.98
+      ],
+      "bounds_min_mm": [
+        -79.8,
+        -108.37,
+        0.0
+      ],
+      "bounds_max_mm": [
+        79.8,
+        108.37,
+        195.98
+      ],
+      "solid_volume_cm3": 615.71,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_intake_manifold_v2_split_right_print_oriented": {
+      "file": "stl/svt_intake_manifold_v2_split_right_print_oriented.stl",
+      "sha256": "d3a75b7fa95861bc1f3c60dca466952422bf0ec430043bc029f61039672b416e",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 410160,
+      "extents_mm": [
+        159.59,
+        216.75,
+        253.73
+      ],
+      "bounds_min_mm": [
+        -79.8,
+        -108.37,
+        0.0
+      ],
+      "bounds_max_mm": [
+        79.8,
+        108.37,
+        253.73
+      ],
+      "solid_volume_cm3": 995.86,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_v2_runner_boot_fit_gauge": {
+      "file": "stl/svt_v2_runner_boot_fit_gauge.stl",
+      "sha256": "03de7a5dffedc48423538c88c4459834cd6ef50d95ed641d470e6e120626bccb",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 8960,
+      "extents_mm": [
+        56.8,
+        56.8,
+        44.0
+      ],
+      "bounds_min_mm": [
+        -28.4,
+        -28.4,
+        0.0
+      ],
+      "bounds_max_mm": [
+        28.4,
+        28.4,
+        44.0
+      ],
+      "solid_volume_cm3": 29.29,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_v2_tb_flange_fit_gauge": {
+      "file": "stl/svt_v2_tb_flange_fit_gauge.stl",
+      "sha256": "77575afd7d99397826d811637e8b73b7a18caa608b530071ac4c1d9182e3d85b",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 2064,
+      "extents_mm": [
+        96.0,
+        100.0,
+        4.0
+      ],
+      "bounds_min_mm": [
+        -48.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_mm": [
+        48.0,
+        50.0,
+        4.0
+      ],
+      "solid_volume_cm3": 24.3,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_v2_iacv_flange_fit_gauge": {
+      "file": "stl/svt_v2_iacv_flange_fit_gauge.stl",
+      "sha256": "44e4e0308447455082e2c1f30fe299779bd6d87ebcc7a9368367baa38c0006c4",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 1548,
+      "extents_mm": [
+        48.0,
+        68.0,
+        4.0
+      ],
+      "bounds_min_mm": [
+        -24.0,
+        -34.0,
+        0.0
+      ],
+      "bounds_max_mm": [
+        24.0,
+        34.0,
+        4.0
+      ],
+      "solid_volume_cm3": 11.52,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_v2_alignment_dowel_pins": {
+      "file": "stl/svt_v2_alignment_dowel_pins.stl",
+      "sha256": "a4a8f630ca7b485d372258a1d55c06290d2f6c482d16f56636d129bf294b8562",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 1764,
+      "extents_mm": [
+        20.0,
+        41.8,
+        5.5
+      ],
+      "bounds_min_mm": [
+        -10.0,
+        -20.92,
+        0.0
+      ],
+      "bounds_max_mm": [
+        10.0,
+        20.87,
+        5.5
+      ],
+      "solid_volume_cm3": 2.05,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    },
+    "svt_v2_flat_face_iacv_fit_coupon": {
+      "file": "stl/svt_v2_flat_face_iacv_fit_coupon.stl",
+      "sha256": "6c49c4062e072aed820af265543629cee380540d577a8e529c8316d24e25b24b",
+      "is_watertight": true,
+      "is_volume": true,
+      "body_count": 1,
+      "triangle_count": 23940,
+      "extents_mm": [
+        96.0,
+        100.0,
+        4.0
+      ],
+      "bounds_min_mm": [
+        -48.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_mm": [
+        48.0,
+        50.0,
+        4.0
+      ],
+      "solid_volume_cm3": 23.31,
+      "fits_centauri_carbon_2_256": true,
+      "fits_ender_3_s1_pro_220": true
+    }
+  }
+}

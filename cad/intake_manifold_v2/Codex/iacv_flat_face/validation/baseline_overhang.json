@@ -1,0 +1,27 @@
+{
+  "neck_roi_mm": [
+    [
+      132,
+      -94,
+      -15
+    ],
+    [
+      254,
+      45,
+      97
+    ]
+  ],
+  "build_axis_in_assembly_coordinates": [
+    1,
+    0,
+    0
+  ],
+  "neck_total_surface_area_mm2": 72480.53,
+  "neck_downward_face_area_by_angle_from_vertical_mm2": {
+    "45": 10825.2,
+    "55": 7687.04,
+    "65": 3197.15,
+    "80": 1477.78
+  },
+  "contains_interior_and_exterior_surfaces": true
+}

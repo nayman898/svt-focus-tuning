@@ -1,0 +1,352 @@
+{
+  "baseline": {
+    "bolt_centers_world_xyz_mm": [
+      [
+        191.71571387195615,
+        -14.806936160972343,
+        69.0
+      ],
+      [
+        172.8859286349773,
+        -35.52985072261771,
+        69.0
+      ]
+    ],
+    "pilot_depth_mm": 10.0,
+    "intersection_with_iacv_pad_mm3": 0.0,
+    "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+    "closest_to_iacv_pad_mm": 1.4813728618679933,
+    "upper_posts_to_iacv_pad_mm": 1.965789794921875,
+    "posts_to_extruded_iacv_mounting_footprint_mm": 4.054537424956746,
+    "closest_to_throttle_flange_mm": 1.853836301136321,
+    "post_foot_overlap_with_neck_mm3": [
+      1142.476152619547,
+      1316.1042555436063
+    ],
+    "cable_pilot_min_gap_to_air_mm": 5.1432677339013395,
+    "iacv_supply_min_gap_to_air_mm": 5.071837247773994,
+    "socket_pocket_min_gap_to_air_mm": 4.609111183785319,
+    "throttle_face_world_xyz_mm": [
+      216.8742893205249,
+      -34.17014076828159,
+      28.903062747196014
+    ]
+  },
+  "candidates": [
+    {
+      "neck_extension_mm": 6,
+      "bracket_setback_relative_to_throttle_mm": 0,
+      "bolt_centers_world_xyz_mm": [
+        [
+          196.6528585322186,
+          -17.89200654511314,
+          70.451531373598
+        ],
+        [
+          177.82307329523974,
+          -38.61492110675851,
+          70.451531373598
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 5.48142719357774,
+      "upper_posts_to_iacv_pad_mm": 6.9796346181968145,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 7.861577622082864,
+      "closest_to_throttle_flange_mm": 1.8538314411170707,
+      "post_foot_overlap_with_neck_mm3": [
+        1131.4633752506254,
+        1157.2805452948896
+      ],
+      "cable_pilot_min_gap_to_air_mm": 4.987131447690868,
+      "iacv_supply_min_gap_to_air_mm": 5.19934117537338,
+      "socket_pocket_min_gap_to_air_mm": 5.025964099649011,
+      "throttle_face_world_xyz_mm": [
+        221.81143398078734,
+        -37.25521115242239,
+        30.35459412079402
+      ]
+    },
+    {
+      "neck_extension_mm": 6,
+      "bracket_setback_relative_to_throttle_mm": 1.5,
+      "bolt_centers_world_xyz_mm": [
+        [
+          195.418572367153,
+          -17.12073894907794,
+          70.0886485301985
+        ],
+        [
+          176.58878713017413,
+          -37.84365351072331,
+          70.0886485301985
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 4.3713683780059265,
+      "upper_posts_to_iacv_pad_mm": 5.707234646923496,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 6.82146606192031,
+      "closest_to_throttle_flange_mm": 3.3538292719904814,
+      "post_foot_overlap_with_neck_mm3": [
+        1089.082958253106,
+        1209.7961858244246
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.2202782854521805,
+      "iacv_supply_min_gap_to_air_mm": 5.19934117537338,
+      "socket_pocket_min_gap_to_air_mm": 5.025964099649011,
+      "throttle_face_world_xyz_mm": [
+        221.81143398078734,
+        -37.25521115242239,
+        30.35459412079402
+      ]
+    },
+    {
+      "neck_extension_mm": 6,
+      "bracket_setback_relative_to_throttle_mm": 3,
+      "bolt_centers_world_xyz_mm": [
+        [
+          194.18428620208738,
+          -16.349471353042738,
+          69.72576568679901
+        ],
+        [
+          175.3545009651085,
+          -37.072385914688105,
+          69.72576568679901
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 3.323408857238106,
+      "upper_posts_to_iacv_pad_mm": 4.441718505342773,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 5.845823677085352,
+      "closest_to_throttle_flange_mm": 4.853840639389532,
+      "post_foot_overlap_with_neck_mm3": [
+        1061.6896158909872,
+        1234.4977091290139
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.458501646425662,
+      "iacv_supply_min_gap_to_air_mm": 5.19934117537338,
+      "socket_pocket_min_gap_to_air_mm": 5.025964099649011,
+      "throttle_face_world_xyz_mm": [
+        221.81143398078734,
+        -37.25521115242239,
+        30.35459412079402
+      ]
+    },
+    {
+      "neck_extension_mm": 8,
+      "bracket_setback_relative_to_throttle_mm": 0,
+      "bolt_centers_world_xyz_mm": [
+        [
+          198.29857341897275,
+          -18.920363339826736,
+          70.93537516479734
+        ],
+        [
+          179.4687881819939,
+          -39.6432779014721,
+          70.93537516479734
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 6.9597243514280605,
+      "upper_posts_to_iacv_pad_mm": 8.712645409424448,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 9.295745515939037,
+      "closest_to_throttle_flange_mm": 1.8538402992538972,
+      "post_foot_overlap_with_neck_mm3": [
+        1127.8097486547433,
+        1121.2132757356771
+      ],
+      "cable_pilot_min_gap_to_air_mm": 4.942058507372244,
+      "iacv_supply_min_gap_to_air_mm": 5.235454892576845,
+      "socket_pocket_min_gap_to_air_mm": 5.150916783842755,
+      "throttle_face_world_xyz_mm": [
+        223.4571488675415,
+        -38.283567947135985,
+        30.838437911993356
+      ]
+    },
+    {
+      "neck_extension_mm": 8,
+      "bracket_setback_relative_to_throttle_mm": 1.5,
+      "bolt_centers_world_xyz_mm": [
+        [
+          197.06428725390714,
+          -18.14909574379154,
+          70.57249232139785
+        ],
+        [
+          178.23450201692827,
+          -38.8720103054369,
+          70.57249232139785
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 5.813829111985559,
+      "upper_posts_to_iacv_pad_mm": 7.410021317603543,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 8.211009234937556,
+      "closest_to_throttle_flange_mm": 3.3538381301274676,
+      "post_foot_overlap_with_neck_mm3": [
+        1086.5082021531969,
+        1167.608280176994
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.1679763783408,
+      "iacv_supply_min_gap_to_air_mm": 5.235454892576845,
+      "socket_pocket_min_gap_to_air_mm": 5.150916783842755,
+      "throttle_face_world_xyz_mm": [
+        223.4571488675415,
+        -38.283567947135985,
+        30.838437911993356
+      ]
+    },
+    {
+      "neck_extension_mm": 8,
+      "bracket_setback_relative_to_throttle_mm": 3,
+      "bolt_centers_world_xyz_mm": [
+        [
+          195.83000108884153,
+          -17.37782814775634,
+          70.20960947799834
+        ],
+        [
+          177.00021585186266,
+          -38.10074270940171,
+          70.20960947799834
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 4.703836608587231,
+      "upper_posts_to_iacv_pad_mm": 6.130783597804295,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 7.165554278986368,
+      "closest_to_throttle_flange_mm": 4.853836941718582,
+      "post_foot_overlap_with_neck_mm3": [
+        1059.7642593273338,
+        1206.58216583008
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.400152381509518,
+      "iacv_supply_min_gap_to_air_mm": 5.235454892576845,
+      "socket_pocket_min_gap_to_air_mm": 5.150916783842755,
+      "throttle_face_world_xyz_mm": [
+        223.4571488675415,
+        -38.283567947135985,
+        30.838437911993356
+      ]
+    },
+    {
+      "neck_extension_mm": 9,
+      "bracket_setback_relative_to_throttle_mm": 0,
+      "bolt_centers_world_xyz_mm": [
+        [
+          199.12143086235017,
+          -19.434541737183856,
+          71.17729706039701
+        ],
+        [
+          180.29164562537062,
+          -40.157456298828585,
+          71.17729706039701
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 7.730778849115969,
+      "upper_posts_to_iacv_pad_mm": 9.595347198300832,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 10.04869644675663,
+      "closest_to_throttle_flange_mm": 1.8538366443704442,
+      "post_foot_overlap_with_neck_mm3": [
+        1126.0319289736206,
+        1107.9725212985907
+      ],
+      "cable_pilot_min_gap_to_air_mm": 4.920667662030534,
+      "iacv_supply_min_gap_to_air_mm": 5.252694112078306,
+      "socket_pocket_min_gap_to_air_mm": 5.209341847534224,
+      "throttle_face_world_xyz_mm": [
+        224.28000631091857,
+        -38.797746344492786,
+        31.080359807593023
+      ]
+    },
+    {
+      "neck_extension_mm": 9,
+      "bracket_setback_relative_to_throttle_mm": 1.5,
+      "bolt_centers_world_xyz_mm": [
+        [
+          197.88714469728455,
+          -18.663274141148655,
+          70.8144142169975
+        ],
+        [
+          179.057359460305,
+          -39.38618870279338,
+          70.8144142169975
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 6.5550584160991265,
+      "upper_posts_to_iacv_pad_mm": 8.273929664719676,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 8.929391974059063,
+      "closest_to_throttle_flange_mm": 3.353835455961325,
+      "post_foot_overlap_with_neck_mm3": [
+        1085.3837189815956,
+        1149.7982820990194
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.1428755628143135,
+      "iacv_supply_min_gap_to_air_mm": 5.252694112078306,
+      "socket_pocket_min_gap_to_air_mm": 5.209341847534224,
+      "throttle_face_world_xyz_mm": [
+        224.28000631091857,
+        -38.797746344492786,
+        31.080359807593023
+      ]
+    },
+    {
+      "neck_extension_mm": 9,
+      "bracket_setback_relative_to_throttle_mm": 3,
+      "bolt_centers_world_xyz_mm": [
+        [
+          196.65285853221894,
+          -17.892006545113453,
+          70.451531373598
+        ],
+        [
+          177.8230732952394,
+          -38.61492110675819,
+          70.451531373598
+        ]
+      ],
+      "pilot_depth_mm": 10.0,
+      "intersection_with_iacv_pad_mm3": 0.0,
+      "intersection_of_pilots_with_iacv_pad_mm3": 0.0,
+      "closest_to_iacv_pad_mm": 5.424729374684123,
+      "upper_posts_to_iacv_pad_mm": 6.9796346181968145,
+      "posts_to_extruded_iacv_mounting_footprint_mm": 7.861577622082864,
+      "closest_to_throttle_flange_mm": 4.853831441117156,
+      "post_foot_overlap_with_neck_mm3": [
+        1058.875651795247,
+        1189.7819858292028
+      ],
+      "cable_pilot_min_gap_to_air_mm": 5.37229131459224,
+      "iacv_supply_min_gap_to_air_mm": 5.252694112078306,
+      "socket_pocket_min_gap_to_air_mm": 5.209341847534224,
+      "throttle_face_world_xyz_mm": [
+        224.28000631091857,
+        -38.797746344492786,
+        31.080359807593023
+      ]
+    }
+  ]
+}

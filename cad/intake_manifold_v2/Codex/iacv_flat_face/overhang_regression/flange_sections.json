@@ -1,0 +1,103 @@
+{
+  "previous_sha256": "adbd6b2f917fe2e49bd1c6d5f4d4bda3296d085e40d0ba2a4192527b31cf7c9e",
+  "corrected_sha256": "7101be808477b7203d9eaa54a46f1eaa7b97885f1dab9c03ac947f8c1549f99c",
+  "sections": [
+    {
+      "behind_face_mm": 0.1,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 1.0066474183223321e-06
+    },
+    {
+      "behind_face_mm": 9.5,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 7.784183587806678e-07
+    },
+    {
+      "behind_face_mm": 10.0,
+      "profile_band_outside_area_before_after_mm2": [
+        60.068095297564106,
+        0.0
+      ],
+      "removed_mm2": 60.946410072156006
+    },
+    {
+      "behind_face_mm": 10.8,
+      "profile_band_outside_area_before_after_mm2": [
+        104.04881966064809,
+        0.0
+      ],
+      "removed_mm2": 105.31263691180867
+    },
+    {
+      "behind_face_mm": 11.9,
+      "profile_band_outside_area_before_after_mm2": [
+        104.04881723763354,
+        0.0
+      ],
+      "removed_mm2": 105.31260824618381
+    },
+    {
+      "behind_face_mm": 12.1,
+      "profile_band_outside_area_before_after_mm2": [
+        91.20563627270124,
+        0.0
+      ],
+      "removed_mm2": 92.41859203115148
+    },
+    {
+      "behind_face_mm": 13.0,
+      "profile_band_outside_area_before_after_mm2": [
+        15.448462308753495,
+        0.0
+      ],
+      "removed_mm2": 16.134850571746007
+    },
+    {
+      "behind_face_mm": 14.0,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 0.0
+    },
+    {
+      "behind_face_mm": 16.0,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 0.0
+    },
+    {
+      "behind_face_mm": 18.0,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 0.0
+    },
+    {
+      "behind_face_mm": 20.0,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 0.0
+    },
+    {
+      "behind_face_mm": 22.0,
+      "profile_band_outside_area_before_after_mm2": [
+        0.0,
+        0.0
+      ],
+      "removed_mm2": 0.2807578728392353
+    }
+  ],
+  "highlighted_removed_area_mm2": 104.04881723763356
+}

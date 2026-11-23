@@ -1,0 +1,75 @@
+{
+  "source_sha256": "54aea809ee11f6876f61926cbd75c72f666df5c277018934e7abe6f7194bbcba",
+  "dx_mm": 2.0,
+  "cell_components": [
+    365581
+  ],
+  "geometry_volume_mm3": 2930705.548433144,
+  "mass_flow_input_kgs": 0.2777,
+  "cases": {
+    "all_cylinders": {
+      "trace": [
+        {
+          "iteration": 1,
+          "max_mach": 5301.2888436461,
+          "projection_linear_relative_l2": 5.983443257272058e-05,
+          "projected_local_continuity_abs_l1_over_inlet": 17.932364087706226,
+          "reconstructed_center_face_continuity_abs_l1_over_inlet": 2077.2006113237976,
+          "signed_outlet_kgs": 0.0,
+          "positive_only_outlet_kgs": 0.0,
+          "signed_cylinder_kgs": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "inlet_cells": 1184,
+      "outlet_faces_by_cylinder": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_outlet_faces": 0,
+      "linear_solver_exit_codes": {
+        "cg": {
+          "700": 1,
+          "600": 1
+        },
+        "bicgstab": {
+          "0": 3
+        }
+      },
+      "reported_metrics": {
+        "n_fluid_cells": 365581,
+        "mass_conservation_error_pct": 100.0,
+        "cyl_mass_flow_raw_kgs": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cyl_flow_share_pct": [
+          25.0,
+          25.0,
+          25.0,
+          25.0
+        ],
+        "cyl_maldistribution_spread_pct": 0.0,
+        "cyl_dp_total_kpa": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tb_to_plenum_dp_kpa": 0.0,
+        "tb_to_plenum_dp_psi": 0.0,
+        "max_mach_3d": 5301.289,
+        "max_vel_3d_ms": 1916338.4,
+        "mean_tb_vel_ms": 34.65
+      }
+    }
+  }
+}

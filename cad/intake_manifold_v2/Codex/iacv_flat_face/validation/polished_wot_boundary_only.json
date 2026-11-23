@@ -1,0 +1,70 @@
+{
+  "source_sha256": {
+    "parameters": "a1294d92ddf318b9710ab211b081315b8d423ed057fa3aac8c1a924f4c572b86",
+    "frozen_solver": "fe263be23c38b12abf65e713f6146f5f249ded7306ebc269e9e68abe19bbd8c0"
+  },
+  "cases": [
+    {
+      "dx_mm": 2.0,
+      "grid_offset_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_connected_components": 1,
+      "n_inlet_cells": 702,
+      "active_cyls": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "outlet_face_counts_all": [
+        362,
+        362,
+        362,
+        362
+      ],
+      "outlet_areas_mm2_all": [
+        1448.0,
+        1448.0,
+        1448.0,
+        1448.0
+      ],
+      "empty_active_outlets": [],
+      "disjoint_outlets": true,
+      "inlet_to_outlet_connected": true
+    },
+    {
+      "dx_mm": 2.0,
+      "grid_offset_mm": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "n_connected_components": 1,
+      "n_inlet_cells": 700,
+      "active_cyls": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "outlet_face_counts_all": [
+        360,
+        360,
+        360,
+        360
+      ],
+      "outlet_areas_mm2_all": [
+        1440.0,
+        1440.0,
+        1440.0,
+        1440.0
+      ],
+      "empty_active_outlets": [],
+      "disjoint_outlets": true,
+      "inlet_to_outlet_connected": true
+    }
+  ]
+}
