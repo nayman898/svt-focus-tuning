@@ -28,6 +28,10 @@ import math
 from pathlib import Path
 from typing import Iterable
 
+from scipy.interpolate import CubicSpline
+from shapely.geometry import box as shapely_box
+from shapely.geometry.polygon import orient
+
 from build123d import (
     BuildLine,
     BuildPart,
@@ -1053,6 +1057,84 @@ def build_service_hatch_components(params: dict) -> dict:
 # TB Neck, IACV Pad, -Y NA Vacuum Pads & Center Split Flange
 # ---------------------------------------------------------------------------
 
+def eased_progress(t: float, start: float, end: float) -> float:
+    """Integrate two cubic endpoint rate ramps and a constant middle rate."""
+    if not (start > 0 and end > 0 and start + end <= 1):
+        raise ValueError("Transition endpoint widths must be positive and total at most one")
+    if t <= 0:
+        return 0.0
+    if t >= 1:
+        return 1.0
+    integral = 1.0 - (start + end) / 2.0
+    if t < start:
+        u = t / start
+        return start * (u**3 - 0.5 * u**4) / integral
+    if t > 1.0 - end:
+        u = (1.0 - t) / end
+        return 1.0 - end * (u**3 - 0.5 * u**4) / integral
+    return (t - start / 2.0) / integral
+
+
+def deck_seal_land(params: dict, tb_parts: dict) -> tuple[dict, dict]:
+    """Add local radial bore-edge support behind the narrowest portion of the factory throttle gasket."""
+    body = params["throttle_body"]
+    cfg = body["iacv_flange_feed"]
+    face, axis = tb_parts["flange_face_center"], tb_parts["tb_axis"]
+    u, v, offset = throttle_mounting_frame(axis, body)
+    radius = body["bore_diameter_mm"] / 2.0
+    center = np.asarray(body["bore_from_bolt_grid_uv_mm"], dtype=np.float64)
+    first, divider = cfg["visible_throttle_seal_centerlines_uv_mm"]
+    seal = LineString([*first, first[0]]).union(LineString(divider))
+    band = seal.buffer(1.60)
+    directions = rounded_rect_points(2.0, 2.0, 1.0, 480)
+    from shapely.geometry import Point as ShapelyPoint
+    origin = ShapelyPoint(center)
+    cut_radii = []
+    for direction in directions:
+        ray = LineString([center, center + radius * direction])
+        crossing = ray.intersection(band)
+        cut_radii.append(radius if crossing.is_empty else origin.distance(crossing))
+    cut_radii_arr = np.asarray(cut_radii, dtype=np.float64)
+    axes = np.stack((u, v))
+    depths = np.r_[-2.25, np.linspace(0.0, 5.5, 45), 5.7]
+    rings = []
+    for depth in depths:
+        fade = eased_progress((float(depth) - 1.0) / 4.5, 0.24, 0.24)
+        radii = cut_radii_arr + fade * (radius + 0.03 - cut_radii_arr)
+        rings.append(face + offset - float(depth) * axis + (center + radii[:, None] * directions) @ axes)
+    opening = trimesh_to_manifold(loft_closed_solid(rings))
+    stock = make_cylinder_along(face + 2.2 * axis, face - 5.58 * axis, radius + 1.0, 160)
+    support = stock - opening
+    trimmed = {**tb_parts, "tb_bore": tb_parts["tb_bore"] - support, "cutters": tb_parts["cutters"] - support}
+    return trimmed, {"max_local_radial_inset_mm": float(radius - cut_radii_arr.min())}
+
+
+def flush_flange_blend(params: dict, tb_parts: dict) -> tuple[dict, dict]:
+    """Confine the round flange-back blend inside the square throttle flange profile."""
+    cfg = params["throttle_body"]
+    face, axis = tb_parts["flange_face_center"], tb_parts["tb_axis"]
+    u, v, offset = throttle_mounting_frame(axis, cfg)
+    frame = np.stack((u, v, axis))
+    origin = face + offset
+    w, h, r = (float(cfg[k]) for k in ("flange_width_mm", "flange_height_mm", "flange_corner_radius_mm"))
+    thickness = float(cfg["flange_thickness_mm"])
+    start, stop, fade_end = thickness - 2.5, thickness + 10.0, thickness + 17.0
+
+    def ring(depth: float) -> np.ndarray:
+        extra = 48.0 * eased_progress((depth - stop) / (fade_end - stop), 0.35, 0.35)
+        section = rounded_rect_points(w + 0.012 + 2.0 * extra, h + 0.012 + 2.0 * extra, r + extra, 192)
+        return origin - depth * axis + section @ frame[:2]
+
+    envelope = trimesh_to_manifold(loft_closed_solid([
+        ring(float(d)) for d in (start - 0.5, start, stop, *np.linspace(stop + 0.2, fade_end, 38), fade_end + 0.5)
+    ]))
+    original = tb_parts["outer"]
+    fwd = original.trim_by_plane(axis, float(axis @ face) - start)
+    aft = original.trim_by_plane(-axis, float(-axis @ face) + fade_end)
+    revised = m_union([fwd, original ^ envelope, aft])
+    return {**tb_parts, "outer": revised}, {"removed_exterior_mm3": float((original - revised).volume())}
+
+
 def tb_neck_bezier_points(params: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Compute 3D C1 cubic-Bezier control points and flange frame for the TB neck."""
     tb = params["throttle_body"]
@@ -1167,13 +1249,18 @@ def build_throttle_body_components(params: dict) -> dict:
         inner_g = make_cylinder_along(p_flange_face - tb_axis * (depth_g + 1.0), p_flange_face + tb_axis * 2.0, r_in_g, segments=72)
         cutters.append(outer_g - inner_g)
 
-    return {
+    tb_out = {
         "outer": m_union(outer_pieces),
         "tb_bore": tb_bore,
         "cutters": m_union(cutters),
         "flange_face_center": p_flange_face,
         "tb_axis": tb_axis,
     }
+    if tb.get("iacv_flange_feed") and tb["iacv_flange_feed"].get("visible_throttle_seal_centerlines_uv_mm"):
+        tb_out, _ = deck_seal_land(params, tb_out)
+    if tb.get("flush_back_blend_to_flange_profile", False) or tb.get("iacv_flange_feed"):
+        tb_out, _ = flush_flange_blend(params, tb_out)
+    return tb_out
 
 
 def build_boss_pad_components(pad_cfg: dict, params: dict) -> tuple[md.Manifold, list[md.Manifold]]:
@@ -1253,12 +1340,37 @@ def build_iacv_components(params: dict) -> dict:
         cutters.append(make_cylinder_along(np.array([xc, yc + sy * b_half, b_bot]), np.array([xc, yc + sy * b_half, top_z + 4.0]), b_rad, segments=36))
 
     p_rad = float(iac["port_diameter_mm"]) * 0.5
-    cutters.append(make_cylinder_along(np.array([x_plenum_port, yc, 14.0]), np.array([x_plenum_port, yc, top_z + 4.0]), p_rad, segments=48))
-    cutters.append(make_cylinder_along(np.array([x_supply_port, yc, float(iac["supply_pocket_bottom_z_mm"])]), np.array([x_supply_port, yc, top_z + 4.0]), p_rad, segments=48))
+    ang_p = np.linspace(0.0, 2.0 * math.pi, 64, endpoint=False)
+    cos_p, sin_p = np.cos(ang_p), np.sin(ang_p)
+    disch_rings = [
+        np.column_stack([x_plenum_port + p_rad * cos_p, yc + p_rad * sin_p, np.full(64, top_z + 4.0)]),
+        np.column_stack([x_plenum_port + p_rad * cos_p, yc + p_rad * sin_p, np.full(64, 45.0)]),
+    ]
+    th_max = 0.38 * math.pi
+    denom = 1.0 - math.cos(th_max)
+    for th in np.linspace(0.0, th_max, 13)[1:]:
+        rk = p_rad + 2.3 * (1.0 - math.cos(th)) / denom
+        zk = 45.0 - 7.0 * (math.sin(th) / math.sin(th_max))
+        disch_rings.append(np.column_stack([x_plenum_port + rk * cos_p, yc + rk * sin_p, np.full(64, zk)]))
+    disch_rings.append(np.column_stack([x_plenum_port + 8.8 * cos_p, yc + 8.8 * sin_p, np.full(64, 32.0)]))
+    cutters.append(trimesh_to_manifold(loft_closed_solid(disch_rings[::-1])))
 
-    tap_rad = float(iac["side_supply_tap_diameter_mm"]) * 0.5
-    tap_z = float(iac["side_supply_tap_z_mm"])
-    cutters.append(make_cylinder_along(np.array([x_supply_port, yc, tap_z]), np.array([x_supply_port, yc + 0.5 * pad_w + 10.0, tap_z]), tap_rad, segments=36))
+    z_elbow = 54.6
+    supply_upper = make_cylinder_along(np.array([x_supply_port, yc, z_elbow]), np.array([x_supply_port, yc, top_z + 4.0]), p_rad, segments=64)
+    bowl_rings = [
+        np.column_stack([
+            x_supply_port + max(0.2, p_rad * math.cos(th)) * cos_p,
+            yc + max(0.2, p_rad * math.cos(th)) * sin_p,
+            np.full(64, z_elbow - 6.2 * math.sin(th)),
+        ])
+        for th in np.linspace(0.0, 0.5 * math.pi, 13)
+    ]
+    cutters.append(supply_upper + trimesh_to_manifold(loft_closed_solid(bowl_rings[::-1])))
+
+    if iac.get("side_supply_tap_enabled", False):
+        tap_rad = float(iac["side_supply_tap_diameter_mm"]) * 0.5
+        tap_z = float(iac["side_supply_tap_z_mm"])
+        cutters.append(make_cylinder_along(np.array([x_supply_port, yc, tap_z]), np.array([x_supply_port, yc + 0.5 * pad_w + 10.0, tap_z]), tap_rad, segments=36))
 
     wall_thickness = float(iac["supply_pocket_bottom_z_mm"]) - float(params["plenum"]["top_inner_z_mm"])
     assert wall_thickness >= 4.5, f"IACV supply wall thickness {wall_thickness:.2f} mm < 4.5 mm"
@@ -1266,6 +1378,91 @@ def build_iacv_components(params: dict) -> dict:
         "outer": pad_outer,
         "cutters": m_union(cutters),
         "wall_thickness_mm": wall_thickness,
+    }
+
+
+def make_iacv_flange_feed_route(params: dict, tb_parts: dict) -> dict | None:
+    """Build sealed internal IACV feed passage from flat TB face opening to IACV supply pocket."""
+    tb_cfg = params["throttle_body"]
+    cfg = tb_cfg.get("iacv_flange_feed")
+    if not cfg or not cfg.get("route_path_xyz_mm"):
+        return None
+
+    port = ShapelyPolygon(cfg["face_opening_uv_mm"])
+    radius = float(cfg["duct_diameter_mm"]) / 2.0
+    wall = float(cfg["duct_wall_mm"])
+    face, axis = tb_parts["flange_face_center"], tb_parts["tb_axis"]
+    u, v, offset = throttle_mounting_frame(axis, tb_cfg)
+    origin = face + offset
+    axes = np.stack((u, v))
+    cup = np.asarray(cfg["round_transition_center_uv_mm"], dtype=np.float64)
+    depths = np.r_[-1.5, np.linspace(0.3, 11.0, 32), 11.65]
+
+    def adapter(poly, end_radius: float) -> md.Manifold:
+        outline = LineString(orient(poly, sign=1.0).exterior.coords)
+        profile = np.asarray([outline.interpolate(i / 96, normalized=True).coords[0] for i in range(96)])
+        start = profile[0] - np.mean(profile, axis=0)
+        ang = math.atan2(float(start[1]), float(start[0]))
+        rot = np.array([[math.cos(ang), math.sin(ang)], [-math.sin(ang), math.cos(ang)]])
+        circle = cup + end_radius * rounded_rect_points(2.0, 2.0, 1.0, 96) @ rot
+        rings = []
+        for d in depths:
+            w = eased_progress((float(d) - 0.32) / 10.68, 0.26, 0.31)
+            rings.append(origin - float(d) * axis + ((1.0 - w) * profile + w * circle) @ axes)
+        return trimesh_to_manifold(loft_closed_solid(rings))
+
+    inlet = adapter(port, radius)
+    inlet_outer = adapter(port.buffer(wall), radius + wall).trim_by_plane(-axis, float((-axis) @ face) + 1.25)
+
+    approach = [origin + cup @ axes - 11.0 * axis]
+    iac = tb_cfg["iacv_mount"]
+    x_sup = float(iac["x_center_mm"]) + float(iac["port_spacing_x_mm"]) / 2.0
+    y_sup = float(iac["y_center_mm"])
+    points = np.array([*approach, *cfg["route_path_xyz_mm"], [x_sup, y_sup, 54.6]], dtype=np.float64)
+    stations = np.r_[0.0, np.cumsum(np.linalg.norm(np.diff(points, axis=0), axis=1))]
+    curve = CubicSpline(stations, points, bc_type=((1, -axis), (1, [0.0, 1.0, 0.0])))
+    ts = np.r_[-0.75, np.linspace(0.0, float(stations[-1]), 100)]
+    positions, tangents = curve(ts), curve(ts, 1)
+
+    def tube(rad: float, add_fairing: bool = False) -> md.Manifold:
+        profile = rounded_rect_points(2.0 * rad, 2.0 * rad, rad, 96)
+        rings = []
+        for idx, (pos, tan) in enumerate(zip(positions, tangents, strict=True)):
+            ring = ring_frame_points(pos, tan, np.array([0.0, 0.0, 1.0]), profile)
+            if add_fairing:
+                t_hat = tan / np.linalg.norm(tan)
+                down = np.array([-1.0, 0.0, 0.0]) + t_hat * t_hat[0]
+                mag = float(np.linalg.norm(down))
+                radial = (ring - pos) / rad
+                s_norm = float(ts[idx]) / max(float(stations[-1]), 1e-6)
+                fade_in = eased_progress((s_norm - 0.08) / 0.22, 0.35, 0.35)
+                fade_out = 1.0 - eased_progress((s_norm - 0.72) / 0.22, 0.35, 0.35)
+                span_w = fade_in * fade_out
+                if mag > 1e-6:
+                    cosine = np.clip(radial @ (down / mag), -1.0, 1.0)
+                    sine = np.sqrt(np.maximum(1e-8, 1.0 - cosine**2) + 0.0049)
+                    u_sh = np.clip((cosine - 0.50) / 0.35, 0.0, 1.0)
+                    w_sh = u_sh * u_sh * (3.0 - 2.0 * u_sh)
+                    shoulder = 1.0 + w_sh * np.maximum(0.0, math.sqrt(2.0) / (np.maximum(cosine, 0.0) + sine) - 1.0)
+                    ring = pos + rad * radial * (1.0 + (shoulder - 1.0) * mag * span_w)[:, None]
+            rings.append(ring)
+        return trimesh_to_manifold(loft_closed_solid(rings))
+
+    *_, p_fb, _, _ = tb_neck_bezier_points(params)
+    bx, by, b_rad = float(tb_cfg["bolt_spacing_x_mm"]) * 0.5, float(tb_cfg["bolt_spacing_y_mm"]) * 0.5, float(tb_cfg["bolt_hole_diameter_mm"]) * 0.5
+    centers = [p_fb + offset + sx * bx * u + sy * by * v for sx in (-1.0, 1.0) for sy in (-1.0, 1.0)]
+    sockets = m_union([make_cylinder_along(pt - 14.0 * axis, pt - 0.30 * axis, 6.27, 64) for pt in centers])
+    holes = m_union([make_cylinder_along(pt - 2.0 * axis, pt + 15.0 * axis, b_rad, 64) for pt in centers])
+    deck_guard = make_rounded_prism(
+        float(iac["pad_length_x_mm"]) + 4.0, float(iac["pad_width_y_mm"]) + 4.0, float(iac["pad_corner_radius_mm"]), 35.0,
+        segments=96, center=(float(iac["x_center_mm"]), y_sup, float(iac["top_z_mm"]) + 17.5), axis="z",
+    )
+    fairing = bool(cfg.get("printer_fairing", False))
+    return {
+        "inner": inlet + tube(radius),
+        "outer": (inlet_outer + tube(radius + wall, fairing)) - sockets - deck_guard,
+        "sockets": sockets,
+        "bolt_holes": holes,
     }
 
 
@@ -1720,6 +1917,7 @@ def assemble_all(params: dict) -> dict:
 
     pl_bond_env = build_plenum_loft(params, is_inner=True, wall_offset_mm=2.5)
     floor_scoops = build_floor_flow_scoops(params, pl_bond_env=pl_bond_env)
+    iacv_route = make_iacv_flange_feed_route(params, tb_parts)
     pl_and_tb_cavities = m_union([pl_inner, tb_parts["cutters"]])
 
     # --- 1-Piece Reference Assembly ---
@@ -1728,6 +1926,8 @@ def assemble_all(params: dict) -> dict:
         outer_1pc_list.append(hatches["outer"])
     if iacv_parts is not None:
         outer_1pc_list.append(iacv_parts["outer"])
+    if iacv_route is not None:
+        outer_1pc_list.append(iacv_route["outer"])
     outer_1pc = m_union(outer_1pc_list)
 
     hollow_1pc = outer_1pc - pl_and_tb_cavities
@@ -1740,6 +1940,8 @@ def assemble_all(params: dict) -> dict:
         sub_1pc.append(hatches["cutters"])
     if iacv_parts is not None:
         sub_1pc.append(iacv_parts["cutters"])
+    if iacv_route is not None:
+        sub_1pc.extend([iacv_route["inner"], iacv_route["sockets"], iacv_route["bolt_holes"]])
     final_1pc = m_diff(hollow_1pc, sub_1pc)
 
     # --- 2-Piece Split Assembly ---
@@ -2044,7 +2246,8 @@ def render_1to1_svg(solids: dict, params: dict, out_path: Path):
     """Generate true 1:1 mm-scale SVG template of all key interfaces + butterfly valve."""
     spigot_sec = solids["svt_na_dsi_runner_boot_fit_gauge"].slice(24.0).to_polygons()
     split_sec = solids["svt_na_dsi_manifold_split_left_cyl1_2"].rotate([0.0, -90.0, 0.0]).slice(-1.0).to_polygons()
-    tb_sec = solids["svt_na_dsi_tb_flange_fit_gauge"].slice(2.0).to_polygons()
+    tb_key = "svt_na_dsi_flat_face_iacv_fit_coupon" if "svt_na_dsi_flat_face_iacv_fit_coupon" in solids else "svt_na_dsi_tb_flange_fit_gauge"
+    tb_sec = solids[tb_key].slice(2.0).to_polygons()
     iacv_sec = solids["svt_na_dsi_iacv_flange_fit_gauge"].slice(2.0).to_polygons()
     valve_sec = solids["svt_na_dsi_valve_bore_fit_gauge"].slice(17.0).to_polygons()
 
@@ -2073,6 +2276,101 @@ def render_1to1_svg(solids: dict, params: dict, out_path: Path):
     out_path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def flat_face_checks(body: md.Manifold, tb_parts: dict, params: dict) -> tuple[dict, md.Manifold]:
+    """Verify flat throttle mating face preserves >= 1.5 mm gasket support land and 6 internal openings."""
+    face, axis = tb_parts["flange_face_center"], tb_parts["tb_axis"]
+    tb_cfg = params["throttle_body"]
+    u, v, shift = throttle_mounting_frame(axis, tb_cfg)
+    frame = np.stack((u, v, axis))
+    flange = body.transform(np.column_stack((frame, -frame @ (face + shift))))
+    w, h = float(tb_cfg["flange_width_mm"]) / 2.0 + 1.0, float(tb_cfg["flange_height_mm"]) / 2.0 + 1.0
+    window = shapely_box(-w, -h, w, h)
+    cfg = tb_cfg["iacv_flange_feed"]
+    first, divider = cfg["visible_throttle_seal_centerlines_uv_mm"]
+    seal = LineString([*first, first[0]]).union(LineString(divider))
+    profile_stats = {}
+    reference_loops = []
+    for depth in (0.1, 0.25, 1.1, 2.2):
+        section = ShapelyPolygon()
+        for loop in flange.slice(-depth).to_polygons():
+            section = section.symmetric_difference(ShapelyPolygon(loop).intersection(window))
+        assert isinstance(section, ShapelyPolygon) and section.is_valid and len(section.interiors) == 6, (depth, len(section.interiors))
+        assert section.covers(seal), depth
+        profile_stats[str(depth)] = {
+            "seal_centerline_to_edge_mm": round(float(section.boundary.distance(seal)), 4),
+            "openings": len(section.interiors),
+        }
+        if depth == 0.1:
+            reference_loops = [np.asarray(section.exterior.coords[:-1]), *[np.asarray(hole.coords[:-1]) for hole in section.interiors]]
+    assert profile_stats["0.1"]["seal_centerline_to_edge_mm"] >= 1.5, profile_stats
+    return profile_stats, md.CrossSection(reference_loops, md.FillRule.EvenOdd).extrude(4.0)
+
+
+def render_exterior_closeup_figure(solids: dict, meshes: dict, params: dict, out_path: Path):
+    """Render 6-panel multi-angle exterior & internal transition inspection plate."""
+    fig = plt.figure(figsize=(18.0, 11.5), facecolor="#f7f6f2")
+    fig.suptitle("NA Dual-Stage DSI — Cohesive Exterior Polish & V2 Flat-Face TB/IACV Inspection", fontsize=14, fontweight="bold", y=0.975)
+
+    def plot_3d(ax, mesh, title, elev, azim, color):
+        ax.set_facecolor("#f5f4f0")
+        ax.plot_trisurf(mesh.vertices[:, 0], mesh.vertices[:, 1], mesh.vertices[:, 2], triangles=mesh.faces, color=color, linewidth=0, antialiased=False, shade=True)
+        b = mesh.bounds
+        span = max(b[1] - b[0]) * 0.54
+        c = 0.5 * (b[0] + b[1])
+        ax.set_xlim(c[0] - span, c[0] + span)
+        ax.set_ylim(c[1] - span, c[1] + span)
+        ax.set_zlim(c[2] - span, c[2] + span)
+        ax.set_box_aspect([1, 1, 1])
+        ax.view_init(elev=elev, azim=azim)
+        ax.set_title(title, fontsize=10.0, fontweight="bold")
+        ax.tick_params(labelsize=7)
+
+    m_full = meshes["svt_na_dsi_manifold_1piece_full"]
+    m_l = meshes["svt_na_dsi_manifold_split_left_cyl1_2"]
+    m_r = meshes["svt_na_dsi_manifold_split_right_cyl3_4_tb"]
+
+    plot_3d(fig.add_subplot(2, 3, 1, projection="3d"), m_full, "1. Underside-Front 3/4: C-Scrolls & Dropped Plenum", -20, -60, "#3e5266")
+    plot_3d(fig.add_subplot(2, 3, 2, projection="3d"), m_r, "2. Right Half: 32°/14° TB, Flat-Face IACV & Top Pedestal", 20, -25, "#2b618a")
+    plot_3d(fig.add_subplot(2, 3, 3, projection="3d"), m_l, "3. Left Half: -X Actuator/Seal End & Plenum Dome", 20, -145, "#2b618a")
+    plot_3d(fig.add_subplot(2, 3, 4, projection="3d"), m_full, "4. Rear-Top 3/4: Service Hatches, Vacuum Pads & IACV", 32, 135, "#3e5266")
+
+    def draw_slice(ax, polys, title, xlabel, ylabel, xlim, ylim, fc="#386487"):
+        ax.set_facecolor("#ffffff")
+        sh_polys = [ShapelyPolygon(p) for p in polys if len(p) >= 3]
+        depths = [sum(1 for j, pj in enumerate(sh_polys) if i != j and pj.area > pi.area and pj.contains(pi.representative_point())) for i, pi in enumerate(sh_polys)]
+        for i, pi in enumerate(sh_polys):
+            if depths[i] % 2 != 0:
+                continue
+            rings = [np.asarray(pi.exterior.coords)] + [np.asarray(pj.exterior.coords) for j, pj in enumerate(sh_polys) if depths[j] == depths[i] + 1 and pi.contains(pj.representative_point())]
+            verts, codes = [], []
+            for r_idx, r in enumerate(rings):
+                area = 0.5 * np.sum(r[:-1, 0] * r[1:, 1] - r[1:, 0] * r[:-1, 1])
+                if (r_idx == 0 and area < 0) or (r_idx > 0 and area > 0):
+                    r = r[::-1]
+                verts.extend(r)
+                codes.extend([MplPath.MOVETO] + [MplPath.LINETO] * (len(r) - 2) + [MplPath.CLOSEPOLY])
+            ax.add_patch(PathPatch(MplPath(np.asarray(verts), codes), facecolor=fc, edgecolor="#182a38", lw=0.8))
+        ax.set_aspect("equal")
+        ax.set_xlim(*xlim)
+        ax.set_ylim(*ylim)
+        ax.grid(True, ls=":", alpha=0.45)
+        ax.set_title(title, fontsize=10.0, fontweight="bold")
+        ax.set_xlabel(xlabel, fontsize=8)
+        ax.set_ylabel(ylabel, fontsize=8)
+
+    full_s = solids["svt_na_dsi_manifold_1piece_full"]
+    draw_slice(fig.add_subplot(2, 3, 5), [np.asarray(p) for p in full_s.slice(10.0).to_polygons()],
+               "5. X-Y Slice at Z = +10 mm: Rear Flow Guide & TB Throat", "X [mm]", "Y [mm]", (-205, 255), (-110, 95))
+    xz_polys = [np.column_stack([np.asarray(p)[:, 0], -np.asarray(p)[:, 1]]) for p in full_s.rotate([90.0, 0.0, 0.0]).slice(-100.0).to_polygons()]
+    draw_slice(fig.add_subplot(2, 3, 6), xz_polys,
+               "6. X-Z Slice at Y = -100 mm: Elevated Runners & Tie-Bars", "X [mm]", "Z [mm]", (-180, 180), (-20, 100), fc="#24695c")
+
+    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out_path, dpi=180)
+    plt.close(fig)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -2083,6 +2381,10 @@ def main():
     FITMENT_DIR.mkdir(parents=True, exist_ok=True)
 
     solids = assemble_all(params)
+    if solids.get("_iacv_route") is not None and params["throttle_body"].get("iacv_flange_feed", {}).get("visible_throttle_seal_centerlines_uv_mm"):
+        ff_stats, coupon_solid = flat_face_checks(solids["svt_na_dsi_manifold_1piece_full"], solids["_tb_parts"], params)
+        solids["svt_na_dsi_flat_face_iacv_fit_coupon"] = coupon_solid
+        print(f"  Flat-Face IACV TB Check: {ff_stats['0.1']}")
     cnc_info = export_cnc_metal_hardware(params)
 
     meshes: dict[str, trimesh.Trimesh] = {}
@@ -2161,6 +2463,7 @@ def main():
     (STL_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
     render_overview_png(meshes, solids, params, FITMENT_DIR / "01_na_dsi_manifold_overview.png")
+    render_exterior_closeup_figure(solids, meshes, params, FITMENT_DIR / "05_na_dsi_exterior_transitions_closeup.png")
     render_1to1_svg(solids, params, FITMENT_DIR / "02_na_dsi_interfaces_1to1_template.svg")
 
     print(f"Generated {len(meshes)} watertight NA DSI STLs + 5 CNC STEP/DXF files. Plenum = {plenum_l:.3f} L")

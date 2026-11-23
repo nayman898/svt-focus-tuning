@@ -30,9 +30,12 @@ This Track 2 design adapts the printed composite modular split-plenum C-scroll a
     - **Primary Pad (`X = +56.0, Y = +32.0 mm`):** Brake Booster (`1/4-18 NPT`), PCV Crankcase Vent (`1/4-18 NPT`), Fuel Rail Pressure Sensor FRPS (`1/8-27 NPT`).
     - **Aux Pad (`X = -52.0, Y = +26.0 mm`):** EVAP Canister Purge (`1/8-27 NPT`), DSI Vacuum-Pod / Aux MAP Reference (`1/8-27 NPT`).
 
-| CAD & Flow Cross-Sections | 3D CFD & NA Acoustic Crossover |
-| :---: | :---: |
-| ![Overview](fitment/01_na_dsi_manifold_overview.png) | ![Verification](fitment/03_na_dsi_airflow_verification.png) |
+| CAD & Flow Cross-Sections | 3D CFD & NA Acoustic Crossover | Exterior Polish & V2 TB/IACV |
+| :---: | :---: | :---: |
+| ![Overview](fitment/01_na_dsi_manifold_overview.png) | ![Verification](fitment/03_na_dsi_airflow_verification.png) | ![Exterior](fitment/05_na_dsi_exterior_transitions_closeup.png) |
+
+> [!TIP]
+> **Full Buy-Ready BOM:** See [PARTS_LIST.md](PARTS_LIST.md) for the complete itemized list of printed parts, CNC metal valve hardware, bearings, seals, OEM gaskets, fasteners, couplers, NPT fittings, and both Path A (OEM IMRC) & Path B (vacuum pod + 12V solenoid) actuation hardware.
 
 ---
 
@@ -44,13 +47,13 @@ Verified by [verify_na_dsi_airflow.py](verify_na_dsi_airflow.py) (`121.13 s` run
 
 | Metric | Long Mode (`4,200 RPM`, Valves Closed) | Short Mode (`7,000 RPM`, Valves Open) |
 | --- | :---: | :---: |
-| **Fluid Mesh Cells** | `74,263` | `75,043` |
+| **Fluid Mesh Cells** | `74,876` | `75,656` |
 | **Leaked Valve Throat Voxels** | **`0`** (100% sealed) | N/A |
 | **Mass Conservation Error** | **`0.0%`** | **`0.0%`** |
-| **Cylinder Flow Share [Cyl 1, 2, 3, 4] (%)** | `[24.68, 24.98, 25.10, 25.25]` | `[25.35, 25.23, 25.09, 24.33]` |
-| **3D Cylinder Maldistribution Spread** | **`2.28%`** | **`4.08%`** |
-| **TB-to-Plenum / Upper ΔP** | `0.6731 kPa` | **`1.2411 kPa`** (`-37.6%` vs OEM `1.99 kPa`) |
-| **Flow Path Split (Short / C-Scroll)** | `0.0% / 100.0%` | `57.8% / 42.2%` |
+| **Cylinder Flow Share [Cyl 1, 2, 3, 4] (%)** | `[24.63, 24.93, 25.01, 25.43]` | `[25.33, 25.22, 25.09, 24.36]` |
+| **3D Cylinder Maldistribution Spread** | **`3.21%`** | **`3.90%`** |
+| **TB-to-Plenum / Upper ΔP** | `0.662 kPa` | **`1.2352 kPa`** (`-37.9%` vs OEM `1.99 kPa`) |
+| **Flow Path Split (Short / C-Scroll)** | `0.0% / 100.0%` | `60.0% / 40.0%` |
 | **Peak Air Speed / Mach** | `27.7 m/s` (`M = 0.080`) | `46.9 m/s` (`M = 0.135`) |
 | **Mean TB Entry Velocity** | `19.92 m/s` | `34.25 m/s` |
 
